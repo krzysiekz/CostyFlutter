@@ -11,10 +11,39 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   ReportGenerator reportGenerator;
+  User kate;
+  User john;
+  Currency eur;
+  Currency pln;
 
   setUp(() {
     reportGenerator = ReportGeneratorImpl();
+    john = User(id: 1, name: 'John');
+    kate = User(id: 2, name: 'Kate');
+
+    eur = Currency(name: 'EUR');
+    pln = Currency(name: 'PLN');
   });
+
+  UserExpense createExpense(
+      User sender, List<User> receivers, Currency currency, int amount) {
+    return UserExpense(
+        id: 1,
+        receivers: receivers,
+        amount: Decimal.fromInt(amount),
+        currency: currency,
+        description: "Test",
+        user: sender);
+  }
+
+  ReportEntry createReportEntry(
+      User sender, User receiver, Currency currency, int amount) {
+    return ReportEntry(
+        receiver: receiver,
+        amount: Decimal.fromInt(amount),
+        currency: currency,
+        sender: sender);
+  }
 
   test('should return report with project project', () async {
     //arrange
@@ -28,18 +57,9 @@ void main() {
 
   test('report for single user should be empty', () async {
     //arrange
-    final john = User(id: 1, name: 'John');
     final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john], eur, 10));
 
-    project.addExpense(
-      UserExpense(
-          id: 1,
-          receivers: [john],
-          amount: Decimal.fromInt(10),
-          currency: Currency(name: 'USD'),
-          description: "Test",
-          user: john),
-    );
     final expectedReport = Report(project: project);
     //act
     final result = await reportGenerator.generate(project);
@@ -49,40 +69,27 @@ void main() {
 
   test('report should be valid for two users and two currencies', () async {
     //arrange
-    final john = User(id: 1, name: 'John');
-    final kate = User(id: 2, name: 'Kate');
     final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate], eur, 50));
+    project.addExpense(createExpense(kate, [john, kate], pln, 20));
 
-    project.addExpense(
-      UserExpense(
-          id: 1,
-          receivers: [john, kate],
-          amount: Decimal.fromInt(50),
-          currency: Currency(name: 'EUR'),
-          description: "Test",
-          user: john),
-    );
-
-    project.addExpense(
-      UserExpense(
-          id: 2,
-          receivers: [john, kate],
-          amount: Decimal.fromInt(20),
-          currency: Currency(name: 'PLN'),
-          description: "Test",
-          user: kate),
-    );
     final expectedReport = Report(project: project);
-    expectedReport.addEntry(ReportEntry(
-        amount: Decimal.fromInt(25),
-        currency: Currency(name: 'EUR'),
-        receiver: john,
-        sender: kate));
-    expectedReport.addEntry(ReportEntry(
-        amount: Decimal.fromInt(10),
-        currency: Currency(name: 'PLN'),
-        receiver: kate,
-        sender: john));
+    expectedReport.addEntry(createReportEntry(kate, john, eur, 25));
+    expectedReport.addEntry(createReportEntry(john, kate, pln, 10));
+    //act
+    final result = await reportGenerator.generate(project);
+    //assert
+    expect(result, expectedReport);
+  });
+
+  test('report should be valid for two users', () async {
+    //arrange
+    final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate], eur, 50));
+    project.addExpense(createExpense(kate, [john, kate], eur, 20));
+
+    final expectedReport = Report(project: project);
+    expectedReport.addEntry(createReportEntry(kate, john, eur, 15));
     //act
     final result = await reportGenerator.generate(project);
     //assert

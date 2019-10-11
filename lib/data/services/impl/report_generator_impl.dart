@@ -17,24 +17,44 @@ class ReportGeneratorImpl implements ReportGenerator {
     project.expenses.forEach((expense) {
       Decimal baseAmount =
           expense.amount / Decimal.fromInt(expense.receivers.length);
+
       expense.receivers.forEach((receiver) {
         final key = CalculationKey(
             sender: expense.user,
             receiver: receiver,
             currency: expense.currency);
 
-        calculationsMap.update(key, (oldValue) => oldValue + baseAmount,
-            ifAbsent: () => baseAmount);
+        final reverseKey = CalculationKey(
+            receiver: expense.user,
+            sender: receiver,
+            currency: expense.currency);
+
+        if (calculationsMap.containsKey(key)) {
+          calculationsMap.update(key, (oldValue) => oldValue + baseAmount);
+        } else if (calculationsMap.containsKey(reverseKey)) {
+          calculationsMap.update(
+              reverseKey, (oldValue) => oldValue - baseAmount);
+        } else {
+          calculationsMap.putIfAbsent(key, () => baseAmount);
+        }
       });
     });
 
     calculationsMap.forEach((key, value) {
       if (key.sender != key.receiver && value != Decimal.zero) {
-        report.addEntry(ReportEntry(
-            currency: key.currency,
-            receiver: key.sender,
-            sender: key.receiver,
-            amount: value));
+        if (value > Decimal.zero) {
+          report.addEntry(ReportEntry(
+              currency: key.currency,
+              receiver: key.sender,
+              sender: key.receiver,
+              amount: value));
+        } else {
+          report.addEntry(ReportEntry(
+              currency: key.currency,
+              receiver: key.receiver,
+              sender: key.sender,
+              amount: value));
+        }
       }
     });
 
