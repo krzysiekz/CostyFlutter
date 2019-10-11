@@ -53,7 +53,7 @@ class ReportGeneratorImpl implements ReportGenerator {
               currency: key.currency,
               receiver: key.receiver,
               sender: key.sender,
-              amount: value));
+              amount: Decimal.fromInt(-1) * value));
         }
       }
     });

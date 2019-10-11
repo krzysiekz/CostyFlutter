@@ -13,6 +13,7 @@ void main() {
   ReportGenerator reportGenerator;
   User kate;
   User john;
+  User bob;
   Currency eur;
   Currency pln;
 
@@ -20,6 +21,7 @@ void main() {
     reportGenerator = ReportGeneratorImpl();
     john = User(id: 1, name: 'John');
     kate = User(id: 2, name: 'Kate');
+    bob = User(id: 3, name: 'Bob');
 
     eur = Currency(name: 'EUR');
     pln = Currency(name: 'PLN');
@@ -37,10 +39,10 @@ void main() {
   }
 
   ReportEntry createReportEntry(
-      User sender, User receiver, Currency currency, int amount) {
+      User sender, User receiver, Currency currency, double amount) {
     return ReportEntry(
         receiver: receiver,
-        amount: Decimal.fromInt(amount),
+        amount: Decimal.parse(amount.toString()),
         currency: currency,
         sender: sender);
   }
@@ -90,6 +92,92 @@ void main() {
 
     final expectedReport = Report(project: project);
     expectedReport.addEntry(createReportEntry(kate, john, eur, 15));
+    //act
+    final result = await reportGenerator.generate(project);
+    //assert
+    expect(result, expectedReport);
+  });
+
+  test('report should be empty for 3 users when expenses are the same',
+      () async {
+    //arrange
+    final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate, bob], eur, 50));
+    project.addExpense(createExpense(kate, [john, kate, bob], eur, 50));
+    project.addExpense(createExpense(bob, [john, kate, bob], eur, 50));
+
+    final expectedReport = Report(project: project);
+    //act
+    final result = await reportGenerator.generate(project);
+    //assert
+    expect(result, expectedReport);
+  });
+
+  test('report should be empty for 2 users when expenses are the same',
+      () async {
+    //arrange
+    final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate], eur, 50));
+    project.addExpense(createExpense(kate, [john, kate], eur, 50));
+
+    final expectedReport = Report(project: project);
+    //act
+    final result = await reportGenerator.generate(project);
+    //assert
+    expect(result, expectedReport);
+  });
+
+  test('report should be valid for multiple users', () async {
+    //arrange
+    final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate, bob], eur, 9));
+    project.addExpense(createExpense(kate, [john, kate, bob], eur, 18));
+    project.addExpense(createExpense(bob, [john, kate, bob], eur, 27));
+
+    final expectedReport = Report(project: project);
+    expectedReport.addEntry(createReportEntry(john, kate, eur, 3));
+    expectedReport.addEntry(createReportEntry(john, bob, eur, 6));
+    expectedReport.addEntry(createReportEntry(kate, bob, eur, 3));
+    //act
+    final result = await reportGenerator.generate(project);
+    //assert
+    expect(result, expectedReport);
+  });
+
+  test('report should be valid when user is not paying for all other users', () async {
+    //arrange
+    final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate], eur, 15));
+    project.addExpense(createExpense(kate, [john, kate, bob], eur, 30));
+    project.addExpense(createExpense(bob, [john, kate, bob], eur, 45));
+
+    final expectedReport = Report(project: project);
+    expectedReport.addEntry(createReportEntry(john, kate, eur, 2.5));
+    expectedReport.addEntry(createReportEntry(kate, bob, eur, 5));
+    expectedReport.addEntry(createReportEntry(john, bob, eur, 15));
+    //act
+    final result = await reportGenerator.generate(project);
+    //assert
+    expect(result, expectedReport);
+  });
+
+  test('report should be valid for multiple users and currencies', () async {
+    //arrange
+    final project = Project(id: 1, name: "Test Project");
+    project.addExpense(createExpense(john, [john, kate, bob], eur, 9));
+    project.addExpense(createExpense(kate, [john, kate, bob], eur, 18));
+    project.addExpense(createExpense(bob, [john, kate, bob], eur, 27));
+    project.addExpense(createExpense(john, [john, kate, bob], pln, 9));
+    project.addExpense(createExpense(kate, [john, kate, bob], pln, 18));
+    project.addExpense(createExpense(bob, [john, kate, bob], pln, 27));
+
+    final expectedReport = Report(project: project);
+    expectedReport.addEntry(createReportEntry(john, kate, eur, 3));
+    expectedReport.addEntry(createReportEntry(john, bob, eur, 6));
+    expectedReport.addEntry(createReportEntry(kate, bob, eur, 3));
+    expectedReport.addEntry(createReportEntry(john, kate, pln, 3));
+    expectedReport.addEntry(createReportEntry(john, bob, pln, 6));
+    expectedReport.addEntry(createReportEntry(kate, bob, pln, 3));
     //act
     final result = await reportGenerator.generate(project);
     //assert
