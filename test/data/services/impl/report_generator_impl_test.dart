@@ -49,7 +49,7 @@ void main() {
         sender: sender);
   }
 
-  test('should return report with project project', () async {
+  test('should return report with proper project', () async {
     //arrange
     final project = Project(id: 1, name: "Test Project");
     final expectedReport = Report(project: project);
