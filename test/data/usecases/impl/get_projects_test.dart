@@ -1,3 +1,4 @@
+import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/repositories/projects_repository.dart';
 import 'package:costy/data/usecases/impl/get_projects.dart';
@@ -18,8 +19,8 @@ void main() {
   });
 
   final tProjectsList = [
-    Project(id: 1, name: 'First'),
-    Project(id: 2, name: 'Second')
+    Project(id: 1, name: 'First', defaultCurrency: Currency(name: 'USD')),
+    Project(id: 2, name: 'Second', defaultCurrency: Currency(name: 'USD'))
   ];
 
   test('should get projects from the repository', () async {

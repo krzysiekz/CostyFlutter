@@ -51,7 +51,7 @@ void main() {
 
   test('should return report with proper project', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     final expectedReport = Report(project: project);
     //act
     final result = await reportGenerator.generate(project);
@@ -61,7 +61,7 @@ void main() {
 
   test('report for single user should be empty', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john], eur, 10));
 
     final expectedReport = Report(project: project);
@@ -73,7 +73,7 @@ void main() {
 
   test('report should be valid for two users and two currencies', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate], eur, 50));
     project.addExpense(createExpense(kate, [john, kate], pln, 20));
 
@@ -88,7 +88,7 @@ void main() {
 
   test('report should be valid for two users', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate], eur, 50));
     project.addExpense(createExpense(kate, [john, kate], eur, 20));
 
@@ -103,7 +103,7 @@ void main() {
   test('report should be empty for 3 users when expenses are the same',
       () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate, bob], eur, 50));
     project.addExpense(createExpense(kate, [john, kate, bob], eur, 50));
     project.addExpense(createExpense(bob, [john, kate, bob], eur, 50));
@@ -118,7 +118,7 @@ void main() {
   test('report should be empty for 2 users when expenses are the same',
       () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate], eur, 50));
     project.addExpense(createExpense(kate, [john, kate], eur, 50));
 
@@ -131,7 +131,7 @@ void main() {
 
   test('report should be valid for multiple users', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate, bob], eur, 9));
     project.addExpense(createExpense(kate, [john, kate, bob], eur, 18));
     project.addExpense(createExpense(bob, [john, kate, bob], eur, 27));
@@ -149,7 +149,7 @@ void main() {
   test('report should be valid when user is not paying for all other users',
       () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate], eur, 15));
     project.addExpense(createExpense(kate, [john, kate, bob], eur, 30));
     project.addExpense(createExpense(bob, [john, kate, bob], eur, 45));
@@ -166,7 +166,7 @@ void main() {
 
   test('report should be valid for multiple users and currencies', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [john, kate, bob], eur, 9));
     project.addExpense(createExpense(kate, [john, kate, bob], eur, 18));
     project.addExpense(createExpense(bob, [john, kate, bob], eur, 27));
@@ -189,7 +189,7 @@ void main() {
 
   test('should not generate redundant entries when there are cycles', () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [kate], eur, 5));
     project.addExpense(createExpense(bob, [john], eur, 10));
     project.addExpense(createExpense(kate, [bob], eur, 15));
@@ -206,7 +206,7 @@ void main() {
   test('should not generate redundant entries when there are cycles 2',
       () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [kate], eur, 25));
     project.addExpense(createExpense(bob, [john], eur, 10));
     project.addExpense(createExpense(kate, [bob], eur, 15));
@@ -223,7 +223,7 @@ void main() {
   test('should not generate redundant entries when there are cycles 3',
       () async {
     //arrange
-    final project = Project(id: 1, name: "Test Project");
+    final project = Project(id: 1, name: "Test Project", defaultCurrency: eur);
     project.addExpense(createExpense(john, [kate], eur, 5));
     project.addExpense(createExpense(bob, [john], eur, 10));
     project.addExpense(createExpense(adam, [bob], eur, 15));

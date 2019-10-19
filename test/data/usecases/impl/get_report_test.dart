@@ -1,3 +1,4 @@
+import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/report.dart';
 import 'package:costy/data/services/report_generator.dart';
@@ -17,7 +18,8 @@ void main() {
     usecase = GetReport(reportGenerator: mockReportGenerator);
   });
 
-  final tProject = Project(id: 1, name: 'Test project');
+  final tProject = Project(
+      id: 1, name: 'Test project', defaultCurrency: Currency(name: 'USD'));
   final tReport = Report(project: tProject);
 
   test('should get report from the service', () async {
