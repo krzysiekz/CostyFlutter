@@ -11,4 +11,7 @@ abstract class ProjectsRepository {
       String projectName, Currency defaultCurrency);
 
   Future<Either<Failure, int>> deleteProject(int projectId);
+
+  Future<Either<Failure, int>> modifyProject(
+      String projectName, Currency defaultCurrency);
 }
