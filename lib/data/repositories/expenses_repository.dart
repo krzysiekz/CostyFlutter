@@ -27,4 +27,6 @@ abstract class ExpensesRepository {
     User user,
     List<User> receivers,
   });
+
+  Future<Either<Failure, int>> deleteExpense(int expenseId);
 }
