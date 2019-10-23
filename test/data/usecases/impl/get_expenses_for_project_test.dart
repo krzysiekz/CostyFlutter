@@ -1,4 +1,5 @@
 import 'package:costy/data/models/currency.dart';
+import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/data/repositories/expenses_repository.dart';
@@ -24,7 +25,8 @@ void main() {
   final john = User(id: 1, name: 'John');
   final kate = User(id: 2, name: 'Kate');
 
-  final tProjectId = 1;
+  final tProject = Project(
+      id: 1, name: 'Test project', defaultCurrency: Currency(name: 'USD'));
   final tExpensesList = [
     UserExpense(
         id: 1,
@@ -47,10 +49,10 @@ void main() {
     when(mockExpensesRepository.getExpenses(any))
         .thenAnswer((_) async => Right(tExpensesList));
     //act
-    final result = await getExpensesForProject.call(Params(projectId: tProjectId));
+    final result = await getExpensesForProject.call(Params(project: tProject));
     //assert
     expect(result, Right(tExpensesList));
-    verify(mockExpensesRepository.getExpenses(tProjectId));
+    verify(mockExpensesRepository.getExpenses(tProject));
     verifyNoMoreInteractions(mockExpensesRepository);
   });
 }

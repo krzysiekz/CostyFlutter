@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../errors/failures.dart';
+import '../../models/project.dart';
 import '../../models/user_expense.dart';
 import '../../repositories/expenses_repository.dart';
 import '../usecase.dart';
@@ -14,15 +15,15 @@ class GetExpensesForProject implements UseCase<List<UserExpense>, Params> {
 
   @override
   Future<Either<Failure, List<UserExpense>>> call(Params params) {
-    return expensesRepository.getExpenses(params.projectId);
+    return expensesRepository.getExpenses(params.project);
   }
 }
 
 class Params extends Equatable {
-  final int projectId;
+  final Project project;
 
-  Params({@required this.projectId});
+  Params({@required this.project});
 
   @override
-  List<Object> get props => [this.projectId];
+  List<Object> get props => [this.project];
 }
