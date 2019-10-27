@@ -6,4 +6,6 @@ import '../models/user.dart';
 
 abstract class UsersRepository {
   Future<Either<Failure, List<User>>> getUsers(Project project);
+
+  Future<Either<Failure, int>> addUser({Project project, String name});
 }
