@@ -10,4 +10,6 @@ abstract class UsersRepository {
   Future<Either<Failure, int>> addUser({Project project, String name});
 
   Future<Either<Failure, int>> modifyUser(User user);
+
+  Future<Either<Failure, int>> deleteUser(int userId);
 }
