@@ -19,14 +19,7 @@ abstract class ExpensesRepository {
     List<User> receivers,
   });
 
-  Future<Either<Failure, int>> modifyExpense({
-    int expenseId,
-    Decimal amount,
-    Currency currency,
-    String description,
-    User user,
-    List<User> receivers,
-  });
+  Future<Either<Failure, int>> modifyExpense(UserExpense expense);
 
   Future<Either<Failure, int>> deleteExpense(int expenseId);
 }

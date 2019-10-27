@@ -1,5 +1,6 @@
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/user.dart';
+import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/data/repositories/expenses_repository.dart';
 import 'package:costy/data/usecases/impl/modify_expense.dart';
 import 'package:dartz/dartz.dart';
@@ -20,40 +21,25 @@ void main() {
 
   final john = User(id: 1, name: 'John');
   final kate = User(id: 2, name: 'Kate');
+  final currency = Currency(name: 'USD');
 
-  final tAmount = Decimal.fromInt(10);
-  final tCurrency = Currency(name: 'USD');
-  final tDescription = 'First Expense';
-  final tReceivers = [john, kate];
-  final tExpenseId = 1;
+  final tExpense = UserExpense(
+      id: 1,
+      amount: Decimal.fromInt(10),
+      currency: currency,
+      description: 'First Expense',
+      user: john,
+      receivers: [john, kate]);
 
   test('should modify expense', () async {
     //arrange
-    when(mockExpensesRepository.modifyExpense(
-            expenseId: anyNamed('expenseId'),
-            amount: anyNamed('amount'),
-            currency: anyNamed('currency'),
-            description: anyNamed('description'),
-            user: anyNamed('user'),
-            receivers: anyNamed('receivers')))
-        .thenAnswer((_) async => Right(tExpenseId));
+    when(mockExpensesRepository.modifyExpense(tExpense))
+        .thenAnswer((_) async => Right(tExpense.id));
     //act
-    final result = await modifyExpense.call(Params(
-        expenseId: tExpenseId,
-        amount: tAmount,
-        currency: tCurrency,
-        description: tDescription,
-        user: john,
-        receivers: tReceivers));
+    final result = await modifyExpense.call(Params(expense: tExpense));
     //assert
-    expect(result, Right(tExpenseId));
-    verify(mockExpensesRepository.modifyExpense(
-        expenseId: tExpenseId,
-        amount: tAmount,
-        currency: tCurrency,
-        description: tDescription,
-        user: john,
-        receivers: tReceivers));
+    expect(result, Right(tExpense.id));
+    verify(mockExpensesRepository.modifyExpense(tExpense));
     verifyNoMoreInteractions(mockExpensesRepository);
   });
 }

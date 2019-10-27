@@ -1,4 +1,5 @@
 import 'package:costy/data/models/currency.dart';
+import 'package:costy/data/models/project.dart';
 import 'package:costy/data/repositories/projects_repository.dart';
 import 'package:costy/data/usecases/impl/modify_project.dart';
 import 'package:dartz/dartz.dart';
@@ -16,21 +17,18 @@ void main() {
     modifyProject = ModifyProject(projectsRepository: mockProjectsRepository);
   });
 
-  final tProjectName = 'Sample project.';
-  final tProjectDefaultCurrency = Currency(name: 'USD');
-  final tProjectId = 1;
+  final tProject = Project(
+      id: 1, name: 'Sample project.', defaultCurrency: Currency(name: 'USD'));
 
   test('should modify project using a repository', () async {
     //arrange
-    when(mockProjectsRepository.modifyProject(any, any))
-        .thenAnswer((_) async => Right(tProjectId));
+    when(mockProjectsRepository.modifyProject(any))
+        .thenAnswer((_) async => Right(tProject.id));
     //act
-    final result = await modifyProject.call(Params(
-        projectName: tProjectName, defaultCurrency: tProjectDefaultCurrency));
+    final result = await modifyProject.call(Params(project: tProject));
     //assert
-    expect(result, Right(tProjectId));
-    verify(mockProjectsRepository.modifyProject(
-        tProjectName, tProjectDefaultCurrency));
+    expect(result, Right(tProject.id));
+    verify(mockProjectsRepository.modifyProject(tProject));
     verifyNoMoreInteractions(mockProjectsRepository);
   });
 }
