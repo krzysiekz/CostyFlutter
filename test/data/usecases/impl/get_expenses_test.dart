@@ -3,7 +3,7 @@ import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/data/repositories/expenses_repository.dart';
-import 'package:costy/data/usecases/impl/get_expenses_for_project.dart';
+import 'package:costy/data/usecases/impl/get_expenses.dart';
 import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,13 +12,12 @@ import 'package:mockito/mockito.dart';
 class MockExpensesRepository extends Mock implements ExpensesRepository {}
 
 void main() {
-  GetExpensesForProject getExpensesForProject;
+  GetExpenses getExpenses;
   MockExpensesRepository mockExpensesRepository;
 
   setUp(() {
     mockExpensesRepository = MockExpensesRepository();
-    getExpensesForProject =
-        GetExpensesForProject(expensesRepository: mockExpensesRepository);
+    getExpenses = GetExpenses(expensesRepository: mockExpensesRepository);
   });
 
   final currency = Currency(name: 'USD');
@@ -49,7 +48,7 @@ void main() {
     when(mockExpensesRepository.getExpenses(any))
         .thenAnswer((_) async => Right(tExpensesList));
     //act
-    final result = await getExpensesForProject.call(Params(project: tProject));
+    final result = await getExpenses.call(Params(project: tProject));
     //assert
     expect(result, Right(tExpensesList));
     verify(mockExpensesRepository.getExpenses(tProject));

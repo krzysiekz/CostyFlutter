@@ -4,18 +4,18 @@ import 'package:meta/meta.dart';
 
 import '../../errors/failures.dart';
 import '../../models/project.dart';
-import '../../models/user.dart';
-import '../../repositories/users_repository.dart';
+import '../../models/user_expense.dart';
+import '../../repositories/expenses_repository.dart';
 import '../usecase.dart';
 
-class GetUsersForProject implements UseCase<List<User>, Params> {
-  final UsersRepository usersRepository;
+class GetExpenses implements UseCase<List<UserExpense>, Params> {
+  final ExpensesRepository expensesRepository;
 
-  GetUsersForProject({@required this.usersRepository});
+  GetExpenses({@required this.expensesRepository});
 
   @override
-  Future<Either<Failure, List<User>>> call(Params params) {
-    return usersRepository.getUsers(params.project);
+  Future<Either<Failure, List<UserExpense>>> call(Params params) {
+    return expensesRepository.getExpenses(params.project);
   }
 }
 
