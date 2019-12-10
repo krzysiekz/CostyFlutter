@@ -6,13 +6,13 @@ import '../hive_operations.dart';
 class CurrenciesDataSourceImpl implements CurrenciesDataSource {
   static const _BOX_NAME = 'currencies';
 
-  final HiveOperations hiveOperations;
+  final HiveOperations _hiveOperations;
 
-  CurrenciesDataSourceImpl(this.hiveOperations);
+  CurrenciesDataSourceImpl(this._hiveOperations);
 
   @override
   Future<List<Currency>> getCurrencies() async {
-    var box = await hiveOperations.openBox(_BOX_NAME);
+    var box = await _hiveOperations.openBox(_BOX_NAME);
     var currenciesAsMap = box.toMap();
     var currencyEntities = currenciesAsMap.values as Iterable<CurrencyEntity>;
     var currencyList =
