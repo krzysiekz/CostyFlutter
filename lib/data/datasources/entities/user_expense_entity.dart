@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 part 'user_expense_entity.g.dart';
 
 @HiveType()
-class UserExpense {
+class UserExpenseEntity {
   @HiveField(0)
   final List<int> receiversIds;
   
@@ -21,7 +21,7 @@ class UserExpense {
   @HiveField(4)
   final String currency;
 
-  UserExpense(
+  UserExpenseEntity(
       {@required this.receiversIds,
       @required this.userId,
       @required this.amount,

@@ -6,14 +6,14 @@ part of 'user_expense_entity.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserExpenseAdapter extends TypeAdapter<UserExpense> {
+class UserExpenseEntityAdapter extends TypeAdapter<UserExpenseEntity> {
   @override
-  UserExpense read(BinaryReader reader) {
+  UserExpenseEntity read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserExpense(
+    return UserExpenseEntity(
       receiversIds: (fields[0] as List)?.cast<int>(),
       userId: fields[1] as int,
       amount: fields[2] as Decimal,
@@ -23,7 +23,7 @@ class UserExpenseAdapter extends TypeAdapter<UserExpense> {
   }
 
   @override
-  void write(BinaryWriter writer, UserExpense obj) {
+  void write(BinaryWriter writer, UserExpenseEntity obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)

@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+import 'data/datasources/entities/currency_entity.dart';
+import 'data/datasources/entities/project_entity.dart';
+import 'data/datasources/entities/user_entity.dart';
+import 'data/datasources/entities/user_expense_entity.dart';
+
 void main() async {
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(CurrencyEntityAdapter(), 0);
+  Hive.registerAdapter(ProjectEntityAdapter(), 1);
+  Hive.registerAdapter(UserEntityAdapter(), 2);
+  Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
   runApp(MyApp());
 }
 
