@@ -6,7 +6,7 @@ import '../models/user.dart';
 import '../models/user_expense.dart';
 
 abstract class ExpensesDataSource {
-  Future<List<UserExpense>> getExpenses(Project project);
+  Future<List<UserExpense>> getExpenses(Project project, List<User> users);
 
   Future<int> addExpense({
     Project project,

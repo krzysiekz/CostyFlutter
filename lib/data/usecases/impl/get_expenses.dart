@@ -1,3 +1,4 @@
+import 'package:costy/data/models/user.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -15,15 +16,16 @@ class GetExpenses implements UseCase<List<UserExpense>, Params> {
 
   @override
   Future<Either<Failure, List<UserExpense>>> call(Params params) {
-    return expensesRepository.getExpenses(params.project);
+    return expensesRepository.getExpenses(params.project, params.users);
   }
 }
 
 class Params extends Equatable {
   final Project project;
+  final List<User> users;
 
-  Params({@required this.project});
+  Params({@required this.project, @required this.users});
 
   @override
-  List<Object> get props => [this.project];
+  List<Object> get props => [this.project, this.users];
 }

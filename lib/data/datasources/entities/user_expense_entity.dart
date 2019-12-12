@@ -1,17 +1,18 @@
 import 'package:decimal/decimal.dart';
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 
 part 'user_expense_entity.g.dart';
 
 @HiveType()
-class UserExpenseEntity {
+class UserExpenseEntity extends Equatable {
   @HiveField(0)
   final List<int> receiversIds;
-  
+
   @HiveField(1)
   final int userId;
-  
+
   @HiveField(2)
   final Decimal amount;
 
@@ -21,10 +22,24 @@ class UserExpenseEntity {
   @HiveField(4)
   final String currency;
 
+  @HiveField(5)
+  final int projectId;
+
   UserExpenseEntity(
       {@required this.receiversIds,
       @required this.userId,
       @required this.amount,
       @required this.description,
-      @required this.currency});
+      @required this.currency,
+      @required this.projectId});
+
+  @override
+  List<Object> get props => [
+        this.receiversIds,
+        this.userId,
+        this.amount,
+        this.description,
+        this.currency,
+        this.projectId
+      ];
 }

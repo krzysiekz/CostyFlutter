@@ -136,25 +136,25 @@ void main() {
 
   test('should return object from data source when getting expenses', () async {
     //arrange
-    when(mockDataSource.getExpenses(any))
+    when(mockDataSource.getExpenses(any, any))
         .thenAnswer((_) async => tExpensesList);
     //act
-    final result = await repository.getExpenses(tProject);
+    final result = await repository.getExpenses(tProject, [john, kate]);
     //assert
     expect(result, Right(tExpensesList));
-    verify(mockDataSource.getExpenses(tProject));
+    verify(mockDataSource.getExpenses(tProject, [john, kate]));
     verifyNoMoreInteractions(mockDataSource);
   });
 
   test('should return failure when exception occurs during getting expenses',
       () async {
     //arrange
-    when(mockDataSource.getExpenses(any)).thenThrow(DataSourceException());
+    when(mockDataSource.getExpenses(any, any)).thenThrow(DataSourceException());
     //act
-    final result = await repository.getExpenses(tProject);
+    final result = await repository.getExpenses(tProject, [john, kate]);
     //assert
     expect(result, Left(DataSourceFailure()));
-    verify(mockDataSource.getExpenses(tProject));
+    verify(mockDataSource.getExpenses(tProject, [john, kate]));
     verifyNoMoreInteractions(mockDataSource);
   });
 

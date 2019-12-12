@@ -41,9 +41,10 @@ class ExpensesRepositoryImpl implements ExpensesRepository {
   }
 
   @override
-  Future<Either<Failure, List<UserExpense>>> getExpenses(Project project) {
+  Future<Either<Failure, List<UserExpense>>> getExpenses(
+      Project project, List<User> users) {
     return _getResponse(() {
-      return expensesDataSource.getExpenses(project);
+      return expensesDataSource.getExpenses(project, users);
     });
   }
 

@@ -19,13 +19,14 @@ class UserExpenseEntityAdapter extends TypeAdapter<UserExpenseEntity> {
       amount: fields[2] as Decimal,
       description: fields[3] as String,
       currency: fields[4] as String,
+      projectId: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserExpenseEntity obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.receiversIds)
       ..writeByte(1)
@@ -35,6 +36,8 @@ class UserExpenseEntityAdapter extends TypeAdapter<UserExpenseEntity> {
       ..writeByte(3)
       ..write(obj.description)
       ..writeByte(4)
-      ..write(obj.currency);
+      ..write(obj.currency)
+      ..writeByte(5)
+      ..write(obj.projectId);
   }
 }
