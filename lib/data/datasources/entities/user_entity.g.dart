@@ -15,14 +15,17 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
     };
     return UserEntity(
       name: fields[0] as String,
+      projectId: fields[1] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserEntity obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.projectId);
   }
 }

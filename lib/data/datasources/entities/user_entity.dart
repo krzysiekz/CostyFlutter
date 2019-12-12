@@ -1,12 +1,19 @@
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 
 part 'user_entity.g.dart';
 
 @HiveType()
-class UserEntity {
+class UserEntity extends Equatable {
   @HiveField(0)
   final String name;
 
-  UserEntity({@required this.name});
+  @HiveField(1)
+  final int projectId;
+
+  UserEntity({@required this.name, @required this.projectId});
+
+  @override
+  List<Object> get props => [name, projectId];
 }
