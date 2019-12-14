@@ -36,6 +36,7 @@ dev_dependencies:
     sdk: flutter
   mockito: ^4.1.1
   hive_generator: ^0.5.2
+  bloc_test: ^2.2.2
   build_runner:
 
 
