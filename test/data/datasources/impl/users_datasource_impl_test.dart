@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:costy/data/datasources/entities/user_entity.dart';
 import 'package:costy/data/datasources/hive_operations.dart';
 import 'package:costy/data/datasources/impl/users_datasource_impl.dart';
@@ -77,7 +75,7 @@ void main() {
   test('should delete user', () async {
     //arrange
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.delete(any)).thenAnswer((_) async => Void());
+    when(mockBox.delete(any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.deleteUser(tUserId);
     //assert
@@ -96,7 +94,7 @@ void main() {
 
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
     when(mockBox.get(any)).thenReturn(tUsersEntities[1]);
-    when(mockBox.put(any, any)).thenAnswer((_) async => Void());
+    when(mockBox.put(any, any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.modifyUser(tUser);
     //assert

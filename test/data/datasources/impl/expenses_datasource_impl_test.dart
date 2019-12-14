@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:costy/data/datasources/entities/user_entity.dart';
 import 'package:costy/data/datasources/entities/user_expense_entity.dart';
 import 'package:costy/data/datasources/hive_operations.dart';
 import 'package:costy/data/datasources/impl/expenses_datasource_impl.dart';
@@ -120,7 +117,7 @@ void main() {
   test('should delete expense', () async {
     //arrange
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.delete(any)).thenAnswer((_) async => Void());
+    when(mockBox.delete(any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.deleteExpense(tExpenseId);
     //assert
@@ -137,7 +134,7 @@ void main() {
     //arrange
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
     when(mockBox.get(any)).thenReturn(tExpensesEntities[1]);
-    when(mockBox.put(any, any)).thenAnswer((_) async => Void());
+    when(mockBox.put(any, any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.modifyExpense(tExpensesList[0]);
     //assert

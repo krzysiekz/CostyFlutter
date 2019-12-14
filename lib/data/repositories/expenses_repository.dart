@@ -8,8 +8,7 @@ import '../models/user.dart';
 import '../models/user_expense.dart';
 
 abstract class ExpensesRepository {
-  Future<Either<Failure, List<UserExpense>>> getExpenses(
-      Project project, List<User> users);
+  Future<Either<Failure, List<UserExpense>>> getExpenses(Project project);
 
   Future<Either<Failure, int>> addExpense({
     Project project,

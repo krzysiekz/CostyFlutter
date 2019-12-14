@@ -45,14 +45,13 @@ void main() {
 
   test('should get expenses for project', () async {
     //arrange
-    when(mockExpensesRepository.getExpenses(any, any))
+    when(mockExpensesRepository.getExpenses(any))
         .thenAnswer((_) async => Right(tExpensesList));
     //act
-    final result =
-        await getExpenses.call(Params(project: tProject, users: [john, kate]));
+    final result = await getExpenses.call(Params(project: tProject));
     //assert
     expect(result, Right(tExpensesList));
-    verify(mockExpensesRepository.getExpenses(tProject, [john, kate]));
+    verify(mockExpensesRepository.getExpenses(tProject));
     verifyNoMoreInteractions(mockExpensesRepository);
   });
 }

@@ -1,4 +1,5 @@
 import 'package:costy/data/datasources/expenses_datasource.dart';
+import 'package:costy/data/datasources/users_datasource.dart';
 import 'package:costy/data/errors/exceptions.dart';
 import 'package:costy/data/errors/failures.dart';
 import 'package:costy/data/models/currency.dart';
@@ -13,13 +14,18 @@ import 'package:mockito/mockito.dart';
 
 class MockExpensesDataSource extends Mock implements ExpensesDataSource {}
 
+class MockUsersDataSource extends Mock implements UsersDataSource {}
+
 void main() {
   ExpensesRepositoryImpl repository;
-  MockExpensesDataSource mockDataSource;
+  MockExpensesDataSource mockExpensesDataSource;
+  MockUsersDataSource mockUsersDataSource;
 
   setUp(() {
-    mockDataSource = MockExpensesDataSource();
-    repository = ExpensesRepositoryImpl(mockDataSource);
+    mockExpensesDataSource = MockExpensesDataSource();
+    mockUsersDataSource = MockUsersDataSource();
+    repository =
+        ExpensesRepositoryImpl(mockExpensesDataSource, mockUsersDataSource);
   });
 
   final john = User(id: 1, name: 'John');
@@ -52,7 +58,7 @@ void main() {
 
   test('should return object from data source when adding expense', () async {
     //arrange
-    when(mockDataSource.addExpense(
+    when(mockExpensesDataSource.addExpense(
             project: anyNamed('project'),
             amount: anyNamed('amount'),
             currency: anyNamed('currency'),
@@ -70,20 +76,20 @@ void main() {
         receivers: tReceivers);
     //assert
     expect(result, Right(tExpenseId));
-    verify(mockDataSource.addExpense(
+    verify(mockExpensesDataSource.addExpense(
         project: tProject,
         amount: tAmount,
         currency: tCurrency,
         description: tDescription,
         user: john,
         receivers: tReceivers));
-    verifyNoMoreInteractions(mockDataSource);
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test('should return failure when exception occurs during adding expense',
       () async {
     //arrange
-    when(mockDataSource.addExpense(
+    when(mockExpensesDataSource.addExpense(
             project: anyNamed('project'),
             amount: anyNamed('amount'),
             currency: anyNamed('currency'),
@@ -101,84 +107,95 @@ void main() {
         receivers: tReceivers);
     //assert
     expect(result, Left(DataSourceFailure()));
-    verify(mockDataSource.addExpense(
+    verify(mockExpensesDataSource.addExpense(
         project: tProject,
         amount: tAmount,
         currency: tCurrency,
         description: tDescription,
         user: john,
         receivers: tReceivers));
-    verifyNoMoreInteractions(mockDataSource);
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test('should return object from data source when deleting expense', () async {
     //arrange
-    when(mockDataSource.deleteExpense(any)).thenAnswer((_) async => tExpenseId);
+    when(mockExpensesDataSource.deleteExpense(any))
+        .thenAnswer((_) async => tExpenseId);
     //act
     final result = await repository.deleteExpense(tExpenseId);
     //assert
     expect(result, Right(tExpenseId));
-    verify(mockDataSource.deleteExpense(tExpenseId));
-    verifyNoMoreInteractions(mockDataSource);
+    verify(mockExpensesDataSource.deleteExpense(tExpenseId));
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test('should return failure when exception occurs during deleting expense',
       () async {
     //arrange
-    when(mockDataSource.deleteExpense(any)).thenThrow(DataSourceException());
+    when(mockExpensesDataSource.deleteExpense(any))
+        .thenThrow(DataSourceException());
     //act
     final result = await repository.deleteExpense(tExpenseId);
     //assert
     expect(result, Left(DataSourceFailure()));
-    verify(mockDataSource.deleteExpense(tExpenseId));
-    verifyNoMoreInteractions(mockDataSource);
+    verify(mockExpensesDataSource.deleteExpense(tExpenseId));
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test('should return object from data source when getting expenses', () async {
     //arrange
-    when(mockDataSource.getExpenses(any, any))
+    when(mockExpensesDataSource.getExpenses(any, any))
         .thenAnswer((_) async => tExpensesList);
+    when(mockUsersDataSource.getUsers(any))
+        .thenAnswer((_) async => [john, kate]);
     //act
-    final result = await repository.getExpenses(tProject, [john, kate]);
+    final result = await repository.getExpenses(tProject);
     //assert
     expect(result, Right(tExpensesList));
-    verify(mockDataSource.getExpenses(tProject, [john, kate]));
-    verifyNoMoreInteractions(mockDataSource);
+    verify(mockExpensesDataSource.getExpenses(tProject, [john, kate]));
+    verify(mockUsersDataSource.getUsers(tProject));
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test('should return failure when exception occurs during getting expenses',
       () async {
     //arrange
-    when(mockDataSource.getExpenses(any, any)).thenThrow(DataSourceException());
+    when(mockExpensesDataSource.getExpenses(any, any))
+        .thenThrow(DataSourceException());
+    when(mockUsersDataSource.getUsers(any))
+        .thenAnswer((_) async => [john, kate]);
     //act
-    final result = await repository.getExpenses(tProject, [john, kate]);
+    final result = await repository.getExpenses(tProject);
     //assert
     expect(result, Left(DataSourceFailure()));
-    verify(mockDataSource.getExpenses(tProject, [john, kate]));
-    verifyNoMoreInteractions(mockDataSource);
+    verify(mockExpensesDataSource.getExpenses(tProject, [john, kate]));
+    verify(mockUsersDataSource.getUsers(tProject));
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test('should return object from data source when modyfing expense', () async {
     //arrange
-    when(mockDataSource.modifyExpense(any)).thenAnswer((_) async => tExpenseId);
+    when(mockExpensesDataSource.modifyExpense(any))
+        .thenAnswer((_) async => tExpenseId);
     //act
     final result = await repository.modifyExpense(tExpensesList[0]);
     //assert
     expect(result, Right(tExpenseId));
-    verify(mockDataSource.modifyExpense(tExpensesList[0]));
-    verifyNoMoreInteractions(mockDataSource);
+    verify(mockExpensesDataSource.modifyExpense(tExpensesList[0]));
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 
   test(
       'should return failure when exception occurs during modification of expense',
       () async {
     //arrange
-    when(mockDataSource.modifyExpense(any)).thenThrow(DataSourceException());
+    when(mockExpensesDataSource.modifyExpense(any))
+        .thenThrow(DataSourceException());
     //act
     final result = await repository.modifyExpense(tExpensesList[0]);
     //assert
     expect(result, Left(DataSourceFailure()));
-    verify(mockDataSource.modifyExpense(tExpensesList[0]));
-    verifyNoMoreInteractions(mockDataSource);
+    verify(mockExpensesDataSource.modifyExpense(tExpensesList[0]));
+    verifyNoMoreInteractions(mockExpensesDataSource);
   });
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:costy/data/datasources/entities/project_entity.dart';
 import 'package:costy/data/datasources/hive_operations.dart';
 import 'package:costy/data/datasources/impl/projects_datasource_impl.dart';
@@ -76,7 +74,7 @@ void main() {
     final tProjectId = 1;
 
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.delete(any)).thenAnswer((_) async => Void());
+    when(mockBox.delete(any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.deleteProject(tProjectId);
     //assert
@@ -95,7 +93,7 @@ void main() {
         Project(id: 5, name: 'First', defaultCurrency: Currency(name: 'USD'));
 
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.put(any, any)).thenAnswer((_) async => Void());
+    when(mockBox.put(any, any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.modifyProject(tProject);
     //assert

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
 
 import '../../datasources/expenses_datasource.dart';
+import '../../datasources/users_datasource.dart';
 import '../../errors/failures.dart';
 import '../../models/currency.dart';
 import '../../models/project.dart';
@@ -11,8 +12,9 @@ import '../expenses_repository.dart';
 
 class ExpensesRepositoryImpl implements ExpensesRepository {
   final ExpensesDataSource expensesDataSource;
+  final UsersDataSource usersDataSource;
 
-  ExpensesRepositoryImpl(this.expensesDataSource);
+  ExpensesRepositoryImpl(this.expensesDataSource, this.usersDataSource);
 
   @override
   Future<Either<Failure, int>> addExpense(
@@ -41,9 +43,9 @@ class ExpensesRepositoryImpl implements ExpensesRepository {
   }
 
   @override
-  Future<Either<Failure, List<UserExpense>>> getExpenses(
-      Project project, List<User> users) {
-    return _getResponse(() {
+  Future<Either<Failure, List<UserExpense>>> getExpenses(Project project) {
+    return _getResponse(() async {
+      final users = await usersDataSource.getUsers(project);
       return expensesDataSource.getExpenses(project, users);
     });
   }
