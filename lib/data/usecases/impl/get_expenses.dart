@@ -8,21 +8,21 @@ import '../../models/user_expense.dart';
 import '../../repositories/expenses_repository.dart';
 import '../usecase.dart';
 
-class GetExpenses implements UseCase<List<UserExpense>, Params> {
+class GetExpenses implements UseCase<List<UserExpense>, GetExpensesParams> {
   final ExpensesRepository expensesRepository;
 
   GetExpenses({@required this.expensesRepository});
 
   @override
-  Future<Either<Failure, List<UserExpense>>> call(Params params) {
+  Future<Either<Failure, List<UserExpense>>> call(GetExpensesParams params) {
     return expensesRepository.getExpenses(params.project);
   }
 }
 
-class Params extends Equatable {
+class GetExpensesParams extends Equatable {
   final Project project;
 
-  Params({@required this.project});
+  GetExpensesParams({@required this.project});
 
   @override
   List<Object> get props => [this.project];

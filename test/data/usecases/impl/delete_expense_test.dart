@@ -22,7 +22,7 @@ void main() {
     when(mockExpensesRepository.deleteExpense(any))
         .thenAnswer((_) async => Right(tExpenseId));
     //act
-    final result = await deleteExpense.call(Params(expenseId: tExpenseId));
+    final result = await deleteExpense.call(DeleteExpenseParams(expenseId: tExpenseId));
     //assert
     expect(result, Right(tExpenseId));
     verify(mockExpensesRepository.deleteExpense(tExpenseId));

@@ -11,12 +11,10 @@ import 'package:mockito/mockito.dart';
 class MockGetCurrencies extends Mock implements GetCurrencies {}
 
 void main() {
-  CurrencyBloc bloc;
   MockGetCurrencies mockGetCurrencies;
 
   setUp(() {
     mockGetCurrencies = MockGetCurrencies();
-    bloc = CurrencyBloc(mockGetCurrencies);
   });
 
   final tCurrencyList = [
@@ -25,8 +23,6 @@ void main() {
   ];
 
   blocTest('should emit empty state initially', build: () {
-    when(mockGetCurrencies.call(any))
-        .thenAnswer((_) async => Right(tCurrencyList));
     return CurrencyBloc(mockGetCurrencies);
   }, expect: [CurrencyEmpty()]);
 
@@ -37,7 +33,11 @@ void main() {
         return CurrencyBloc(mockGetCurrencies);
       },
       act: (bloc) => bloc.add(GetCurrenciesEvent()),
-      expect: [CurrencyEmpty(), CurrencyLoading(), CurrencyLoaded(tCurrencyList)]);
+      expect: [
+        CurrencyEmpty(),
+        CurrencyLoading(),
+        CurrencyLoaded(tCurrencyList)
+      ]);
 
   blocTest('should emit proper states in case or error',
       build: () {
@@ -46,5 +46,9 @@ void main() {
         return CurrencyBloc(mockGetCurrencies);
       },
       act: (bloc) => bloc.add(GetCurrenciesEvent()),
-      expect: [CurrencyEmpty(), CurrencyLoading(), CurrencyError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [
+        CurrencyEmpty(),
+        CurrencyLoading(),
+        CurrencyError(DATASOURCE_FAILURE_MESSAGE)
+      ]);
 }

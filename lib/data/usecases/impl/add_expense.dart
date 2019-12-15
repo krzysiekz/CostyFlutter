@@ -10,13 +10,13 @@ import '../../models/user.dart';
 import '../../repositories/expenses_repository.dart';
 import '../usecase.dart';
 
-class AddExpense implements UseCase<int, Params> {
+class AddExpense implements UseCase<int, AddExpenseParams> {
   final ExpensesRepository expensesRepository;
 
   AddExpense({@required this.expensesRepository});
 
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, int>> call(AddExpenseParams params) {
     return expensesRepository.addExpense(
         project: params.project,
         amount: params.amount,
@@ -27,7 +27,7 @@ class AddExpense implements UseCase<int, Params> {
   }
 }
 
-class Params extends Equatable {
+class AddExpenseParams extends Equatable {
   final Project project;
   final Decimal amount;
   final String description;
@@ -35,7 +35,7 @@ class Params extends Equatable {
   final User user;
   final List<User> receivers;
 
-  Params(
+  AddExpenseParams(
       {@required this.amount,
       @required this.description,
       @required this.currency,

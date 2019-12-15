@@ -6,21 +6,21 @@ import '../../errors/failures.dart';
 import '../../repositories/expenses_repository.dart';
 import '../usecase.dart';
 
-class DeleteExpense implements UseCase<int, Params> {
+class DeleteExpense implements UseCase<int, DeleteExpenseParams> {
   final ExpensesRepository expensesRepository;
 
   DeleteExpense({@required this.expensesRepository});
 
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, int>> call(DeleteExpenseParams params) {
     return expensesRepository.deleteExpense(params.expenseId);
   }
 }
 
-class Params extends Equatable {
+class DeleteExpenseParams extends Equatable {
   final int expenseId;
 
-  Params({@required this.expenseId});
+  DeleteExpenseParams({@required this.expenseId});
 
   @override
   List<Object> get props => [this.expenseId];

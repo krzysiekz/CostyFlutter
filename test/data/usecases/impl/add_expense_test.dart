@@ -41,7 +41,7 @@ void main() {
             receivers: anyNamed('receivers')))
         .thenAnswer((_) async => Right(tExpenseId));
     //act
-    final result = await addExpense.call(Params(
+    final result = await addExpense.call(AddExpenseParams(
         project: tProject,
         amount: tAmount,
         currency: tCurrency,

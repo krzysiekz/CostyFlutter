@@ -9,9 +9,6 @@ import '../../data/models/currency.dart';
 import '../../data/usecases/impl/get_currencies.dart';
 import '../../data/usecases/usecase.dart';
 
-const String DATASOURCE_FAILURE_MESSAGE = 'Data Source Failure';
-const String UNEXPECTED_ERROR_MESSAGE = 'Unexpected error';
-
 class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
   final GetCurrencies getCurrencies;
 
@@ -32,17 +29,8 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
   Stream<CurrencyState> _eitherLoadedOrErrorState(
       Either<Failure, List<Currency>> dataOrFailure) async* {
     yield dataOrFailure.fold(
-      (failure) => CurrencyError(_mapFailureToMessage(failure)),
+      (failure) => CurrencyError(mapFailureToMessage(failure)),
       (currencies) => CurrencyLoaded(currencies),
     );
-  }
-
-  String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case DataSourceFailure:
-        return DATASOURCE_FAILURE_MESSAGE;
-      default:
-        return UNEXPECTED_ERROR_MESSAGE;
-    }
   }
 }

@@ -36,7 +36,7 @@ void main() {
     when(mockExpensesRepository.modifyExpense(tExpense))
         .thenAnswer((_) async => Right(tExpense.id));
     //act
-    final result = await modifyExpense.call(Params(expense: tExpense));
+    final result = await modifyExpense.call(ModifyExpenseParams(expense: tExpense));
     //assert
     expect(result, Right(tExpense.id));
     verify(mockExpensesRepository.modifyExpense(tExpense));

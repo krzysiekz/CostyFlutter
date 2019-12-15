@@ -48,7 +48,7 @@ void main() {
     when(mockExpensesRepository.getExpenses(any))
         .thenAnswer((_) async => Right(tExpensesList));
     //act
-    final result = await getExpenses.call(Params(project: tProject));
+    final result = await getExpenses.call(GetExpensesParams(project: tProject));
     //assert
     expect(result, Right(tExpensesList));
     verify(mockExpensesRepository.getExpenses(tProject));
