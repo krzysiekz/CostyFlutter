@@ -25,7 +25,7 @@ void main() {
     when(mockProjectsRepository.addProject(any, any))
         .thenAnswer((_) async => Right(tProjectId));
     //act
-    final result = await addProject.call(Params(
+    final result = await addProject.call(AddProjectParams(
         projectName: tProjectName, defaultCurrency: tProjectDefaultCurrency));
     //assert
     expect(result, Right(tProjectId));

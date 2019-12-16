@@ -7,21 +7,21 @@ import '../../models/project.dart';
 import '../../repositories/projects_repository.dart';
 import '../usecase.dart';
 
-class ModifyProject implements UseCase<int, Params> {
+class ModifyProject implements UseCase<int, ModifyProjectParams> {
   final ProjectsRepository projectsRepository;
 
   ModifyProject({@required this.projectsRepository});
 
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, int>> call(ModifyProjectParams params) {
     return projectsRepository.modifyProject(params.project);
   }
 }
 
-class Params extends Equatable {
+class ModifyProjectParams extends Equatable {
   final Project project;
 
-  Params({@required this.project});
+  ModifyProjectParams({@required this.project});
 
   @override
   List<Object> get props => [this.project];

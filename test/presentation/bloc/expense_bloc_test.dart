@@ -28,11 +28,19 @@ void main() {
   MockDeleteExpense mockDeleteExpense;
   MockModifyExpense mockModifyExpense;
 
+  ExpenseBloc bloc;
+
   setUp(() {
     mockGetExpenses = MockGetExpenses();
     mockAddExpense = MockAddExpense();
     mockDeleteExpense = MockDeleteExpense();
     mockModifyExpense = MockModifyExpense();
+
+    bloc = ExpenseBloc(
+        getExpenses: mockGetExpenses,
+        addExpense: mockAddExpense,
+        modifyExpense: mockModifyExpense,
+        deleteExpense: mockDeleteExpense);
   });
 
   final currency = Currency(name: 'USD');
@@ -59,22 +67,14 @@ void main() {
   ];
 
   blocTest('should emit empty state initially', build: () {
-    return ExpenseBloc(
-        getExpenses: mockGetExpenses,
-        addExpense: mockAddExpense,
-        modifyExpense: mockModifyExpense,
-        deleteExpense: mockDeleteExpense);
+    return bloc;
   }, expect: [ExpenseEmpty()]);
 
   blocTest('should emit proper states when getting expenses',
       build: () {
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Right(tExpensesList));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(GetExpensesEvent(tProject)),
       expect: [ExpenseEmpty(), ExpenseLoading(), ExpenseLoaded(tExpensesList)]);
@@ -83,11 +83,7 @@ void main() {
       build: () {
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(GetExpensesEvent(tProject)),
       expect: [
@@ -100,11 +96,7 @@ void main() {
       build: () {
         when(mockAddExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(AddExpenseEvent(
           user: tExpensesList[0].user,
@@ -123,11 +115,7 @@ void main() {
       build: () {
         when(mockAddExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(AddExpenseEvent(
           user: tExpensesList[0].user,
@@ -146,11 +134,7 @@ void main() {
       build: () {
         when(mockDeleteExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(DeleteExpenseEvent(tExpensesList[0].id)),
       expect: [
@@ -163,11 +147,7 @@ void main() {
       build: () {
         when(mockDeleteExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(DeleteExpenseEvent(tExpensesList[0].id)),
       expect: [
@@ -180,11 +160,7 @@ void main() {
       build: () {
         when(mockModifyExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(ModifyExpenseEvent(tExpensesList[0])),
       expect: [
@@ -197,11 +173,7 @@ void main() {
       build: () {
         when(mockModifyExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
-        return ExpenseBloc(
-            getExpenses: mockGetExpenses,
-            addExpense: mockAddExpense,
-            modifyExpense: mockModifyExpense,
-            deleteExpense: mockDeleteExpense);
+        return bloc;
       },
       act: (bloc) => bloc.add(ModifyExpenseEvent(tExpensesList[0])),
       expect: [

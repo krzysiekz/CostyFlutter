@@ -25,7 +25,7 @@ void main() {
     when(mockProjectsRepository.modifyProject(any))
         .thenAnswer((_) async => Right(tProject.id));
     //act
-    final result = await modifyProject.call(Params(project: tProject));
+    final result = await modifyProject.call(ModifyProjectParams(project: tProject));
     //assert
     expect(result, Right(tProject.id));
     verify(mockProjectsRepository.modifyProject(tProject));

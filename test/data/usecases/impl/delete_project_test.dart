@@ -22,7 +22,7 @@ void main() {
     when(mockProjectsRepository.deleteProject(any))
         .thenAnswer((_) async => Right(tProjectId));
     //act
-    final result = await deleteProject.call(Params(projectId: tProjectId));
+    final result = await deleteProject.call(DeleteProjectParams(projectId: tProjectId));
     //assert
     expect(result, Right(tProjectId));
     verify(mockProjectsRepository.deleteProject(tProjectId));
