@@ -8,21 +8,21 @@ import '../../models/user.dart';
 import '../../repositories/users_repository.dart';
 import '../usecase.dart';
 
-class GetUsers implements UseCase<List<User>, Params> {
+class GetUsers implements UseCase<List<User>, GetUsersParams> {
   final UsersRepository usersRepository;
 
   GetUsers({@required this.usersRepository});
 
   @override
-  Future<Either<Failure, List<User>>> call(Params params) {
+  Future<Either<Failure, List<User>>> call(GetUsersParams params) {
     return usersRepository.getUsers(params.project);
   }
 }
 
-class Params extends Equatable {
+class GetUsersParams extends Equatable {
   final Project project;
 
-  Params({@required this.project});
+  GetUsersParams({@required this.project});
 
   @override
   List<Object> get props => [this.project];

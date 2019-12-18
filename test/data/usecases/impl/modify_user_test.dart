@@ -23,7 +23,7 @@ void main() {
     when(mockUsersRepository.modifyUser(tUser))
         .thenAnswer((_) async => Right(tUser.id));
     //act
-    final result = await modifyUser.call(Params(user: tUser));
+    final result = await modifyUser.call(ModifyUserParams(user: tUser));
     //assert
     expect(result, Right(tUser.id));
     verify(mockUsersRepository.modifyUser(tUser));

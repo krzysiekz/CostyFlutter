@@ -6,21 +6,21 @@ import '../../errors/failures.dart';
 import '../../repositories/users_repository.dart';
 import '../usecase.dart';
 
-class DeleteUser implements UseCase<int, Params> {
+class DeleteUser implements UseCase<int, DeleteUserParams> {
   final UsersRepository usersRepository;
 
   DeleteUser({@required this.usersRepository});
 
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, int>> call(DeleteUserParams params) {
     return usersRepository.deleteUser(params.userId);
   }
 }
 
-class Params extends Equatable {
+class DeleteUserParams extends Equatable {
   final int userId;
 
-  Params({@required this.userId});
+  DeleteUserParams({@required this.userId});
 
   @override
   List<Object> get props => [this.userId];

@@ -22,7 +22,7 @@ void main() {
     when(mockUsersRepository.deleteUser(any))
         .thenAnswer((_) async => Right(tUserId));
     //act
-    final result = await deleteUser.call(Params(userId: tUserId));
+    final result = await deleteUser.call(DeleteUserParams(userId: tUserId));
     //assert
     expect(result, Right(tUserId));
     verify(mockUsersRepository.deleteUser(tUserId));

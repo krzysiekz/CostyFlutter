@@ -30,7 +30,7 @@ void main() {
     when(mockUsersRepository.getUsers(any))
         .thenAnswer((_) async => Right(tUsers));
     //act
-    final result = await getUsers.call(Params(project: tProject));
+    final result = await getUsers.call(GetUsersParams(project: tProject));
     //assert
     expect(result, Right(tUsers));
     verify(mockUsersRepository.getUsers(tProject));

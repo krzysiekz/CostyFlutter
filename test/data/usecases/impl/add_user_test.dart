@@ -28,7 +28,7 @@ void main() {
             project: anyNamed('project'), name: anyNamed('name')))
         .thenAnswer((_) async => Right(tUserId));
     //act
-    final result = await addUser.call(Params(project: tProject, name: tName));
+    final result = await addUser.call(AddUserParams(project: tProject, name: tName));
     //assert
     expect(result, Right(tUserId));
     verify(mockUsersRepository.addUser(project: tProject, name: tName));

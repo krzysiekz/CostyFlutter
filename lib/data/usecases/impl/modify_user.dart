@@ -7,21 +7,21 @@ import '../../models/user.dart';
 import '../../repositories/users_repository.dart';
 import '../usecase.dart';
 
-class ModifyUser implements UseCase<int, Params> {
+class ModifyUser implements UseCase<int, ModifyUserParams> {
   final UsersRepository usersRepository;
 
   ModifyUser({@required this.usersRepository});
 
   @override
-  Future<Either<Failure, int>> call(Params params) {
+  Future<Either<Failure, int>> call(ModifyUserParams params) {
     return usersRepository.modifyUser(params.user);
   }
 }
 
-class Params extends Equatable {
+class ModifyUserParams extends Equatable {
   final User user;
 
-  Params({@required this.user});
+  ModifyUserParams({@required this.user});
 
   @override
   List<Object> get props => [this.user];
