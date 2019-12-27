@@ -1,3 +1,4 @@
+import 'package:costy/data/errors/failures.dart';
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/report.dart';
@@ -27,9 +28,21 @@ void main() {
     when(mockReportGenerator.generate(tProject))
         .thenAnswer((_) async => tReport);
     //act
-    final result = await usecase.call(Params(project: tProject));
+    final result = await usecase.call(GetReportParams(project: tProject));
     //assert
     expect(result, equals(Right(tReport)));
     verify(mockReportGenerator.generate(tProject));
+    verifyNoMoreInteractions(mockReportGenerator);
+  });
+
+  test('should return failure in case of exception', () async {
+    //arrange
+    when(mockReportGenerator.generate(tProject)).thenThrow(Exception());
+    //act
+    final result = await usecase.call(GetReportParams(project: tProject));
+    //assert
+    expect(result, equals(Left(ReportGenerationFailure())));
+    verify(mockReportGenerator.generate(tProject));
+    verifyNoMoreInteractions(mockReportGenerator);
   });
 }
