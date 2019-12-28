@@ -9,12 +9,13 @@ import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
 
 void main() async {
-  // final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-  // Hive.init(appDocumentDir.path);
-  // Hive.registerAdapter(CurrencyEntityAdapter(), 0);
-  // Hive.registerAdapter(ProjectEntityAdapter(), 1);
-  // Hive.registerAdapter(UserEntityAdapter(), 2);
-  // Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
+  WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(CurrencyEntityAdapter(), 0);
+  Hive.registerAdapter(ProjectEntityAdapter(), 1);
+  Hive.registerAdapter(UserEntityAdapter(), 2);
+  Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
   runApp(MyApp());
 }
 
