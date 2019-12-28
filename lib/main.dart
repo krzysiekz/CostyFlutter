@@ -7,9 +7,11 @@ import 'data/datasources/entities/currency_entity.dart';
 import 'data/datasources/entities/project_entity.dart';
 import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
+import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(CurrencyEntityAdapter(), 0);
