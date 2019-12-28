@@ -1,3 +1,4 @@
+import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -8,12 +9,12 @@ import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
 
 void main() async {
-  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-  Hive.init(appDocumentDir.path);
-  Hive.registerAdapter(CurrencyEntityAdapter(), 0);
-  Hive.registerAdapter(ProjectEntityAdapter(), 1);
-  Hive.registerAdapter(UserEntityAdapter(), 2);
-  Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
+  // final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  // Hive.init(appDocumentDir.path);
+  // Hive.registerAdapter(CurrencyEntityAdapter(), 0);
+  // Hive.registerAdapter(ProjectEntityAdapter(), 1);
+  // Hive.registerAdapter(UserEntityAdapter(), 2);
+  // Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
   runApp(MyApp());
 }
 
@@ -40,7 +41,12 @@ class _MyAppState extends State<MyApp> {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SplashScreen.navigate(
+          name: 'assets/costy_splash.flr',
+          next: (_) => MyHomePage(title: 'Flutter Demo Home Page'),
+          until: () => Future.delayed(Duration(milliseconds: 500)),
+          startAnimation: 'splash',
+          backgroundColor: Color(0xFF145970)),
     );
   }
 
