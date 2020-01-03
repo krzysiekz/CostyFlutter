@@ -13,10 +13,16 @@ class CurrenciesDataSourceImpl implements CurrenciesDataSource {
   @override
   Future<List<Currency>> getCurrencies() async {
     var box = await _hiveOperations.openBox(_BOX_NAME);
-    var currenciesAsMap = box.toMap();
-    var currencyEntities = currenciesAsMap.values as Iterable<CurrencyEntity>;
+    var entries = box.values;
     var currencyList =
-        currencyEntities.map((entity) => Currency(name: entity.name)).toList();
+        entries.map((entity) => Currency(name: entity.name)).toList();
     return currencyList;
+  }
+
+  @override
+  Future<void> saveCurrencies(List<String> currencies) async {
+    var box = await _hiveOperations.openBox(_BOX_NAME);
+    currencies.forEach(
+        (currency) async => await box.add(CurrencyEntity(name: currency)));
   }
 }

@@ -25,7 +25,7 @@ dependencies:
   hive: ^1.1.1
   hive_flutter: ^0.2.1
   path_provider: ^1.5.1
-  flutter_bloc: ^2.1.1
+  flutter_bloc: ^3.1.0
   flare_splash_screen: ^3.0.0
   get_it: ^3.1.0
 
@@ -38,7 +38,7 @@ dev_dependencies:
     sdk: flutter
   mockito: ^4.1.1
   hive_generator: ^0.5.2
-  bloc_test: ^2.2.2
+  bloc_test: ^3.0.0
   build_runner:
 
 

@@ -1,8 +1,9 @@
-import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../injection_container.dart';
+import '../bloc/bloc.dart';
+import '../widgets/new_project.dart';
 
 class ProjectsPage extends StatelessWidget {
   @override
@@ -10,8 +11,29 @@ class ProjectsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Projects'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _startAddNewProject(context),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewProject(context),
       ),
       body: SingleChildScrollView(child: buildBody(context)),
+    );
+  }
+
+  void _addNewProject(String projectName, String defaultCurrency) {}
+
+  void _startAddNewProject(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewProject(_addNewProject);
+      },
     );
   }
 

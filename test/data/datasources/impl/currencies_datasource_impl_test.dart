@@ -34,7 +34,7 @@ void main() {
   test('should return list of currencies', () async {
     //arrange
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.toMap()).thenReturn(tCurrencyEntities);
+    when(mockBox.values).thenReturn(tCurrencyEntities.values);
     //act
     final currencies = await dataSource.getCurrencies();
     //assert
@@ -43,7 +43,22 @@ void main() {
     verify(mockHiveOperations.openBox('currencies'));
     verifyNoMoreInteractions(mockHiveOperations);
 
-    verify(mockBox.toMap());
+    verify(mockBox.values);
+    verifyNoMoreInteractions(mockBox);
+  });
+
+  test('should add currencies', () async {
+    //arrange
+    when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
+    when(mockBox.add(any)).thenAnswer((_) async => 1);
+    //act
+    await dataSource.saveCurrencies(['USD', 'EUR']);
+    //assert
+    verify(mockHiveOperations.openBox('currencies'));
+    verifyNoMoreInteractions(mockHiveOperations);
+
+    verify(mockBox.add(CurrencyEntity(name: 'USD')));
+    verify(mockBox.add(CurrencyEntity(name: 'EUR')));
     verifyNoMoreInteractions(mockBox);
   });
 }
