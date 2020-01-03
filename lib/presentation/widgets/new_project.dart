@@ -48,6 +48,7 @@ class _NewProjectState extends State<NewProject> {
   @override
   void dispose() {
     _currencyBloc.close();
+    _nameController.dispose();
     super.dispose();
   }
 
