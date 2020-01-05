@@ -46,7 +46,6 @@ class _NewProjectState extends State<NewProject> {
 
   @override
   void dispose() {
-    _currencyBloc.drain();
     _currencyBloc.close();
     _nameController.dispose();
     super.dispose();
@@ -55,24 +54,22 @@ class _NewProjectState extends State<NewProject> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocProvider(
-        child:
-            BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
-          return Card(
-            color: Theme.of(context).backgroundColor,
-            child: Container(
-              padding: EdgeInsets.only(
-                top: 10,
-                left: 10,
-                right: 10,
-                bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+      child: BlocBuilder<CurrencyBloc, CurrencyState>(
+          bloc: _currencyBloc,
+          builder: (context, state) {
+            return Card(
+              color: Theme.of(context).backgroundColor,
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+                ),
+                child: buildForm(context, state),
               ),
-              child: buildForm(context, state),
-            ),
-          );
-        }),
-        create: (_) => _currencyBloc,
-      ),
+            );
+          }),
     );
   }
 

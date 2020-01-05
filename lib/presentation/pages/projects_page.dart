@@ -24,7 +24,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   void dispose() {
-    _projectBloc.drain();
     _projectBloc.close();
     super.dispose();
   }
@@ -66,38 +65,36 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
   }
 
-  BlocProvider<ProjectBloc> buildBody(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _projectBloc,
-      child: BlocBuilder<ProjectBloc, ProjectState>(
-        builder: (context, state) {
-          if (state is ProjectEmpty) {
-            return Text("No projects to display.");
-          } else if (state is ProjectError) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              _showAlertDialog(context);
-            });
-          } else if (state is ProjectLoaded) {
-            return ListView.builder(
-              itemBuilder: (ctx, index) {
-                return ProjectListItem(
-                  project: state.projects[index],
-                );
-              },
-              itemCount: state.projects.length,
-            );
-          } else if (state is ProjectLoading) {
-            return _showLoadingIndicator(context);
-          } else if (state is ProjectAdded) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: const Text("Project added."),
-              ));
-            });
-          }
-          return Container();
-        },
-      ),
+  Widget buildBody(BuildContext context) {
+    return BlocBuilder<ProjectBloc, ProjectState>(
+      bloc: _projectBloc,
+      builder: (context, state) {
+        if (state is ProjectEmpty) {
+          return Text("No projects to display.");
+        } else if (state is ProjectError) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showAlertDialog(context);
+          });
+        } else if (state is ProjectLoaded) {
+          return ListView.builder(
+            itemBuilder: (ctx, index) {
+              return ProjectListItem(
+                project: state.projects[index],
+              );
+            },
+            itemCount: state.projects.length,
+          );
+        } else if (state is ProjectLoading) {
+          return _showLoadingIndicator(context);
+        } else if (state is ProjectAdded) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: const Text("Project added."),
+            ));
+          });
+        }
+        return Container();
+      },
     );
   }
 
