@@ -22,35 +22,47 @@ void main() {
   final tProjectName = 'Sample project.';
   final tProjectDefaultCurrency = Currency(name: 'USD');
   final tProjectId = 1;
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
 
   final tProjectsList = [
-    Project(id: 1, name: 'First', defaultCurrency: Currency(name: 'USD')),
-    Project(id: 2, name: 'Second', defaultCurrency: Currency(name: 'USD'))
+    Project(
+        id: 1,
+        name: 'First',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime),
+    Project(
+        id: 2,
+        name: 'Second',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime)
   ];
 
   test('should return object from data source when adding project', () async {
     //arrange
-    when(mockDataSource.addProject(any, any))
+    when(mockDataSource.addProject(any, any, any))
         .thenAnswer((_) async => tProjectId);
     //act
-    final result =
-        await repository.addProject(tProjectName, tProjectDefaultCurrency);
+    final result = await repository.addProject(
+        tProjectName, tProjectDefaultCurrency, tCreationDateTime);
     //assert
     expect(result, Right(tProjectId));
-    verify(mockDataSource.addProject(tProjectName, tProjectDefaultCurrency));
+    verify(mockDataSource.addProject(
+        tProjectName, tProjectDefaultCurrency, tCreationDateTime));
     verifyNoMoreInteractions(mockDataSource);
   });
 
   test('should return failure when exception occurs during adding project',
       () async {
     //arrange
-    when(mockDataSource.addProject(any, any)).thenThrow(DataSourceException());
+    when(mockDataSource.addProject(any, any, any))
+        .thenThrow(DataSourceException());
     //act
-    final result =
-        await repository.addProject(tProjectName, tProjectDefaultCurrency);
+    final result = await repository.addProject(
+        tProjectName, tProjectDefaultCurrency, tCreationDateTime);
     //assert
     expect(result, Left(DataSourceFailure()));
-    verify(mockDataSource.addProject(tProjectName, tProjectDefaultCurrency));
+    verify(mockDataSource.addProject(
+        tProjectName, tProjectDefaultCurrency, tCreationDateTime));
     verifyNoMoreInteractions(mockDataSource);
   });
 

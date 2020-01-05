@@ -20,8 +20,12 @@ void main() {
     bloc = ReportBloc(mockGetReport);
   });
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
-      id: 1, name: 'Test project', defaultCurrency: Currency(name: 'USD'));
+      id: 1,
+      name: 'Test project',
+      defaultCurrency: Currency(name: 'USD'),
+      creationDateTime: tCreationDateTime);
   final tReport = Report(project: tProject);
 
   blocTest('should emit empty state initially', build: () {

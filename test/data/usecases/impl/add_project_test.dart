@@ -22,7 +22,7 @@ void main() {
 
   test('should add project using a repository', () async {
     //arrange
-    when(mockProjectsRepository.addProject(any, any))
+    when(mockProjectsRepository.addProject(any, any, any))
         .thenAnswer((_) async => Right(tProjectId));
     //act
     final result = await addProject.call(AddProjectParams(
@@ -30,7 +30,10 @@ void main() {
     //assert
     expect(result, Right(tProjectId));
     verify(mockProjectsRepository.addProject(
-        tProjectName, tProjectDefaultCurrency));
-    verifyNoMoreInteractions(mockProjectsRepository);
+      argThat(equals(tProjectName)),
+      argThat(equals(tProjectDefaultCurrency)),
+      argThat(isA<DateTime>()),
+    ));
+    // verifyNoMoreInteractions(mockProjectsRepository);
   });
 }

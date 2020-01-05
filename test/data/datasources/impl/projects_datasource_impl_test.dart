@@ -22,14 +22,30 @@ void main() {
     dataSource = ProjectsDataSourceImpl(mockHiveOperations);
   });
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
+
   final tProjectEntities = {
-    1: ProjectEntity(name: 'First', defaultCurrency: 'USD'),
-    2: ProjectEntity(name: 'Second', defaultCurrency: 'USD'),
+    1: ProjectEntity(
+        name: 'First',
+        defaultCurrency: 'USD',
+        creationDateTime: tCreationDateTime.toIso8601String()),
+    2: ProjectEntity(
+        name: 'Second',
+        defaultCurrency: 'USD',
+        creationDateTime: tCreationDateTime.toIso8601String()),
   };
 
   final tProjectsList = [
-    Project(id: 1, name: 'First', defaultCurrency: Currency(name: 'USD')),
-    Project(id: 2, name: 'Second', defaultCurrency: Currency(name: 'USD'))
+    Project(
+        id: 1,
+        name: 'First',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime),
+    Project(
+        id: 2,
+        name: 'Second',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime)
   ];
 
   test('should return list of projects', () async {
@@ -57,7 +73,8 @@ void main() {
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
     when(mockBox.add(any)).thenAnswer((_) async => tProjectId);
     //act
-    final result = await dataSource.addProject(tProjectName, tDefaultCurrency);
+    final result = await dataSource.addProject(
+        tProjectName, tDefaultCurrency, tCreationDateTime);
     //assert
     expect(result, tProjectId);
 
@@ -65,7 +82,9 @@ void main() {
     verifyNoMoreInteractions(mockHiveOperations);
 
     verify(mockBox.add(ProjectEntity(
-        name: tProjectName, defaultCurrency: tDefaultCurrency.name)));
+        name: tProjectName,
+        defaultCurrency: tDefaultCurrency.name,
+        creationDateTime: tCreationDateTime.toIso8601String())));
     verifyNoMoreInteractions(mockBox);
   });
 
@@ -89,8 +108,11 @@ void main() {
 
   test('should modify project', () async {
     //arrange
-    final tProject =
-        Project(id: 5, name: 'First', defaultCurrency: Currency(name: 'USD'));
+    final tProject = Project(
+        id: 5,
+        name: 'First',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime);
 
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
     when(mockBox.put(any, any)).thenAnswer((_) async => {});
@@ -106,7 +128,8 @@ void main() {
         tProject.id,
         ProjectEntity(
             name: tProject.name,
-            defaultCurrency: tProject.defaultCurrency.name)));
+            defaultCurrency: tProject.defaultCurrency.name,
+            creationDateTime: tCreationDateTime.toIso8601String())));
     verifyNoMoreInteractions(mockBox);
   });
 }

@@ -43,9 +43,18 @@ void main() {
   final tProjectName = 'Sample project.';
   final tProjectDefaultCurrency = Currency(name: 'USD');
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProjectsList = [
-    Project(id: 1, name: 'First', defaultCurrency: Currency(name: 'USD')),
-    Project(id: 2, name: 'Second', defaultCurrency: Currency(name: 'USD'))
+    Project(
+        id: 1,
+        name: 'First',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime),
+    Project(
+        id: 2,
+        name: 'Second',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime)
   ];
 
   blocTest('should emit empty state initially', build: () {

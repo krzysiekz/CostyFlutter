@@ -15,7 +15,7 @@ class AddProject implements UseCase<int, AddProjectParams> {
   @override
   Future<Either<Failure, int>> call(AddProjectParams params) {
     return projectsRepository.addProject(
-        params.projectName, params.defaultCurrency);
+        params.projectName, params.defaultCurrency, DateTime.now());
   }
 }
 

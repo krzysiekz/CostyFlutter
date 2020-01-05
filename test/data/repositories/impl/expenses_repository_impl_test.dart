@@ -31,8 +31,12 @@ void main() {
   final john = User(id: 1, name: 'John');
   final kate = User(id: 2, name: 'Kate');
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
-      id: 1, name: 'Test project', defaultCurrency: Currency(name: 'USD'));
+      id: 1,
+      name: 'Test project',
+      defaultCurrency: Currency(name: 'USD'),
+      creationDateTime: tCreationDateTime);
   final tAmount = Decimal.fromInt(10);
   final tCurrency = Currency(name: 'USD');
   final tDescription = 'First Expense';

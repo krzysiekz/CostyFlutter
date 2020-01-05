@@ -18,9 +18,18 @@ void main() {
     getProjects = GetProjects(projectsRepository: mockProjectsRepository);
   });
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProjectsList = [
-    Project(id: 1, name: 'First', defaultCurrency: Currency(name: 'USD')),
-    Project(id: 2, name: 'Second', defaultCurrency: Currency(name: 'USD'))
+    Project(
+        id: 1,
+        name: 'First',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime),
+    Project(
+        id: 2,
+        name: 'Second',
+        defaultCurrency: Currency(name: 'USD'),
+        creationDateTime: tCreationDateTime)
   ];
 
   test('should get projects from the repository', () async {

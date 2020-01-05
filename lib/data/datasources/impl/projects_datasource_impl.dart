@@ -11,10 +11,17 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
   ProjectsDataSourceImpl(this._hiveOperations);
 
   @override
-  Future<int> addProject(String projectName, Currency defaultCurrency) async {
+  Future<int> addProject(
+    String projectName,
+    Currency defaultCurrency,
+    DateTime creationDateTime,
+  ) async {
     final box = await _hiveOperations.openBox(_BOX_NAME);
-    final entity =
-        ProjectEntity(name: projectName, defaultCurrency: defaultCurrency.name);
+    final entity = ProjectEntity(
+      name: projectName,
+      defaultCurrency: defaultCurrency.name,
+      creationDateTime: creationDateTime.toIso8601String(),
+    );
     return box.add(entity);
   }
 
@@ -36,7 +43,10 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
   Future<int> modifyProject(Project project) async {
     final box = await _hiveOperations.openBox(_BOX_NAME);
     final newProjectEntity = ProjectEntity(
-        name: project.name, defaultCurrency: project.defaultCurrency.name);
+      name: project.name,
+      defaultCurrency: project.defaultCurrency.name,
+      creationDateTime: project.creationDateTime.toIso8601String(),
+    );
     await box.put(project.id, newProjectEntity);
     return project.id;
   }
@@ -45,5 +55,7 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
       id: e.key,
       name: (e.value as ProjectEntity).name,
       defaultCurrency:
-          Currency(name: (e.value as ProjectEntity).defaultCurrency));
+          Currency(name: (e.value as ProjectEntity).defaultCurrency),
+      creationDateTime:
+          DateTime.parse((e.value as ProjectEntity).creationDateTime));
 }

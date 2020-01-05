@@ -8,15 +8,17 @@ import 'user_expense.dart';
 class Project extends Equatable {
   final List<UserExpense> expenses = [];
   final List<User> users = [];
-  
+
   final int id;
   final String name;
   final Currency defaultCurrency;
+  final DateTime creationDateTime;
 
   Project({
     @required this.id,
     @required this.name,
     @required this.defaultCurrency,
+    @required this.creationDateTime,
   });
 
   @override

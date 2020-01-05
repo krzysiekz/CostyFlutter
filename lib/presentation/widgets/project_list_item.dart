@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../data/models/project.dart';
 
 class ProjectListItem extends StatefulWidget {
+  final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
   final Project project;
 
   ProjectListItem({Key key, this.project}) : super(key: key);
@@ -80,7 +83,24 @@ class _ProjectListItemState extends State<ProjectListItem> {
                         widget.project.defaultCurrency.name,
                         style: TextStyle(
                             color: Colors.white54,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.date_range,
+                        color: Colors.white54,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        widget.dateFormat
+                            .format(widget.project.creationDateTime),
+                        style: TextStyle(
+                            color: Colors.white54,
                             fontSize: 20),
                       ),
                     ],

@@ -22,9 +22,16 @@ class ProjectsRepositoryImpl implements ProjectsRepository {
 
   @override
   Future<Either<Failure, int>> addProject(
-      String projectName, Currency defaultCurrency) {
+    String projectName,
+    Currency defaultCurrency,
+    DateTime creationDateTime,
+  ) {
     return _getResponse(() {
-      return projectsDataSource.addProject(projectName, defaultCurrency);
+      return projectsDataSource.addProject(
+        projectName,
+        defaultCurrency,
+        creationDateTime,
+      );
     });
   }
 

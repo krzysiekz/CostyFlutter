@@ -41,8 +41,12 @@ void main() {
         deleteUser: mockDeleteUser);
   });
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
-      id: 1, name: 'Test project', defaultCurrency: Currency(name: 'USD'));
+      id: 1,
+      name: 'Test project',
+      defaultCurrency: Currency(name: 'USD'),
+      creationDateTime: tCreationDateTime);
   final tUsers = [
     User(id: 1, name: 'John'),
     User(id: 2, name: 'Kate'),

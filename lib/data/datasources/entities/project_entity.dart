@@ -12,10 +12,13 @@ class ProjectEntity extends Equatable {
   @HiveField(1)
   final String defaultCurrency;
 
-  ProjectEntity({
-    @required this.name,
-    @required this.defaultCurrency,
-  });
+  @HiveField(2)
+  final String creationDateTime;
+
+  ProjectEntity(
+      {@required this.name,
+      @required this.defaultCurrency,
+      @required this.creationDateTime});
 
   @override
   List<Object> get props => [name, defaultCurrency];

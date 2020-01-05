@@ -17,8 +17,12 @@ void main() {
     addUser = AddUser(usersRepository: mockUsersRepository);
   });
 
+  final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
-      id: 1, name: 'Test project', defaultCurrency: Currency(name: 'USD'));
+      id: 1,
+      name: 'Test project',
+      defaultCurrency: Currency(name: 'USD'),
+      creationDateTime: tCreationDateTime);
   final tName = 'John';
   final tUserId = 1;
 
@@ -28,7 +32,8 @@ void main() {
             project: anyNamed('project'), name: anyNamed('name')))
         .thenAnswer((_) async => Right(tUserId));
     //act
-    final result = await addUser.call(AddUserParams(project: tProject, name: tName));
+    final result =
+        await addUser.call(AddUserParams(project: tProject, name: tName));
     //assert
     expect(result, Right(tUserId));
     verify(mockUsersRepository.addUser(project: tProject, name: tName));

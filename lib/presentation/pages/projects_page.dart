@@ -24,6 +24,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   void dispose() {
+    _projectBloc.drain();
     _projectBloc.close();
     super.dispose();
   }
