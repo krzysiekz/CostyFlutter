@@ -9,7 +9,7 @@ import 'data/datasources/entities/project_entity.dart';
 import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
 import 'injection_container.dart' as di;
-import 'presentation/pages/projects_page.dart';
+import 'presentation/widgets/pages/projects_page.dart';
 
 const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
 

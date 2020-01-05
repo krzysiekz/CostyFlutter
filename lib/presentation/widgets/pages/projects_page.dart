@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/currency.dart';
-import '../../injection_container.dart';
-import '../bloc/bloc.dart';
-import '../widgets/new_project.dart';
-import '../widgets/project_list_item.dart';
+import '../../../data/models/currency.dart';
+import '../../../injection_container.dart';
+import '../../bloc/project_bloc.dart';
+import '../../bloc/project_event.dart';
+import '../../bloc/project_state.dart';
+import '../forms/new_project_form.dart';
+import '../other/project_list_item.dart';
 
 class ProjectsPage extends StatefulWidget {
   @override
@@ -60,21 +62,30 @@ class _ProjectsPageState extends State<ProjectsPage> {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return NewProject(_addNewProject);
+        return NewProjectForm(_addNewProject);
       },
     );
   }
 
   Widget buildBody(BuildContext context) {
-    return BlocBuilder<ProjectBloc, ProjectState>(
+    return BlocConsumer<ProjectBloc, ProjectState>(
       bloc: _projectBloc,
-      builder: (context, state) {
-        if (state is ProjectEmpty) {
-          return Text("No projects to display.");
-        } else if (state is ProjectError) {
+      listener: (context, state) {
+        if (state is ProjectError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _showAlertDialog(context);
           });
+        } else if (state is ProjectAdded) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: const Text("Project added."),
+            ));
+          });
+        }
+      },
+      builder: (context, state) {
+        if (state is ProjectEmpty) {
+          return Text("No projects to display.");
         } else if (state is ProjectLoaded) {
           return ListView.builder(
             itemBuilder: (ctx, index) {
@@ -86,12 +97,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
           );
         } else if (state is ProjectLoading) {
           return _showLoadingIndicator(context);
-        } else if (state is ProjectAdded) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: const Text("Project added."),
-            ));
-          });
         }
         return Container();
       },

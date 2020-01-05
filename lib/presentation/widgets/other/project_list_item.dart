@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../data/models/project.dart';
+import '../../../data/models/project.dart';
+
 
 class ProjectListItem extends StatefulWidget {
   final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
