@@ -46,8 +46,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color(0xFF145970),
-        accentColor: Color(0xFFF18F01),
+        primaryColor: Color(0xFF296EB4),
+        accentColor: Color(0xFFFDB833),
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
                 fontFamily: 'OpenSans',
@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
               ),
               button: TextStyle(color: Colors.white),
             ),
+        backgroundColor: Color(0xFFFCEDCF),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                   title: TextStyle(
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
           next: (_) => ProjectsPage(),
           until: () => Future.delayed(Duration(milliseconds: 500)),
           startAnimation: 'splash',
-          backgroundColor: Color(0xFF145970)),
+          backgroundColor: Color(0xFF296EB4)),
     );
   }
 

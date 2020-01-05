@@ -1,12 +1,11 @@
-import 'package:costy/data/models/currency.dart';
-import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/bloc/currency_state.dart';
-
-import '../bloc/currency_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/currency.dart';
 import '../../injection_container.dart';
+import '../bloc/bloc.dart';
+import '../bloc/currency_bloc.dart';
+import '../bloc/currency_state.dart';
 
 class NewProject extends StatefulWidget {
   final Function addTx;
@@ -59,6 +58,7 @@ class _NewProjectState extends State<NewProject> {
         child:
             BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
           return Card(
+            color: Theme.of(context).backgroundColor,
             child: Container(
               padding: EdgeInsets.only(
                 top: 10,
@@ -77,15 +77,18 @@ class _NewProjectState extends State<NewProject> {
 
   Widget buildForm(BuildContext context, CurrencyState state) {
     if (state is CurrencyError) {
-      return showAlertDialog(context);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showAlertDialog(context);
+      });
+      return Container();
     } else if (state is CurrencyLoaded) {
-      return showForm(context, state);
+      return _showForm(context, state);
     } else {
-      return showLoadingIndicator(context);
+      return _showLoadingIndicator(context);
     }
   }
 
-  Column showLoadingIndicator(BuildContext context) {
+  Column _showLoadingIndicator(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +109,7 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  Widget showForm(BuildContext context, CurrencyLoaded state) {
+  Widget _showForm(BuildContext context, CurrencyLoaded state) {
     return Form(
       key: _formKey,
       child: Column(
@@ -186,18 +189,22 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  AlertDialog showAlertDialog(BuildContext context) {
-    return AlertDialog(
-      title: Text('Error'),
-      content: const Text('Cannot fetch available currencies.'),
-      actions: <Widget>[
-        FlatButton(
-          child: const Text('Ok'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    );
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: const Text('Cannot fetch available currencies.'),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }
