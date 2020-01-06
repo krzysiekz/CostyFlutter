@@ -9,12 +9,14 @@ import '../../bloc/project_state.dart';
 import '../forms/new_project_form.dart';
 import '../other/project_list_item.dart';
 
-class ProjectsPage extends StatefulWidget {
+class ProjectsListPage extends StatefulWidget {
+  static const routeName = '/projects-list';
+
   @override
-  _ProjectsPageState createState() => _ProjectsPageState();
+  _ProjectsListPageState createState() => _ProjectsListPageState();
 }
 
-class _ProjectsPageState extends State<ProjectsPage> {
+class _ProjectsListPageState extends State<ProjectsListPage> {
   var _projectBloc;
 
   @override

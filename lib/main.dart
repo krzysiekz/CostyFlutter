@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/pages/project_details_page.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -9,7 +10,7 @@ import 'data/datasources/entities/project_entity.dart';
 import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
 import 'injection_container.dart' as di;
-import 'presentation/widgets/pages/projects_page.dart';
+import 'presentation/widgets/pages/projects_list_page.dart';
 
 const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
 
@@ -68,10 +69,14 @@ class _MyAppState extends State<MyApp> {
       ),
       home: SplashScreen.navigate(
           name: 'assets/costy_splash.flr',
-          next: (_) => ProjectsPage(),
+          next: (_) => ProjectsListPage(),
           until: () => Future.delayed(Duration(milliseconds: 500)),
           startAnimation: 'splash',
           backgroundColor: Color(0xFF296EB4)),
+      routes: {
+        ProjectsListPage.routeName: (ctx) => ProjectsListPage(),
+        ProjectDetailsPage.routeName: (ctx) => ProjectDetailsPage(),
+      },
     );
   }
 

@@ -1,8 +1,8 @@
+import 'package:costy/presentation/widgets/pages/project_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
-
 
 class ProjectListItem extends StatefulWidget {
   final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
@@ -19,7 +19,12 @@ class _ProjectListItemState extends State<ProjectListItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => {},
+      onTap: () => {
+        Navigator.of(context).pushNamed(
+          ProjectDetailsPage.routeName,
+          arguments: widget.project,
+        )
+      },
       child: Card(
         color: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
@@ -82,9 +87,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
                       ),
                       Text(
                         widget.project.defaultCurrency.name,
-                        style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 20),
+                        style: TextStyle(color: Colors.white54, fontSize: 20),
                       ),
                     ],
                   ),
@@ -100,9 +103,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
                       Text(
                         widget.dateFormat
                             .format(widget.project.creationDateTime),
-                        style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 20),
+                        style: TextStyle(color: Colors.white54, fontSize: 20),
                       ),
                     ],
                   ),
