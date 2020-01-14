@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/currency.dart';
-import '../../../injection_container.dart';
+import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
-import '../../bloc/currency_event.dart';
 import '../../bloc/currency_state.dart';
+import '../../bloc/project_bloc.dart';
 
 class NewProjectForm extends StatefulWidget {
-  final Function addTx;
-
-  NewProjectForm(this.addTx);
-
   @override
   _NewProjectFormState createState() => _NewProjectFormState();
 }
@@ -21,17 +17,16 @@ class _NewProjectFormState extends State<NewProjectForm> {
   var _defaultCurrency;
 
   final _formKey = GlobalKey<FormState>();
-  CurrencyBloc _currencyBloc;
 
   void _submitData() {
     if (_formKey.currentState.validate()) {
       final enteredName = _nameController.text;
       final enteredDefaultCurrency = _defaultCurrency;
 
-      widget.addTx(
-        enteredName,
-        enteredDefaultCurrency,
-      );
+      BlocProvider.of<ProjectBloc>(context).add(AddProjectEvent(
+          projectName: enteredName,
+          defaultCurrency: Currency(name: enteredDefaultCurrency)));
+      BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
 
       Navigator.of(context).pop();
     }
@@ -39,14 +34,12 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
   @override
   void initState() {
-    this._currencyBloc = ic<CurrencyBloc>();
-    _currencyBloc.add(GetCurrenciesEvent());
+    BlocProvider.of<CurrencyBloc>(context).add(GetCurrenciesEvent());
     super.initState();
   }
 
   @override
   void dispose() {
-    _currencyBloc.close();
     _nameController.dispose();
     super.dispose();
   }
@@ -55,7 +48,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: BlocConsumer<CurrencyBloc, CurrencyState>(
-          bloc: _currencyBloc,
+          bloc: BlocProvider.of<CurrencyBloc>(context),
           listener: (context, state) {
             if (state is CurrencyError) {
               _showAlertDialog(context);

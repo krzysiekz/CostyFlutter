@@ -1,8 +1,10 @@
-import 'package:costy/data/models/project.dart';
-import 'package:costy/presentation/widgets/pages/expenses_list_page.dart';
-import 'package:costy/presentation/widgets/pages/person_list_page.dart';
-import 'package:costy/presentation/widgets/pages/report_page.dart';
 import 'package:flutter/material.dart';
+
+import '../../../data/models/project.dart';
+import '../forms/new_person_form.dart';
+import 'expenses_list_page.dart';
+import 'person_list_page.dart';
+import 'report_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   static const routeName = '/project-details';
@@ -16,26 +18,11 @@ class ProjectDetailsPage extends StatefulWidget {
 class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-  FloatingActionButton _addPersonButton;
-  FloatingActionButton _addExpenseButton;
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabIndex);
-
-    _addPersonButton = FloatingActionButton(
-        onPressed: null,
-        child: Icon(
-          Icons.person_add,
-        ));
-
-    _addExpenseButton = FloatingActionButton(
-      onPressed: null,
-      child: Icon(
-        Icons.note_add,
-      ),
-    );
     super.initState();
   }
 
@@ -50,10 +37,23 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     setState(() {});
   }
 
+  void _showAddPersonForm(BuildContext ctx, Project project) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewPersonForm(project: project);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final project = ModalRoute.of(context).settings.arguments as Project;
 
+    return buildProjectDetailsPage(project, context);
+  }
+
+  Container buildProjectDetailsPage(Project project, BuildContext context) {
     return Container(
       height: 600,
       width: double.infinity,
@@ -126,17 +126,26 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
             Center(child: ReportPage()),
           ],
         ),
-        floatingActionButton: _bottomButtons(),
+        floatingActionButton: _bottomButtons(project, context),
       ),
     );
   }
 
-  Widget _bottomButtons() {
+  Widget _bottomButtons(Project project, BuildContext ctx) {
     switch (_tabController.index) {
       case 0:
-        return _addPersonButton;
+        return FloatingActionButton(
+            onPressed: () => _showAddPersonForm(ctx, project),
+            child: Icon(
+              Icons.person_add,
+            ));
       case 1:
-        return _addExpenseButton;
+        return FloatingActionButton(
+          onPressed: null,
+          child: Icon(
+            Icons.note_add,
+          ),
+        );
       default:
         return null;
     }

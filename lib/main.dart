@@ -1,6 +1,8 @@
+import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/pages/project_details_page.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
@@ -10,6 +12,7 @@ import 'data/datasources/entities/project_entity.dart';
 import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
 import 'injection_container.dart' as di;
+import 'injection_container.dart';
 import 'presentation/widgets/pages/projects_list_page.dart';
 
 const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
@@ -44,40 +47,52 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Color(0xFF296EB4),
-        accentColor: Color(0xFFFDB833),
-        textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              button: TextStyle(color: Colors.white),
-            ),
-        backgroundColor: Color(0xFFFCEDCF),
-        appBarTheme: AppBarTheme(
-          textTheme: ThemeData.light().textTheme.copyWith(
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<ProjectBloc>(
+            create: (BuildContext context) => ic<ProjectBloc>(),
+          ),
+          BlocProvider<CurrencyBloc>(
+            create: (BuildContext context) => ic<CurrencyBloc>(),
+          ),
+          BlocProvider<UserBloc>(
+            create: (BuildContext context) => ic<UserBloc>(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primaryColor: Color(0xFF296EB4),
+            accentColor: Color(0xFFFDB833),
+            textTheme: ThemeData.light().textTheme.copyWith(
                   title: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
-      ),
-      home: SplashScreen.navigate(
-          name: 'assets/costy_splash.flr',
-          next: (_) => ProjectsListPage(),
-          until: () => Future.delayed(Duration(milliseconds: 500)),
-          startAnimation: 'splash',
-          backgroundColor: Color(0xFF296EB4)),
-      routes: {
-        ProjectsListPage.routeName: (ctx) => ProjectsListPage(),
-        ProjectDetailsPage.routeName: (ctx) => ProjectDetailsPage(),
-      },
-    );
+                    fontFamily: 'OpenSans',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  button: TextStyle(color: Colors.white),
+                ),
+            backgroundColor: Color(0xFFFCEDCF),
+            appBarTheme: AppBarTheme(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                      title: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ),
+          home: SplashScreen.navigate(
+              name: 'assets/costy_splash.flr',
+              next: (_) => ProjectsListPage(),
+              until: () => Future.delayed(Duration(milliseconds: 500)),
+              startAnimation: 'splash',
+              backgroundColor: Color(0xFF296EB4)),
+          routes: {
+            ProjectsListPage.routeName: (ctx) => ProjectsListPage(),
+            ProjectDetailsPage.routeName: (ctx) => ProjectDetailsPage(),
+          },
+        ));
   }
 
   @override

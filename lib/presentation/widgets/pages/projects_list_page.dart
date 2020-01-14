@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/models/currency.dart';
-import '../../../injection_container.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
@@ -17,19 +15,10 @@ class ProjectsListPage extends StatefulWidget {
 }
 
 class _ProjectsListPageState extends State<ProjectsListPage> {
-  var _projectBloc;
-
   @override
   void initState() {
-    _projectBloc = ic<ProjectBloc>();
-    _projectBloc.add(GetProjectsEvent());
+    BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _projectBloc.close();
-    super.dispose();
   }
 
   @override
@@ -53,25 +42,18 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
     );
   }
 
-  void _addNewProject(String projectName, String defaultCurrency) {
-    _projectBloc.add(AddProjectEvent(
-        projectName: projectName,
-        defaultCurrency: Currency(name: defaultCurrency)));
-    _projectBloc.add(GetProjectsEvent());
-  }
-
   void _startAddNewProject(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return NewProjectForm(_addNewProject);
+        return NewProjectForm();
       },
     );
   }
 
   Widget buildBody(BuildContext context) {
     return BlocConsumer<ProjectBloc, ProjectState>(
-      bloc: _projectBloc,
+      bloc: BlocProvider.of<ProjectBloc>(context),
       listener: (context, state) {
         if (state is ProjectError) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
