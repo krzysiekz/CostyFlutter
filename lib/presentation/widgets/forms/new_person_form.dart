@@ -25,6 +25,7 @@ class _NewPersonFormState extends State<NewPersonForm> {
 
       BlocProvider.of<UserBloc>(context)
           .add(AddUserEvent(enteredName, widget.project));
+      BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
 
       Navigator.of(context).pop();
     }

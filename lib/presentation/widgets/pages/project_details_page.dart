@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../data/models/project.dart';
 import '../forms/new_person_form.dart';
 import 'expenses_list_page.dart';
-import 'person_list_page.dart';
 import 'report_page.dart';
+import 'user_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   static const routeName = '/project-details';
@@ -121,7 +121,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            Center(child: PersonListPage()),
+            Center(child: UserListPage(project: project)),
             Center(child: ExpensesListPage()),
             Center(child: ReportPage()),
           ],

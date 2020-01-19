@@ -1,8 +1,8 @@
-import 'package:costy/presentation/widgets/pages/project_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
+import '../pages/project_details_page.dart';
 
 class ProjectListItem extends StatefulWidget {
   final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
@@ -87,7 +87,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
                       ),
                       Text(
                         widget.project.defaultCurrency.name,
-                        style: TextStyle(color: Colors.white54, fontSize: 20),
+                        style: TextStyle(color: Colors.white70, fontSize: 20),
                       ),
                     ],
                   ),

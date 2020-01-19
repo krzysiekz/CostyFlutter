@@ -5,7 +5,7 @@ import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
 import '../forms/new_project_form.dart';
-import '../other/project_list_item.dart';
+import '../item/project_list_item.dart';
 
 class ProjectsListPage extends StatefulWidget {
   static const routeName = '/projects-list';
@@ -61,6 +61,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
           });
         } else if (state is ProjectAdded) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            Scaffold.of(context).hideCurrentSnackBar();
             Scaffold.of(context).showSnackBar(SnackBar(
               content: const Text("Project added."),
             ));
@@ -114,7 +115,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Error'),
-            content: const Text('Cannot fetch available currencies.'),
+            content: const Text('Cannot add project.'),
             actions: <Widget>[
               FlatButton(
                 child: const Text('Ok'),
