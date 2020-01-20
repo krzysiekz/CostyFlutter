@@ -63,7 +63,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           elevation: 0.0,
           backgroundColor: Theme.of(context).primaryColor,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(60),
+            preferredSize: const Size.fromHeight(60),
             child: Container(
               color: Colors.transparent,
               child: SafeArea(
@@ -82,28 +82,28 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
                       indicatorWeight: 6,
                       indicatorSize: TabBarIndicatorSize.label,
                       labelColor: Theme.of(context).accentColor,
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 12,
                         letterSpacing: 1.3,
                         fontWeight: FontWeight.w500,
                       ),
                       unselectedLabelColor: Colors.white38,
                       tabs: <Widget>[
-                        Tab(
+                        const Tab(
                           text: "PEOPLE",
                           icon: Icon(
                             Icons.people,
                             size: 35,
                           ),
                         ),
-                        Tab(
+                        const Tab(
                           text: "EXPENSES",
                           icon: Icon(
                             Icons.attach_money,
                             size: 35,
                           ),
                         ),
-                        Tab(
+                        const Tab(
                           text: "REPORT",
                           icon: Icon(
                             Icons.picture_as_pdf,
@@ -136,13 +136,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       case 0:
         return FloatingActionButton(
             onPressed: () => _showAddPersonForm(ctx, project),
-            child: Icon(
+            child: const Icon(
               Icons.person_add,
             ));
       case 1:
         return FloatingActionButton(
           onPressed: null,
-          child: Icon(
+          child: const Icon(
             Icons.note_add,
           ),
         );

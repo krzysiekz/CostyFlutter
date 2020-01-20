@@ -6,6 +6,7 @@ import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
 import '../forms/new_project_form.dart';
 import '../item/project_list_item.dart';
+import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {
   static const routeName = '/projects-list';
@@ -56,22 +57,19 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
       bloc: BlocProvider.of<ProjectBloc>(context),
       listener: (context, state) {
         if (state is ProjectError) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _showAlertDialog(context);
-          });
+          DialogUtilities.showAlertDialog(
+              context, 'Error', 'Cannot add project.');
         } else if (state is ProjectAdded) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Scaffold.of(context).hideCurrentSnackBar();
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: const Text("Project added."),
-            ));
-          });
+          DialogUtilities.showSnackBar(context, "Project added.");
         }
       },
       builder: (context, state) {
         if (state is ProjectEmpty) {
-          return Text("No projects to display.");
+          return const Text("No projects to display.");
         } else if (state is ProjectLoaded) {
+          if (state.projects.isEmpty) {
+            return const Text("No projects to display.");
+          }
           return ListView.builder(
             itemBuilder: (ctx, index) {
               return ProjectListItem(
@@ -81,50 +79,10 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
             itemCount: state.projects.length,
           );
         } else if (state is ProjectLoading) {
-          return _showLoadingIndicator(context);
+          return DialogUtilities.showLoadingIndicator(context);
         }
         return Container();
       },
     );
-  }
-
-  Column _showLoadingIndicator(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Center(
-          child: Container(
-            height: 20,
-            width: 20,
-            margin: EdgeInsets.all(5),
-            child: CircularProgressIndicator(
-              strokeWidth: 2.0,
-              valueColor:
-                  AlwaysStoppedAnimation(Theme.of(context).primaryColor),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _showAlertDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Cannot add project.'),
-            actions: <Widget>[
-              FlatButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
   }
 }

@@ -11,7 +11,7 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Expenses list'),
+      child: const Text('Expenses list'),
     );
   }
 }

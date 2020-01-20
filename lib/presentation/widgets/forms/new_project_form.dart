@@ -6,6 +6,7 @@ import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
+import '../utilities/dialog_utilities.dart';
 
 class NewProjectForm extends StatefulWidget {
   @override
@@ -51,7 +52,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
           bloc: BlocProvider.of<CurrencyBloc>(context),
           listener: (context, state) {
             if (state is CurrencyError) {
-              _showAlertDialog(context);
+              DialogUtilities.showAlertDialog(
+                  context, 'Error', 'Cannot get available currencies.');
             }
           },
           builder: (context, state) {
@@ -75,31 +77,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
     if (state is CurrencyLoaded) {
       return _showForm(context, state);
     } else if (state is CurrencyLoading) {
-      return _showLoadingIndicator(context);
+      return DialogUtilities.showLoadingIndicator(context);
     } else {
       return new Container();
     }
-  }
-
-  Widget _showLoadingIndicator(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Center(
-          child: Container(
-            height: 20,
-            width: 20,
-            margin: EdgeInsets.all(5),
-            child: CircularProgressIndicator(
-              strokeWidth: 2.0,
-              valueColor:
-                  AlwaysStoppedAnimation(Theme.of(context).primaryColor),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _showForm(BuildContext context, CurrencyLoaded state) {
@@ -109,11 +90,11 @@ class _NewProjectFormState extends State<NewProjectForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           _createProjectNameTextField(context),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           _createCurrencyDropdownField(context, state),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           RaisedButton(
@@ -189,25 +170,5 @@ class _NewProjectFormState extends State<NewProjectForm> {
       validator: (val) => val.isEmpty ? 'Project name is required' : null,
       controller: _nameController,
     );
-  }
-
-  void _showAlertDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: const Text('Cannot fetch available currencies.'),
-            actions: <Widget>[
-              FlatButton(
-                child: const Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
   }
 }

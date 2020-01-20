@@ -11,7 +11,7 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Report'),
+      child: const Text('Report'),
     );
   }
 }
