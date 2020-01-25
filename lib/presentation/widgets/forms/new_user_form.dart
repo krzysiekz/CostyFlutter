@@ -5,16 +5,16 @@ import '../../../data/models/project.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
 
-class NewPersonForm extends StatefulWidget {
+class NewUserForm extends StatefulWidget {
   final Project project;
 
-  const NewPersonForm({Key key, this.project}) : super(key: key);
+  const NewUserForm({Key key, this.project}) : super(key: key);
 
   @override
-  _NewPersonFormState createState() => _NewPersonFormState();
+  _NewUserFormState createState() => _NewUserFormState();
 }
 
-class _NewPersonFormState extends State<NewPersonForm> {
+class _NewUserFormState extends State<NewUserForm> {
   final _nameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -55,11 +55,11 @@ class _NewPersonFormState extends State<NewPersonForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           _createPersonNameTextField(context),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           RaisedButton(
-            child: const Text('Add Person'),
+            child: const Text('Add User'),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,
@@ -77,10 +77,10 @@ class _NewPersonFormState extends State<NewPersonForm> {
           size: 28,
           color: Theme.of(context).primaryColor,
         ),
-        hintText: 'Enter person name',
+        hintText: 'Enter user name',
         labelText: 'Name',
       ),
-      validator: (val) => val.isEmpty ? 'Person name is required' : null,
+      validator: (val) => val.isEmpty ? 'User name is required' : null,
       controller: _nameController,
     );
   }

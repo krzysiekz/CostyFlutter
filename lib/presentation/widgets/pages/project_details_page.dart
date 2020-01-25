@@ -1,7 +1,8 @@
+import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/project.dart';
-import '../forms/new_person_form.dart';
+import '../forms/new_user_form.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
 import 'user_list_page.dart';
@@ -41,7 +42,16 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return NewPersonForm(project: project);
+        return NewUserForm(project: project);
+      },
+    );
+  }
+
+  void _showAddExpenseForm(BuildContext ctx, Project project) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewExpenseForm(project: project);
       },
     );
   }
@@ -90,7 +100,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
                       unselectedLabelColor: Colors.white38,
                       tabs: <Widget>[
                         const Tab(
-                          text: "PEOPLE",
+                          text: "USERS",
                           icon: Icon(
                             Icons.people,
                             size: 35,
@@ -141,7 +151,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
             ));
       case 1:
         return FloatingActionButton(
-          onPressed: null,
+          onPressed: () => _showAddExpenseForm(ctx, project),
           child: const Icon(
             Icons.note_add,
           ),

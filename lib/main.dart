@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   button: TextStyle(color: Colors.white),
                 ),
-            backgroundColor: Color(0xFFFCEDCF),
+            backgroundColor: Colors.white,
             appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
                       title: TextStyle(
