@@ -110,7 +110,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
   FormField<String> _createCurrencyDropdownField(
       BuildContext context, CurrencyLoaded state) {
-    return new FormField<String>(
+    return FormField<String>(
       builder: (FormFieldState<String> formState) {
         return InputDecorator(
           decoration: InputDecoration(
