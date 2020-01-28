@@ -1,10 +1,10 @@
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/user.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/project.dart';
@@ -87,8 +87,20 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          _createDescriptionTextField(context),
-          _createAmountTextField(context),
+          CustomTextField(
+            icon: Icons.note,
+            hintText: 'Enter description',
+            labelText: 'Description',
+            controller: _descriptionController,
+            validator: (val) => val.isEmpty ? 'Description is required' : null,
+          ),
+          CustomTextField(
+            icon: Icons.attach_money,
+            hintText: 'Enter amount',
+            labelText: 'Amount',
+            controller: _amountController,
+            validator: _numberValidator,
+          ),
           _createCurrencyDropDownList(context),
           _createUserDropDownList(context),
           _createReceiversWidget(context),
@@ -103,39 +115,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           )
         ],
       ),
-    );
-  }
-
-  Widget _createAmountTextField(BuildContext context) {
-    return TextFormField(
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.attach_money,
-          size: 28,
-          color: Theme.of(context).primaryColor,
-        ),
-        hintText: 'Enter Amount',
-        labelText: 'Amount',
-      ),
-      validator: _numberValidator,
-      controller: _amountController,
-    );
-  }
-
-  Widget _createDescriptionTextField(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.note,
-          size: 28,
-          color: Theme.of(context).primaryColor,
-        ),
-        hintText: 'Enter Description',
-        labelText: 'Description',
-      ),
-      validator: (val) => val.isEmpty ? 'Description is required' : null,
-      controller: _descriptionController,
     );
   }
 
@@ -171,13 +150,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                           formState.didChange(newValue);
                         });
                       },
-                      items: state.currencies
-                          .map<DropdownMenuItem<Currency>>((Currency currency) {
-                        return DropdownMenuItem<Currency>(
-                          value: currency,
-                          child: Text(currency.name),
-                        );
-                      }).toList(),
+                      items: getCurrencyDropdownItems(state),
                     ),
                   ),
                 );
@@ -189,6 +162,17 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           }
           return Container();
         });
+  }
+
+  List<DropdownMenuItem<Currency>> getCurrencyDropdownItems(
+      CurrencyLoaded state) {
+    return state.currencies
+        .map<DropdownMenuItem<Currency>>((Currency currency) {
+      return DropdownMenuItem<Currency>(
+        value: currency,
+        child: Text(currency.name),
+      );
+    }).toList();
   }
 
   Widget _createUserDropDownList(BuildContext context) {
@@ -204,51 +188,52 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   FormField<User> creteItemDropDown(BuildContext context, List<User> users) {
     return FormField<User>(
-            builder: (FormFieldState<User> formState) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.person,
-                    size: 28,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  labelText: 'User',
-                  errorText: formState.hasError ? formState.errorText : null,
-                ),
-                isEmpty: _user == null,
-                child: new DropdownButtonHideUnderline(
-                  child: new DropdownButton<User>(
-                    isExpanded: true,
-                    icon: Icon(
-                      Icons.arrow_downward,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    value: _user,
-                    isDense: true,
-                    onChanged: (User newValue) {
-                      setState(() {
-                        _user = newValue;
-                        formState.didChange(newValue);
-                      });
-                    },
-                    items:
-                        users.map<DropdownMenuItem<User>>((User user) {
-                      return DropdownMenuItem<User>(
-                        value: user,
-                        child: Text(user.name,
-                            overflow: TextOverflow.fade,
-                            maxLines: 1,
-                            softWrap: false),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              );
-            },
-            validator: (val) {
-              return (val == null) ? 'Please select a user' : null;
-            },
-          );
+      builder: (FormFieldState<User> formState) {
+        return InputDecorator(
+          decoration: InputDecoration(
+            icon: Icon(
+              Icons.person,
+              size: 28,
+              color: Theme.of(context).primaryColor,
+            ),
+            labelText: 'User',
+            errorText: formState.hasError ? formState.errorText : null,
+          ),
+          isEmpty: _user == null,
+          child: new DropdownButtonHideUnderline(
+            child: new DropdownButton<User>(
+              isExpanded: true,
+              icon: Icon(
+                Icons.arrow_downward,
+                color: Theme.of(context).primaryColor,
+              ),
+              value: _user,
+              isDense: true,
+              onChanged: (User newValue) {
+                setState(() {
+                  _user = newValue;
+                  formState.didChange(newValue);
+                });
+              },
+              items: getUsersDropdownItems(users),
+            ),
+          ),
+        );
+      },
+      validator: (val) {
+        return (val == null) ? 'Please select a user' : null;
+      },
+    );
+  }
+
+  List<DropdownMenuItem<User>> getUsersDropdownItems(List<User> users) {
+    return users.map<DropdownMenuItem<User>>((User user) {
+      return DropdownMenuItem<User>(
+        value: user,
+        child: Text(user.name,
+            overflow: TextOverflow.fade, maxLines: 1, softWrap: false),
+      );
+    }).toList();
   }
 
   Widget _createReceiversWidget(BuildContext context) {

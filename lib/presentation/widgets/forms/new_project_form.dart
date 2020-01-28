@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,6 @@ import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
-import '../utilities/dialog_utilities.dart';
 
 class NewProjectForm extends StatefulWidget {
   @override
@@ -22,11 +22,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
   void _submitData() {
     if (_formKey.currentState.validate()) {
       final enteredName = _nameController.text;
-      final enteredDefaultCurrency = _defaultCurrency;
 
       BlocProvider.of<ProjectBloc>(context).add(AddProjectEvent(
-          projectName: enteredName,
-          defaultCurrency: Currency(name: enteredDefaultCurrency)));
+          projectName: enteredName, defaultCurrency: _defaultCurrency));
       BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
 
       Navigator.of(context).pop();
@@ -48,14 +46,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocConsumer<CurrencyBloc, CurrencyState>(
+      child: BlocBuilder<CurrencyBloc, CurrencyState>(
           bloc: BlocProvider.of<CurrencyBloc>(context),
-          listener: (context, state) {
-            if (state is CurrencyError) {
-              DialogUtilities.showAlertDialog(
-                  context, 'Error', 'Cannot get available currencies.');
-            }
-          },
           builder: (context, state) {
             return Card(
               color: Theme.of(context).backgroundColor,
@@ -76,8 +68,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
   Widget _buildForm(BuildContext context, CurrencyState state) {
     if (state is CurrencyLoaded) {
       return _showForm(context, state);
-    } else if (state is CurrencyLoading) {
-      return DialogUtilities.showLoadingIndicator(context);
     } else {
       return new Container();
     }
@@ -89,7 +79,13 @@ class _NewProjectFormState extends State<NewProjectForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          _createProjectNameTextField(context),
+          CustomTextField(
+            icon: Icons.text_fields,
+            hintText: 'Enter project name',
+            labelText: 'Project name',
+            controller: _nameController,
+            validator: (val) => val.isEmpty ? 'Project name is required' : null,
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -108,10 +104,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
     );
   }
 
-  FormField<String> _createCurrencyDropdownField(
+  FormField<Currency> _createCurrencyDropdownField(
       BuildContext context, CurrencyLoaded state) {
-    return FormField<String>(
-      builder: (FormFieldState<String> formState) {
+    return FormField<Currency>(
+      builder: (FormFieldState<Currency> formState) {
         return InputDecorator(
           decoration: InputDecoration(
             icon: Icon(
@@ -122,25 +118,25 @@ class _NewProjectFormState extends State<NewProjectForm> {
             labelText: 'Default Currency',
             errorText: formState.hasError ? formState.errorText : null,
           ),
-          isEmpty: _defaultCurrency == '',
+          isEmpty: _defaultCurrency == null,
           child: new DropdownButtonHideUnderline(
-            child: new DropdownButton<String>(
+            child: new DropdownButton<Currency>(
               icon: Icon(
                 Icons.arrow_downward,
                 color: Theme.of(context).primaryColor,
               ),
               value: _defaultCurrency,
               isDense: true,
-              onChanged: (String newValue) {
+              onChanged: (Currency newValue) {
                 setState(() {
                   _defaultCurrency = newValue;
                   formState.didChange(newValue);
                 });
               },
               items: state.currencies
-                  .map<DropdownMenuItem<String>>((Currency currency) {
-                return DropdownMenuItem<String>(
-                  value: currency.name,
+                  .map<DropdownMenuItem<Currency>>((Currency currency) {
+                return DropdownMenuItem<Currency>(
+                  value: currency,
                   child: Text(currency.name),
                 );
               }).toList(),
@@ -149,26 +145,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
         );
       },
       validator: (val) {
-        return (val == null || val.isEmpty)
-            ? 'Please select a default currency'
-            : null;
+        return (val == null) ? 'Please select a default currency' : null;
       },
-    );
-  }
-
-  TextFormField _createProjectNameTextField(BuildContext context) {
-    return new TextFormField(
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.text_fields,
-          size: 28,
-          color: Theme.of(context).primaryColor,
-        ),
-        hintText: 'Enter project name',
-        labelText: 'Name',
-      ),
-      validator: (val) => val.isEmpty ? 'Project name is required' : null,
-      controller: _nameController,
     );
   }
 }

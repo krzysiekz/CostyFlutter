@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +55,13 @@ class _NewUserFormState extends State<NewUserForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          _createPersonNameTextField(context),
+          CustomTextField(
+            icon: Icons.person,
+            hintText: "Enter user's name",
+            labelText: 'Name',
+            controller: _nameController,
+            validator: (val) => val.isEmpty ? "User's name is required" : null,
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -66,22 +73,6 @@ class _NewUserFormState extends State<NewUserForm> {
           )
         ],
       ),
-    );
-  }
-
-  TextFormField _createPersonNameTextField(BuildContext context) {
-    return new TextFormField(
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.person,
-          size: 28,
-          color: Theme.of(context).primaryColor,
-        ),
-        hintText: 'Enter user name',
-        labelText: 'Name',
-      ),
-      validator: (val) => val.isEmpty ? 'User name is required' : null,
-      controller: _nameController,
     );
   }
 }
