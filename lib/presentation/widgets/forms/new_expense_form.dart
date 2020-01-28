@@ -100,6 +100,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             labelText: 'Amount',
             controller: _amountController,
             validator: _numberValidator,
+            textInputType: TextInputType.numberWithOptions(decimal: true),
           ),
           _createCurrencyDropDownList(context),
           _createUserDropDownList(context),
