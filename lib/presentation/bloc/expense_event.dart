@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../data/models/currency.dart';
 import '../../data/models/project.dart';
@@ -37,12 +38,12 @@ class AddExpenseEvent extends ExpenseEvent {
   final List<User> receivers;
 
   AddExpenseEvent(
-      {this.project,
-      this.amount,
-      this.description,
-      this.currency,
-      this.user,
-      this.receivers});
+      {@required this.project,
+      @required this.amount,
+      @required this.description,
+      @required this.currency,
+      @required this.user,
+      @required this.receivers});
 
   @override
   List<Object> get props => [

@@ -1,6 +1,8 @@
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/user.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,8 +22,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
   var _currency;
-  var _userId;
-  var _receiversIds;
+  var _user;
+  var _receivers;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -29,14 +31,24 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   void initState() {
     BlocProvider.of<CurrencyBloc>(context).add(GetCurrenciesEvent());
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
-    _currency = widget.project.defaultCurrency.name;
+    _currency = widget.project.defaultCurrency;
     super.initState();
   }
 
   void _submitData() {
     if (_formKey.currentState.validate()) {
       final enteredDescription = _descriptionController.text;
+      final enteredAmount = _amountController.text;
 
+      BlocProvider.of<ExpenseBloc>(context).add(AddExpenseEvent(
+          project: widget.project,
+          amount: Decimal.parse(enteredAmount),
+          currency: _currency,
+          user: _user,
+          receivers: _receivers,
+          description: enteredDescription));
+      BlocProvider.of<ExpenseBloc>(context)
+          .add(GetExpensesEvent(widget.project));
       Navigator.of(context).pop();
     }
   }
@@ -79,7 +91,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           _createAmountTextField(context),
           _createCurrencyDropDownList(context),
           _createUserDropDownList(context),
-          _createReceiversCheckBoxes(context),
+          _createReceiversWidget(context),
           const SizedBox(
             height: 20,
           ),
@@ -107,7 +119,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         labelText: 'Amount',
       ),
       validator: _numberValidator,
-      controller: _descriptionController,
+      controller: _amountController,
     );
   }
 
@@ -123,7 +135,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         labelText: 'Description',
       ),
       validator: (val) => val.isEmpty ? 'Description is required' : null,
-      controller: _amountController,
+      controller: _descriptionController,
     );
   }
 
@@ -132,9 +144,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         bloc: BlocProvider.of<CurrencyBloc>(context),
         builder: (context, state) {
           if (state is CurrencyLoaded) {
-            return FormField<String>(
-              initialValue: widget.project.defaultCurrency.name,
-              builder: (FormFieldState<String> formState) {
+            return FormField<Currency>(
+              initialValue: widget.project.defaultCurrency,
+              builder: (FormFieldState<Currency> formState) {
                 return InputDecorator(
                   decoration: InputDecoration(
                     icon: Icon(
@@ -145,25 +157,24 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                     labelText: 'Currency',
                     errorText: formState.hasError ? formState.errorText : null,
                   ),
-                  isEmpty: _currency == '',
                   child: new DropdownButtonHideUnderline(
-                    child: new DropdownButton<String>(
+                    child: new DropdownButton<Currency>(
                       icon: Icon(
                         Icons.arrow_downward,
                         color: Theme.of(context).primaryColor,
                       ),
                       value: _currency,
                       isDense: true,
-                      onChanged: (String newValue) {
+                      onChanged: (Currency newValue) {
                         setState(() {
                           _currency = newValue;
                           formState.didChange(newValue);
                         });
                       },
                       items: state.currencies
-                          .map<DropdownMenuItem<String>>((Currency currency) {
-                        return DropdownMenuItem<String>(
-                          value: currency.name,
+                          .map<DropdownMenuItem<Currency>>((Currency currency) {
+                        return DropdownMenuItem<Currency>(
+                          value: currency,
                           child: Text(currency.name),
                         );
                       }).toList(),
@@ -172,9 +183,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 );
               },
               validator: (val) {
-                return (val == null || val.isEmpty)
-                    ? 'Please select a currency'
-                    : null;
+                return (val == null) ? 'Please select a currency' : null;
               },
             );
           }
@@ -187,61 +196,69 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
-            return FormField<int>(
-              builder: (FormFieldState<int> formState) {
-                return InputDecorator(
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.person,
-                      size: 28,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    labelText: 'User',
-                    errorText: formState.hasError ? formState.errorText : null,
-                  ),
-                  isEmpty: _userId == '',
-                  child: new DropdownButtonHideUnderline(
-                    child: new DropdownButton<int>(
-                      icon: Icon(
-                        Icons.arrow_downward,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      value: _userId,
-                      isDense: true,
-                      onChanged: (int newValue) {
-                        setState(() {
-                          _userId = newValue;
-                          formState.didChange(newValue);
-                        });
-                      },
-                      items:
-                          state.users.map<DropdownMenuItem<int>>((User user) {
-                        return DropdownMenuItem<int>(
-                          value: user.id,
-                          child: Text(user.name),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                );
-              },
-              validator: (val) {
-                return (val == null) ? 'Please select a user' : null;
-              },
-            );
+            return creteItemDropDown(context, state.users);
           }
           return Container();
         });
   }
 
-  Widget _createReceiversCheckBoxes(BuildContext context) {
+  FormField<User> creteItemDropDown(BuildContext context, List<User> users) {
+    return FormField<User>(
+            builder: (FormFieldState<User> formState) {
+              return InputDecorator(
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.person,
+                    size: 28,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  labelText: 'User',
+                  errorText: formState.hasError ? formState.errorText : null,
+                ),
+                isEmpty: _user == null,
+                child: new DropdownButtonHideUnderline(
+                  child: new DropdownButton<User>(
+                    isExpanded: true,
+                    icon: Icon(
+                      Icons.arrow_downward,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    value: _user,
+                    isDense: true,
+                    onChanged: (User newValue) {
+                      setState(() {
+                        _user = newValue;
+                        formState.didChange(newValue);
+                      });
+                    },
+                    items:
+                        users.map<DropdownMenuItem<User>>((User user) {
+                      return DropdownMenuItem<User>(
+                        value: user,
+                        child: Text(user.name,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              );
+            },
+            validator: (val) {
+              return (val == null) ? 'Please select a user' : null;
+            },
+          );
+  }
+
+  Widget _createReceiversWidget(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
-            return FormField<List<int>>(
-              initialValue: state.users.map((user) => user.id).toList(),
-              builder: (FormFieldState<List<int>> formState) {
+            return FormField<List<User>>(
+              initialValue: state.users,
+              builder: (FormFieldState<List<User>> formState) {
                 return InputDecorator(
                     decoration: InputDecoration(
                       icon: Icon(
@@ -257,7 +274,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                       state.users,
                       onSelectionChanged: (selectedList) {
                         setState(() {
-                          _receiversIds = selectedList;
+                          _receivers = selectedList;
                           formState.didChange(selectedList);
                         });
                       },
@@ -272,56 +289,5 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           }
           return Container();
         });
-  }
-}
-
-class MultiSelectChip extends StatefulWidget {
-  final List<User> userList;
-  final Function(List<int>) onSelectionChanged;
-
-  MultiSelectChip(this.userList, {this.onSelectionChanged});
-
-  @override
-  _MultiSelectChipState createState() => _MultiSelectChipState();
-}
-
-class _MultiSelectChipState extends State<MultiSelectChip> {
-  List<int> _selectedUserIds = List();
-
-  @override
-  void initState() {
-    _selectedUserIds = widget.userList.map((user) => user.id).toList();
-    super.initState();
-  }
-
-  _buildChoiceList() {
-    List<Widget> choices = List();
-
-    widget.userList.forEach((item) {
-      choices.add(Container(
-        padding: const EdgeInsets.all(2.0),
-        child: ChoiceChip(
-          label: Text(item.name),
-          selected: _selectedUserIds.contains(item.id),
-          onSelected: (selected) {
-            setState(() {
-              _selectedUserIds.contains(item.id)
-                  ? _selectedUserIds.remove(item.id)
-                  : _selectedUserIds.add(item.id);
-              widget.onSelectionChanged(_selectedUserIds);
-            });
-          },
-        ),
-      ));
-    });
-
-    return choices;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      children: _buildChoiceList(),
-    );
   }
 }

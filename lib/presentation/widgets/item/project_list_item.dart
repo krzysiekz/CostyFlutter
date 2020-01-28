@@ -19,12 +19,10 @@ class _ProjectListItemState extends State<ProjectListItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => {
-        Navigator.of(context).pushNamed(
-          ProjectDetailsPage.routeName,
-          arguments: widget.project,
-        )
-      },
+      onTap: () => Navigator.of(context).pushNamed(
+        ProjectDetailsPage.routeName,
+        arguments: widget.project,
+      ),
       child: Card(
         color: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
