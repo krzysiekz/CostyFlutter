@@ -1,8 +1,8 @@
+import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/models/currency.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
@@ -89,7 +89,14 @@ class _NewProjectFormState extends State<NewProjectForm> {
           const SizedBox(
             height: 20,
           ),
-          _createCurrencyDropdownField(context, state),
+          CurrencyDropdownField(
+              currencies: state.currencies,
+              label: 'Default currency',
+              callback: (newValue) {
+                setState(() {
+                  _defaultCurrency = newValue;
+                });
+              }),
           const SizedBox(
             height: 20,
           ),
@@ -101,52 +108,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
           )
         ],
       ),
-    );
-  }
-
-  FormField<Currency> _createCurrencyDropdownField(
-      BuildContext context, CurrencyLoaded state) {
-    return FormField<Currency>(
-      builder: (FormFieldState<Currency> formState) {
-        return InputDecorator(
-          decoration: InputDecoration(
-            icon: Icon(
-              Icons.monetization_on,
-              size: 28,
-              color: Theme.of(context).primaryColor,
-            ),
-            labelText: 'Default Currency',
-            errorText: formState.hasError ? formState.errorText : null,
-          ),
-          isEmpty: _defaultCurrency == null,
-          child: new DropdownButtonHideUnderline(
-            child: new DropdownButton<Currency>(
-              icon: Icon(
-                Icons.arrow_downward,
-                color: Theme.of(context).primaryColor,
-              ),
-              value: _defaultCurrency,
-              isDense: true,
-              onChanged: (Currency newValue) {
-                setState(() {
-                  _defaultCurrency = newValue;
-                  formState.didChange(newValue);
-                });
-              },
-              items: state.currencies
-                  .map<DropdownMenuItem<Currency>>((Currency currency) {
-                return DropdownMenuItem<Currency>(
-                  value: currency,
-                  child: Text(currency.name),
-                );
-              }).toList(),
-            ),
-          ),
-        );
-      },
-      validator: (val) {
-        return (val == null) ? 'Please select a default currency' : null;
-      },
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/user.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
 import 'package:decimal/decimal.dart';
@@ -131,56 +131,17 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         bloc: BlocProvider.of<CurrencyBloc>(context),
         builder: (context, state) {
           if (state is CurrencyLoaded) {
-            return FormField<Currency>(
-              initialValue: widget.project.defaultCurrency,
-              builder: (FormFieldState<Currency> formState) {
-                return InputDecorator(
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.monetization_on,
-                      size: 28,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    labelText: 'Currency',
-                    errorText: formState.hasError ? formState.errorText : null,
-                  ),
-                  child: new DropdownButtonHideUnderline(
-                    child: new DropdownButton<Currency>(
-                      icon: Icon(
-                        Icons.arrow_downward,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      value: _currency,
-                      isDense: true,
-                      onChanged: (Currency newValue) {
-                        setState(() {
-                          _currency = newValue;
-                          formState.didChange(newValue);
-                        });
-                      },
-                      items: getCurrencyDropdownItems(state),
-                    ),
-                  ),
-                );
-              },
-              validator: (val) {
-                return (val == null) ? 'Please select a currency' : null;
-              },
-            );
+            return CurrencyDropdownField(
+                currencies: state.currencies,
+                label: 'Currency',
+                callback: (newValue) {
+                  setState(() {
+                    _currency = newValue;
+                  });
+                });
           }
           return Container();
         });
-  }
-
-  List<DropdownMenuItem<Currency>> getCurrencyDropdownItems(
-      CurrencyLoaded state) {
-    return state.currencies
-        .map<DropdownMenuItem<Currency>>((Currency currency) {
-      return DropdownMenuItem<Currency>(
-        value: currency,
-        child: Text(currency.name),
-      );
-    }).toList();
   }
 
   Widget _createUserDropDownList(BuildContext context) {
