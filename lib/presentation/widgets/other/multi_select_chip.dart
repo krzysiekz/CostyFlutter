@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class MultiSelectChip<T> extends StatefulWidget {
-  final List<T> userList;
+  final Iterable<T> userList;
   final Function(List<T>) onSelectionChanged;
 
   MultiSelectChip(this.userList, {this.onSelectionChanged});
@@ -41,14 +41,40 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
         ),
       ));
     });
-
     return choices;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: _buildChoiceList(),
+    return Column(
+      children: <Widget>[
+        ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+              child: Text("Select all"),
+              onPressed: () {
+                setState(() {
+                  _selectedItems.addAll(widget.userList);
+                  widget.onSelectionChanged(_selectedItems);
+                });
+              },
+            ),
+            FlatButton(
+              child: Text("Select none"),
+              onPressed: () {
+                setState(() {
+                  _selectedItems.clear();
+                  widget.onSelectionChanged(_selectedItems);
+                });
+              },
+            )
+          ],
+        ),
+        Wrap(
+          children: _buildChoiceList(),
+        ),
+      ],
     );
   }
 }

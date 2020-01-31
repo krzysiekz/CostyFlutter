@@ -94,15 +94,22 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             controller: _descriptionController,
             validator: (val) => val.isEmpty ? 'Description is required' : null,
           ),
-          CustomTextField(
-            icon: Icons.attach_money,
-            hintText: 'Enter amount',
-            labelText: 'Amount',
-            controller: _amountController,
-            validator: _numberValidator,
-            textInputType: TextInputType.numberWithOptions(decimal: true),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Expanded(
+                child: CustomTextField(
+                  icon: Icons.attach_money,
+                  hintText: 'Enter amount',
+                  labelText: 'Amount',
+                  controller: _amountController,
+                  validator: _numberValidator,
+                  textInputType: TextInputType.numberWithOptions(decimal: true),
+                ),
+              ),
+              Expanded(child: _createCurrencyDropDownList(context)),
+            ],
           ),
-          _createCurrencyDropDownList(context),
           _createUserDropDownList(context),
           _createReceiversWidget(context),
           const SizedBox(
