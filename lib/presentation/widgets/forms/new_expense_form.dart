@@ -34,6 +34,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
     BlocProvider.of<CurrencyBloc>(context).add(GetCurrenciesEvent());
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
     _currency = widget.project.defaultCurrency;
+    _selectedDate = DateTime.now();
     super.initState();
   }
 
@@ -129,26 +130,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               Expanded(child: _createCurrencyDropDownList(context)),
             ],
           ),
-          Container(
-            height: 70,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(_selectedDate == null
-                      ? 'No Date Chosen'
-                      : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
-                ),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  onPressed: _presentDatePicker,
-                  child: Text(
-                    "Choose Date",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          _createDatePicker(context),
           _createUserDropDownList(context),
           _createReceiversWidget(context),
           const SizedBox(
@@ -162,6 +144,46 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _createDatePicker(BuildContext context) {
+    return FormField<DateTime>(
+      initialValue: DateTime.now(),
+      builder: (FormFieldState<DateTime> formState) {
+        return InputDecorator(
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.date_range,
+                size: 28,
+                color: Theme.of(context).primaryColor,
+              ),
+              errorText: formState.hasError ? formState.errorText : null,
+            ),
+            child: Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(_selectedDate == null
+                        ? 'No Date Chosen'
+                        : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                  ),
+                  FlatButton(
+                    textColor: Theme.of(context).primaryColor,
+                    onPressed: _presentDatePicker,
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ));
+      },
+      validator: (val) {
+        return (val == null) ? 'Please select date' : null;
+      },
     );
   }
 
