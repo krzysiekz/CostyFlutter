@@ -17,6 +17,7 @@ abstract class ExpensesRepository {
     String description,
     User user,
     List<User> receivers,
+    DateTime dateTime
   });
 
   Future<Either<Failure, int>> modifyExpense(UserExpense expense);

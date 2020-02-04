@@ -30,6 +30,7 @@ void main() {
       name: 'Test project',
       defaultCurrency: Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
+  final tDateTime = DateTime.now();
   final tExpensesList = [
     UserExpense(
         id: 1,
@@ -37,14 +38,16 @@ void main() {
         currency: currency,
         description: 'First Expense',
         user: john,
-        receivers: [john, kate]),
+        receivers: [john, kate],
+        dateTime: tDateTime),
     UserExpense(
         id: 2,
         amount: Decimal.fromInt(20),
         currency: currency,
         description: 'Second Expense',
         user: kate,
-        receivers: [john, kate]),
+        receivers: [john, kate],
+        dateTime: tDateTime),
   ];
 
   test('should get expenses for project', () async {

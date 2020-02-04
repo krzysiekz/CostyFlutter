@@ -38,6 +38,7 @@ void main() {
   final tCurrency = Currency(name: 'USD');
   final tDescription = 'First Expense';
   final tExpenseId = 1;
+  final tDateTime = DateTime.now();
 
   final tExpensesList = [
     UserExpense(
@@ -46,14 +47,16 @@ void main() {
         currency: tCurrency,
         description: 'First Expense',
         user: john,
-        receivers: [john, kate]),
+        receivers: [john, kate],
+        dateTime: tDateTime),
     UserExpense(
         id: 2,
         amount: Decimal.fromInt(20),
         currency: tCurrency,
         description: 'Second Expense',
         user: kate,
-        receivers: [john, kate]),
+        receivers: [john, kate],
+        dateTime: tDateTime),
   ];
 
   final tExpensesEntities = {
@@ -63,14 +66,16 @@ void main() {
         currency: tCurrency.name,
         description: 'First Expense',
         userId: john.id,
-        receiversIds: [john.id, kate.id]),
+        receiversIds: [john.id, kate.id],
+        dateTime: tDateTime.toIso8601String()),
     2: UserExpenseEntity(
         projectId: tProject.id,
         amount: Decimal.fromInt(20),
         currency: tCurrency.name,
         description: 'Second Expense',
         userId: kate.id,
-        receiversIds: [john.id, kate.id]),
+        receiversIds: [john.id, kate.id],
+        dateTime: tDateTime.toIso8601String()),
   };
 
   test('should return list of expenses', () async {
@@ -100,7 +105,8 @@ void main() {
         user: john,
         currency: tCurrency,
         amount: tAmount,
-        description: tDescription);
+        description: tDescription,
+        dateTime: tDateTime);
     //assert
     expect(result, tExpenseId);
 
@@ -108,13 +114,13 @@ void main() {
     verifyNoMoreInteractions(mockHiveOperations);
 
     verify(mockBox.add(UserExpenseEntity(
-      userId: john.id,
-      projectId: tProject.id,
-      amount: tAmount,
-      currency: tCurrency.name,
-      description: tDescription,
-      receiversIds: [john.id, kate.id],
-    )));
+        userId: john.id,
+        projectId: tProject.id,
+        amount: tAmount,
+        currency: tCurrency.name,
+        description: tDescription,
+        receiversIds: [john.id, kate.id],
+        dateTime: tDateTime.toIso8601String())));
     verifyNoMoreInteractions(mockBox);
   });
 
@@ -151,13 +157,13 @@ void main() {
     verify(mockBox.put(
         tProject.id,
         UserExpenseEntity(
-          userId: john.id,
-          projectId: tProject.id,
-          amount: tAmount,
-          currency: tCurrency.name,
-          description: tDescription,
-          receiversIds: [john.id, kate.id],
-        )));
+            userId: john.id,
+            projectId: tProject.id,
+            amount: tAmount,
+            currency: tCurrency.name,
+            description: tDescription,
+            receiversIds: [john.id, kate.id],
+            dateTime: tDateTime.toIso8601String())));
     verifyNoMoreInteractions(mockBox);
   });
 }

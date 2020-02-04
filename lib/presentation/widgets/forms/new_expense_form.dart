@@ -6,6 +6,7 @@ import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
 
@@ -24,6 +25,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   var _currency;
   var _user;
   var _receivers;
+  var _selectedDate;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -46,11 +48,28 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           currency: _currency,
           user: _user,
           receivers: _receivers,
-          description: enteredDescription));
+          description: enteredDescription,
+          dateTime: _selectedDate));
       BlocProvider.of<ExpenseBloc>(context)
           .add(GetExpensesEvent(widget.project));
       Navigator.of(context).pop();
     }
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   String _numberValidator(String value) {
@@ -110,6 +129,26 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               Expanded(child: _createCurrencyDropDownList(context)),
             ],
           ),
+          Container(
+            height: 70,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(_selectedDate == null
+                      ? 'No Date Chosen'
+                      : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                ),
+                FlatButton(
+                  textColor: Theme.of(context).primaryColor,
+                  onPressed: _presentDatePicker,
+                  child: Text(
+                    "Choose Date",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
           _createUserDropDownList(context),
           _createReceiversWidget(context),
           const SizedBox(
@@ -134,6 +173,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             return CurrencyDropdownField(
                 currencies: state.currencies,
                 label: 'Currency',
+                initialValue: widget.project.defaultCurrency,
                 callback: (newValue) {
                   setState(() {
                     _currency = newValue;

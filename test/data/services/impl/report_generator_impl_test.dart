@@ -18,6 +18,7 @@ void main() {
   Currency eur;
   Currency pln;
   DateTime projectCreationDateTime;
+  DateTime expenseDateTime;
 
   setUp(() {
     reportGenerator = ReportGeneratorImpl();
@@ -30,6 +31,7 @@ void main() {
     pln = Currency(name: 'PLN');
 
     projectCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
+    expenseDateTime = DateTime.now();
   });
 
   UserExpense createExpense(
@@ -40,16 +42,18 @@ void main() {
         amount: Decimal.fromInt(amount),
         currency: currency,
         description: "Test",
-        user: sender);
+        user: sender,
+        dateTime: expenseDateTime);
   }
 
   ReportEntry createReportEntry(
       User sender, User receiver, Currency currency, double amount) {
     return ReportEntry(
-        receiver: receiver,
-        amount: Decimal.parse(amount.toString()),
-        currency: currency,
-        sender: sender);
+      receiver: receiver,
+      amount: Decimal.parse(amount.toString()),
+      currency: currency,
+      sender: sender,
+    );
   }
 
   test('should return report with proper project', () async {

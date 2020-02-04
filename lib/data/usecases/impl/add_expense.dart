@@ -23,7 +23,8 @@ class AddExpense implements UseCase<int, AddExpenseParams> {
         currency: params.currency,
         description: params.description,
         user: params.user,
-        receivers: params.receivers);
+        receivers: params.receivers,
+        dateTime: params.dateTime);
   }
 }
 
@@ -34,6 +35,7 @@ class AddExpenseParams extends Equatable {
   final Currency currency;
   final User user;
   final List<User> receivers;
+  final DateTime dateTime;
 
   AddExpenseParams(
       {@required this.amount,
@@ -41,7 +43,8 @@ class AddExpenseParams extends Equatable {
       @required this.currency,
       @required this.user,
       @required this.receivers,
-      @required this.project});
+      @required this.project,
+      @required this.dateTime});
 
   @override
   List<Object> get props => [
@@ -50,6 +53,7 @@ class AddExpenseParams extends Equatable {
         this.currency,
         this.user,
         this.receivers,
-        this.project
+        this.project,
+        this.dateTime
       ];
 }

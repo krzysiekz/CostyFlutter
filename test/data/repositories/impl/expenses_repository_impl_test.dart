@@ -42,6 +42,7 @@ void main() {
   final tDescription = 'First Expense';
   final tReceivers = [john, kate];
   final tExpenseId = 1;
+  final DateTime tDateTime = DateTime.now();
 
   final tExpensesList = [
     UserExpense(
@@ -50,14 +51,16 @@ void main() {
         currency: tCurrency,
         description: 'First Expense',
         user: john,
-        receivers: [john, kate]),
+        receivers: [john, kate],
+        dateTime: tDateTime),
     UserExpense(
         id: 2,
         amount: Decimal.fromInt(20),
         currency: tCurrency,
         description: 'Second Expense',
         user: kate,
-        receivers: [john, kate]),
+        receivers: [john, kate],
+        dateTime: tDateTime),
   ];
 
   test('should return object from data source when adding expense', () async {

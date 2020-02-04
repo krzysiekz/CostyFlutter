@@ -36,6 +36,7 @@ class AddExpenseEvent extends ExpenseEvent {
   final Currency currency;
   final User user;
   final List<User> receivers;
+  final DateTime dateTime;
 
   AddExpenseEvent(
       {@required this.project,
@@ -43,7 +44,8 @@ class AddExpenseEvent extends ExpenseEvent {
       @required this.description,
       @required this.currency,
       @required this.user,
-      @required this.receivers});
+      @required this.receivers,
+      @required this.dateTime});
 
   @override
   List<Object> get props => [
@@ -52,7 +54,8 @@ class AddExpenseEvent extends ExpenseEvent {
         this.description,
         this.currency,
         this.user,
-        this.receivers
+        this.receivers,
+        this.dateTime
       ];
 }
 

@@ -33,6 +33,7 @@ void main() {
   final tDescription = 'First Expense';
   final tReceivers = [john, kate];
   final tExpenseId = 1;
+  final tDateTime = DateTime.now();
 
   test('should add expense to project', () async {
     //arrange
@@ -42,7 +43,8 @@ void main() {
             currency: anyNamed('currency'),
             description: anyNamed('description'),
             user: anyNamed('user'),
-            receivers: anyNamed('receivers')))
+            receivers: anyNamed('receivers'),
+            dateTime: anyNamed('dateTime')))
         .thenAnswer((_) async => Right(tExpenseId));
     //act
     final result = await addExpense.call(AddExpenseParams(
@@ -51,7 +53,8 @@ void main() {
         currency: tCurrency,
         description: tDescription,
         user: john,
-        receivers: tReceivers));
+        receivers: tReceivers,
+        dateTime: tDateTime));
     //assert
     expect(result, Right(tExpenseId));
     verify(mockExpensesRepository.addExpense(
@@ -60,7 +63,8 @@ void main() {
         currency: tCurrency,
         description: tDescription,
         user: john,
-        receivers: tReceivers));
+        receivers: tReceivers,
+        dateTime: tDateTime));
     verifyNoMoreInteractions(mockExpensesRepository);
   });
 }

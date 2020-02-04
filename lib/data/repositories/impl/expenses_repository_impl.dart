@@ -23,7 +23,8 @@ class ExpensesRepositoryImpl implements ExpensesRepository {
       Currency currency,
       String description,
       User user,
-      List<User> receivers}) {
+      List<User> receivers,
+      DateTime dateTime}) {
     return _getResponse(() {
       return expensesDataSource.addExpense(
           project: project,
@@ -31,7 +32,8 @@ class ExpensesRepositoryImpl implements ExpensesRepository {
           currency: currency,
           description: description,
           user: user,
-          receivers: receivers);
+          receivers: receivers,
+          dateTime: dateTime);
     });
   }
 

@@ -16,14 +16,14 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
   ExpensesDataSourceImpl(this._hiveOperations);
 
   @override
-  Future<int> addExpense({
-    Project project,
-    Decimal amount,
-    Currency currency,
-    String description,
-    User user,
-    List<User> receivers,
-  }) async {
+  Future<int> addExpense(
+      {Project project,
+      Decimal amount,
+      Currency currency,
+      String description,
+      User user,
+      List<User> receivers,
+      DateTime dateTime}) async {
     final box = await _hiveOperations.openBox(_BOX_NAME);
     final entity = UserExpenseEntity(
         projectId: project.id,
@@ -31,7 +31,8 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
         amount: amount,
         currency: currency.name,
         description: description,
-        receiversIds: receivers.map((r) => r.id).toList());
+        receiversIds: receivers.map((r) => r.id).toList(),
+        dateTime: dateTime.toIso8601String());
     return box.add(entity);
   }
 
@@ -63,7 +64,8 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
         amount: expense.amount,
         currency: expense.currency.name,
         description: expense.description,
-        receiversIds: expense.receivers.map((r) => r.id).toList());
+        receiversIds: expense.receivers.map((r) => r.id).toList(),
+        dateTime: expense.dateTime.toIso8601String());
     await box.put(expense.id, newEntity);
     return expense.id;
   }
@@ -77,6 +79,8 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
         currency: Currency(name: entity.currency),
         user: users.firstWhere((user) => user.id == entity.userId),
         receivers: entity.receiversIds
-            .map((id) => users.firstWhere((u) => u.id == id)).toList());
+            .map((id) => users.firstWhere((u) => u.id == id))
+            .toList(),
+        dateTime: DateTime.parse(entity.dateTime));
   }
 }

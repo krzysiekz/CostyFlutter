@@ -6,9 +6,14 @@ class CurrencyDropdownField extends StatefulWidget {
   final List<Currency> currencies;
   final String label;
   final Function callback;
+  final Currency initialValue;
 
   const CurrencyDropdownField(
-      {Key key, this.currencies, this.label, this.callback})
+      {Key key,
+      @required this.currencies,
+      @required this.label,
+      @required this.callback,
+      this.initialValue})
       : super(key: key);
 
   @override
@@ -19,8 +24,15 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
   var _selected;
 
   @override
+  void initState() {
+    _selected = widget.initialValue;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormField<Currency>(
+      initialValue: widget.initialValue,
       builder: (FormFieldState<Currency> formState) {
         return InputDecorator(
           decoration: InputDecoration(

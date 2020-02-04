@@ -25,13 +25,17 @@ class UserExpenseEntity extends Equatable {
   @HiveField(5)
   final int projectId;
 
+  @HiveField(6)
+  final String dateTime;
+
   UserExpenseEntity(
       {@required this.receiversIds,
       @required this.userId,
       @required this.amount,
       @required this.description,
       @required this.currency,
-      @required this.projectId});
+      @required this.projectId,
+      @required this.dateTime});
 
   @override
   List<Object> get props => [
@@ -40,6 +44,7 @@ class UserExpenseEntity extends Equatable {
         this.amount,
         this.description,
         this.currency,
-        this.projectId
+        this.projectId,
+        this.dateTime
       ];
 }

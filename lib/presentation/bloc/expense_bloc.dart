@@ -67,7 +67,8 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
         currency: event.currency,
         description: event.description,
         receivers: event.receivers,
-        user: event.user));
+        user: event.user,
+        dateTime: event.dateTime));
     yield dataOrFailure.fold(
       (failure) => ExpenseError(mapFailureToMessage(failure)),
       (expenseId) => ExpenseAdded(expenseId),

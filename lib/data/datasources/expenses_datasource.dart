@@ -8,14 +8,14 @@ import '../models/user_expense.dart';
 abstract class ExpensesDataSource {
   Future<List<UserExpense>> getExpenses(Project project, List<User> users);
 
-  Future<int> addExpense({
-    Project project,
-    Decimal amount,
-    Currency currency,
-    String description,
-    User user,
-    List<User> receivers,
-  });
+  Future<int> addExpense(
+      {Project project,
+      Decimal amount,
+      Currency currency,
+      String description,
+      User user,
+      List<User> receivers,
+      DateTime dateTime});
 
   Future<int> modifyExpense(UserExpense expense);
 

@@ -12,6 +12,7 @@ class UserExpense extends Equatable {
   final Decimal amount;
   final String description;
   final Currency currency;
+  final DateTime dateTime;
 
   UserExpense(
       {@required this.id,
@@ -19,14 +20,21 @@ class UserExpense extends Equatable {
       @required this.user,
       @required this.amount,
       @required this.description,
-      @required this.currency});
+      @required this.currency,
+      @required this.dateTime});
 
   @override
-  List<Object> get props =>
-      [this.receivers, this.user, this.amount, this.description, this.currency];
+  List<Object> get props => [
+        this.receivers,
+        this.user,
+        this.amount,
+        this.description,
+        this.currency,
+        this.dateTime
+      ];
 
   @override
   String toString() {
-    return "UserExpense[id: $id, user: $user, amount: $amount, currency: $currency, description: $description, receivers: $receivers]";
+    return 'UserExpense{id: $id, receivers: $receivers, user: $user, amount: $amount, description: $description, currency: $currency, dateTime: $dateTime}';
   }
 }

@@ -22,6 +22,7 @@ void main() {
   final john = User(id: 1, name: 'John');
   final kate = User(id: 2, name: 'Kate');
   final currency = Currency(name: 'USD');
+  final dateTime = DateTime.now();
 
   final tExpense = UserExpense(
       id: 1,
@@ -29,14 +30,16 @@ void main() {
       currency: currency,
       description: 'First Expense',
       user: john,
-      receivers: [john, kate]);
+      receivers: [john, kate],
+      dateTime: dateTime);
 
   test('should modify expense', () async {
     //arrange
     when(mockExpensesRepository.modifyExpense(tExpense))
         .thenAnswer((_) async => Right(tExpense.id));
     //act
-    final result = await modifyExpense.call(ModifyExpenseParams(expense: tExpense));
+    final result =
+        await modifyExpense.call(ModifyExpenseParams(expense: tExpense));
     //assert
     expect(result, Right(tExpense.id));
     verify(mockExpensesRepository.modifyExpense(tExpense));
