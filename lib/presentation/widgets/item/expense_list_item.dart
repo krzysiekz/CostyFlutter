@@ -22,14 +22,19 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
       elevation: 3,
       margin: EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Theme.of(context).accentColor,
-          radius: 35,
+        leading: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            color: Theme.of(context).accentColor,
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5),
             child: FittedBox(
               child: Text(widget.userExpense.amount.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              fit: BoxFit.scaleDown,
             ),
           ),
         ),
