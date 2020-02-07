@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +13,7 @@ class UserExpenseEntity extends Equatable {
   final int userId;
 
   @HiveField(2)
-  final Decimal amount;
+  final String amount;
 
   @HiveField(3)
   final String description;

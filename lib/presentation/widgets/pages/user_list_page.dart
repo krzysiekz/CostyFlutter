@@ -10,7 +10,7 @@ import '../utilities/dialog_utilities.dart';
 class UserListPage extends StatefulWidget {
   final Project project;
 
-  UserListPage({Key key, this.project}) : super(key: key);
+  UserListPage({Key key, @required this.project}) : super(key: key);
 
   @override
   _UserListPageState createState() => _UserListPageState();

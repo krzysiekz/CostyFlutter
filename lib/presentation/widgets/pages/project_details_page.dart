@@ -132,7 +132,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           controller: _tabController,
           children: <Widget>[
             Center(child: UserListPage(project: project)),
-            Center(child: ExpensesListPage()),
+            Center(child: ExpensesListPage(project: project)),
             Center(child: ReportPage()),
           ],
         ),

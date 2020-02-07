@@ -17,6 +17,9 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
   @override
   void initState() {
     _selectedItems = widget.userList;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onSelectionChanged(_selectedItems);
+    });
     super.initState();
   }
 

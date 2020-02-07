@@ -62,7 +62,7 @@ void main() {
   final tExpensesEntities = {
     1: UserExpenseEntity(
         projectId: tProject.id,
-        amount: Decimal.fromInt(10),
+        amount: "10",
         currency: tCurrency.name,
         description: 'First Expense',
         userId: john.id,
@@ -70,7 +70,7 @@ void main() {
         dateTime: tDateTime.toIso8601String()),
     2: UserExpenseEntity(
         projectId: tProject.id,
-        amount: Decimal.fromInt(20),
+        amount: "20",
         currency: tCurrency.name,
         description: 'Second Expense',
         userId: kate.id,
@@ -116,7 +116,7 @@ void main() {
     verify(mockBox.add(UserExpenseEntity(
         userId: john.id,
         projectId: tProject.id,
-        amount: tAmount,
+        amount: tAmount.toString(),
         currency: tCurrency.name,
         description: tDescription,
         receiversIds: [john.id, kate.id],
@@ -159,7 +159,7 @@ void main() {
         UserExpenseEntity(
             userId: john.id,
             projectId: tProject.id,
-            amount: tAmount,
+            amount: tAmount.toString(),
             currency: tCurrency.name,
             description: tDescription,
             receiversIds: [john.id, kate.id],

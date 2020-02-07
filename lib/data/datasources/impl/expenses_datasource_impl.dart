@@ -28,12 +28,13 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
     final entity = UserExpenseEntity(
         projectId: project.id,
         userId: user.id,
-        amount: amount,
+        amount: amount.toString(),
         currency: currency.name,
         description: description,
         receiversIds: receivers.map((r) => r.id).toList(),
         dateTime: dateTime.toIso8601String());
-    return box.add(entity);
+    int response = await box.add(entity);
+    return response;
   }
 
   @override
@@ -61,7 +62,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
     final newEntity = UserExpenseEntity(
         projectId: oldEntity.projectId,
         userId: expense.user.id,
-        amount: expense.amount,
+        amount: expense.amount.toString(),
         currency: expense.currency.name,
         description: expense.description,
         receiversIds: expense.receivers.map((r) => r.id).toList(),
@@ -75,7 +76,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
     return UserExpense(
         id: e.key,
         description: entity.description,
-        amount: entity.amount,
+        amount: Decimal.parse(entity.amount),
         currency: Currency(name: entity.currency),
         user: users.firstWhere((user) => user.id == entity.userId),
         receivers: entity.receiversIds

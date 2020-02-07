@@ -16,7 +16,7 @@ class UserExpenseEntityAdapter extends TypeAdapter<UserExpenseEntity> {
     return UserExpenseEntity(
       receiversIds: (fields[0] as List)?.cast<int>(),
       userId: fields[1] as int,
-      amount: fields[2] as Decimal,
+      amount: fields[2] as String,
       description: fields[3] as String,
       currency: fields[4] as String,
       projectId: fields[5] as int,
