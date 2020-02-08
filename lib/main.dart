@@ -61,6 +61,9 @@ class _MyAppState extends State<MyApp> {
           BlocProvider<ExpenseBloc>(
             create: (BuildContext context) => ic<ExpenseBloc>(),
           ),
+          BlocProvider<ReportBloc>(
+            create: (BuildContext context) => ic<ReportBloc>(),
+          ),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

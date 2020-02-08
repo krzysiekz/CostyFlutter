@@ -3,6 +3,7 @@ import 'package:costy/data/errors/failures.dart';
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/report.dart';
+import 'package:costy/data/usecases/impl/get_expenses.dart';
 import 'package:costy/data/usecases/impl/get_report.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -11,13 +12,17 @@ import 'package:mockito/mockito.dart';
 
 class MockGetReport extends Mock implements GetReport {}
 
+class MockGetExpenses extends Mock implements GetExpenses {}
+
 void main() {
   MockGetReport mockGetReport;
+  MockGetExpenses mockGetExpenses;
   ReportBloc bloc;
 
   setUp(() {
     mockGetReport = MockGetReport();
-    bloc = ReportBloc(mockGetReport);
+    mockGetExpenses = MockGetExpenses();
+    bloc = ReportBloc(mockGetReport, mockGetExpenses);
   });
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
@@ -35,15 +40,31 @@ void main() {
   blocTest('should emit proper states when getting report',
       build: () {
         when(mockGetReport.call(any)).thenAnswer((_) async => Right(tReport));
+        when(mockGetExpenses.call(any)).thenAnswer((_) async => Right(List()));
         return bloc;
       },
       act: (bloc) => bloc.add(GetReportEvent(tProject)),
       expect: [ReportEmpty(), ReportLoading(), ReportLoaded(tReport)]);
 
-  blocTest('should emit proper states in case or error',
+  blocTest('should emit proper states in case or error when generating report',
       build: () {
         when(mockGetReport.call(any))
             .thenAnswer((_) async => Left(ReportGenerationFailure()));
+        when(mockGetExpenses.call(any)).thenAnswer((_) async => Right(List()));
+        return bloc;
+      },
+      act: (bloc) => bloc.add(GetReportEvent(tProject)),
+      expect: [
+        ReportEmpty(),
+        ReportLoading(),
+        ReportError(REPORT_GENERATION_FAILURE_MESSAGE)
+      ]);
+
+  blocTest('should emit proper states in case or error when getting expenses',
+      build: () {
+        when(mockGetReport.call(any)).thenAnswer((_) async => Right(tReport));
+        when(mockGetExpenses.call(any))
+            .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(GetReportEvent(tProject)),

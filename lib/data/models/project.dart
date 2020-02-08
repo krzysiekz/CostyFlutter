@@ -2,12 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import 'currency.dart';
-import 'user.dart';
 import 'user_expense.dart';
 
 class Project extends Equatable {
   final List<UserExpense> expenses = [];
-  final List<User> users = [];
 
   final int id;
   final String name;
@@ -30,6 +28,6 @@ class Project extends Equatable {
 
   @override
   String toString() {
-    return "Project[id: $id, name: $name, users: $users, expenses: $expenses, defailtCurrency: $defaultCurrency]";
+    return 'Project{expenses: $expenses, id: $id, name: $name, defaultCurrency: $defaultCurrency, creationDateTime: $creationDateTime}';
   }
 }

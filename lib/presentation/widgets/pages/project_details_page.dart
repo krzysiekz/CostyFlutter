@@ -133,7 +133,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           children: <Widget>[
             Center(child: UserListPage(project: project)),
             Center(child: ExpensesListPage(project: project)),
-            Center(child: ReportPage()),
+            Center(child: ReportPage(project: project)),
           ],
         ),
         floatingActionButton: _bottomButtons(project, context),

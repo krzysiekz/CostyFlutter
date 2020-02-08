@@ -112,5 +112,5 @@ void registerBloc() {
       modifyProject: ic()));
   ic.registerFactory(() => UserBloc(
       addUser: ic(), deleteUser: ic(), getUsers: ic(), modifyUser: ic()));
-  ic.registerFactory(() => ReportBloc(ic()));
+  ic.registerFactory(() => ReportBloc(ic(), ic()));
 }

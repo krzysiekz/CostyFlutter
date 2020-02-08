@@ -23,8 +23,8 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
       margin: EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
         leading: Container(
-          width: 60,
-          height: 60,
+          width: 65,
+          height: 65,
           decoration: BoxDecoration(
             color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(15),
@@ -32,8 +32,16 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
           child: Padding(
             padding: EdgeInsets.all(5),
             child: FittedBox(
-              child: Text(widget.userExpense.amount.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              child: Column(
+                children: <Widget>[
+                  Text(widget.userExpense.amount.toString(),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  Text(widget.userExpense.currency.name,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                ],
+              ),
               fit: BoxFit.scaleDown,
             ),
           ),
@@ -52,6 +60,10 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             Text(
               '${widget.userExpense.user.name} => ${widget.userExpense.receivers.map((user) => user.name).toList().join(', ')}',
               style: TextStyle(color: Colors.white70),
+            ),
+            Divider(
+              color: Theme.of(context).accentColor,
+              thickness: 0.8,
             ),
             Text(DateFormat.yMMMd().format(widget.userExpense.dateTime),
                 style: TextStyle(color: Colors.white70)),
