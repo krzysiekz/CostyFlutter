@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 
@@ -42,6 +43,7 @@ class ReportGeneratorImpl implements ReportGenerator {
 
     _createReportEntries(calculationsMap, report);
     _removeRedundantEntriesFromCycles(report);
+    report.entries.sort((e1, e2) => e1.sender.name.compareTo(e2.sender.name));
 
     return report;
   }
@@ -52,7 +54,7 @@ class ReportGeneratorImpl implements ReportGenerator {
     while (_doesCycleExist(report)) {
       for (ReportEntry entry in report.entries) {
         final cycle = _findCycle(
-            entry.sender, entry.sender, report.entries, entry.currency);
+            entry.sender, entry.sender, report.entries, entry.currency, []);
         if (cycle.isNotEmpty) {
           _processCycle(cycle, report);
           break;
@@ -63,11 +65,8 @@ class ReportGeneratorImpl implements ReportGenerator {
 
   bool _doesCycleExist(Report report) {
     return report.entries.any((entry) => _findCycle(
-          entry.sender,
-          entry.sender,
-          report.entries,
-          entry.currency,
-        ).isNotEmpty);
+            entry.sender, entry.sender, report.entries, entry.currency, [])
+        .isNotEmpty);
   }
 
   void _createReportEntries(
@@ -116,13 +115,23 @@ class ReportGeneratorImpl implements ReportGenerator {
       cycle.reduce((curr, next) => curr.amount < next.amount ? curr : next);
 
   List<ReportEntry> _findCycle(
-    User root,
-    User current,
-    List<ReportEntry> entries,
-    Currency currency,
-  ) {
+      User root,
+      User current,
+      List<ReportEntry> entries,
+      Currency currency,
+      List<Tuple2<User, User>> visited) {
     final connected = _findConnected(current, currency, entries);
-    if (connected.isEmpty) return [];
+
+    final currentPair = Tuple2(root, current);
+
+    if (connected.isEmpty) {
+      visited.add(currentPair);
+      return [];
+    }
+
+    if (visited.contains(currentPair)) {
+      return [];
+    }
 
     final rootConnection = connected.firstWhere(
       (entry) => entry.receiver == root,
@@ -132,10 +141,13 @@ class ReportGeneratorImpl implements ReportGenerator {
     if (rootConnection != null) {
       return [rootConnection];
     } else {
+      visited.add(currentPair);
       for (ReportEntry entry in connected) {
-        final cycle = _findCycle(root, entry.receiver, entries, currency);
+        final cycle =
+            _findCycle(root, entry.receiver, entries, currency, visited);
         if (cycle.isNotEmpty) {
           cycle.add(entry);
+          visited.add(currentPair);
           return cycle;
         }
       }

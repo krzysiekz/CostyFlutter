@@ -27,13 +27,18 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
   Stream<ReportState> _processGetReportEvent(GetReportEvent event) async* {
     yield ReportLoading();
 
-    final Project project = event.project;
     final eitherExpenses =
         await getExpenses.call(GetExpensesParams(project: event.project));
 
     if (eitherExpenses.isLeft()) {
       yield ReportError(REPORT_GENERATION_FAILURE_MESSAGE);
     } else {
+      final Project project = new Project(
+          id: event.project.id,
+          name: event.project.name,
+          defaultCurrency: event.project.defaultCurrency,
+          creationDateTime: event.project.creationDateTime);
+
       List<UserExpense> expenses = eitherExpenses.getOrElse(() => List());
       expenses.forEach((expense) => project.addExpense(expense));
 

@@ -97,8 +97,8 @@ void main() {
     project.addExpense(createExpense(kate, [john, kate], pln, 20));
 
     final expectedReport = Report(project: project);
-    expectedReport.addEntry(createReportEntry(kate, john, eur, 25));
     expectedReport.addEntry(createReportEntry(john, kate, pln, 10));
+    expectedReport.addEntry(createReportEntry(kate, john, eur, 25));
     //act
     final result = await reportGenerator.generate(project);
     //assert
@@ -195,8 +195,8 @@ void main() {
 
     final expectedReport = Report(project: project);
     expectedReport.addEntry(createReportEntry(john, kate, eur, 2.5));
-    expectedReport.addEntry(createReportEntry(kate, bob, eur, 5));
     expectedReport.addEntry(createReportEntry(john, bob, eur, 15));
+    expectedReport.addEntry(createReportEntry(kate, bob, eur, 5));
     //act
     final result = await reportGenerator.generate(project);
     //assert
@@ -220,9 +220,9 @@ void main() {
     final expectedReport = Report(project: project);
     expectedReport.addEntry(createReportEntry(john, kate, eur, 3));
     expectedReport.addEntry(createReportEntry(john, bob, eur, 6));
-    expectedReport.addEntry(createReportEntry(kate, bob, eur, 3));
     expectedReport.addEntry(createReportEntry(john, kate, pln, 3));
     expectedReport.addEntry(createReportEntry(john, bob, pln, 6));
+    expectedReport.addEntry(createReportEntry(kate, bob, eur, 3));
     expectedReport.addEntry(createReportEntry(kate, bob, pln, 3));
     //act
     final result = await reportGenerator.generate(project);
