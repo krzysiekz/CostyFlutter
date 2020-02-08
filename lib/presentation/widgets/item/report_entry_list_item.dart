@@ -45,9 +45,18 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
             ),
           ),
         ),
-        title: Text(
-          'From: ${widget.reportEntry.sender.name}',
-          style: TextStyle(color: Colors.white70),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'From: ${widget.reportEntry.sender.name}',
+              style: TextStyle(color: Colors.white70),
+            ),
+            Divider(
+              color: Theme.of(context).accentColor,
+              thickness: 0.8,
+            ),
+          ],
         ),
         subtitle: Text(
           'To: ${widget.reportEntry.receiver.name}',

@@ -30,10 +30,12 @@ class UsersDataSourceImpl implements UsersDataSource {
   Future<List<User>> getUsers(Project project) async {
     final box = await _hiveOperations.openBox(_BOX_NAME);
     final entityMap = box.toMap();
-    return entityMap.entries
+    var users = entityMap.entries
         .where((e) => (e.value as UserEntity).projectId == project.id)
         .map(_mapEntityToUser)
         .toList();
+    users.sort((u1, u2) => u1.name.compareTo(u2.name));
+    return users;
   }
 
   @override

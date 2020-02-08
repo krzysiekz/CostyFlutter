@@ -14,29 +14,23 @@ class UserListItem extends StatefulWidget {
 class _UserListItemState extends State<UserListItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: Column(
-        children: <Widget>[
-          Icon(
-            Icons.person,
-            color: Theme.of(context).accentColor,
-            size: 40,
-          ),
-          Expanded(
-            child: Text(
-              widget.user.name,
-              style: TextStyle(color: Colors.white70),
-              overflow: TextOverflow.fade,
-              maxLines: 1,
-              softWrap: false,
-            ),
-          )
-        ],
+    return Card(
+      color: Theme.of(context).primaryColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(20),
+      elevation: 3,
+      margin: EdgeInsets.symmetric(vertical: 5),
+      child: ListTile(
+        leading: Icon(
+          Icons.person,
+          color: Theme.of(context).accentColor,
+          size: 40,
+        ),
+        title: Text(
+          widget.user.name,
+          style: TextStyle(color: Colors.white70),
+        ),
       ),
     );
   }

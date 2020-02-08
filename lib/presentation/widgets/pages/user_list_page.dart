@@ -34,18 +34,12 @@ class _UserListPageState extends State<UserListPage> {
           if (state.users.isEmpty) {
             return const Text("No users to display.");
           }
-          return GridView.builder(
+          return ListView.builder(
             padding: const EdgeInsets.all(25),
             itemBuilder: (cts, index) {
               return UserListItem(user: state.users[index]);
             },
             itemCount: state.users.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-            ),
           );
         } else if (state is UserLoading) {
           return DialogUtilities.showLoadingIndicator(context);
