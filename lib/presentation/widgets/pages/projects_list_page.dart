@@ -39,7 +39,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         child: Icon(Icons.add),
         onPressed: () => _startAddNewProject(context),
       ),
-      body: buildBody(context),
+      body: Center(child: buildBody(context)),
     );
   }
 

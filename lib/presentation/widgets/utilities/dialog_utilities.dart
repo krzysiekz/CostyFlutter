@@ -52,4 +52,28 @@ class DialogUtilities {
       ));
     });
   }
+
+  static AlertDialog createDeleteConfirmationDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Confirm"),
+      content: const Text("Are you sure you wish to delete this item?"),
+      actions: <Widget>[
+        FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text("DELETE")),
+        FlatButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text("CANCEL"),
+        ),
+      ],
+    );
+  }
+
+  static Widget createStackBehindDismiss(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerRight,
+      padding: EdgeInsets.only(right: 20.0),
+      child: Icon(Icons.delete, color: Theme.of(context).errorColor),
+    );
+  }
 }

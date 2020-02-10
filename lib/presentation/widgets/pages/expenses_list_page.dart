@@ -36,7 +36,10 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
           return ListView.builder(
             padding: const EdgeInsets.all(25),
             itemBuilder: (cts, index) {
-              return ExpenseListItem(userExpense: state.expenses[index]);
+              return ExpenseListItem(
+                userExpense: state.expenses[index],
+                project: widget.project,
+              );
             },
             itemCount: state.expenses.length,
           );
@@ -51,6 +54,8 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
               context, 'Error', 'Cannot add expense');
         } else if (state is ExpenseAdded) {
           DialogUtilities.showSnackBar(context, 'Expense added.');
+        } else if (state is ExpenseDeleted) {
+          DialogUtilities.showSnackBar(context, 'Expense deleted.');
         }
       },
     );

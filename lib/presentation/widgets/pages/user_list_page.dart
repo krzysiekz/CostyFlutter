@@ -37,7 +37,10 @@ class _UserListPageState extends State<UserListPage> {
           return ListView.builder(
             padding: const EdgeInsets.all(25),
             itemBuilder: (cts, index) {
-              return UserListItem(user: state.users[index]);
+              return UserListItem(
+                user: state.users[index],
+                project: widget.project,
+              );
             },
             itemCount: state.users.length,
           );
@@ -51,6 +54,8 @@ class _UserListPageState extends State<UserListPage> {
           DialogUtilities.showAlertDialog(context, 'Error', 'Cannot add user');
         } else if (state is UserAdded) {
           DialogUtilities.showSnackBar(context, 'User added.');
+        } else if (state is UserDeleted) {
+          DialogUtilities.showSnackBar(context, 'User deleted.');
         }
       },
     );
