@@ -36,13 +36,14 @@ class _NewUserFormState extends State<NewUserForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Card(
+      elevation: 0,
       color: Theme.of(context).backgroundColor,
       child: Container(
         padding: EdgeInsets.only(
-          top: 10,
+          top: 5,
           left: 10,
           right: 10,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 5,
         ),
         child: _showForm(context),
       ),
@@ -63,7 +64,7 @@ class _NewUserFormState extends State<NewUserForm> {
             validator: (val) => val.isEmpty ? "User's name is required" : null,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           RaisedButton(
             child: const Text('Add User'),

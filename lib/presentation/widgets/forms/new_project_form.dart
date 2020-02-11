@@ -50,13 +50,14 @@ class _NewProjectFormState extends State<NewProjectForm> {
           bloc: BlocProvider.of<CurrencyBloc>(context),
           builder: (context, state) {
             return Card(
+              elevation: 0,
               color: Theme.of(context).backgroundColor,
               child: Container(
                 padding: EdgeInsets.only(
-                  top: 10,
+                  top: 5,
                   left: 10,
                   right: 10,
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 5,
                 ),
                 child: _buildForm(context, state),
               ),
@@ -87,7 +88,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             validator: (val) => val.isEmpty ? 'Project name is required' : null,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           CurrencyDropdownField(
               currencies: state.currencies,
@@ -98,7 +99,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 });
               }),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           RaisedButton(
             child: const Text('Add Project'),

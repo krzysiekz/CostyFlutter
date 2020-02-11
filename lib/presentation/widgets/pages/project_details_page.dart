@@ -40,6 +40,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   void _showAddPersonForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
       context: ctx,
       builder: (_) {
         return NewUserForm(project: project);
@@ -49,6 +53,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   void _showAddExpenseForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
       context: ctx,
       builder: (_) {
         return NewExpenseForm(project: project);

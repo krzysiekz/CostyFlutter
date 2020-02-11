@@ -38,7 +38,7 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
           decoration: InputDecoration(
             icon: Icon(
               Icons.monetization_on,
-              size: 28,
+              size: 26,
               color: Theme.of(context).primaryColor,
             ),
             labelText: widget.label,

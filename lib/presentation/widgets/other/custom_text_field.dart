@@ -31,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: InputDecoration(
         icon: Icon(
           widget.icon,
-          size: 28,
+          size: 26,
           color: Theme.of(context).primaryColor,
         ),
         hintText: widget.hintText,

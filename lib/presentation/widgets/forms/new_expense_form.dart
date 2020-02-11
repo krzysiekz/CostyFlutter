@@ -88,13 +88,14 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Card(
+      elevation: 0,
       color: Theme.of(context).backgroundColor,
       child: Container(
         padding: EdgeInsets.only(
-          top: 10,
+          top: 5,
           left: 10,
           right: 10,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 5,
         ),
         child: _showForm(context),
       ),
@@ -127,14 +128,21 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                   textInputType: TextInputType.numberWithOptions(decimal: true),
                 ),
               ),
+              const SizedBox(width: 15),
               Expanded(child: _createCurrencyDropDownList(context)),
             ],
           ),
-          _createDatePicker(context),
-          _createUserDropDownList(context),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Expanded(child: _createUserDropDownList(context)),
+              const SizedBox(width: 15),
+              Expanded(child: _createDatePicker(context)),
+            ],
+          ),
           _createReceiversWidget(context),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           RaisedButton(
             child: const Text('Add Expense'),
@@ -155,29 +163,18 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             decoration: InputDecoration(
               icon: Icon(
                 Icons.date_range,
-                size: 28,
+                size: 26,
                 color: Theme.of(context).primaryColor,
               ),
               errorText: formState.hasError ? formState.errorText : null,
             ),
             child: Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_selectedDate == null
-                        ? 'No Date Chosen'
-                        : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      "Choose Date",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
+              child: FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                onPressed: _presentDatePicker,
+                child: Text(_selectedDate == null
+                    ? 'No Date Chosen'
+                    : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
               ),
             ));
       },
@@ -224,7 +221,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           decoration: InputDecoration(
             icon: Icon(
               Icons.person,
-              size: 28,
+              size: 26,
               color: Theme.of(context).primaryColor,
             ),
             labelText: 'User',
@@ -279,7 +276,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                     decoration: InputDecoration(
                       icon: Icon(
                         Icons.group,
-                        size: 28,
+                        size: 26,
                         color: Theme.of(context).primaryColor,
                       ),
                       labelText: 'Receivers',

@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
             textTheme: ThemeData.light().textTheme.copyWith(
                   title: TextStyle(
                     fontFamily: 'OpenSans',
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   button: TextStyle(color: Colors.white),
@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
               textTheme: ThemeData.light().textTheme.copyWith(
                       title: TextStyle(
                     fontFamily: 'OpenSans',
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   )),
             ),
