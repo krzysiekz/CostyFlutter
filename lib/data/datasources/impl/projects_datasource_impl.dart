@@ -1,8 +1,13 @@
+import 'package:costy/data/datasources/entities/user_entity.dart';
+import 'package:costy/data/datasources/entities/user_expense_entity.dart';
+import 'package:costy/data/datasources/impl/users_datasource_impl.dart';
+
 import '../../models/currency.dart';
 import '../../models/project.dart';
 import '../entities/project_entity.dart';
 import '../hive_operations.dart';
 import '../projects_datasource.dart';
+import 'expenses_datasource_impl.dart';
 
 class ProjectsDataSourceImpl implements ProjectsDataSource {
   static const _BOX_NAME = 'projects';
@@ -27,9 +32,30 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
 
   @override
   Future<int> deleteProject(int projectId) async {
+    await deleteExpenses(projectId);
+    await deleteUsers(projectId);
+
     final box = await _hiveOperations.openBox(_BOX_NAME);
     await box.delete(projectId);
     return projectId;
+  }
+
+  Future deleteExpenses(int projectId) async {
+    final expensesBox =
+        await _hiveOperations.openBox(ExpensesDataSourceImpl.BOX_NAME);
+    final entityMap = expensesBox.toMap();
+    entityMap.entries
+        .where((e) => (e.value as UserExpenseEntity).projectId == projectId)
+        .forEach((e) => expensesBox.delete(e.key));
+  }
+
+  Future deleteUsers(int projectId) async {
+    final usersBox =
+        await _hiveOperations.openBox(UsersDataSourceImpl.BOX_NAME);
+    final entityMap = usersBox.toMap();
+    entityMap.entries
+        .where((e) => (e.value as UserEntity).projectId == projectId)
+        .forEach((e) => usersBox.delete(e.key));
   }
 
   @override

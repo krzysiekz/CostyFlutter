@@ -1,4 +1,7 @@
+import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
@@ -18,99 +21,117 @@ class ProjectListItem extends StatefulWidget {
 class _ProjectListItemState extends State<ProjectListItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(
-        ProjectDetailsPage.routeName,
-        arguments: widget.project,
-      ),
-      child: Card(
-        color: Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      background: DialogUtilities.createStackBehindDismiss(context),
+      key: ObjectKey(widget.project),
+      child: InkWell(
+        onTap: () => Navigator.of(context).pushNamed(
+          ProjectDetailsPage.routeName,
+          arguments: widget.project,
         ),
-        elevation: 4,
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  child: Image.asset(
-                    'assets/project.jpg',
-                    height: 250,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 10,
-                  child: Container(
-                    width: 300,
-                    color: Colors.white70,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 20,
-                    ),
-                    child: Text(
-                      widget.project.name,
-                      style: TextStyle(
-                        fontSize: 26,
-                        color: Colors.black,
-                      ),
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Card(
+          color: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 4,
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              Stack(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.monetization_on,
-                        color: Colors.white54,
-                      ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Text(
-                        widget.project.defaultCurrency.name,
-                        style: TextStyle(color: Colors.white70, fontSize: 20),
-                      ),
-                    ],
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                    child: Image.asset(
+                      'assets/project.jpg',
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.date_range,
-                        color: Colors.white54,
+                  Positioned(
+                    bottom: 20,
+                    right: 10,
+                    child: Container(
+                      width: 300,
+                      color: Colors.white70,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 20,
                       ),
-                      SizedBox(
-                        width: 6,
+                      child: Text(
+                        widget.project.name,
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.black,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
                       ),
-                      Text(
-                        widget.dateFormat
-                            .format(widget.project.creationDateTime),
-                        style: TextStyle(color: Colors.white54, fontSize: 20),
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.monetization_on,
+                          color: Colors.white54,
+                        ),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          widget.project.defaultCurrency.name,
+                          style: TextStyle(color: Colors.white70, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.date_range,
+                          color: Colors.white54,
+                        ),
+                        SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          widget.dateFormat
+                              .format(widget.project.creationDateTime),
+                          style: TextStyle(color: Colors.white54, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+      confirmDismiss: (DismissDirection direction) async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return DialogUtilities.createDeleteConfirmationDialog(context);
+          },
+        );
+      },
+      onDismissed: (DismissDirection direction) {
+        BlocProvider.of<ProjectBloc>(context)
+            .add(DeleteProjectEvent(widget.project.id));
+        BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
+      },
     );
   }
 }

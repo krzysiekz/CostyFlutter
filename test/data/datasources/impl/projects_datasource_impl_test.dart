@@ -1,4 +1,6 @@
 import 'package:costy/data/datasources/entities/project_entity.dart';
+import 'package:costy/data/datasources/entities/user_entity.dart';
+import 'package:costy/data/datasources/entities/user_expense_entity.dart';
 import 'package:costy/data/datasources/hive_operations.dart';
 import 'package:costy/data/datasources/impl/projects_datasource_impl.dart';
 import 'package:costy/data/models/currency.dart';
@@ -14,10 +16,14 @@ class MockBox extends Mock implements Box {}
 void main() {
   ProjectsDataSourceImpl dataSource;
   MockHiveOperations mockHiveOperations;
-  MockBox mockBox;
+  MockBox mockProjectsBox;
+  MockBox mockExpensesBox;
+  MockBox mockUsersBox;
 
   setUp(() {
-    mockBox = MockBox();
+    mockProjectsBox = MockBox();
+    mockExpensesBox = MockBox();
+    mockUsersBox = MockBox();
     mockHiveOperations = MockHiveOperations();
     dataSource = ProjectsDataSourceImpl(mockHiveOperations);
   });
@@ -50,8 +56,9 @@ void main() {
 
   test('should return list of projects', () async {
     //arrange
-    when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.toMap()).thenReturn(tProjectEntities);
+    when(mockHiveOperations.openBox(any))
+        .thenAnswer((_) async => mockProjectsBox);
+    when(mockProjectsBox.toMap()).thenReturn(tProjectEntities);
     //act
     final projects = await dataSource.getProjects();
     //assert
@@ -60,8 +67,8 @@ void main() {
     verify(mockHiveOperations.openBox('projects'));
     verifyNoMoreInteractions(mockHiveOperations);
 
-    verify(mockBox.toMap());
-    verifyNoMoreInteractions(mockBox);
+    verify(mockProjectsBox.toMap());
+    verifyNoMoreInteractions(mockProjectsBox);
   });
 
   test('should add project', () async {
@@ -70,8 +77,9 @@ void main() {
     final tProjectName = 'new project';
     final tDefaultCurrency = Currency(name: 'USD');
 
-    when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.add(any)).thenAnswer((_) async => tProjectId);
+    when(mockHiveOperations.openBox(any))
+        .thenAnswer((_) async => mockProjectsBox);
+    when(mockProjectsBox.add(any)).thenAnswer((_) async => tProjectId);
     //act
     final result = await dataSource.addProject(
         tProjectName, tDefaultCurrency, tCreationDateTime);
@@ -81,29 +89,69 @@ void main() {
     verify(mockHiveOperations.openBox('projects'));
     verifyNoMoreInteractions(mockHiveOperations);
 
-    verify(mockBox.add(ProjectEntity(
+    verify(mockProjectsBox.add(ProjectEntity(
         name: tProjectName,
         defaultCurrency: tDefaultCurrency.name,
         creationDateTime: tCreationDateTime.toIso8601String())));
-    verifyNoMoreInteractions(mockBox);
+    verifyNoMoreInteractions(mockProjectsBox);
   });
 
   test('should delete project', () async {
     //arrange
     final tProjectId = 1;
 
-    when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.delete(any)).thenAnswer((_) async => {});
+    final tExpensesEntities = {
+      1: UserExpenseEntity(
+          projectId: tProjectId,
+          amount: "10",
+          currency: "USD",
+          description: 'First Expense',
+          userId: 1,
+          receiversIds: [1, 2],
+          dateTime: DateTime.now().toIso8601String()),
+      2: UserExpenseEntity(
+          projectId: tProjectId + 1,
+          amount: "10",
+          currency: "USD",
+          description: 'First Expense',
+          userId: 1,
+          receiversIds: [1, 2],
+          dateTime: DateTime.now().toIso8601String()),
+    };
+
+    final tUsersEntities = {
+      1: UserEntity(name: 'John', projectId: tProjectId),
+      2: UserEntity(name: 'Kate', projectId: tProjectId + 1),
+    };
+
+    when(mockHiveOperations.openBox("projects"))
+        .thenAnswer((_) async => mockProjectsBox);
+    when(mockHiveOperations.openBox("expenses"))
+        .thenAnswer((_) async => mockExpensesBox);
+    when(mockHiveOperations.openBox("users"))
+        .thenAnswer((_) async => mockUsersBox);
+
+    when(mockProjectsBox.delete(any)).thenAnswer((_) async => {});
+    when(mockExpensesBox.delete(any)).thenAnswer((_) async => {});
+    when(mockUsersBox.delete(any)).thenAnswer((_) async => {});
+
+    when(mockExpensesBox.toMap()).thenReturn(tExpensesEntities);
+    when(mockUsersBox.toMap()).thenReturn(tUsersEntities);
     //act
     final result = await dataSource.deleteProject(tProjectId);
     //assert
     expect(result, tProjectId);
 
     verify(mockHiveOperations.openBox('projects'));
+    verify(mockHiveOperations.openBox('expenses'));
+    verify(mockHiveOperations.openBox('users'));
     verifyNoMoreInteractions(mockHiveOperations);
 
-    verify(mockBox.delete(tProjectId));
-    verifyNoMoreInteractions(mockBox);
+    verify(mockExpensesBox.delete(1));
+    verify(mockUsersBox.delete(1));
+    verify(mockProjectsBox.delete(tProjectId));
+
+    verifyNoMoreInteractions(mockProjectsBox);
   });
 
   test('should modify project', () async {
@@ -114,8 +162,9 @@ void main() {
         defaultCurrency: Currency(name: 'USD'),
         creationDateTime: tCreationDateTime);
 
-    when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
-    when(mockBox.put(any, any)).thenAnswer((_) async => {});
+    when(mockHiveOperations.openBox(any))
+        .thenAnswer((_) async => mockProjectsBox);
+    when(mockProjectsBox.put(any, any)).thenAnswer((_) async => {});
     //act
     final result = await dataSource.modifyProject(tProject);
     //assert
@@ -124,12 +173,12 @@ void main() {
     verify(mockHiveOperations.openBox('projects'));
     verifyNoMoreInteractions(mockHiveOperations);
 
-    verify(mockBox.put(
+    verify(mockProjectsBox.put(
         tProject.id,
         ProjectEntity(
             name: tProject.name,
             defaultCurrency: tProject.defaultCurrency.name,
             creationDateTime: tCreationDateTime.toIso8601String())));
-    verifyNoMoreInteractions(mockBox);
+    verifyNoMoreInteractions(mockProjectsBox);
   });
 }

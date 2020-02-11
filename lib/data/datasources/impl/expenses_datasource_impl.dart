@@ -9,7 +9,7 @@ import '../expenses_datasource.dart';
 import '../hive_operations.dart';
 
 class ExpensesDataSourceImpl implements ExpensesDataSource {
-  static const _BOX_NAME = 'expenses';
+  static const BOX_NAME = 'expenses';
 
   final HiveOperations _hiveOperations;
 
@@ -24,7 +24,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
       User user,
       List<User> receivers,
       DateTime dateTime}) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     final entity = UserExpenseEntity(
         projectId: project.id,
         userId: user.id,
@@ -39,7 +39,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
 
   @override
   Future<int> deleteExpense(int expenseId) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     await box.delete(expenseId);
     return expenseId;
   }
@@ -47,7 +47,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
   @override
   Future<List<UserExpense>> getExpenses(
       Project project, List<User> users) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     final entityMap = box.toMap();
     return entityMap.entries
         .where((e) => (e.value as UserExpenseEntity).projectId == project.id)
@@ -57,7 +57,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
 
   @override
   Future<int> modifyExpense(UserExpense expense) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     final oldEntity = box.get(expense.id) as UserExpenseEntity;
     final newEntity = UserExpenseEntity(
         projectId: oldEntity.projectId,

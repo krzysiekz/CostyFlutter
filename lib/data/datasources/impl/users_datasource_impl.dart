@@ -6,7 +6,7 @@ import '../hive_operations.dart';
 import '../users_datasource.dart';
 
 class UsersDataSourceImpl implements UsersDataSource {
-  static const _BOX_NAME = 'users';
+  static const BOX_NAME = 'users';
 
   final HiveOperations _hiveOperations;
 
@@ -14,21 +14,21 @@ class UsersDataSourceImpl implements UsersDataSource {
 
   @override
   Future<int> addUser({Project project, String name}) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     final entity = UserEntity(name: name, projectId: project.id);
     return box.add(entity);
   }
 
   @override
   Future<int> deleteUser(int userId) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     await box.delete(userId);
     return userId;
   }
 
   @override
   Future<List<User>> getUsers(Project project) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     final entityMap = box.toMap();
     var users = entityMap.entries
         .where((e) => (e.value as UserEntity).projectId == project.id)
@@ -40,7 +40,7 @@ class UsersDataSourceImpl implements UsersDataSource {
 
   @override
   Future<int> modifyUser(User user) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(BOX_NAME);
     final oldUserEntity = box.get(user.id) as UserEntity;
     if (oldUserEntity != null) {
       final newUserEntity =

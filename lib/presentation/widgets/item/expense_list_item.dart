@@ -21,6 +21,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      direction: DismissDirection.endToStart,
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.userExpense),
       child: Card(

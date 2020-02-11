@@ -21,6 +21,7 @@ class _UserListItemState extends State<UserListItem> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      direction: DismissDirection.endToStart,
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.user),
       child: Card(
