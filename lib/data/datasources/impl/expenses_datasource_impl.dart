@@ -49,10 +49,12 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
       Project project, List<User> users) async {
     final box = await _hiveOperations.openBox(BOX_NAME);
     final entityMap = box.toMap();
-    return entityMap.entries
+    var expensesList = entityMap.entries
         .where((e) => (e.value as UserExpenseEntity).projectId == project.id)
         .map((entity) => _mapEntityToUserExpense(entity, users))
         .toList();
+    expensesList.sort((u1, u2) => u2.dateTime.compareTo(u1.dateTime));
+    return expensesList;
   }
 
   @override
