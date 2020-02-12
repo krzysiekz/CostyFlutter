@@ -3,9 +3,13 @@ import 'package:flutter/widgets.dart';
 
 class MultiSelectChip<T> extends StatefulWidget {
   final Iterable<T> userList;
+  final Iterable<T> initialUserList;
   final Function(List<T>) onSelectionChanged;
 
-  MultiSelectChip(this.userList, {this.onSelectionChanged});
+  MultiSelectChip(
+      {@required this.userList,
+      @required this.onSelectionChanged,
+      this.initialUserList});
 
   @override
   _MultiSelectChipState createState() => _MultiSelectChipState();
@@ -16,7 +20,11 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
 
   @override
   void initState() {
-    _selectedItems = widget.userList;
+    if (widget.initialUserList != null) {
+      _selectedItems = widget.initialUserList;
+    } else {
+      _selectedItems = widget.userList;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onSelectionChanged(_selectedItems);
     });

@@ -1,4 +1,5 @@
 import 'package:costy/data/models/user.dart';
+import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
@@ -12,8 +13,10 @@ import '../../../data/models/project.dart';
 
 class NewExpenseForm extends StatefulWidget {
   final Project project;
+  final UserExpense expenseToEdit;
 
-  const NewExpenseForm({Key key, this.project}) : super(key: key);
+  const NewExpenseForm({Key key, @required this.project, this.expenseToEdit})
+      : super(key: key);
 
   @override
   _NewExpenseFormState createState() => _NewExpenseFormState();
@@ -33,8 +36,17 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   void initState() {
     BlocProvider.of<CurrencyBloc>(context).add(GetCurrenciesEvent());
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
-    _currency = widget.project.defaultCurrency;
-    _selectedDate = DateTime.now();
+    if (widget.expenseToEdit != null) {
+      _descriptionController.text = widget.expenseToEdit.description;
+      _amountController.text = widget.expenseToEdit.amount.toString();
+      _currency = widget.expenseToEdit.currency;
+      _user = widget.expenseToEdit.user;
+      _receivers = widget.expenseToEdit.receivers;
+      _selectedDate = widget.expenseToEdit.dateTime;
+    } else {
+      _currency = widget.project.defaultCurrency;
+      _selectedDate = DateTime.now();
+    }
     super.initState();
   }
 
@@ -43,14 +55,26 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       final enteredDescription = _descriptionController.text;
       final enteredAmount = _amountController.text;
 
-      BlocProvider.of<ExpenseBloc>(context).add(AddExpenseEvent(
-          project: widget.project,
-          amount: Decimal.parse(enteredAmount),
-          currency: _currency,
-          user: _user,
-          receivers: _receivers,
-          description: enteredDescription,
-          dateTime: _selectedDate));
+      if (widget.expenseToEdit == null) {
+        BlocProvider.of<ExpenseBloc>(context).add(AddExpenseEvent(
+            project: widget.project,
+            amount: Decimal.parse(enteredAmount),
+            currency: _currency,
+            user: _user,
+            receivers: _receivers,
+            description: enteredDescription,
+            dateTime: _selectedDate));
+      } else {
+        final UserExpense edited = UserExpense(
+            id: widget.expenseToEdit.id,
+            amount: Decimal.parse(enteredAmount),
+            currency: _currency,
+            user: _user,
+            receivers: _receivers,
+            description: enteredDescription,
+            dateTime: _selectedDate);
+        BlocProvider.of<ExpenseBloc>(context).add(ModifyExpenseEvent(edited));
+      }
       BlocProvider.of<ExpenseBloc>(context)
           .add(GetExpensesEvent(widget.project));
       Navigator.of(context).pop();
@@ -60,7 +84,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   void _presentDatePicker() {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _selectedDate == null ? DateTime.now() : _selectedDate,
       firstDate: DateTime(DateTime.now().year - 1),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
@@ -145,7 +169,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             height: 10,
           ),
           RaisedButton(
-            child: const Text('Add Expense'),
+            child: widget.expenseToEdit == null
+                ? const Text('Add Expense')
+                : const Text('Edit Expense'),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,
@@ -157,7 +183,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   Widget _createDatePicker(BuildContext context) {
     return FormField<DateTime>(
-      initialValue: DateTime.now(),
+      initialValue: _selectedDate == null ? DateTime.now() : _selectedDate,
       builder: (FormFieldState<DateTime> formState) {
         return InputDecorator(
             decoration: InputDecoration(
@@ -192,7 +218,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             return CurrencyDropdownField(
                 currencies: state.currencies,
                 label: 'Currency',
-                initialValue: widget.project.defaultCurrency,
+                initialValue: _currency,
                 callback: (newValue) {
                   setState(() {
                     _currency = newValue;
@@ -208,13 +234,13 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
-            return creteItemDropDown(context, state.users);
+            return _createItemDropDown(context, state.users);
           }
           return Container();
         });
   }
 
-  FormField<User> creteItemDropDown(BuildContext context, List<User> users) {
+  FormField<User> _createItemDropDown(BuildContext context, List<User> users) {
     return FormField<User>(
       builder: (FormFieldState<User> formState) {
         return InputDecorator(
@@ -251,6 +277,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       validator: (val) {
         return (val == null) ? 'Please select a user' : null;
       },
+      initialValue: _user,
     );
   }
 
@@ -270,7 +297,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         builder: (context, state) {
           if (state is UserLoaded) {
             return FormField<List<User>>(
-              initialValue: state.users,
+              initialValue: _receivers == null ? state.users : _receivers,
               builder: (FormFieldState<List<User>> formState) {
                 return InputDecorator(
                     decoration: InputDecoration(
@@ -284,7 +311,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                           formState.hasError ? formState.errorText : null,
                     ),
                     child: MultiSelectChip(
-                      state.users,
+                      initialUserList: _receivers,
+                      userList: state.users,
                       onSelectionChanged: (selectedList) {
                         setState(() {
                           _receivers = selectedList;

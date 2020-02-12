@@ -1,6 +1,7 @@
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             children: <Widget>[
               Divider(
                 color: Theme.of(context).accentColor,
-                thickness: 0.8,
+                thickness: 0.6,
               ),
               Text(
                 '${widget.userExpense.user.name} => ${widget.userExpense.receivers.map((user) => user.name).toList().join(', ')}',
@@ -73,13 +74,20 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
               ),
               Divider(
                 color: Theme.of(context).accentColor,
-                thickness: 0.8,
+                thickness: 0.6,
               ),
               Text(DateFormat.yMMMd().format(widget.userExpense.dateTime),
                   style: TextStyle(color: Colors.white70)),
             ],
           ),
           isThreeLine: true,
+          trailing: GestureDetector(
+            onTap: () => _showAddExpenseForm(context, widget.project),
+            child: Icon(
+              Icons.edit,
+              color: Theme.of(context).accentColor,
+            ),
+          ),
         ),
       ),
       confirmDismiss: (DismissDirection direction) async {
@@ -95,6 +103,21 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             .add(DeleteExpenseEvent(widget.userExpense.id));
         BlocProvider.of<ExpenseBloc>(context)
             .add(GetExpensesEvent(widget.project));
+      },
+    );
+  }
+
+  void _showAddExpenseForm(BuildContext ctx, Project project) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
+      context: ctx,
+      builder: (_) {
+        return NewExpenseForm(
+            project: project, expenseToEdit: widget.userExpense);
       },
     );
   }
