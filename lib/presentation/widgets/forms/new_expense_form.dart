@@ -7,15 +7,18 @@ import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
 
 class NewExpenseForm extends StatefulWidget {
+  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
+
   final Project project;
   final UserExpense expenseToEdit;
 
-  const NewExpenseForm({Key key, @required this.project, this.expenseToEdit})
+  NewExpenseForm({Key key, @required this.project, this.expenseToEdit})
       : super(key: key);
 
   @override
@@ -82,19 +85,14 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   }
 
   void _presentDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: _selectedDate == null ? DateTime.now() : _selectedDate,
-      firstDate: DateTime(DateTime.now().year - 1),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
+    DatePicker.showDateTimePicker(context,
+        showTitleActions: true,
+        minTime: DateTime(DateTime.now().year - 1),
+        maxTime: DateTime.now(), onConfirm: (date) {
       setState(() {
-        _selectedDate = pickedDate;
+        _selectedDate = date;
       });
-    });
+    }, currentTime: _selectedDate == null ? DateTime.now() : _selectedDate);
   }
 
   String _numberValidator(String value) {
@@ -200,7 +198,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 onPressed: _presentDatePicker,
                 child: Text(_selectedDate == null
                     ? 'No Date Chosen'
-                    : 'Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                    : widget.dateFormat.format(_selectedDate)),
               ),
             ));
       },

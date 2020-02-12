@@ -9,7 +9,7 @@ import '../../../data/models/project.dart';
 import '../pages/project_details_page.dart';
 
 class ProjectListItem extends StatefulWidget {
-  final DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
 
   final Project project;
 

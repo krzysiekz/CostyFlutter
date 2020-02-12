@@ -54,7 +54,7 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
             ),
             Divider(
               color: Theme.of(context).accentColor,
-              thickness: 0.8,
+              thickness: 0.5,
             ),
           ],
         ),

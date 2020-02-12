@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseListItem extends StatefulWidget {
+  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
+
   final UserExpense userExpense;
   final Project project;
 
@@ -66,7 +68,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             children: <Widget>[
               Divider(
                 color: Theme.of(context).accentColor,
-                thickness: 0.6,
+                thickness: 0.5,
               ),
               Text(
                 '${widget.userExpense.user.name} => ${widget.userExpense.receivers.map((user) => user.name).toList().join(', ')}',
@@ -74,9 +76,9 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
               ),
               Divider(
                 color: Theme.of(context).accentColor,
-                thickness: 0.6,
+                thickness: 0.5,
               ),
-              Text(DateFormat.yMMMd().format(widget.userExpense.dateTime),
+              Text(widget.dateFormat.format(widget.userExpense.dateTime),
                   style: TextStyle(color: Colors.white70)),
             ],
           ),
