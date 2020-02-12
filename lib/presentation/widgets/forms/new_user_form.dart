@@ -1,3 +1,4 @@
+import 'package:costy/data/models/user.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,8 +9,10 @@ import '../../bloc/user_bloc.dart';
 
 class NewUserForm extends StatefulWidget {
   final Project project;
+  final User userToModify;
 
-  const NewUserForm({Key key, this.project}) : super(key: key);
+  const NewUserForm({Key key, @required this.project, this.userToModify})
+      : super(key: key);
 
   @override
   _NewUserFormState createState() => _NewUserFormState();
@@ -20,14 +23,27 @@ class _NewUserFormState extends State<NewUserForm> {
 
   final _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    if (widget.userToModify != null) {
+      _nameController.text = widget.userToModify.name;
+    }
+    super.initState();
+  }
+
   void _submitData() {
     if (_formKey.currentState.validate()) {
       final enteredName = _nameController.text;
 
-      BlocProvider.of<UserBloc>(context)
-          .add(AddUserEvent(enteredName, widget.project));
-      BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
+      if (widget.userToModify == null) {
+        BlocProvider.of<UserBloc>(context)
+            .add(AddUserEvent(enteredName, widget.project));
+      } else {
+        final User edited = User(id: widget.userToModify.id, name: enteredName);
+        BlocProvider.of<UserBloc>(context).add(ModifyUserEvent(edited));
+      }
 
+      BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
       Navigator.of(context).pop();
     }
   }
@@ -67,7 +83,9 @@ class _NewUserFormState extends State<NewUserForm> {
             height: 10,
           ),
           RaisedButton(
-            child: const Text('Add User'),
+            child: widget.userToModify == null
+                ? const Text('Add User')
+                : const Text('Edit User'),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,

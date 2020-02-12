@@ -38,7 +38,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     setState(() {});
   }
 
-  void _showAddPersonForm(BuildContext ctx, Project project) {
+  void _showAddUserForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -154,7 +154,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     switch (_tabController.index) {
       case 0:
         return FloatingActionButton(
-            onPressed: () => _showAddPersonForm(ctx, project),
+            onPressed: () => _showAddUserForm(ctx, project),
             child: const Icon(
               Icons.person_add,
             ));

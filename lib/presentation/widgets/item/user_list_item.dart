@@ -1,5 +1,6 @@
 import 'package:costy/data/models/project.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/forms/new_user_form.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,13 @@ class _UserListItemState extends State<UserListItem> {
           title: Text(
             widget.user.name,
             style: TextStyle(color: Colors.white70),
+          ),
+          trailing: GestureDetector(
+            onTap: () => _showEditUserForm(context, widget.project),
+            child: Icon(
+              Icons.edit,
+              color: Theme.of(context).accentColor,
+            ),
           ),
         ),
       ),
@@ -89,6 +97,19 @@ class _UserListItemState extends State<UserListItem> {
       onDismissed: (DismissDirection direction) {
         BlocProvider.of<UserBloc>(context).add(DeleteUserEvent(widget.user.id));
         BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
+      },
+    );
+  }
+
+  void _showEditUserForm(BuildContext ctx, Project project) {
+    showModalBottomSheet(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
+      context: ctx,
+      builder: (_) {
+        return NewUserForm(project: project, userToModify: widget.user);
       },
     );
   }
