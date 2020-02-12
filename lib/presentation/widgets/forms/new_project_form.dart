@@ -1,3 +1,4 @@
+import 'package:costy/data/models/project.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,10 @@ import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
 
 class NewProjectForm extends StatefulWidget {
+  final Project projectToEdit;
+
+  const NewProjectForm({Key key, this.projectToEdit}) : super(key: key);
+
   @override
   _NewProjectFormState createState() => _NewProjectFormState();
 }
@@ -23,9 +28,19 @@ class _NewProjectFormState extends State<NewProjectForm> {
     if (_formKey.currentState.validate()) {
       final enteredName = _nameController.text;
 
-      BlocProvider.of<ProjectBloc>(context).add(AddProjectEvent(
-          projectName: enteredName, defaultCurrency: _defaultCurrency));
-      BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
+      if (widget.projectToEdit == null) {
+        BlocProvider.of<ProjectBloc>(context).add(AddProjectEvent(
+            projectName: enteredName, defaultCurrency: _defaultCurrency));
+        BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
+      } else {
+        final Project edited = Project(
+            id: widget.projectToEdit.id,
+            name: enteredName,
+            defaultCurrency: _defaultCurrency,
+            creationDateTime: widget.projectToEdit.creationDateTime);
+        BlocProvider.of<ProjectBloc>(context).add(ModifyProjectEvent(edited));
+        BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
+      }
 
       Navigator.of(context).pop();
     }
@@ -33,6 +48,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
   @override
   void initState() {
+    if (widget.projectToEdit != null) {
+      _nameController.text = widget.projectToEdit.name;
+      _defaultCurrency = widget.projectToEdit.defaultCurrency;
+    }
     BlocProvider.of<CurrencyBloc>(context).add(GetCurrenciesEvent());
     super.initState();
   }
@@ -91,6 +110,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             height: 10,
           ),
           CurrencyDropdownField(
+              initialValue: _defaultCurrency,
               currencies: state.currencies,
               label: 'Default currency',
               callback: (newValue) {
@@ -102,7 +122,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
             height: 10,
           ),
           RaisedButton(
-            child: const Text('Add Project'),
+            child: widget.projectToEdit == null
+                ? const Text('Add Project')
+                : const Text('Edit Project'),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,
