@@ -56,6 +56,8 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
           DialogUtilities.showSnackBar(context, 'Expense added.');
         } else if (state is ExpenseDeleted) {
           DialogUtilities.showSnackBar(context, 'Expense deleted.');
+        } else if (state is ExpenseModified) {
+          DialogUtilities.showSnackBar(context, 'Expense modified.');
         }
       },
     );

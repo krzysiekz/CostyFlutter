@@ -68,7 +68,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             children: <Widget>[
               Divider(
                 color: Theme.of(context).accentColor,
-                thickness: 0.5,
+                thickness: 0.4,
               ),
               Text(
                 '${widget.userExpense.user.name} => ${widget.userExpense.receivers.map((user) => user.name).toList().join(', ')}',
@@ -76,7 +76,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
               ),
               Divider(
                 color: Theme.of(context).accentColor,
-                thickness: 0.5,
+                thickness: 0.4,
               ),
               Text(widget.dateFormat.format(widget.userExpense.dateTime),
                   style: TextStyle(color: Colors.white70)),

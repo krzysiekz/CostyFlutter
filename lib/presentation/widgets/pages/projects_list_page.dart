@@ -65,6 +65,10 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
               context, 'Error', 'Cannot add project.');
         } else if (state is ProjectAdded) {
           DialogUtilities.showSnackBar(context, "Project added.");
+        } else if (state is ProjectDeleted) {
+          DialogUtilities.showSnackBar(context, "Project deleted.");
+        } else if (state is ProjectModified) {
+          DialogUtilities.showSnackBar(context, "Project modified.");
         }
       },
       builder: (context, state) {

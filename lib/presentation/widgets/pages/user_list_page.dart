@@ -56,6 +56,8 @@ class _UserListPageState extends State<UserListPage> {
           DialogUtilities.showSnackBar(context, 'User added.');
         } else if (state is UserDeleted) {
           DialogUtilities.showSnackBar(context, 'User deleted.');
+        } else if (state is UserModified) {
+          DialogUtilities.showSnackBar(context, 'User modified.');
         }
       },
     );
