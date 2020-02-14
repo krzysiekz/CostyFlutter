@@ -1,6 +1,5 @@
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/pages/project_details_page.dart';
-import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -17,7 +16,12 @@ import 'presentation/widgets/pages/projects_list_page.dart';
 
 const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
 
-void main() async {
+Future<void> main() async {
+  await initializeApp();
+  runApp(MyApp());
+}
+
+Future initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
@@ -26,11 +30,10 @@ void main() async {
   Hive.registerAdapter(ProjectEntityAdapter(), 1);
   Hive.registerAdapter(UserEntityAdapter(), 2);
   Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
-  await initHiveStaticData();
-  runApp(MyApp());
+  await _initHiveStaticData();
 }
 
-Future<void> initHiveStaticData() async {
+Future<void> _initHiveStaticData() async {
   final currenciesDataSource = di.ic<CurrenciesDataSource>();
   final currencies = await currenciesDataSource.getCurrencies();
   if (currencies.isEmpty) {
@@ -88,12 +91,7 @@ class _MyAppState extends State<MyApp> {
                   )),
             ),
           ),
-          home: SplashScreen.navigate(
-              name: 'assets/costy_splash.flr',
-              next: (_) => ProjectsListPage(),
-              until: () => Future.delayed(Duration(milliseconds: 500)),
-              startAnimation: 'splash',
-              backgroundColor: Color(0xFF296EB4)),
+          home: ProjectsListPage(),
           routes: {
             ProjectsListPage.routeName: (ctx) => ProjectsListPage(),
             ProjectDetailsPage.routeName: (ctx) => ProjectDetailsPage(),
