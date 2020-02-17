@@ -28,7 +28,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
       key: ObjectKey(widget.project),
       child: InkWell(
         onTap: () => Navigator.of(context).pushNamed(
-          ProjectDetailsPage.routeName,
+          ProjectDetailsPage.ROUTE_NAME,
           arguments: widget.project,
         ),
         child: Card(

@@ -1,4 +1,5 @@
 import 'package:costy/data/models/project.dart';
+import 'package:costy/keys.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
+            textFormFieldKey: Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
             icon: Icons.text_fields,
             hintText: 'Enter project name',
             labelText: 'Project name',
@@ -110,6 +112,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             height: 10,
           ),
           CurrencyDropdownField(
+              key: Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
               initialValue: _defaultCurrency,
               currencies: state.currencies,
               label: 'Default currency',
@@ -122,6 +125,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             height: 10,
           ),
           RaisedButton(
+            key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.projectToEdit == null
                 ? const Text('Add Project')
                 : const Text('Edit Project'),

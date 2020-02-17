@@ -8,6 +8,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final Function validator;
   final TextInputType textInputType;
+  final Key textFormFieldKey;
 
   const CustomTextField(
       {Key key,
@@ -16,7 +17,8 @@ class CustomTextField extends StatefulWidget {
       this.labelText,
       this.controller,
       this.validator,
-      this.textInputType})
+      this.textInputType,
+      this.textFormFieldKey})
       : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: widget.textFormFieldKey,
       textCapitalization: TextCapitalization.sentences,
       keyboardType: widget.textInputType,
       decoration: InputDecoration(

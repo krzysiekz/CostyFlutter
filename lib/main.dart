@@ -93,8 +93,8 @@ class _MyAppState extends State<MyApp> {
           ),
           home: ProjectsListPage(),
           routes: {
-            ProjectsListPage.routeName: (ctx) => ProjectsListPage(),
-            ProjectDetailsPage.routeName: (ctx) => ProjectDetailsPage(),
+            ProjectsListPage.ROUTE_NAME: (ctx) => ProjectsListPage(),
+            ProjectDetailsPage.ROUTE_NAME: (ctx) => ProjectDetailsPage(),
           },
         ));
   }

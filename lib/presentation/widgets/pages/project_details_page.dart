@@ -8,7 +8,7 @@ import 'report_page.dart';
 import 'user_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
-  static const routeName = '/project-details';
+  static const ROUTE_NAME = '/project-details';
 
   ProjectDetailsPage({Key key}) : super(key: key);
 

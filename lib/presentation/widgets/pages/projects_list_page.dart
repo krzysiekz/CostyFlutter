@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../keys.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
@@ -9,7 +10,7 @@ import '../item/project_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {
-  static const routeName = '/projects-list';
+  static const ROUTE_NAME = '/projects-list';
 
   @override
   _ProjectsListPageState createState() => _ProjectsListPageState();
@@ -30,6 +31,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         title: const Text('Projects'),
         actions: <Widget>[
           IconButton(
+            key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
             icon: Icon(Icons.add),
             onPressed: () => _startAddNewProject(context),
           )
