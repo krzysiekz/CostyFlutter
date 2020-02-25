@@ -158,6 +158,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
 
   Positioned _buildEditButton(BuildContext context) {
     return Positioned(
+      key: Key("${widget.project.name}_edit"),
       top: 20,
       right: 10,
       child: GestureDetector(

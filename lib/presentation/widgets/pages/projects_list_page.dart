@@ -83,6 +83,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
           return ListView.builder(
             itemBuilder: (ctx, index) {
               return ProjectListItem(
+                key: Key(state.projects[index].name),
                 project: state.projects[index],
               );
             },

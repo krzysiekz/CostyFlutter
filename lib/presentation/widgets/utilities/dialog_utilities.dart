@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../keys.dart';
+
 class DialogUtilities {
   static void showAlertDialog(
       BuildContext context, String title, String content) {
@@ -59,9 +61,11 @@ class DialogUtilities {
       content: const Text("Are you sure you wish to delete this item?"),
       actions: <Widget>[
         FlatButton(
+            key: Key(Keys.DELETE_CONFIRMATION_DELETE_BUTTON),
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text("DELETE")),
         FlatButton(
+          key: Key(Keys.DELETE_CONFIRMATION_CANCEL_BUTTON),
           onPressed: () => Navigator.of(context).pop(false),
           child: const Text("CANCEL"),
         ),
