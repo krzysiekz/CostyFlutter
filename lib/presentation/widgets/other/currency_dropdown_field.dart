@@ -45,8 +45,8 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
             errorText: formState.hasError ? formState.errorText : null,
           ),
           isEmpty: _selected == null,
-          child: new DropdownButtonHideUnderline(
-            child: new DropdownButton<Currency>(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<Currency>(
               icon: Icon(
                 Icons.arrow_downward,
                 color: Theme.of(context).primaryColor,
@@ -64,7 +64,10 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
                   .map<DropdownMenuItem<Currency>>((Currency currency) {
                 return DropdownMenuItem<Currency>(
                   value: currency,
-                  child: Text(currency.name),
+                  child: Text(
+                    currency.name,
+                    key: Key('currency_${currency.name}'),
+                  ),
                 );
               }).toList(),
             ),
