@@ -1,4 +1,5 @@
 import 'package:costy/data/models/user.dart';
+import 'package:costy/keys.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,6 +74,7 @@ class _NewUserFormState extends State<NewUserForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
+            textFormFieldKey: Key(Keys.USER_FORM_NAME_FIELD_KEY),
             icon: Icons.person,
             hintText: "Enter user's name",
             labelText: 'Name',
@@ -83,6 +85,7 @@ class _NewUserFormState extends State<NewUserForm> {
             height: 10,
           ),
           RaisedButton(
+            key: Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.userToModify == null
                 ? const Text('Add User')
                 : const Text('Edit User'),

@@ -188,6 +188,7 @@ void main() {
       //assert
       expect(find.text('Project to edit'), findsOneWidget);
       expect(find.text('USD').hitTestable(), findsOneWidget);
+      expect(find.text('Edit Project').hitTestable(), findsOneWidget);
     });
 
     testWidgets('should edit project', (WidgetTester tester) async {
