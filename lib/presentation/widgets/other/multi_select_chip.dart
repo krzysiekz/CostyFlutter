@@ -1,3 +1,4 @@
+import 'package:costy/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -63,6 +64,7 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
           alignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
+              key: Key(Keys.MULTI_SELECT_CHIP_SELECT_ALL),
               child: Text("Select all"),
               onPressed: () {
                 setState(() {
@@ -72,6 +74,7 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
               },
             ),
             FlatButton(
+              key: Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE),
               child: Text("Select none"),
               onPressed: () {
                 setState(() {

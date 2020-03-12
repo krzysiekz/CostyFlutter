@@ -144,6 +144,27 @@ void main() {
       verifyNever(expenseBloc.add(argThat(isA<AddExpenseEvent>())));
     });
 
+    testWidgets('select none should deselect all receivers',
+        (WidgetTester tester) async {
+      //arrange
+      await tester.pumpWidget(testedWidget);
+      await tester.pumpAndSettle();
+      //act
+      final selectNoneButtonFinder =
+          find.byKey(Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE));
+      expect(selectNoneButtonFinder, findsOneWidget);
+      await tester.tap(selectNoneButtonFinder);
+      await tester.pumpAndSettle();
+
+      final addExpenseButtonFinder =
+          find.byKey(Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY));
+      expect(addExpenseButtonFinder, findsOneWidget);
+      await tester.tap(addExpenseButtonFinder);
+      await tester.pumpAndSettle();
+      //assert
+      expect(find.text('Please select receivers'), findsOneWidget);
+    });
+
     testWidgets('should add expense with default currency and users',
         (WidgetTester tester) async {
       //arrange
