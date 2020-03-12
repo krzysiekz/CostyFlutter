@@ -6,10 +6,9 @@ class MultiSelectChip<T> extends StatefulWidget {
   final Iterable<T> initialUserList;
   final Function(List<T>) onSelectionChanged;
 
-  MultiSelectChip(
-      {@required this.userList,
-      @required this.onSelectionChanged,
-      this.initialUserList});
+  const MultiSelectChip(
+      {Key key, this.userList, this.initialUserList, this.onSelectionChanged})
+      : super(key: key);
 
   @override
   _MultiSelectChipState createState() => _MultiSelectChipState();
@@ -38,6 +37,7 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
+          key: Key("receiver_${item.name}"),
           label: Text(item.name,
               overflow: TextOverflow.fade, maxLines: 1, softWrap: false),
           selected: _selectedItems.contains(item),

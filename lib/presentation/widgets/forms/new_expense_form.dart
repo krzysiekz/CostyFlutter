@@ -11,6 +11,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 
 class NewExpenseForm extends StatefulWidget {
   final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
@@ -28,6 +29,7 @@ class NewExpenseForm extends StatefulWidget {
 class _NewExpenseFormState extends State<NewExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
+
   var _currency;
   var _user;
   var _receivers;
@@ -39,6 +41,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   void initState() {
     BlocProvider.of<CurrencyBloc>(context).add(GetCurrenciesEvent());
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
+
     if (widget.expenseToEdit != null) {
       _descriptionController.text = widget.expenseToEdit.description;
       _amountController.text = widget.expenseToEdit.amount.toString();
@@ -131,6 +134,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
+            textFormFieldKey: Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
             icon: Icons.note,
             hintText: 'Enter description',
             labelText: 'Description',
@@ -142,6 +146,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             children: <Widget>[
               Expanded(
                 child: CustomTextField(
+                  textFormFieldKey: Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
                   icon: Icons.attach_money,
                   hintText: 'Enter amount',
                   labelText: 'Amount',
@@ -167,6 +172,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             height: 10,
           ),
           RaisedButton(
+            key: Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.expenseToEdit == null
                 ? const Text('Add Expense')
                 : const Text('Edit Expense'),
@@ -214,6 +220,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         builder: (context, state) {
           if (state is CurrencyLoaded) {
             return CurrencyDropdownField(
+                key: Key(Keys.EXPENSE_FORM_CURRENCY_KEY),
                 currencies: state.currencies,
                 label: 'Currency',
                 initialValue: _currency,
@@ -240,6 +247,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   FormField<User> _createItemDropDown(BuildContext context, List<User> users) {
     return FormField<User>(
+      key: Key(Keys.EXPENSE_FORM_USER_KEY),
       builder: (FormFieldState<User> formState) {
         return InputDecorator(
           decoration: InputDecoration(
@@ -282,6 +290,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   List<DropdownMenuItem<User>> getUsersDropdownItems(List<User> users) {
     return users.map<DropdownMenuItem<User>>((User user) {
       return DropdownMenuItem<User>(
+        key: Key('user_${user.id}'),
         value: user,
         child: Text(user.name,
             overflow: TextOverflow.fade, maxLines: 1, softWrap: false),
@@ -309,6 +318,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                           formState.hasError ? formState.errorText : null,
                     ),
                     child: MultiSelectChip(
+                      key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
                       initialUserList: _receivers,
                       userList: state.users,
                       onSelectionChanged: (selectedList) {
