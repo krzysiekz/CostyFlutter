@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
 import '../../../keys.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
@@ -28,7 +29,9 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: const Text('Projects'),
+        title: Text(
+          AppLocalizations.of(context).translate('project_list_page_title'),
+        ),
         actions: <Widget>[
           IconButton(
             key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
