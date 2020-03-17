@@ -106,7 +106,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
     }
     final n = num.tryParse(value);
     if (n == null) {
-      return '"$value" ${AppLocalizations.of(context).translate('expense_form_not_a_valid_number')}';
+      return AppLocalizations.of(context)
+          .translate('expense_form_not_a_valid_number');
     }
     return null;
   }

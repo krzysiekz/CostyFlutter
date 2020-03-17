@@ -36,7 +36,7 @@
   "expense_form_multi_select_chip_select_all_button": "Select all.",
   "expense_form_multi_select_chip_select_none_button": "Select none.",
   "expense_form_amount_required": "Amount is required.",
-  "expense_form_not_a_valid_number": "is not a valid number",
+  "expense_form_not_a_valid_number": "Wrong number",
   "expense_form_description_hint": "Enter description",
   "expense_form_description_label": "Description",
   "expense_form_description_error": "Description is required.",

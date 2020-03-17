@@ -36,7 +36,7 @@
   "expense_form_multi_select_chip_select_all_button": "Zaznasz.",
   "expense_form_multi_select_chip_select_none_button": "Odznacz.",
   "expense_form_amount_required": "Kwota jest wymagana.",
-  "expense_form_not_a_valid_number": "nie jest prawidłowym numerem",
+  "expense_form_not_a_valid_number": "Zły numer",
   "expense_form_description_hint": "Proszę podać opis",
   "expense_form_description_label": "Opis",
   "expense_form_description_error": "Opis jest wymagany.",
