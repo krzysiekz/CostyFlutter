@@ -5,6 +5,7 @@ import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
@@ -103,10 +104,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
           CustomTextField(
             textFormFieldKey: Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
             icon: Icons.text_fields,
-            hintText: 'Enter project name',
-            labelText: 'Project name',
+            hintText: AppLocalizations.of(context)
+                .translate('project_form_project_name_hint'),
+            labelText: AppLocalizations.of(context)
+                .translate('project_form_project_name_label'),
             controller: _nameController,
-            validator: (val) => val.isEmpty ? 'Project name is required' : null,
+            validator: (val) => val.isEmpty
+                ? AppLocalizations.of(context)
+                    .translate('project_form_project_name_error')
+                : null,
           ),
           const SizedBox(
             height: 10,
@@ -115,7 +121,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
               key: Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
               initialValue: _defaultCurrency,
               currencies: state.currencies,
-              label: 'Default currency',
+              label: AppLocalizations.of(context)
+                  .translate('project_form_default_currency_label'),
               callback: (newValue) {
                 setState(() {
                   _defaultCurrency = newValue;
@@ -127,8 +134,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
           RaisedButton(
             key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.projectToEdit == null
-                ? const Text('Add Project')
-                : const Text('Edit Project'),
+                ? Text(AppLocalizations.of(context)
+                    .translate('project_form_add_project_button'))
+                : Text(AppLocalizations.of(context)
+                    .translate('project_form_modify_project_button')),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,

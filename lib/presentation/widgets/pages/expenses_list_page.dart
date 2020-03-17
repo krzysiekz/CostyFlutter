@@ -2,6 +2,7 @@ import 'package:costy/presentation/widgets/item/expense_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../bloc/bloc.dart';
 import '../utilities/dialog_utilities.dart';
@@ -28,10 +29,12 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
       bloc: BlocProvider.of<ExpenseBloc>(context),
       builder: (BuildContext context, ExpenseState state) {
         if (state is ExpenseEmpty) {
-          return const Text("No expenses to display.");
+          return Text(AppLocalizations.of(context)
+              .translate('expenses_list_page_no_expenses'));
         } else if (state is ExpenseLoaded) {
           if (state.expenses.isEmpty) {
-            return const Text("No expenses to display.");
+            return Text(AppLocalizations.of(context)
+                .translate('expenses_list_page_no_expenses'));
           }
           return ListView.builder(
             padding: const EdgeInsets.all(25),
@@ -51,13 +54,25 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
       listener: (BuildContext context, ExpenseState state) {
         if (state is ExpenseError) {
           DialogUtilities.showAlertDialog(
-              context, 'Error', 'Cannot add expense');
+              context,
+              AppLocalizations.of(context).translate('error'),
+              AppLocalizations.of(context)
+                  .translate('expenses_list_page_cannot_add'));
         } else if (state is ExpenseAdded) {
-          DialogUtilities.showSnackBar(context, 'Expense added.');
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('expenses_list_page_added'));
         } else if (state is ExpenseDeleted) {
-          DialogUtilities.showSnackBar(context, 'Expense deleted.');
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('expenses_list_page_deleted'));
         } else if (state is ExpenseModified) {
-          DialogUtilities.showSnackBar(context, 'Expense modified.');
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('expenses_list_page_modified'));
         }
       },
     );

@@ -2,6 +2,8 @@ import 'package:costy/keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../app_localizations.dart';
+
 class MultiSelectChip<T> extends StatefulWidget {
   final Iterable<T> userList;
   final Iterable<T> initialUserList;
@@ -65,7 +67,8 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
           children: <Widget>[
             FlatButton(
               key: Key(Keys.MULTI_SELECT_CHIP_SELECT_ALL),
-              child: Text("Select all"),
+              child: Text(AppLocalizations.of(context)
+                  .translate('expense_form_multi_select_chip_select_all_button')),
               onPressed: () {
                 setState(() {
                   _selectedItems.addAll(widget.userList);
@@ -75,7 +78,8 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
             ),
             FlatButton(
               key: Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE),
-              child: Text("Select none"),
+              child: Text(AppLocalizations.of(context)
+                  .translate('expense_form_multi_select_chip_select_none_button')),
               onPressed: () {
                 setState(() {
                   _selectedItems.clear();

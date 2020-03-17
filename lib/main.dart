@@ -78,7 +78,6 @@ class _MyAppState extends State<MyApp> {
           ],
           // These delegates make sure that the localization data for the proper language is loaded
           localizationsDelegates: [
-            // THIS CLASS WILL BE ADDED LATER
             // A class which loads the translations from JSON files
             AppLocalizations.delegate,
             // Built-in localization of basic text for Material widgets

@@ -4,6 +4,7 @@ import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
@@ -76,10 +77,14 @@ class _NewUserFormState extends State<NewUserForm> {
           CustomTextField(
             textFormFieldKey: Key(Keys.USER_FORM_NAME_FIELD_KEY),
             icon: Icons.person,
-            hintText: "Enter user's name",
-            labelText: 'Name',
+            hintText:
+                AppLocalizations.of(context).translate('user_form_user_name_hint'),
+            labelText:
+                AppLocalizations.of(context).translate('user_form_user_name_label'),
             controller: _nameController,
-            validator: (val) => val.isEmpty ? "User's name is required" : null,
+            validator: (val) => val.isEmpty
+                ? AppLocalizations.of(context).translate('user_form_user_name_error')
+                : null,
           ),
           const SizedBox(
             height: 10,
@@ -87,8 +92,10 @@ class _NewUserFormState extends State<NewUserForm> {
           RaisedButton(
             key: Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.userToModify == null
-                ? const Text('Add User')
-                : const Text('Edit User'),
+                ? Text(AppLocalizations.of(context)
+                    .translate('user_form_add_user_button'))
+                : Text(AppLocalizations.of(context)
+                    .translate('user_form_modify_user_button')),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,

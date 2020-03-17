@@ -1,6 +1,7 @@
 import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
 import 'package:flutter/material.dart';
 
+import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../forms/new_user_form.dart';
 import 'expenses_list_page.dart';
@@ -108,22 +109,25 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
                       ),
                       unselectedLabelColor: Colors.white38,
                       tabs: <Widget>[
-                        const Tab(
-                          text: "USERS",
+                        Tab(
+                          text: AppLocalizations.of(context)
+                              .translate('project_details_page_users'),
                           icon: Icon(
                             Icons.people,
                             size: 35,
                           ),
                         ),
-                        const Tab(
-                          text: "EXPENSES",
+                        Tab(
+                          text: AppLocalizations.of(context)
+                              .translate('project_details_page_expenses'),
                           icon: Icon(
                             Icons.attach_money,
                             size: 35,
                           ),
                         ),
-                        const Tab(
-                          text: "REPORT",
+                        Tab(
+                          text: AppLocalizations.of(context)
+                              .translate('project_details_page_report'),
                           icon: Icon(
                             Icons.picture_as_pdf,
                             size: 35,

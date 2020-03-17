@@ -5,6 +5,8 @@ import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
+
 class ReportPage extends StatefulWidget {
   final Project project;
 
@@ -27,15 +29,18 @@ class _ReportPageState extends State<ReportPage> {
       bloc: BlocProvider.of<ReportBloc>(context),
       builder: (BuildContext context, ReportState state) {
         if (state is ReportEmpty) {
-          return const Text("No report to display.");
+          return Text(
+              AppLocalizations.of(context).translate('report_page_no_report'));
         } else if (state is ReportLoaded) {
           if (state.report != null && state.report.entries.isEmpty) {
-            return const Text("No report to display.");
+            return Text(AppLocalizations.of(context)
+                .translate('report_page_no_report'));
           } else if (state.report != null) {
             return ListView.builder(
               padding: const EdgeInsets.all(25),
               itemBuilder: (cts, index) {
-                return ReportEntryListItem(reportEntry: state.report.entries[index]);
+                return ReportEntryListItem(
+                    reportEntry: state.report.entries[index]);
               },
               itemCount: state.report.entries.length,
             );

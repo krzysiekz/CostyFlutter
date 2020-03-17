@@ -5,6 +5,7 @@ import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
 import '../../../data/models/user.dart';
 
 class UserListItem extends StatefulWidget {
@@ -65,13 +66,15 @@ class _UserListItemState extends State<UserListItem> {
                           expense.user == widget.user ||
                           expense.receivers.contains(widget.user))) {
                     return AlertDialog(
-                      title: const Text("Error"),
-                      content: const Text(
-                          "Cannot remove user that is used in expense. Please remove expense first."),
+                      title:
+                          Text(AppLocalizations.of(context).translate('error')),
+                      content: Text(AppLocalizations.of(context)
+                          .translate('user_list_item_used_in_expense_error')),
                       actions: <Widget>[
                         FlatButton(
                             onPressed: () => Navigator.of(context).pop(false),
-                            child: const Text("OK")),
+                            child: Text(
+                                AppLocalizations.of(context).translate('ok'))),
                       ],
                     );
                   }
@@ -79,12 +82,15 @@ class _UserListItemState extends State<UserListItem> {
                       context);
                 } else if (state is ExpenseError) {
                   return AlertDialog(
-                    title: const Text("Error"),
-                    content: const Text("Cannot remove user."),
+                    title:
+                        Text(AppLocalizations.of(context).translate('error')),
+                    content: Text(AppLocalizations.of(context)
+                        .translate('user_list_item_cannot_remove')),
                     actions: <Widget>[
                       FlatButton(
                           onPressed: () => Navigator.of(context).pop(false),
-                          child: const Text("OK")),
+                          child: Text(
+                              AppLocalizations.of(context).translate('ok'))),
                     ],
                   );
                 }

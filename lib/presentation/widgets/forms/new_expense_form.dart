@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
 
@@ -100,11 +101,12 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   String _numberValidator(String value) {
     if (value == null || value.isEmpty) {
-      return 'Amount is required';
+      return AppLocalizations.of(context)
+          .translate('expense_form_amount_required');
     }
     final n = num.tryParse(value);
     if (n == null) {
-      return '"$value" is not a valid number';
+      return '"$value" ${AppLocalizations.of(context).translate('expense_form_not_a_valid_number')}';
     }
     return null;
   }
@@ -136,10 +138,15 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           CustomTextField(
             textFormFieldKey: Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
             icon: Icons.note,
-            hintText: 'Enter description',
-            labelText: 'Description',
+            hintText: AppLocalizations.of(context)
+                .translate('expense_form_description_hint'),
+            labelText: AppLocalizations.of(context)
+                .translate('expense_form_description_label'),
             controller: _descriptionController,
-            validator: (val) => val.isEmpty ? 'Description is required' : null,
+            validator: (val) => val.isEmpty
+                ? AppLocalizations.of(context)
+                    .translate('expense_form_description_error')
+                : null,
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -148,8 +155,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 child: CustomTextField(
                   textFormFieldKey: Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
                   icon: Icons.attach_money,
-                  hintText: 'Enter amount',
-                  labelText: 'Amount',
+                  hintText: AppLocalizations.of(context)
+                      .translate('expense_form_amount_hint'),
+                  labelText: AppLocalizations.of(context)
+                      .translate('expense_form_amount_label'),
                   controller: _amountController,
                   validator: _numberValidator,
                   textInputType: TextInputType.numberWithOptions(decimal: true),
@@ -174,8 +183,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           RaisedButton(
             key: Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.expenseToEdit == null
-                ? const Text('Add Expense')
-                : const Text('Edit Expense'),
+                ? Text(AppLocalizations.of(context)
+                    .translate('expense_form_add_expense_button'))
+                : Text(AppLocalizations.of(context)
+                    .translate('expense_form_modify_expense_button')),
             onPressed: _submitData,
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).textTheme.button.color,
@@ -203,13 +214,16 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 textColor: Theme.of(context).primaryColor,
                 onPressed: _presentDatePicker,
                 child: Text(_selectedDate == null
-                    ? 'No Date Chosen'
+                    ? AppLocalizations.of(context)
+                        .translate('expense_form_date_no_chosen')
                     : widget.dateFormat.format(_selectedDate)),
               ),
             ));
       },
       validator: (val) {
-        return (val == null) ? 'Please select date' : null;
+        return (val == null)
+            ? AppLocalizations.of(context).translate('expense_form_date_error')
+            : null;
       },
     );
   }
@@ -222,7 +236,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             return CurrencyDropdownField(
                 key: Key(Keys.EXPENSE_FORM_CURRENCY_KEY),
                 currencies: state.currencies,
-                label: 'Currency',
+                label: AppLocalizations.of(context)
+                    .translate('expense_form_currency_label'),
                 initialValue: _currency,
                 callback: (newValue) {
                   setState(() {
@@ -256,7 +271,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               size: 26,
               color: Theme.of(context).primaryColor,
             ),
-            labelText: 'User',
+            labelText: AppLocalizations.of(context)
+                .translate('expense_form_user_label'),
             errorText: formState.hasError ? formState.errorText : null,
           ),
           isEmpty: _user == null,
@@ -281,7 +297,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         );
       },
       validator: (val) {
-        return (val == null) ? 'Please select a user' : null;
+        return (val == null)
+            ? AppLocalizations.of(context).translate('expense_form_user_error')
+            : null;
       },
       initialValue: _user,
     );
@@ -313,7 +331,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                         size: 26,
                         color: Theme.of(context).primaryColor,
                       ),
-                      labelText: 'Receivers',
+                      labelText: AppLocalizations.of(context)
+                          .translate('expense_form_receivers_label'),
                       errorText:
                           formState.hasError ? formState.errorText : null,
                     ),
@@ -331,7 +350,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               },
               validator: (val) {
                 return (val == null || val.length < 1)
-                    ? 'Please select receivers'
+                    ? AppLocalizations.of(context)
+                        .translate('expense_form_receivers_error')
                     : null;
               },
             );

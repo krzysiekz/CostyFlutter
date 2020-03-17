@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
@@ -29,10 +30,12 @@ class _UserListPageState extends State<UserListPage> {
       bloc: BlocProvider.of<UserBloc>(context),
       builder: (BuildContext context, UserState state) {
         if (state is UserEmpty) {
-          return const Text("No users to display.");
+          return Text(AppLocalizations.of(context)
+              .translate('user_list_page_no_users'));
         } else if (state is UserLoaded) {
           if (state.users.isEmpty) {
-            return const Text("No users to display.");
+            return Text(AppLocalizations.of(context)
+                .translate('user_list_page_no_users'));
           }
           return ListView.builder(
             padding: const EdgeInsets.all(25),
@@ -51,13 +54,22 @@ class _UserListPageState extends State<UserListPage> {
       },
       listener: (BuildContext context, UserState state) {
         if (state is UserError) {
-          DialogUtilities.showAlertDialog(context, 'Error', 'Cannot add user');
+          DialogUtilities.showAlertDialog(
+              context,
+              AppLocalizations.of(context).translate('error'),
+              AppLocalizations.of(context)
+                  .translate('user_list_page_cannot_add'));
         } else if (state is UserAdded) {
-          DialogUtilities.showSnackBar(context, 'User added.');
+          DialogUtilities.showSnackBar(context,
+              AppLocalizations.of(context).translate('user_list_page_added'));
         } else if (state is UserDeleted) {
-          DialogUtilities.showSnackBar(context, 'User deleted.');
+          DialogUtilities.showSnackBar(context,
+              AppLocalizations.of(context).translate('user_list_page_deleted'));
         } else if (state is UserModified) {
-          DialogUtilities.showSnackBar(context, 'User modified.');
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('user_list_page_modified'));
         }
       },
     );

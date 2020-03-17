@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../app_localizations.dart';
 import '../../../keys.dart';
 
 class DialogUtilities {
@@ -14,7 +15,7 @@ class DialogUtilities {
               content: Text(content),
               actions: <Widget>[
                 FlatButton(
-                  child: const Text('Ok'),
+                  child: Text(AppLocalizations.of(context).translate('ok')),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -57,17 +58,20 @@ class DialogUtilities {
 
   static AlertDialog createDeleteConfirmationDialog(BuildContext context) {
     return AlertDialog(
-      title: const Text("Confirm"),
-      content: const Text("Are you sure you wish to delete this item?"),
+      title: Text(AppLocalizations.of(context).translate('confirm')),
+      content: Text(AppLocalizations.of(context)
+          .translate('alert_dialog_delete_item_message')),
       actions: <Widget>[
         FlatButton(
             key: Key(Keys.DELETE_CONFIRMATION_DELETE_BUTTON),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text("DELETE")),
+            child: Text(AppLocalizations.of(context)
+                .translate('alert_dialog_delete_button'))),
         FlatButton(
           key: Key(Keys.DELETE_CONFIRMATION_CANCEL_BUTTON),
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text("CANCEL"),
+          child: Text(AppLocalizations.of(context)
+              .translate('alert_dialog_cancel_button')),
         ),
       ],
     );

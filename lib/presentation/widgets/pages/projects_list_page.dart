@@ -67,21 +67,36 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
       listener: (context, state) {
         if (state is ProjectError) {
           DialogUtilities.showAlertDialog(
-              context, 'Error', 'Cannot add project.');
+            context,
+            AppLocalizations.of(context).translate('error'),
+            AppLocalizations.of(context)
+                .translate('project_list_page_cannot_add'),
+          );
         } else if (state is ProjectAdded) {
-          DialogUtilities.showSnackBar(context, "Project added.");
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('project_list_page_added'));
         } else if (state is ProjectDeleted) {
-          DialogUtilities.showSnackBar(context, "Project deleted.");
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('project_list_page_deleted'));
         } else if (state is ProjectModified) {
-          DialogUtilities.showSnackBar(context, "Project modified.");
+          DialogUtilities.showSnackBar(
+              context,
+              AppLocalizations.of(context)
+                  .translate('project_list_page_modified'));
         }
       },
       builder: (context, state) {
         if (state is ProjectEmpty) {
-          return const Text("No projects to display.");
+          return Text(AppLocalizations.of(context)
+              .translate('project_list_page_no_projects'));
         } else if (state is ProjectLoaded) {
           if (state.projects.isEmpty) {
-            return const Text("No projects to display.");
+            return Text(AppLocalizations.of(context)
+                .translate('project_list_page_no_projects'));
           }
           return ListView.builder(
             itemBuilder: (ctx, index) {

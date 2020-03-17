@@ -2,6 +2,8 @@ import 'package:costy/data/models/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../app_localizations.dart';
+
 class CurrencyDropdownField extends StatefulWidget {
   final List<Currency> currencies;
   final String label;
@@ -75,7 +77,10 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
         );
       },
       validator: (val) {
-        return (val == null) ? 'Please select a currency' : null;
+        return (val == null)
+            ? AppLocalizations.of(context)
+                .translate('form_currency_dropdown_error')
+            : null;
       },
     );
   }

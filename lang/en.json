@@ -1,3 +1,71 @@
 {
-  "project_list_page_title": "Projects"
+  "expenses_list_page_no_expenses": "No expenses to display.",
+  "expenses_list_page_cannot_add": "Cannot add expense.",
+  "expenses_list_page_added": "Expense added.",
+  "expenses_list_page_deleted": "Expense deleted.",
+  "expenses_list_page_modified": "Expense modified.",
+
+  "user_list_page_no_users": "No users to display.",
+  "user_list_page_cannot_add": "Cannot add user.",
+  "user_list_page_added": "User added.",
+  "user_list_page_deleted": "User deleted.",
+  "user_list_page_modified": "User modified.",
+
+  "user_list_item_used_in_expense_error": "Cannot remove user that is used in expense. Please remove expense first.",
+  "user_list_item_cannot_remove": "Cannot remove user.",
+
+  "project_list_page_title": "Projects",
+  "project_list_page_no_projects": "No projects to display.",
+  "project_list_page_cannot_add": "Cannot add project.",
+  "project_list_page_added": "Project added.",
+  "project_list_page_deleted": "Project deleted.",
+  "project_list_page_modified": "Project modified.",
+
+  "project_details_page_users": "USERS",
+  "project_details_page_expenses": "EXPENSES",
+  "project_details_page_report": "REPORT",
+
+  "report_page_no_report": "No report to display.",
+
+  "alert_dialog_delete_item_message": "Are you sure you wish to delete this item?",
+  "alert_dialog_delete_button": "DELETE",
+  "alert_dialog_cancel_button": "CANCEL",
+
+  "form_currency_dropdown_error": "Please select a currency",
+
+  "expense_form_multi_select_chip_select_all_button": "Select all.",
+  "expense_form_multi_select_chip_select_none_button": "Select none.",
+  "expense_form_amount_required": "Amount is required.",
+  "expense_form_not_a_valid_number": "is not a valid number",
+  "expense_form_description_hint": "Enter description",
+  "expense_form_description_label": "Description",
+  "expense_form_description_error": "Description is required.",
+  "expense_form_amount_hint": "Enter amount",
+  "expense_form_amount_label": "Amount",
+  "expense_form_date_no_chosen": "No Date Chosen",
+  "expense_form_date_error": "Please select date",
+  "expense_form_currency_label": "Currency",
+  "expense_form_user_label": "User",
+  "expense_form_user_error": "Please select a user",
+  "expense_form_receivers_label": "Receivers",
+  "expense_form_receivers_error": "Please select receivers",
+  "expense_form_add_expense_button": "Add expense",
+  "expense_form_modify_expense_button": "Modify expense",
+
+  "project_form_project_name_hint": "Enter project name",
+  "project_form_project_name_label": "Project name",
+  "project_form_project_name_error": "Project name is required.",
+  "project_form_default_currency_label": "Default currency",
+  "project_form_add_project_button": "Add project",
+  "project_form_modify_project_button": "Modify project",
+
+  "user_form_user_name_hint": "Enter user's name",
+  "user_form_user_name_label": "Name",
+  "user_form_user_name_error": "User's name is required",
+  "user_form_add_user_button": "Add user",
+  "user_form_modify_user_button": "Modify user",
+
+  "error": "Error.",
+  "ok": "Ok.",
+  "confirm": "Confirm."
 }
