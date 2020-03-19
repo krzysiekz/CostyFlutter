@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:costy/app_localizations.dart';
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user.dart';
@@ -31,111 +32,116 @@ void main() {
   );
 
   group('add new user', () {
-    testWidgets('should display proper validation errors',
-        (WidgetTester tester) async {
-      //arrange
-      await tester.pumpWidget(
-        BlocProvider(
-          create: (_) => userBloc,
-          child: MaterialApp(
+    var testedWidget;
+
+    setUp(() {
+      testedWidget = BlocProvider(
+        create: (_) => userBloc,
+        child: MaterialApp(
+            locale: Locale('en'),
             home: Scaffold(
               body: NewUserForm(project: tProject),
             ),
-          ),
-        ),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+            ]),
       );
-      await tester.pumpAndSettle();
-      //act
-      final addUserButtonFinder =
-          find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY));
-      expect(addUserButtonFinder, findsOneWidget);
-      await tester.tap(addUserButtonFinder);
-      await tester.pumpAndSettle();
-      //assert
-      expect(find.text('Add User'), findsOneWidget);
-      expect(find.text("User's name is required"), findsOneWidget);
+    });
 
-      verifyNever(userBloc.add(argThat(isA<AddUserEvent>())));
+    testWidgets('should display proper validation errors',
+        (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        //arrange
+        await tester.pumpWidget(testedWidget);
+        await tester.pumpAndSettle();
+        //act
+        final addUserButtonFinder =
+            find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY));
+        expect(addUserButtonFinder, findsOneWidget);
+        await tester.tap(addUserButtonFinder);
+        await tester.pumpAndSettle();
+        //assert
+        expect(find.text('Add user'), findsOneWidget);
+        expect(find.text("User's name is required"), findsOneWidget);
+
+        verifyNever(userBloc.add(argThat(isA<AddUserEvent>())));
+      });
     });
 
     testWidgets('should add user', (WidgetTester tester) async {
-      //arrange
-      await tester.pumpWidget(
-        BlocProvider(
-          create: (_) => userBloc,
-          child: MaterialApp(
-            home: Scaffold(
-              body: NewUserForm(project: tProject),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      //act
-      var nameFieldFinder = find.byKey(Key(Keys.USER_FORM_NAME_FIELD_KEY));
-      expect(nameFieldFinder, findsOneWidget);
-      await tester.enterText(nameFieldFinder, "John");
-      await tester.pumpAndSettle();
+      await tester.runAsync(() async {
+        //arrange
+        await tester.pumpWidget(testedWidget);
+        await tester.pumpAndSettle();
+        //act
+        var nameFieldFinder = find.byKey(Key(Keys.USER_FORM_NAME_FIELD_KEY));
+        expect(nameFieldFinder, findsOneWidget);
+        await tester.enterText(nameFieldFinder, "John");
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY)));
-      await tester.pumpAndSettle();
-      //assert
-      expect(find.text("User's name is required"), findsNothing);
+        await tester.tap(find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY)));
+        await tester.pumpAndSettle();
+        //assert
+        expect(find.text("User's name is required"), findsNothing);
 
-      verify(userBloc.add(AddUserEvent("John", tProject)));
-      verify(userBloc.add(argThat(isA<GetUsersEvent>())));
+        verify(userBloc.add(AddUserEvent("John", tProject)));
+        verify(userBloc.add(argThat(isA<GetUsersEvent>())));
+      });
     });
   });
 
   group('modify user', () {
-    final User userToModify = User(id: 1, name: "John");
+    var userToModify;
+    var testedWidget;
+
+    setUp(() {
+      userToModify = User(id: 1, name: "John");
+
+      testedWidget = BlocProvider(
+        create: (_) => userBloc,
+        child: MaterialApp(
+            locale: Locale('en'),
+            home: Scaffold(
+              body: NewUserForm(project: tProject, userToModify: userToModify),
+            ),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+            ]),
+      );
+    });
 
     testWidgets('should prepopulate data properly during edit',
         (WidgetTester tester) async {
-      //arrange
-      await tester.pumpWidget(
-        BlocProvider(
-          create: (_) => userBloc,
-          child: MaterialApp(
-            home: Scaffold(
-              body: NewUserForm(project: tProject, userToModify: userToModify),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      //assert
-      expect(find.text('John'), findsOneWidget);
-      expect(find.text('Edit User'), findsOneWidget);
+      await tester.runAsync(() async {
+        //arrange
+        await tester.pumpWidget(testedWidget);
+        await tester.pumpAndSettle();
+        //assert
+        expect(find.text('John'), findsOneWidget);
+        expect(find.text('Modify user'), findsOneWidget);
+      });
     });
 
     testWidgets('should edit user', (WidgetTester tester) async {
-      //arrange
-      await tester.pumpWidget(
-        BlocProvider(
-          create: (_) => userBloc,
-          child: MaterialApp(
-            home: Scaffold(
-              body: NewUserForm(project: tProject, userToModify: userToModify),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      //act
-      var nameFieldFinder = find.byKey(Key(Keys.USER_FORM_NAME_FIELD_KEY));
-      expect(nameFieldFinder, findsOneWidget);
-      await tester.enterText(nameFieldFinder, "Kate");
-      await tester.pumpAndSettle();
+      await tester.runAsync(() async {
+        //arrange
+        await tester.pumpWidget(testedWidget);
+        await tester.pumpAndSettle();
+        //act
+        var nameFieldFinder = find.byKey(Key(Keys.USER_FORM_NAME_FIELD_KEY));
+        expect(nameFieldFinder, findsOneWidget);
+        await tester.enterText(nameFieldFinder, "Kate");
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY)));
-      await tester.pumpAndSettle();
-      //assert
-      expect(find.text("Userk's name is required"), findsNothing);
+        await tester.tap(find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY)));
+        await tester.pumpAndSettle();
+        //assert
+        expect(find.text("Userk's name is required"), findsNothing);
 
-      verify(userBloc
-          .add(ModifyUserEvent(User(id: userToModify.id, name: "Kate"))));
-      verify(userBloc.add(argThat(isA<GetUsersEvent>())));
+        verify(userBloc
+            .add(ModifyUserEvent(User(id: userToModify.id, name: "Kate"))));
+        verify(userBloc.add(argThat(isA<GetUsersEvent>())));
+      });
     });
   });
 }
