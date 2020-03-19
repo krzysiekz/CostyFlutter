@@ -8,6 +8,9 @@ part of 'project_entity.dart';
 
 class ProjectEntityAdapter extends TypeAdapter<ProjectEntity> {
   @override
+  final typeId = 1;
+
+  @override
   ProjectEntity read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{

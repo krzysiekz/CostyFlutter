@@ -28,10 +28,10 @@ Future initializeApp() async {
   await di.init();
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
-  Hive.registerAdapter(CurrencyEntityAdapter(), 0);
-  Hive.registerAdapter(ProjectEntityAdapter(), 1);
-  Hive.registerAdapter(UserEntityAdapter(), 2);
-  Hive.registerAdapter(UserExpenseEntityAdapter(), 3);
+  Hive.registerAdapter(CurrencyEntityAdapter());
+  Hive.registerAdapter(ProjectEntityAdapter());
+  Hive.registerAdapter(UserEntityAdapter());
+  Hive.registerAdapter(UserExpenseEntityAdapter());
   await _initHiveStaticData();
 }
 

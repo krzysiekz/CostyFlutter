@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 part 'currency_entity.g.dart';
 
-@HiveType()
+@HiveType(typeId: 0)
 class CurrencyEntity extends Equatable {
   @HiveField(0)
   final String name;

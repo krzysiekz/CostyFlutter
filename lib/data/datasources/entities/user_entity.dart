@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 part 'user_entity.g.dart';
 
-@HiveType()
+@HiveType(typeId: 2)
 class UserEntity extends Equatable {
   @HiveField(0)
   final String name;

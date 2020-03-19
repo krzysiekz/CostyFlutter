@@ -8,6 +8,9 @@ part of 'currency_entity.dart';
 
 class CurrencyEntityAdapter extends TypeAdapter<CurrencyEntity> {
   @override
+  final typeId = 0;
+
+  @override
   CurrencyEntity read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{

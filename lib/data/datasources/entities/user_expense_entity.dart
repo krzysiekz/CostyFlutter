@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 part 'user_expense_entity.g.dart';
 
-@HiveType()
+@HiveType(typeId: 3)
 class UserExpenseEntity extends Equatable {
   @HiveField(0)
   final List<int> receiversIds;

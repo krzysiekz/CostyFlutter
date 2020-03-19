@@ -8,6 +8,9 @@ part of 'user_expense_entity.dart';
 
 class UserExpenseEntityAdapter extends TypeAdapter<UserExpenseEntity> {
   @override
+  final typeId = 3;
+
+  @override
   UserExpenseEntity read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{

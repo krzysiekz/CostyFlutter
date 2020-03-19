@@ -8,6 +8,9 @@ part of 'user_entity.dart';
 
 class UserEntityAdapter extends TypeAdapter<UserEntity> {
   @override
+  final typeId = 2;
+
+  @override
   UserEntity read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
