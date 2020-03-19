@@ -57,12 +57,13 @@ void main() {
         creationDateTime: tCreationDateTime)
   ];
 
-  blocTest('should emit empty state initially', build: () {
+  blocTest('should emit empty state initially', skip: 0, build: () async {
     return bloc;
   }, expect: [ProjectEmpty()]);
 
   blocTest('should emit proper states when getting projects',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetProjects.call(any))
             .thenAnswer((_) async => Right(tProjectsList));
         return bloc;
@@ -71,7 +72,8 @@ void main() {
       expect: [ProjectEmpty(), ProjectLoading(), ProjectLoaded(tProjectsList)]);
 
   blocTest('should emit proper states in case of error when getting projects',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetProjects.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -84,7 +86,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when adding project',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockAddProject.call(any))
             .thenAnswer((_) async => Right(tProjectsList[0].id));
         return bloc;
@@ -98,7 +101,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case of error when adding project',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockAddProject.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -112,7 +116,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when deleting project',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockDeleteProject.call(any))
             .thenAnswer((_) async => Right(tProjectsList[0].id));
         return bloc;
@@ -125,7 +130,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case of error when deleting project',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockDeleteProject.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -138,7 +144,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when modifying project',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockModifyProject.call(any))
             .thenAnswer((_) async => Right(tProjectsList[0].id));
         return bloc;
@@ -151,7 +158,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case of error when modifying project',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockModifyProject.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;

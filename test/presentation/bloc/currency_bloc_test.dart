@@ -22,12 +22,13 @@ void main() {
     Currency(name: 'PLN'),
   ];
 
-  blocTest('should emit empty state initially', build: () {
+  blocTest('should emit empty state initially', skip: 0, build: () async {
     return CurrencyBloc(mockGetCurrencies);
   }, expect: [CurrencyEmpty()]);
 
   blocTest('should emit proper states when getting currencies',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetCurrencies.call(any))
             .thenAnswer((_) async => Right(tCurrencyList));
         return CurrencyBloc(mockGetCurrencies);
@@ -40,7 +41,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case or error',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetCurrencies.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return CurrencyBloc(mockGetCurrencies);

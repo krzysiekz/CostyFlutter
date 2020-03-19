@@ -73,12 +73,13 @@ void main() {
         dateTime: tDateTime),
   ];
 
-  blocTest('should emit empty state initially', build: () {
+  blocTest('should emit empty state initially', skip: 0, build: () async {
     return bloc;
   }, expect: [ExpenseEmpty()]);
 
   blocTest('should emit proper states when getting expenses',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Right(tExpensesList));
         return bloc;
@@ -87,7 +88,8 @@ void main() {
       expect: [ExpenseEmpty(), ExpenseLoading(), ExpenseLoaded(tExpensesList)]);
 
   blocTest('should emit proper states in case of error when getting expenses',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -100,7 +102,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when adding expense',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockAddExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
         return bloc;
@@ -120,7 +123,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case of error when adding expense',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockAddExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -140,7 +144,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when deleting expense',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockDeleteExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
         return bloc;
@@ -153,7 +158,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case of error when deleting expense',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockDeleteExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -166,7 +172,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when modifying expense',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockModifyExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
         return bloc;
@@ -179,7 +186,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case of error when modifying expense',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockModifyExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;

@@ -33,12 +33,13 @@ void main() {
       creationDateTime: tCreationDateTime);
   final tReport = Report(project: tProject);
 
-  blocTest('should emit empty state initially', build: () {
+  blocTest('should emit empty state initially', skip: 0, build: () async {
     return bloc;
   }, expect: [ReportEmpty()]);
 
   blocTest('should emit proper states when getting report',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetReport.call(any)).thenAnswer((_) async => Right(tReport));
         when(mockGetExpenses.call(any)).thenAnswer((_) async => Right(List()));
         return bloc;
@@ -47,7 +48,8 @@ void main() {
       expect: [ReportEmpty(), ReportLoading(), ReportLoaded(tReport)]);
 
   blocTest('should emit proper states in case or error when generating report',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetReport.call(any))
             .thenAnswer((_) async => Left(ReportGenerationFailure()));
         when(mockGetExpenses.call(any)).thenAnswer((_) async => Right(List()));
@@ -61,7 +63,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states in case or error when getting expenses',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetReport.call(any)).thenAnswer((_) async => Right(tReport));
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));

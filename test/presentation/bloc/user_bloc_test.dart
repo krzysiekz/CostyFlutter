@@ -52,12 +52,13 @@ void main() {
     User(id: 2, name: 'Kate'),
   ];
 
-  blocTest('should emit empty state initially', build: () {
+  blocTest('should emit empty state initially', skip: 0, build: () async {
     return bloc;
   }, expect: [UserEmpty()]);
 
   blocTest('should emit proper states when getting users',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetUsers.call(any)).thenAnswer((_) async => Right(tUsers));
         return bloc;
       },
@@ -65,7 +66,8 @@ void main() {
       expect: [UserEmpty(), UserLoading(), UserLoaded(tUsers)]);
 
   blocTest('should emit proper states in case of error when getting users',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockGetUsers.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -78,7 +80,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when adding user',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockAddUser.call(any))
             .thenAnswer((_) async => Right(tUsers[0].id));
         return bloc;
@@ -87,7 +90,8 @@ void main() {
       expect: [UserEmpty(), UserLoading(), UserAdded(tUsers[0].id)]);
 
   blocTest('should emit proper states in case of error when adding user',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockAddUser.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -100,7 +104,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when deleting user',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockDeleteUser.call(any))
             .thenAnswer((_) async => Right(tUsers[0].id));
         return bloc;
@@ -109,7 +114,8 @@ void main() {
       expect: [UserEmpty(), UserLoading(), UserDeleted(tUsers[0].id)]);
 
   blocTest('should emit proper states in case of error when deleting user',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockDeleteUser.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -122,7 +128,8 @@ void main() {
       ]);
 
   blocTest('should emit proper states when modifying user',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockModifyUser.call(any))
             .thenAnswer((_) async => Right(tUsers[0].id));
         return bloc;
@@ -131,7 +138,8 @@ void main() {
       expect: [UserEmpty(), UserLoading(), UserModified(tUsers[0].id)]);
 
   blocTest('should emit proper states in case of error when modifying user',
-      build: () {
+      skip: 0,
+      build: () async {
         when(mockModifyUser.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
