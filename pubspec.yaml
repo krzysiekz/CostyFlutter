@@ -27,9 +27,8 @@ dependencies:
   decimal: ^0.3.5
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-  path_provider: ^1.5.1
-  flutter_bloc: ^3.1.0
-  flare_splash_screen: ^3.0.0
+  path_provider: ^1.6.5
+  flutter_bloc: ^3.2.0
   get_it: ^3.1.0
   intl: ^0.16.0
   flutter_multiselect: 0.0.1
