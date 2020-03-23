@@ -126,7 +126,6 @@ class _ProjectListItemState extends State<ProjectListItem> {
       child: Image.asset(
         'assets/project.jpg',
         height: 250,
-        width: double.infinity,
         fit: BoxFit.cover,
       ),
     );
