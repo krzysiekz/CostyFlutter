@@ -6,24 +6,20 @@ import 'package:costy/data/models/user.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/pages/user_list_page.dart';
+import 'package:costy/presentation/widgets/pages/expenses_list_page.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
-
 class MockExpenseBloc extends MockBloc<ExpenseEvent, ExpenseState>
     implements ExpenseBloc {}
 
 void main() {
-  UserBloc userBloc;
   ExpenseBloc expenseBloc;
-
   Project tProject;
-  User tUser;
+  UserExpense tExpense;
 
   var testedWidget;
 
@@ -35,28 +31,27 @@ void main() {
       creationDateTime: DateTime.now(),
     );
 
-    tUser = User(id: 1, name: "John");
+    tExpense = UserExpense(
+        id: 2,
+        amount: Decimal.fromInt(10),
+        currency: Currency(name: "USD"),
+        description: 'First Expense',
+        user: User(id: 3, name: "John"),
+        receivers: [User(id: 3, name: "John"), User(id: 4, name: "Kate")],
+        dateTime: DateTime.now());
 
-    userBloc = MockUserBloc();
     expenseBloc = MockExpenseBloc();
 
     //arrange
-    when(userBloc.state).thenAnswer(
-      (_) => UserLoaded([tUser]),
-    );
-
     when(expenseBloc.state).thenAnswer(
-      (_) => ExpenseLoaded([]),
+      (_) => ExpenseLoaded([tExpense]),
     );
 
-    testedWidget = MultiBlocProvider(
-      providers: [
-        BlocProvider<ExpenseBloc>.value(value: expenseBloc),
-        BlocProvider<UserBloc>.value(value: userBloc),
-      ],
+    testedWidget = BlocProvider(
+      create: (_) => expenseBloc,
       child: MaterialApp(
           locale: Locale('en'),
-          home: UserListPage(project: tProject),
+          home: ExpensesListPage(project: tProject),
           localizationsDelegates: [
             AppLocalizations.delegate,
           ]),
@@ -64,7 +59,6 @@ void main() {
   });
 
   tearDown(() {
-    userBloc.close();
     expenseBloc.close();
   });
 
@@ -92,8 +86,8 @@ void main() {
       await tester.pumpAndSettle();
 
       //assert
-      verify(userBloc.add(argThat(isA<GetUsersEvent>())));
-      verify(userBloc.add(DeleteUserEvent(tUser.id)));
+      verify(expenseBloc.add(argThat(isA<GetExpensesEvent>())));
+      verify(expenseBloc.add(DeleteExpenseEvent(tExpense.id)));
     });
   });
 
@@ -122,44 +116,8 @@ void main() {
       await tester.pumpAndSettle();
 
       //assert
-      verify(userBloc.add(argThat(isA<GetUsersEvent>())));
-      verifyNever(userBloc.add(argThat(isA<DeleteUserEvent>())));
-    });
-  });
-
-  testWidgets('should not delete item if user used in expense',
-      (WidgetTester tester) async {
-    await tester.runAsync(() async {
-      //arrange
-      final tExpense = UserExpense(
-          id: 1,
-          amount: Decimal.fromInt(10),
-          currency: Currency(name: "USD"),
-          description: 'First Expense',
-          user: tUser,
-          receivers: [tUser],
-          dateTime: DateTime.now());
-
-      when(expenseBloc.state).thenAnswer(
-        (_) => ExpenseLoaded([tExpense]),
-      );
-
-      await tester.pumpWidget(testedWidget);
-      await tester.pumpAndSettle();
-
-      final itemFinder = find.byType(Dismissible);
-      //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
-      await tester.pumpAndSettle();
-
-      //verify popup
-      expect(find.text('Cannot remove user that is used in expense. Please remove expense first.'),
-          findsOneWidget);
-
-      //assert
-      verify(userBloc.add(argThat(isA<GetUsersEvent>())));
-      verifyNever(userBloc.add(argThat(isA<DeleteUserEvent>())));
+      verify(expenseBloc.add(argThat(isA<GetExpensesEvent>())));
+      verifyNever(expenseBloc.add(argThat(isA<DeleteExpenseEvent>())));
     });
   });
 }
