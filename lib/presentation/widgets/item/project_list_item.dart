@@ -2,7 +2,9 @@ import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/forms/new_project_form.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
@@ -26,7 +28,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
       direction: DismissDirection.endToStart,
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.project),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () => Navigator.of(context).pushNamed(
           ProjectDetailsPage.ROUTE_NAME,
           arguments: widget.project,
@@ -52,7 +54,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
         ),
       ),
       confirmDismiss: (DismissDirection direction) async {
-        return await showDialog(
+        return await showPlatformDialog(
           context: context,
           builder: (BuildContext context) {
             return DialogUtilities.createDeleteConfirmationDialog(context);
@@ -174,10 +176,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
   }
 
   void _startEditProject(BuildContext ctx) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
+    showPlatformModalSheet(
       context: ctx,
       builder: (_) {
         return NewProjectForm(projectToEdit: widget.project);
