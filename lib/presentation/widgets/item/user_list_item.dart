@@ -27,7 +27,6 @@ class _UserListItemState extends State<UserListItem> {
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.user),
       child: Card(
-        color: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -36,18 +35,15 @@ class _UserListItemState extends State<UserListItem> {
         child: ListTile(
           leading: Icon(
             Icons.person,
-            color: Theme.of(context).accentColor,
             size: 40,
           ),
           title: Text(
             widget.user.name,
-            style: TextStyle(color: Colors.white70),
           ),
           trailing: GestureDetector(
             onTap: () => _showEditUserForm(context, widget.project),
             child: Icon(
               Icons.edit,
-              color: Theme.of(context).accentColor,
             ),
           ),
         ),
@@ -109,7 +105,6 @@ class _UserListItemState extends State<UserListItem> {
 
   void _showEditUserForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),

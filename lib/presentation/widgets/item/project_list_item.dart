@@ -32,7 +32,6 @@ class _ProjectListItemState extends State<ProjectListItem> {
           arguments: widget.project,
         ),
         child: Card(
-          color: Theme.of(context).primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -86,14 +85,12 @@ class _ProjectListItemState extends State<ProjectListItem> {
       children: <Widget>[
         Icon(
           Icons.date_range,
-          color: Colors.white54,
         ),
         SizedBox(
           width: 6,
         ),
         Text(
           widget.dateFormat.format(widget.project.creationDateTime),
-          style: TextStyle(color: Colors.white54, fontSize: 20),
         ),
       ],
     );
@@ -104,14 +101,12 @@ class _ProjectListItemState extends State<ProjectListItem> {
       children: <Widget>[
         Icon(
           Icons.monetization_on,
-          color: Colors.white54,
         ),
         SizedBox(
           width: 6,
         ),
         Text(
           widget.project.defaultCurrency.name,
-          style: TextStyle(color: Colors.white70, fontSize: 20),
         ),
       ],
     );
@@ -164,14 +159,13 @@ class _ProjectListItemState extends State<ProjectListItem> {
         onTap: () => _startEditProject(context),
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Colors.white70,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(
               Icons.edit,
-              color: Theme.of(context).accentColor,
             ),
           ),
         ),
@@ -181,7 +175,6 @@ class _ProjectListItemState extends State<ProjectListItem> {
 
   void _startEditProject(BuildContext ctx) {
     showModalBottomSheet(
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),

@@ -117,7 +117,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
     return SingleChildScrollView(
         child: Card(
       elevation: 0,
-      color: Theme.of(context).backgroundColor,
       child: Container(
         padding: EdgeInsets.only(
           top: 5,
@@ -189,8 +188,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 : Text(AppLocalizations.of(context)
                     .translate('expense_form_modify_expense_button')),
             onPressed: _submitData,
-            color: Theme.of(context).primaryColor,
-            textColor: Theme.of(context).textTheme.button.color,
           )
         ],
       ),
@@ -206,13 +203,11 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               icon: Icon(
                 Icons.date_range,
                 size: 26,
-                color: Theme.of(context).primaryColor,
               ),
               errorText: formState.hasError ? formState.errorText : null,
             ),
             child: Container(
               child: FlatButton(
-                textColor: Theme.of(context).primaryColor,
                 onPressed: _presentDatePicker,
                 child: Text(_selectedDate == null
                     ? AppLocalizations.of(context)
@@ -270,7 +265,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             icon: Icon(
               Icons.person,
               size: 26,
-              color: Theme.of(context).primaryColor,
             ),
             labelText: AppLocalizations.of(context)
                 .translate('expense_form_user_label'),
@@ -282,7 +276,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               isExpanded: true,
               icon: Icon(
                 Icons.arrow_downward,
-                color: Theme.of(context).primaryColor,
               ),
               value: _user,
               isDense: true,
@@ -330,7 +323,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                       icon: Icon(
                         Icons.group,
                         size: 26,
-                        color: Theme.of(context).primaryColor,
                       ),
                       labelText: AppLocalizations.of(context)
                           .translate('expense_form_receivers_label'),

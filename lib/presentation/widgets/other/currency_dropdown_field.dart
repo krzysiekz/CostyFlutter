@@ -41,7 +41,6 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
             icon: Icon(
               Icons.monetization_on,
               size: 26,
-              color: Theme.of(context).primaryColor,
             ),
             labelText: widget.label,
             errorText: formState.hasError ? formState.errorText : null,
@@ -51,7 +50,6 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
             child: DropdownButton<Currency>(
               icon: Icon(
                 Icons.arrow_downward,
-                color: Theme.of(context).primaryColor,
               ),
               value: _selected,
               isDense: true,

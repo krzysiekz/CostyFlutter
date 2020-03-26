@@ -36,7 +36,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         icon: Icon(
           widget.icon,
           size: 26,
-          color: Theme.of(context).primaryColor,
         ),
         hintText: widget.hintText,
         labelText: widget.labelText,

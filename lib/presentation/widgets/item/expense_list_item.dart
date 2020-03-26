@@ -28,7 +28,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.userExpense),
       child: Card(
-        color: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -39,7 +38,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             width: 65,
             height: 65,
             decoration: BoxDecoration(
-              color: Theme.of(context).accentColor,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
@@ -61,25 +59,20 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
           ),
           title: Text(
             widget.userExpense.description,
-            style: TextStyle(color: Colors.white70),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Divider(
-                color: Theme.of(context).accentColor,
                 thickness: 0.4,
               ),
               Text(
                 '${widget.userExpense.user.name} => ${widget.userExpense.receivers.map((user) => user.name).toList().join(', ')}',
-                style: TextStyle(color: Colors.white70),
               ),
               Divider(
-                color: Theme.of(context).accentColor,
                 thickness: 0.4,
               ),
-              Text(widget.dateFormat.format(widget.userExpense.dateTime),
-                  style: TextStyle(color: Colors.white70)),
+              Text(widget.dateFormat.format(widget.userExpense.dateTime))
             ],
           ),
           isThreeLine: true,
@@ -87,7 +80,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             onTap: () => _showAddExpenseForm(context, widget.project),
             child: Icon(
               Icons.edit,
-              color: Theme.of(context).accentColor,
             ),
           ),
         ),
@@ -112,7 +104,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
   void _showAddExpenseForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
       isScrollControlled: true,
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),

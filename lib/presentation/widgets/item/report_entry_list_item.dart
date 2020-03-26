@@ -14,7 +14,6 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).primaryColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -25,7 +24,6 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
           width: 65,
           height: 65,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
@@ -50,17 +48,14 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
           children: <Widget>[
             Text(
               'From: ${widget.reportEntry.sender.name}',
-              style: TextStyle(color: Colors.white70),
             ),
             Divider(
-              color: Theme.of(context).accentColor,
               thickness: 0.4,
             ),
           ],
         ),
         subtitle: Text(
           'To: ${widget.reportEntry.receiver.name}',
-          style: TextStyle(color: Colors.white70),
         ),
       ),
     );

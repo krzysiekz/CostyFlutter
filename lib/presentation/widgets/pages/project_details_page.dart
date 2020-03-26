@@ -41,7 +41,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   void _showAddUserForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),
@@ -55,7 +54,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
   void _showAddExpenseForm(BuildContext ctx, Project project) {
     showModalBottomSheet(
       isScrollControlled: true,
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),
@@ -81,11 +79,9 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
         appBar: AppBar(
           title: Text(project.name),
           elevation: 0.0,
-          backgroundColor: Theme.of(context).primaryColor,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: Container(
-              color: Colors.transparent,
               child: SafeArea(
                 child: Column(
                   children: <Widget>[
@@ -93,7 +89,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
                       controller: _tabController,
                       indicator: UnderlineTabIndicator(
                           borderSide: BorderSide(
-                            color: Theme.of(context).accentColor,
                             width: 4.0,
                           ),
                           insets: EdgeInsets.symmetric(
@@ -101,13 +96,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
                           )),
                       indicatorWeight: 6,
                       indicatorSize: TabBarIndicatorSize.label,
-                      labelColor: Theme.of(context).accentColor,
                       labelStyle: const TextStyle(
                         fontSize: 12,
                         letterSpacing: 1.3,
                         fontWeight: FontWeight.w500,
                       ),
-                      unselectedLabelColor: Colors.white38,
                       tabs: <Widget>[
                         Tab(
                           text: AppLocalizations.of(context)

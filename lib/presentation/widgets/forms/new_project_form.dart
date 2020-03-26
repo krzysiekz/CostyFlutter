@@ -72,7 +72,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
           builder: (context, state) {
             return Card(
               elevation: 0,
-              color: Theme.of(context).backgroundColor,
               child: Container(
                 padding: EdgeInsets.only(
                   top: 5,
@@ -139,8 +138,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 : Text(AppLocalizations.of(context)
                     .translate('project_form_modify_project_button')),
             onPressed: _submitData,
-            color: Theme.of(context).primaryColor,
-            textColor: Theme.of(context).textTheme.button.color,
+//            color: Theme.of(context).primaryColor,
+//            textColor: Theme.of(context).colo,
           )
         ],
       ),

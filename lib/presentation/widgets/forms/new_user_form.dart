@@ -55,7 +55,6 @@ class _NewUserFormState extends State<NewUserForm> {
     return SingleChildScrollView(
         child: Card(
       elevation: 0,
-      color: Theme.of(context).backgroundColor,
       child: Container(
         padding: EdgeInsets.only(
           top: 5,
@@ -97,8 +96,6 @@ class _NewUserFormState extends State<NewUserForm> {
                 : Text(AppLocalizations.of(context)
                     .translate('user_form_modify_user_button')),
             onPressed: _submitData,
-            color: Theme.of(context).primaryColor,
-            textColor: Theme.of(context).textTheme.button.color,
           )
         ],
       ),

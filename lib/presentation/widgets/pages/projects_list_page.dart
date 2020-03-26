@@ -27,7 +27,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context).translate('project_list_page_title'),
@@ -50,7 +49,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
 
   void _startAddNewProject(BuildContext ctx) {
     showModalBottomSheet(
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),
