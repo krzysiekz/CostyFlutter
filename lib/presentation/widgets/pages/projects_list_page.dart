@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../keys.dart';
@@ -26,22 +27,18 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
         title: Text(
           AppLocalizations.of(context).translate('project_list_page_title'),
         ),
-        actions: <Widget>[
+        trailingActions: <Widget>[
           IconButton(
             key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
             icon: Icon(Icons.add),
             onPressed: () => _startAddNewProject(context),
           )
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewProject(context),
       ),
       body: Center(child: buildBody(context)),
     );
