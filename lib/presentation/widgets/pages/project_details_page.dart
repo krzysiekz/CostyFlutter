@@ -1,12 +1,14 @@
 import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
+import 'package:costy/presentation/widgets/pages/user_list_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../forms/new_user_form.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
-import 'user_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   static const ROUTE_NAME = '/project-details';
@@ -19,24 +21,36 @@ class ProjectDetailsPage extends StatefulWidget {
 
 class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  PlatformTabController _tabController;
+
+  final items = (BuildContext context) => [
+        BottomNavigationBarItem(
+          title: Text(AppLocalizations.of(context)
+              .translate('project_details_page_users')),
+          icon: Icon(context.platformIcons.group),
+        ),
+        BottomNavigationBarItem(
+          title: Text(AppLocalizations.of(context)
+              .translate('project_details_page_expenses')),
+          icon: Icon(context.platformIcons.shoppingCart),
+        ),
+        BottomNavigationBarItem(
+          title: Text(AppLocalizations.of(context)
+              .translate('project_details_page_report')),
+          icon: Icon(context.platformIcons.mail),
+        ),
+      ];
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(_handleTabIndex);
+    _tabController = PlatformTabController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabIndex);
     _tabController.dispose();
     super.dispose();
-  }
-
-  void _handleTabIndex() {
-    setState(() {});
   }
 
   void _showAddUserForm(BuildContext ctx, Project project) {
@@ -67,101 +81,54 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
   @override
   Widget build(BuildContext context) {
     final project = ModalRoute.of(context).settings.arguments as Project;
-
     return buildProjectDetailsPage(project, context);
   }
 
-  Container buildProjectDetailsPage(Project project, BuildContext context) {
-    return Container(
-      height: 600,
-      width: double.infinity,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(project.name),
-          elevation: 0.0,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(60),
-            child: Container(
-              child: SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    TabBar(
-                      controller: _tabController,
-                      indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(
-                            width: 4.0,
-                          ),
-                          insets: EdgeInsets.symmetric(
-                            horizontal: 60,
-                          )),
-                      indicatorWeight: 6,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      labelStyle: const TextStyle(
-                        fontSize: 12,
-                        letterSpacing: 1.3,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      tabs: <Widget>[
-                        Tab(
-                          text: AppLocalizations.of(context)
-                              .translate('project_details_page_users'),
-                          icon: Icon(
-                            Icons.people,
-                            size: 35,
-                          ),
-                        ),
-                        Tab(
-                          text: AppLocalizations.of(context)
-                              .translate('project_details_page_expenses'),
-                          icon: Icon(
-                            Icons.attach_money,
-                            size: 35,
-                          ),
-                        ),
-                        Tab(
-                          text: AppLocalizations.of(context)
-                              .translate('project_details_page_report'),
-                          icon: Icon(
-                            Icons.picture_as_pdf,
-                            size: 35,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+  Widget buildProjectDetailsPage(Project project, BuildContext context) {
+    return PlatformTabScaffold(
+      iosContentPadding: true,
+      tabController: _tabController,
+      appBarBuilder: (_, index) => PlatformAppBar(
+        title: Text(project.name),
+        trailingActions: _actionButtons(project, context, index),
+        ios: (_) => CupertinoNavigationBarData(
+          title: Text('${items(context)[index].title}'),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            Center(child: UserListPage(project: project)),
-            Center(child: ExpensesListPage(project: project)),
-            Center(child: ReportPage(project: project)),
-          ],
-        ),
-        floatingActionButton: _bottomButtons(project, context),
       ),
+      bodyBuilder: (context, index) => _body(project, context, index),
+      items: items(context),
     );
   }
 
-  Widget _bottomButtons(Project project, BuildContext ctx) {
-    switch (_tabController.index) {
+  List<Widget> _actionButtons(Project project, BuildContext ctx, int index) {
+    switch (index) {
       case 0:
-        return FloatingActionButton(
+        return [
+          PlatformIconButton(
             onPressed: () => _showAddUserForm(ctx, project),
-            child: const Icon(
-              Icons.person_add,
-            ));
+            icon: Icon(context.platformIcons.personAdd),
+          )
+        ];
       case 1:
-        return FloatingActionButton(
-          onPressed: () => _showAddExpenseForm(ctx, project),
-          child: const Icon(
-            Icons.note_add,
-          ),
-        );
+        return [
+          PlatformIconButton(
+            onPressed: () => _showAddExpenseForm(ctx, project),
+            icon: Icon(context.platformIcons.add),
+          )
+        ];
+      default:
+        return null;
+    }
+  }
+
+  Widget _body(Project project, BuildContext ctx, int index) {
+    switch (index) {
+      case 0:
+        return Center(child: UserListPage(project: project));
+      case 1:
+        return Center(child: ExpensesListPage(project: project));
+      case 2:
+        return Center(child: ReportPage(project: project));
       default:
         return null;
     }
