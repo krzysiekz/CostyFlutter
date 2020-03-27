@@ -62,13 +62,13 @@ class _UserListItemState extends State<UserListItem> {
                       state.expenses.any((expense) =>
                           expense.user == widget.user ||
                           expense.receivers.contains(widget.user))) {
-                    return AlertDialog(
+                    return PlatformAlertDialog(
                       title:
                           Text(AppLocalizations.of(context).translate('error')),
                       content: Text(AppLocalizations.of(context)
                           .translate('user_list_item_used_in_expense_error')),
                       actions: <Widget>[
-                        FlatButton(
+                        PlatformDialogAction(
                             onPressed: () => Navigator.of(context).pop(false),
                             child: Text(
                                 AppLocalizations.of(context).translate('ok'))),
