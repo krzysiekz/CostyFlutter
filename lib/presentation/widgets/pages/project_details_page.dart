@@ -85,9 +85,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
         title: Text(project.name),
         trailingActions: _actionButtons(project, context, index),
         ios: (_) => CupertinoNavigationBarData(
-          title: items(context)[index].title,
-          previousPageTitle: 'Projects'
-        ),
+            title: items(context)[index].title,
+            automaticallyImplyLeading: true),
       ),
       bodyBuilder: (context, index) => _body(project, context, index),
       items: items(context),
