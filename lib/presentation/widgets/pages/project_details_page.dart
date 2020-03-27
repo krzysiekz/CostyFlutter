@@ -54,10 +54,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
   }
 
   void _showAddUserForm(BuildContext ctx, Project project) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
+    showPlatformModalSheet(
       context: ctx,
       builder: (_) {
         return NewUserForm(project: project);
@@ -66,11 +63,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
   }
 
   void _showAddExpenseForm(BuildContext ctx, Project project) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
+    showPlatformModalSheet(
       context: ctx,
       builder: (_) {
         return NewExpenseForm(project: project);
@@ -92,7 +85,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
         title: Text(project.name),
         trailingActions: _actionButtons(project, context, index),
         ios: (_) => CupertinoNavigationBarData(
-          title: Text('${items(context)[index].title}'),
+          title: items(context)[index].title,
         ),
       ),
       bodyBuilder: (context, index) => _body(project, context, index),

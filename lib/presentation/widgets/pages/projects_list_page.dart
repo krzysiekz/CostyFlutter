@@ -45,10 +45,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   }
 
   void _startAddNewProject(BuildContext ctx) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
+    showPlatformModalSheet(
       context: ctx,
       builder: (_) {
         return NewProjectForm();

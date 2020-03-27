@@ -4,6 +4,7 @@ import 'package:costy/presentation/widgets/forms/new_user_form.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/user.dart';
@@ -104,10 +105,7 @@ class _UserListItemState extends State<UserListItem> {
   }
 
   void _showEditUserForm(BuildContext ctx, Project project) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
+    showPlatformModalSheet(
       context: ctx,
       builder: (_) {
         return NewUserForm(project: project, userToModify: widget.user);

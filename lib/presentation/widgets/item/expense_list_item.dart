@@ -5,6 +5,7 @@ import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseListItem extends StatefulWidget {
@@ -102,11 +103,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
   }
 
   void _showAddExpenseForm(BuildContext ctx, Project project) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
+    showPlatformModalSheet(
       context: ctx,
       builder: (_) {
         return NewExpenseForm(
