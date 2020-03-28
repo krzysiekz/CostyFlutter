@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../../../app_localizations.dart';
 import '../../../keys.dart';
@@ -49,12 +50,7 @@ class DialogUtilities {
   }
 
   static void showSnackBar(BuildContext context, String content) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Scaffold.of(context).hideCurrentSnackBar();
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(content),
-      ));
-    });
+    showToast(content);
   }
 
   static PlatformAlertDialog createDeleteConfirmationDialog(
