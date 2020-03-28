@@ -8,6 +8,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app_localizations.dart';
@@ -180,7 +181,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           const SizedBox(
             height: 10,
           ),
-          RaisedButton(
+          PlatformButton(
             key: Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.expenseToEdit == null
                 ? Text(AppLocalizations.of(context)

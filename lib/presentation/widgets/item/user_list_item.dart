@@ -35,7 +35,7 @@ class _UserListItemState extends State<UserListItem> {
         margin: EdgeInsets.symmetric(vertical: 5),
         child: ListTile(
           leading: Icon(
-            Icons.person,
+            context.platformIcons.personSolid,
             size: 40,
           ),
           title: Text(
@@ -44,7 +44,7 @@ class _UserListItemState extends State<UserListItem> {
           trailing: GestureDetector(
             onTap: () => _showEditUserForm(context, widget.project),
             child: Icon(
-              Icons.edit,
+              context.platformIcons.create,
             ),
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:costy/keys.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
@@ -76,19 +77,20 @@ class _NewUserFormState extends State<NewUserForm> {
           CustomTextField(
             textFormFieldKey: Key(Keys.USER_FORM_NAME_FIELD_KEY),
             icon: Icons.person,
-            hintText:
-                AppLocalizations.of(context).translate('user_form_user_name_hint'),
-            labelText:
-                AppLocalizations.of(context).translate('user_form_user_name_label'),
+            hintText: AppLocalizations.of(context)
+                .translate('user_form_user_name_hint'),
+            labelText: AppLocalizations.of(context)
+                .translate('user_form_user_name_label'),
             controller: _nameController,
             validator: (val) => val.isEmpty
-                ? AppLocalizations.of(context).translate('user_form_user_name_error')
+                ? AppLocalizations.of(context)
+                    .translate('user_form_user_name_error')
                 : null,
           ),
           const SizedBox(
             height: 10,
           ),
-          RaisedButton(
+          PlatformButton(
             key: Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
             child: widget.userToModify == null
                 ? Text(AppLocalizations.of(context)

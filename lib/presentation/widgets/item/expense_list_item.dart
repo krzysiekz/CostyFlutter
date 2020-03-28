@@ -80,7 +80,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
           trailing: GestureDetector(
             onTap: () => _showAddExpenseForm(context, widget.project),
             child: Icon(
-              Icons.edit,
+              context.platformIcons.create,
             ),
           ),
         ),
