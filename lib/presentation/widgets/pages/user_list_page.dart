@@ -38,7 +38,7 @@ class _UserListPageState extends State<UserListPage> {
                 .translate('user_list_page_no_users'));
           }
           return ListView.builder(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(15),
             itemBuilder: (cts, index) {
               return UserListItem(
                 user: state.users[index],

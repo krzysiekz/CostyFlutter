@@ -9,14 +9,14 @@ class DialogUtilities {
   static void showAlertDialog(
       BuildContext context, String title, String content) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showDialog(
+      showPlatformDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialog(
+            return PlatformAlertDialog(
               title: Text(title),
               content: Text(content),
               actions: <Widget>[
-                FlatButton(
+                PlatformDialogAction(
                   child: Text(AppLocalizations.of(context).translate('ok')),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -38,11 +38,7 @@ class DialogUtilities {
             height: 20,
             width: 20,
             margin: const EdgeInsets.all(5),
-            child: CircularProgressIndicator(
-              strokeWidth: 2.0,
-              valueColor:
-                  AlwaysStoppedAnimation(Theme.of(context).primaryColor),
-            ),
+            child: PlatformCircularProgressIndicator(),
           ),
         ),
       ],
@@ -79,7 +75,8 @@ class DialogUtilities {
     return Container(
       alignment: Alignment.centerRight,
       padding: EdgeInsets.only(right: 20.0),
-      child: Icon(Icons.delete, color: Theme.of(context).errorColor),
+      child: Icon(context.platformIcons.delete,
+          color: Theme.of(context).errorColor),
     );
   }
 }

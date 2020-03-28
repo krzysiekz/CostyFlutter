@@ -37,7 +37,7 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
                 .translate('expenses_list_page_no_expenses'));
           }
           return ListView.builder(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(15),
             itemBuilder: (cts, index) {
               return ExpenseListItem(
                 userExpense: state.expenses[index],

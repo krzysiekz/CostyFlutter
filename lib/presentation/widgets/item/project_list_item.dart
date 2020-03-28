@@ -35,21 +35,28 @@ class _ProjectListItemState extends State<ProjectListItem> {
         ),
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
           ),
-          elevation: 4,
           margin: EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  _buildProjectBackground(),
-                  _buildProjectTitle(),
-                  _buildEditButton(context),
-                ],
+          child: ListTile(
+            leading: Container(
+              child: Text(widget.project.defaultCurrency.name,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            ),
+            title: Text(widget.project.name),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Divider(thickness: 0.4),
+                Text(widget.dateFormat.format(widget.project.creationDateTime)),
+              ],
+            ),
+            trailing: GestureDetector(
+              onTap: () => _startEditProject(context),
+              child: Icon(
+                context.platformIcons.create,
               ),
-              _buildProjectPropertiesPreview(),
-            ],
+            ),
           ),
         ),
       ),
@@ -66,112 +73,6 @@ class _ProjectListItemState extends State<ProjectListItem> {
             .add(DeleteProjectEvent(widget.project.id));
         BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
       },
-    );
-  }
-
-  Padding _buildProjectPropertiesPreview() {
-    return Padding(
-      padding: EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          _buildDefaultCurrencyPreview(),
-          _buildCreationDateTimePreview(),
-        ],
-      ),
-    );
-  }
-
-  Row _buildCreationDateTimePreview() {
-    return Row(
-      children: <Widget>[
-        Icon(
-          Icons.date_range,
-        ),
-        SizedBox(
-          width: 6,
-        ),
-        Text(
-          widget.dateFormat.format(widget.project.creationDateTime),
-        ),
-      ],
-    );
-  }
-
-  Row _buildDefaultCurrencyPreview() {
-    return Row(
-      children: <Widget>[
-        Icon(
-          Icons.monetization_on,
-        ),
-        SizedBox(
-          width: 6,
-        ),
-        Text(
-          widget.project.defaultCurrency.name,
-        ),
-      ],
-    );
-  }
-
-  ClipRRect _buildProjectBackground() {
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15),
-        topRight: Radius.circular(15),
-      ),
-      child: Image.asset(
-        'assets/project.jpg',
-        height: 250,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Positioned _buildProjectTitle() {
-    return Positioned(
-      bottom: 20,
-      right: 10,
-      child: Container(
-        width: 300,
-        color: Colors.white70,
-        padding: EdgeInsets.symmetric(
-          vertical: 5,
-          horizontal: 20,
-        ),
-        child: Text(
-          widget.project.name,
-          style: TextStyle(
-            fontSize: 26,
-            color: Colors.black,
-          ),
-          softWrap: true,
-          overflow: TextOverflow.fade,
-        ),
-      ),
-    );
-  }
-
-  Positioned _buildEditButton(BuildContext context) {
-    return Positioned(
-      key: Key("${widget.project.name}_edit"),
-      top: 20,
-      right: 10,
-      child: GestureDetector(
-        onTap: () => _startEditProject(context),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white70,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.edit,
-            ),
-          ),
-        ),
-      ),
     );
   }
 

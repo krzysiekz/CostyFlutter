@@ -37,7 +37,7 @@ class _ReportPageState extends State<ReportPage> {
                 .translate('report_page_no_report'));
           } else if (state.report != null) {
             return ListView.builder(
-              padding: const EdgeInsets.all(25),
+              padding: const EdgeInsets.all(15),
               itemBuilder: (cts, index) {
                 return ReportEntryListItem(
                     reportEntry: state.report.entries[index]);

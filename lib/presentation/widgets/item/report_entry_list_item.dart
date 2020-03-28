@@ -15,10 +15,8 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
       ),
-      elevation: 3,
-      margin: EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
         leading: Container(
           width: 65,

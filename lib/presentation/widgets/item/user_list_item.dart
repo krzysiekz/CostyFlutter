@@ -29,10 +29,8 @@ class _UserListItemState extends State<UserListItem> {
       key: ObjectKey(widget.user),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 3,
-        margin: EdgeInsets.symmetric(vertical: 5),
         child: ListTile(
           leading: Icon(
             context.platformIcons.personSolid,

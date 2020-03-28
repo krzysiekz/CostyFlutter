@@ -30,10 +30,8 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
       key: ObjectKey(widget.userExpense),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 3,
-        margin: EdgeInsets.symmetric(vertical: 5),
         child: ListTile(
           leading: Container(
             width: 65,
