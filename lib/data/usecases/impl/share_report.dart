@@ -20,9 +20,13 @@ class ShareReport implements UseCase<bool, ShareReportParams> {
   Future<Either<Failure, bool>> call(ShareReportParams params) async {
     try {
       final report = await reportGenerator.generate(params.project);
-      final reportAsString = await reportFormatter.format(report);
-      _shareReport(reportAsString, params.buildContext);
-      return Right(true);
+      if (report.entries.isNotEmpty) {
+        final reportAsString = await reportFormatter.format(report);
+        _shareReport(reportAsString, params.buildContext);
+        return Right(true);
+      } else {
+        return Right(false);
+      }
     } on Exception {
       return Left(ReportGenerationFailure());
     }
