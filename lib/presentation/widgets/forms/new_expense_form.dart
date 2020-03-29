@@ -85,6 +85,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       }
       BlocProvider.of<ExpenseBloc>(context)
           .add(GetExpensesEvent(widget.project));
+      BlocProvider.of<ReportBloc>(context).add(GetReportEvent(widget.project));
       Navigator.of(context).pop();
     }
   }

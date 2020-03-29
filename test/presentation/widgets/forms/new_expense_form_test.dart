@@ -20,6 +20,9 @@ class MockCurrencyBloc extends MockBloc<CurrencyEvent, CurrencyState>
 
 class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
 
+class MockReportBloc extends MockBloc<ReportEvent, ReportState>
+    implements ReportBloc {}
+
 class MockExpenseBloc extends MockBloc<ExpenseEvent, ExpenseState>
     implements ExpenseBloc {}
 
@@ -27,17 +30,20 @@ void main() {
   CurrencyBloc currencyBloc;
   UserBloc userBloc;
   ExpenseBloc expenseBloc;
+  ReportBloc reportBloc;
 
   setUp(() {
     currencyBloc = MockCurrencyBloc();
     userBloc = MockUserBloc();
     expenseBloc = MockExpenseBloc();
+    reportBloc = MockReportBloc();
   });
 
   tearDown(() {
     currencyBloc.close();
     userBloc.close();
     expenseBloc.close();
+    reportBloc.close();
   });
 
   final Project tProject = Project(
@@ -75,6 +81,7 @@ void main() {
           BlocProvider<CurrencyBloc>.value(value: currencyBloc),
           BlocProvider<UserBloc>.value(value: userBloc),
           BlocProvider<ExpenseBloc>.value(value: expenseBloc),
+          BlocProvider<ReportBloc>.value(value: reportBloc),
         ],
         child: MaterialApp(
           locale: Locale('en'),
@@ -205,6 +212,7 @@ void main() {
         expect(calledAddExpenseEvent.receivers, tUsers);
 
         verify(expenseBloc.add(argThat(isA<GetExpensesEvent>())));
+        verify(reportBloc.add(argThat(isA<GetReportEvent>())));
       });
     });
   });
@@ -236,6 +244,7 @@ void main() {
           BlocProvider<CurrencyBloc>.value(value: currencyBloc),
           BlocProvider<UserBloc>.value(value: userBloc),
           BlocProvider<ExpenseBloc>.value(value: expenseBloc),
+          BlocProvider<ReportBloc>.value(value: reportBloc),
         ],
         child: MaterialApp(
           locale: Locale('en'),
@@ -344,6 +353,7 @@ void main() {
         expect(calledAddExpenseEvent.expense.receivers, [tUsers[1]]);
 
         verify(expenseBloc.add(argThat(isA<GetExpensesEvent>())));
+        verify(reportBloc.add(argThat(isA<GetReportEvent>())));
       });
     });
   });
