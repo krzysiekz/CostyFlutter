@@ -29,10 +29,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.project),
       child: GestureDetector(
-        onTap: () => Navigator.of(context).pushNamed(
-          ProjectDetailsPage.ROUTE_NAME,
-          arguments: widget.project,
-        ),
+        onTap: () => ProjectDetailsPage.navigate(context, widget.project),
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

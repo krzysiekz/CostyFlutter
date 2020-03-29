@@ -12,8 +12,6 @@ import '../item/project_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {
-  static const ROUTE_NAME = '/projects-list';
-
   @override
   _ProjectsListPageState createState() => _ProjectsListPageState();
 }

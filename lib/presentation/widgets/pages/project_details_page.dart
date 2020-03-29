@@ -13,9 +13,16 @@ import 'expenses_list_page.dart';
 import 'report_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
-  static const ROUTE_NAME = '/project-details';
+  static navigate(BuildContext buildContext, Project project) {
+    Navigator.of(buildContext).push(platformPageRoute(
+      context: buildContext,
+      builder: (BuildContext context) => ProjectDetailsPage(project: project),
+    ));
+  }
 
-  ProjectDetailsPage({Key key}) : super(key: key);
+  final Project project;
+
+  ProjectDetailsPage({Key key, this.project}) : super(key: key);
 
   @override
   _ProjectDetailsPageState createState() => _ProjectDetailsPageState();
@@ -75,8 +82,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   @override
   Widget build(BuildContext context) {
-    final project = ModalRoute.of(context).settings.arguments as Project;
-    return buildProjectDetailsPage(project, context);
+    return buildProjectDetailsPage(widget.project, context);
   }
 
   Widget buildProjectDetailsPage(Project project, BuildContext context) {

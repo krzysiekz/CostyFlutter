@@ -1,5 +1,4 @@
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/pages/project_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -123,10 +122,6 @@ class _MyAppState extends State<MyApp> {
 //            ),
 //          ),
             home: ProjectsListPage(),
-            routes: {
-              ProjectsListPage.ROUTE_NAME: (ctx) => ProjectsListPage(),
-              ProjectDetailsPage.ROUTE_NAME: (ctx) => ProjectDetailsPage(),
-            },
           ),
         ));
   }
