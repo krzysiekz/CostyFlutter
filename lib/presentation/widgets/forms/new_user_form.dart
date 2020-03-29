@@ -76,7 +76,6 @@ class _NewUserFormState extends State<NewUserForm> {
         children: <Widget>[
           CustomTextField(
             textFormFieldKey: Key(Keys.USER_FORM_NAME_FIELD_KEY),
-            icon: Icons.person,
             hintText: AppLocalizations.of(context)
                 .translate('user_form_user_name_hint'),
             labelText: AppLocalizations.of(context)

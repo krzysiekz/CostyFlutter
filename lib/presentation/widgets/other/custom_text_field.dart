@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CustomTextField extends StatefulWidget {
-  final IconData icon;
   final String hintText;
   final String labelText;
   final TextEditingController controller;
@@ -12,7 +11,6 @@ class CustomTextField extends StatefulWidget {
 
   const CustomTextField(
       {Key key,
-      this.icon,
       this.hintText,
       this.labelText,
       this.controller,
@@ -33,9 +31,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textCapitalization: TextCapitalization.sentences,
       keyboardType: widget.textInputType,
       decoration: InputDecoration(
-        icon: Icon(
-          widget.icon,
-          size: 26,
+        border: new OutlineInputBorder(
+          borderRadius: new BorderRadius.circular(15.0),
+          borderSide: new BorderSide(),
         ),
         hintText: widget.hintText,
         labelText: widget.labelText,

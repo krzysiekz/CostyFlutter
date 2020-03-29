@@ -33,8 +33,8 @@
 
   "form_currency_dropdown_error": "Proszę wybrać walutę",
 
-  "expense_form_multi_select_chip_select_all_button": "Zaznasz.",
-  "expense_form_multi_select_chip_select_none_button": "Odznacz.",
+  "expense_form_multi_select_chip_select_all_button": "Zaznacz",
+  "expense_form_multi_select_chip_select_none_button": "Odznacz",
   "expense_form_amount_required": "Kwota jest wymagana.",
   "expense_form_not_a_valid_number": "Zły numer",
   "expense_form_description_hint": "Proszę podać opis",
@@ -46,6 +46,7 @@
   "expense_form_date_error": "Proszę wybrać datę",
   "expense_form_currency_label": "Waluta",
   "expense_form_user_label": "Płacący",
+  "expense_form_date_label": "Data",
   "expense_form_user_error": "Proszę wybrać płacącego",
   "expense_form_receivers_label": "Odbiorcy",
   "expense_form_receivers_error": "Proszę wybrać odbiorców",
@@ -65,7 +66,7 @@
   "user_form_add_user_button": "Dodaj osobę",
   "user_form_modify_user_button": "Modyfikuj osobę",
 
-  "error": "Błąd.",
-  "ok": "Ok.",
-  "confirm": "Potwierdzenie."
+  "error": "Błąd",
+  "ok": "Ok",
+  "confirm": "Potwierdzenie"
 }

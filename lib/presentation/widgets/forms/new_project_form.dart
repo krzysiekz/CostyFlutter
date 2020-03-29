@@ -103,7 +103,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
         children: <Widget>[
           CustomTextField(
             textFormFieldKey: Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
-            icon: Icons.text_fields,
             hintText: AppLocalizations.of(context)
                 .translate('project_form_project_name_hint'),
             labelText: AppLocalizations.of(context)

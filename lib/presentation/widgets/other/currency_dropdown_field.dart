@@ -38,12 +38,12 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
       builder: (FormFieldState<Currency> formState) {
         return InputDecorator(
           decoration: InputDecoration(
-            icon: Icon(
-              Icons.monetization_on,
-              size: 26,
-            ),
             labelText: widget.label,
             errorText: formState.hasError ? formState.errorText : null,
+            border: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(15.0),
+              borderSide: new BorderSide(),
+            ),
           ),
           isEmpty: _selected == null,
           child: DropdownButtonHideUnderline(

@@ -138,7 +138,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         children: <Widget>[
           CustomTextField(
             textFormFieldKey: Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
-            icon: Icons.note,
             hintText: AppLocalizations.of(context)
                 .translate('expense_form_description_hint'),
             labelText: AppLocalizations.of(context)
@@ -149,13 +148,15 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                     .translate('expense_form_description_error')
                 : null,
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Expanded(
                 child: CustomTextField(
                   textFormFieldKey: Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
-                  icon: Icons.attach_money,
                   hintText: AppLocalizations.of(context)
                       .translate('expense_form_amount_hint'),
                   labelText: AppLocalizations.of(context)
@@ -169,6 +170,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               Expanded(child: _createCurrencyDropDownList(context)),
             ],
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -176,6 +180,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               const SizedBox(width: 15),
               Expanded(child: _createDatePicker(context)),
             ],
+          ),
+          const SizedBox(
+            height: 10,
           ),
           _createReceiversWidget(context),
           const SizedBox(
@@ -201,11 +208,13 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       builder: (FormFieldState<DateTime> formState) {
         return InputDecorator(
             decoration: InputDecoration(
-              icon: Icon(
-                Icons.date_range,
-                size: 26,
-              ),
+              labelText: AppLocalizations.of(context)
+                  .translate('expense_form_date_label'),
               errorText: formState.hasError ? formState.errorText : null,
+              border: new OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(15.0),
+                borderSide: new BorderSide(),
+              ),
             ),
             child: Container(
               child: FlatButton(
@@ -263,13 +272,13 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       builder: (FormFieldState<User> formState) {
         return InputDecorator(
           decoration: InputDecoration(
-            icon: Icon(
-              Icons.person,
-              size: 26,
-            ),
             labelText: AppLocalizations.of(context)
                 .translate('expense_form_user_label'),
             errorText: formState.hasError ? formState.errorText : null,
+            border: new OutlineInputBorder(
+              borderRadius: new BorderRadius.circular(15.0),
+              borderSide: new BorderSide(),
+            ),
           ),
           isEmpty: _user == null,
           child: new DropdownButtonHideUnderline(
@@ -321,14 +330,14 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               builder: (FormFieldState<List<User>> formState) {
                 return InputDecorator(
                     decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.group,
-                        size: 26,
-                      ),
                       labelText: AppLocalizations.of(context)
                           .translate('expense_form_receivers_label'),
                       errorText:
                           formState.hasError ? formState.errorText : null,
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(15.0),
+                        borderSide: new BorderSide(),
+                      ),
                     ),
                     child: MultiSelectChip(
                       key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
