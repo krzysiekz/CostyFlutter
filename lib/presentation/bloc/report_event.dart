@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../data/models/project.dart';
 
@@ -10,6 +11,16 @@ class GetReportEvent extends ReportEvent {
   final Project project;
 
   GetReportEvent(this.project);
+
+  @override
+  List<Object> get props => [project];
+}
+
+class ShareReportEvent extends ReportEvent {
+  final Project project;
+  final BuildContext buildContext;
+
+  ShareReportEvent(this.project, this.buildContext);
 
   @override
   List<Object> get props => [project];

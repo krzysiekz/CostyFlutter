@@ -58,7 +58,7 @@ class _NewUserFormState extends State<NewUserForm> {
       elevation: 0,
       child: Container(
         padding: EdgeInsets.only(
-          top: 5,
+          top: 10,
           left: 10,
           right: 10,
           bottom: MediaQuery.of(context).viewInsets.bottom + 5,

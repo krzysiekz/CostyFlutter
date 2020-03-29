@@ -5,6 +5,7 @@ import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/report.dart';
 import 'package:costy/data/usecases/impl/get_expenses.dart';
 import 'package:costy/data/usecases/impl/get_report.dart';
+import 'package:costy/data/usecases/impl/share_report.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,15 +15,18 @@ class MockGetReport extends Mock implements GetReport {}
 
 class MockGetExpenses extends Mock implements GetExpenses {}
 
+class MockShareReport extends Mock implements ShareReport {}
+
 void main() {
   MockGetReport mockGetReport;
   MockGetExpenses mockGetExpenses;
+  MockShareReport mockShareReport;
   ReportBloc bloc;
 
   setUp(() {
     mockGetReport = MockGetReport();
     mockGetExpenses = MockGetExpenses();
-    bloc = ReportBloc(mockGetReport, mockGetExpenses);
+    bloc = ReportBloc(mockGetReport, mockGetExpenses, mockShareReport);
   });
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);

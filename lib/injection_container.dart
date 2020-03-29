@@ -1,3 +1,5 @@
+import 'package:costy/data/services/impl/report_formatter_impl.dart';
+import 'package:costy/data/usecases/impl/share_report.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/datasources/currencies_datasource.dart';
@@ -19,6 +21,7 @@ import 'data/repositories/impl/users_repository_impl.dart';
 import 'data/repositories/projects_repository.dart';
 import 'data/repositories/users_repository.dart';
 import 'data/services/impl/report_generator_impl.dart';
+import 'data/services/report_formatter.dart';
 import 'data/services/report_generator.dart';
 import 'data/usecases/impl/add_expense.dart';
 import 'data/usecases/impl/add_project.dart';
@@ -48,6 +51,7 @@ Future<void> init() async {
 
 void registerOtherClasses() {
   ic.registerLazySingleton<ReportGenerator>(() => ReportGeneratorImpl());
+  ic.registerLazySingleton<ReportFormatter>(() => ReportFormatterImpl());
   ic.registerLazySingleton<HiveOperations>(() => HiveOperationsImpl());
 }
 
@@ -96,6 +100,8 @@ void registerUseCases() {
   ic.registerLazySingleton(() => ModifyExpense(expensesRepository: ic()));
 
   ic.registerLazySingleton(() => GetReport(reportGenerator: ic()));
+  ic.registerLazySingleton(
+      () => ShareReport(reportGenerator: ic(), reportFormatter: ic()));
 }
 
 void registerBloc() {
@@ -112,5 +118,5 @@ void registerBloc() {
       modifyProject: ic()));
   ic.registerFactory(() => UserBloc(
       addUser: ic(), deleteUser: ic(), getUsers: ic(), modifyUser: ic()));
-  ic.registerFactory(() => ReportBloc(ic(), ic()));
+  ic.registerFactory(() => ReportBloc(ic(), ic(), ic()));
 }

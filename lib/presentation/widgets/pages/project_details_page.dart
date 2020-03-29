@@ -1,7 +1,9 @@
+import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
 import 'package:costy/presentation/widgets/pages/user_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
@@ -112,6 +114,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
             icon: Icon(context.platformIcons.add),
           )
         ];
+      case 2:
+        return [
+          PlatformIconButton(
+            onPressed: () => _shareReport(ctx, project),
+            icon: Icon(context.platformIcons.share),
+          )
+        ];
       default:
         return null;
     }
@@ -128,5 +137,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       default:
         return null;
     }
+  }
+
+  _shareReport(BuildContext ctx, Project project) {
+    BlocProvider.of<ReportBloc>(context).add(ShareReportEvent(project, ctx));
+    BlocProvider.of<ReportBloc>(context).add(GetReportEvent(project));
   }
 }

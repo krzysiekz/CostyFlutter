@@ -33,3 +33,8 @@ class ReportError extends ReportState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class ReportShared extends ReportState {
+  @override
+  List<Object> get props => [];
+}
