@@ -114,6 +114,11 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                 ios: (context) => CupertinoSliverNavigationBar(
                   largeTitle: Text(AppLocalizations.of(context)
                       .translate('project_list_page_title')),
+                  trailing: PlatformIconButton(
+                    key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+                    icon: Icon(Icons.add),
+                    onPressed: () => _startAddNewProject(context),
+                  ),
                 ),
               ),
               SliverList(
