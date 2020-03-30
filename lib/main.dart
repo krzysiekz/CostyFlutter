@@ -1,4 +1,5 @@
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,7 +22,10 @@ const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
 
 Future<void> main() async {
   await initializeApp();
-  runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: false,
+    builder: (context) => MyApp(),
+  ));
 }
 
 Future initializeApp() async {
@@ -73,6 +77,8 @@ class _MyAppState extends State<MyApp> {
         ],
         child: OKToast(
           child: PlatformApp(
+            locale: DevicePreview.of(context).locale,
+            builder: DevicePreview.appBuilder,
             title: 'Costy',
             supportedLocales: [
               Locale('en', 'US'),
