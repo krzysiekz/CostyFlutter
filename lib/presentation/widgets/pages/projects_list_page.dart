@@ -1,3 +1,5 @@
+import 'package:costy/presentation/widgets/item/project_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -8,7 +10,6 @@ import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
 import '../forms/new_project_form.dart';
-import '../item/project_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {
@@ -26,19 +27,19 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      appBar: PlatformAppBar(
-        title: Text(
-          AppLocalizations.of(context).translate('project_list_page_title'),
-        ),
-        trailingActions: <Widget>[
-          PlatformIconButton(
-            key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
-            icon: Icon(Icons.add),
-            onPressed: () => _startAddNewProject(context),
-          )
-        ],
-      ),
-      body: Center(child: buildBody(context)),
+//      appBar: PlatformAppBar(
+//        title: Text(
+//          AppLocalizations.of(context).translate('project_list_page_title'),
+//        ),
+//        trailingActions: <Widget>[
+//          PlatformIconButton(
+//            key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+//            icon: Icon(Icons.add),
+//            onPressed: () => _startAddNewProject(context),
+//          )
+//        ],
+//      ),
+      body: buildBody(context),
     );
   }
 
@@ -88,14 +89,45 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
             return Text(AppLocalizations.of(context)
                 .translate('project_list_page_no_projects'));
           }
-          return ListView.builder(
-            itemBuilder: (ctx, index) {
-              return ProjectListItem(
-                key: Key(state.projects[index].name),
-                project: state.projects[index],
-              );
-            },
-            itemCount: state.projects.length,
+          return CustomScrollView(
+            slivers: <Widget>[
+              PlatformWidget(
+                android: (context) => SliverAppBar(
+                  actions: <Widget>[
+                    PlatformIconButton(
+                      key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+                      icon: Icon(Icons.add),
+                      onPressed: () => _startAddNewProject(context),
+                    )
+                  ],
+                  expandedHeight: 120,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(AppLocalizations.of(context)
+                        .translate('project_list_page_title')),
+//                  background: Image.asset(
+//                    '022.jpg',
+//                    fit: BoxFit.cover,
+//                  ),
+                  ),
+                ),
+                ios: (context) => CupertinoSliverNavigationBar(
+                  largeTitle: Text(AppLocalizations.of(context)
+                      .translate('project_list_page_title')),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    if (index >= state.projects.length) return null;
+                    return ProjectListItem(
+                      key: Key(state.projects[index].name),
+                      project: state.projects[index],
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         } else if (state is ProjectLoading) {
           return DialogUtilities.showLoadingIndicator(context);
