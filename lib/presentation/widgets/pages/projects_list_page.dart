@@ -96,7 +96,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                   actions: <Widget>[
                     PlatformIconButton(
                       key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
-                      icon: Icon(Icons.add),
+                      icon: Icon(context.platformIcons.add),
                       onPressed: () => _startAddNewProject(context),
                     )
                   ],
@@ -105,10 +105,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                   flexibleSpace: FlexibleSpaceBar(
                     title: Container(
                       padding: const EdgeInsets.all(5.0),
-//                      decoration: const BoxDecoration(
-//                        color: Color.fromRGBO(0, 0, 0, 0.7),
-//                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                      ),
                       child: Text(
                           AppLocalizations.of(context)
                               .translate('project_list_page_title'),
@@ -126,7 +122,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                       .translate('project_list_page_title')),
                   trailing: PlatformIconButton(
                     key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
-                    icon: Icon(Icons.add),
+                    icon: Icon(context.platformIcons.add),
                     onPressed: () => _startAddNewProject(context),
                   ),
                 ),

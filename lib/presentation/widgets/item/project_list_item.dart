@@ -52,6 +52,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
               onTap: () => _startEditProject(context),
               child: Icon(
                 context.platformIcons.create,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),

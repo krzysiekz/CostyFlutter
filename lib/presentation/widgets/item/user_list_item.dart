@@ -34,6 +34,7 @@ class _UserListItemState extends State<UserListItem> {
         child: ListTile(
           leading: Icon(
             context.platformIcons.personSolid,
+            color: Theme.of(context).iconTheme.color,
             size: 40,
           ),
           title: Text(
@@ -43,6 +44,7 @@ class _UserListItemState extends State<UserListItem> {
             onTap: () => _showEditUserForm(context, widget.project),
             child: Icon(
               context.platformIcons.create,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
         ),

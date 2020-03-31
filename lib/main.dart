@@ -77,6 +77,12 @@ class _MyAppState extends State<MyApp> {
         ],
         child: OKToast(
           child: PlatformApp(
+            android: (_) => MaterialAppData(
+              theme: ThemeData.light().copyWith(
+                  iconTheme:
+                      ThemeData.light().iconTheme.copyWith(color: Colors.blue)),
+              darkTheme: ThemeData.dark(),
+            ),
             locale: DevicePreview.of(context).locale,
             builder: DevicePreview.appBuilder,
             title: 'Costy',
@@ -106,27 +112,6 @@ class _MyAppState extends State<MyApp> {
               // from the list (English, in this case).
               return supportedLocales.first;
             },
-//          theme: ThemeData(
-//            primaryColor: Color(0xFF296EB4),
-//            accentColor: Color(0xFFFDB833),
-//            textTheme: ThemeData.light().textTheme.copyWith(
-//                  title: TextStyle(
-//                    fontFamily: 'OpenSans',
-//                    fontSize: 16,
-//                    fontWeight: FontWeight.bold,
-//                  ),
-//                  button: TextStyle(color: Colors.white),
-//                ),
-//            backgroundColor: Colors.white,
-//            appBarTheme: AppBarTheme(
-//              textTheme: ThemeData.light().textTheme.copyWith(
-//                      title: TextStyle(
-//                    fontFamily: 'OpenSans',
-//                    fontSize: 18,
-//                    fontWeight: FontWeight.bold,
-//                  )),
-//            ),
-//          ),
             home: ProjectsListPage(),
           ),
         ));
