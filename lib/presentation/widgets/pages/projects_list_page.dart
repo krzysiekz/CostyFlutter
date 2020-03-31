@@ -27,18 +27,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-//      appBar: PlatformAppBar(
-//        title: Text(
-//          AppLocalizations.of(context).translate('project_list_page_title'),
-//        ),
-//        trailingActions: <Widget>[
-//          PlatformIconButton(
-//            key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
-//            icon: Icon(Icons.add),
-//            onPressed: () => _startAddNewProject(context),
-//          )
-//        ],
-//      ),
       body: buildBody(context),
     );
   }
@@ -54,97 +42,108 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
 
   Widget buildBody(BuildContext context) {
     return BlocConsumer<ProjectBloc, ProjectState>(
-      bloc: BlocProvider.of<ProjectBloc>(context),
-      listener: (context, state) {
-        if (state is ProjectError) {
-          DialogUtilities.showAlertDialog(
-            context,
-            AppLocalizations.of(context).translate('error'),
-            AppLocalizations.of(context)
-                .translate('project_list_page_cannot_add'),
-          );
-        } else if (state is ProjectAdded) {
-          DialogUtilities.showSnackBar(
+        bloc: BlocProvider.of<ProjectBloc>(context),
+        listener: (context, state) {
+          if (state is ProjectError) {
+            DialogUtilities.showAlertDialog(
               context,
+              AppLocalizations.of(context).translate('error'),
               AppLocalizations.of(context)
-                  .translate('project_list_page_added'));
-        } else if (state is ProjectDeleted) {
-          DialogUtilities.showSnackBar(
-              context,
-              AppLocalizations.of(context)
-                  .translate('project_list_page_deleted'));
-        } else if (state is ProjectModified) {
-          DialogUtilities.showSnackBar(
-              context,
-              AppLocalizations.of(context)
-                  .translate('project_list_page_modified'));
-        }
-      },
-      builder: (context, state) {
-        if (state is ProjectEmpty) {
-          return Text(AppLocalizations.of(context)
-              .translate('project_list_page_no_projects'));
-        } else if (state is ProjectLoaded) {
-          if (state.projects.isEmpty) {
-            return Text(AppLocalizations.of(context)
-                .translate('project_list_page_no_projects'));
+                  .translate('project_list_page_cannot_add'),
+            );
+          } else if (state is ProjectAdded) {
+            DialogUtilities.showSnackBar(
+                context,
+                AppLocalizations.of(context)
+                    .translate('project_list_page_added'));
+          } else if (state is ProjectDeleted) {
+            DialogUtilities.showSnackBar(
+                context,
+                AppLocalizations.of(context)
+                    .translate('project_list_page_deleted'));
+          } else if (state is ProjectModified) {
+            DialogUtilities.showSnackBar(
+                context,
+                AppLocalizations.of(context)
+                    .translate('project_list_page_modified'));
           }
-          return CustomScrollView(
-            slivers: <Widget>[
-              PlatformWidget(
-                android: (context) => SliverAppBar(
-                  actions: <Widget>[
-                    PlatformIconButton(
-                      key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
-                      icon: Icon(context.platformIcons.add),
-                      onPressed: () => _startAddNewProject(context),
-                    )
-                  ],
-                  expandedHeight: 170,
-                  pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Container(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                          AppLocalizations.of(context)
-                              .translate('project_list_page_title'),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
-                    ),
-                    background: Image.asset(
-                      'assets/background.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                ios: (context) => CupertinoSliverNavigationBar(
-                  largeTitle: Text(AppLocalizations.of(context)
-                      .translate('project_list_page_title')),
-                  trailing: PlatformIconButton(
-                    key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
-                    icon: Icon(context.platformIcons.add),
-                    onPressed: () => _startAddNewProject(context),
-                  ),
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (index >= state.projects.length) return null;
-                    return ProjectListItem(
-                      key: Key(state.projects[index].name),
-                      project: state.projects[index],
-                    );
-                  },
-                ),
-              ),
-            ],
+        },
+        builder: (context, state) {
+          if (state is ProjectLoaded) {
+            return CustomScrollView(
+              slivers: <Widget>[
+                _createSliverAppBar(),
+                _createRemainingSliverWidget(state),
+              ],
+            );
+          } else
+            return DialogUtilities.showLoadingIndicator(context);
+        });
+  }
+
+  Widget _createRemainingSliverWidget(ProjectLoaded state) {
+    if (state.projects.isEmpty) {
+      return SliverFillRemaining(
+        child: Center(
+          child: Text(AppLocalizations.of(context)
+              .translate('project_list_page_no_projects')),
+        ),
+      );
+    } else {
+      return _createSliverList(state);
+    }
+  }
+
+  SliverList _createSliverList(ProjectLoaded state) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          if (index >= state.projects.length) return null;
+          return ProjectListItem(
+            key: Key(state.projects[index].name),
+            project: state.projects[index],
           );
-        } else if (state is ProjectLoading) {
-          return DialogUtilities.showLoadingIndicator(context);
-        }
-        return Container();
-      },
+        },
+      ),
+    );
+  }
+
+  PlatformWidget _createSliverAppBar() {
+    return PlatformWidget(
+      android: (context) => SliverAppBar(
+        actions: <Widget>[
+          PlatformIconButton(
+            key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+            icon: Icon(context.platformIcons.add),
+            onPressed: () => _startAddNewProject(context),
+          )
+        ],
+        expandedHeight: 170,
+        pinned: true,
+        flexibleSpace: FlexibleSpaceBar(
+          title: Container(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+                AppLocalizations.of(context)
+                    .translate('project_list_page_title'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
+          ),
+          background: Image.asset(
+            'assets/background.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      ios: (context) => CupertinoSliverNavigationBar(
+        largeTitle: Text(
+            AppLocalizations.of(context).translate('project_list_page_title')),
+        trailing: PlatformIconButton(
+          key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+          icon: Icon(context.platformIcons.add),
+          onPressed: () => _startAddNewProject(context),
+        ),
+      ),
     );
   }
 }
