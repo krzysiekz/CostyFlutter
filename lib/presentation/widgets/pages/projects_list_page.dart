@@ -100,15 +100,25 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                       onPressed: () => _startAddNewProject(context),
                     )
                   ],
-                  expandedHeight: 120,
+                  expandedHeight: 170,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Text(AppLocalizations.of(context)
-                        .translate('project_list_page_title')),
-//                  background: Image.asset(
-//                    '022.jpg',
-//                    fit: BoxFit.cover,
-//                  ),
+                    title: Container(
+                      padding: const EdgeInsets.all(5.0),
+//                      decoration: const BoxDecoration(
+//                        color: Color.fromRGBO(0, 0, 0, 0.7),
+//                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//                      ),
+                      child: Text(
+                          AppLocalizations.of(context)
+                              .translate('project_list_page_title'),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    background: Image.asset(
+                      'assets/background.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 ios: (context) => CupertinoSliverNavigationBar(
