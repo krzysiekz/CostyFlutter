@@ -16,7 +16,7 @@ import '../../../data/models/project.dart';
 import '../../../keys.dart';
 
 class NewExpenseForm extends StatefulWidget {
-  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
+  final DateFormat dateFormat = DateFormat("dd/MM HH:mm");
 
   final Project project;
   final UserExpense expenseToEdit;
@@ -141,13 +141,12 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             textFormFieldKey: Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
             hintText: AppLocalizations.of(context)
                 .translate('expense_form_description_hint'),
-            labelText: AppLocalizations.of(context)
-                .translate('expense_form_description_label'),
             controller: _descriptionController,
             validator: (val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('expense_form_description_error')
                 : null,
+            iconData: context.platformIcons.shoppingCart,
           ),
           const SizedBox(
             height: 10,
@@ -160,11 +159,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                   textFormFieldKey: Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
                   hintText: AppLocalizations.of(context)
                       .translate('expense_form_amount_hint'),
-                  labelText: AppLocalizations.of(context)
-                      .translate('expense_form_amount_label'),
                   controller: _amountController,
                   validator: _numberValidator,
                   textInputType: TextInputType.numberWithOptions(decimal: true),
+                  iconData: context.platformIcons.tag,
                 ),
               ),
               const SizedBox(width: 15),
@@ -204,34 +202,40 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   }
 
   Widget _createDatePicker(BuildContext context) {
-    return FormField<DateTime>(
-      initialValue: _selectedDate == null ? DateTime.now() : _selectedDate,
-      builder: (FormFieldState<DateTime> formState) {
-        return InputDecorator(
-            decoration: InputDecoration(
-              labelText: AppLocalizations.of(context)
-                  .translate('expense_form_date_label'),
-              errorText: formState.hasError ? formState.errorText : null,
-              border: new OutlineInputBorder(
-                borderRadius: new BorderRadius.circular(15.0),
-                borderSide: new BorderSide(),
+    return Container(
+      margin: const EdgeInsets.only(right: 5, left: 5),
+      child: FormField<DateTime>(
+        initialValue: _selectedDate == null ? DateTime.now() : _selectedDate,
+        builder: (FormFieldState<DateTime> formState) {
+          return InputDecorator(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                filled: true,
+                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                isDense: true,
+                errorText: formState.hasError ? formState.errorText : null,
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(15.0),
+                  borderSide: BorderSide.none,
+                ),
               ),
-            ),
-            child: Container(
               child: FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: EdgeInsets.all(0),
                 onPressed: _presentDatePicker,
                 child: Text(_selectedDate == null
                     ? AppLocalizations.of(context)
                         .translate('expense_form_date_no_chosen')
                     : widget.dateFormat.format(_selectedDate)),
-              ),
-            ));
-      },
-      validator: (val) {
-        return (val == null)
-            ? AppLocalizations.of(context).translate('expense_form_date_error')
-            : null;
-      },
+              ));
+        },
+        validator: (val) {
+          return (val == null)
+              ? AppLocalizations.of(context)
+                  .translate('expense_form_date_error')
+              : null;
+        },
+      ),
     );
   }
 
@@ -243,8 +247,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             return CurrencyDropdownField(
                 key: Key(Keys.EXPENSE_FORM_CURRENCY_KEY),
                 currencies: state.currencies,
-                label: AppLocalizations.of(context)
-                    .translate('expense_form_currency_label'),
                 initialValue: _currency,
                 callback: (newValue) {
                   setState(() {
@@ -261,7 +263,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
-            return _createItemDropDown(context, state.users);
+            return Container(
+                margin: const EdgeInsets.only(right: 5, left: 5),
+                child: _createItemDropDown(context, state.users));
           }
           return Container();
         });
@@ -273,12 +277,20 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       builder: (FormFieldState<User> formState) {
         return InputDecorator(
           decoration: InputDecoration(
-            labelText: AppLocalizations.of(context)
-                .translate('expense_form_user_label'),
+            contentPadding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+            prefixIcon: Icon(
+              context.platformIcons.person,
+              color: Theme.of(context).iconTheme.color,
+            ),
+            filled: true,
+            fillColor: Color.fromRGBO(230, 230, 230, 1),
+            isDense: true,
             errorText: formState.hasError ? formState.errorText : null,
+            hintText: AppLocalizations.of(context)
+                .translate('expense_form_user_hint'),
             border: new OutlineInputBorder(
               borderRadius: new BorderRadius.circular(15.0),
-              borderSide: new BorderSide(),
+              borderSide: BorderSide.none,
             ),
           ),
           isEmpty: _user == null,
@@ -287,6 +299,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               isExpanded: true,
               icon: Icon(
                 Icons.arrow_downward,
+                color: Theme.of(context).iconTheme.color,
               ),
               value: _user,
               isDense: true,
@@ -326,38 +339,47 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
-            return FormField<List<User>>(
-              initialValue: _receivers == null ? state.users : _receivers,
-              builder: (FormFieldState<List<User>> formState) {
-                return InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)
-                          .translate('expense_form_receivers_label'),
-                      errorText:
-                          formState.hasError ? formState.errorText : null,
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(15.0),
-                        borderSide: new BorderSide(),
+            return Container(
+              margin: const EdgeInsets.only(right: 5, left: 5),
+              child: FormField<List<User>>(
+                initialValue: _receivers == null ? state.users : _receivers,
+                builder: (FormFieldState<List<User>> formState) {
+                  return InputDecorator(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(0.0),
+                        prefixIcon: Icon(
+                          context.platformIcons.group,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        filled: true,
+                        fillColor: Color.fromRGBO(230, 230, 230, 1),
+                        isDense: true,
+                        errorText:
+                            formState.hasError ? formState.errorText : null,
+                        border: new OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(15.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
-                    ),
-                    child: MultiSelectChip(
-                      key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
-                      initialUserList: _receivers,
-                      userList: state.users,
-                      onSelectionChanged: (selectedList) {
-                        setState(() {
-                          _receivers = selectedList;
-                          formState.didChange(selectedList);
-                        });
-                      },
-                    ));
-              },
-              validator: (val) {
-                return (val == null || val.length < 1)
-                    ? AppLocalizations.of(context)
-                        .translate('expense_form_receivers_error')
-                    : null;
-              },
+                      child: MultiSelectChip(
+                        key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
+                        initialUserList: _receivers,
+                        userList: state.users,
+                        onSelectionChanged: (selectedList) {
+                          setState(() {
+                            _receivers = selectedList;
+                            formState.didChange(selectedList);
+                          });
+                        },
+                      ));
+                },
+                validator: (val) {
+                  return (val == null || val.length < 1)
+                      ? AppLocalizations.of(context)
+                          .translate('expense_form_receivers_error')
+                      : null;
+                },
+              ),
             );
           }
           return Container();

@@ -78,13 +78,12 @@ class _NewUserFormState extends State<NewUserForm> {
             textFormFieldKey: Key(Keys.USER_FORM_NAME_FIELD_KEY),
             hintText: AppLocalizations.of(context)
                 .translate('user_form_user_name_hint'),
-            labelText: AppLocalizations.of(context)
-                .translate('user_form_user_name_label'),
             controller: _nameController,
             validator: (val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('user_form_user_name_error')
                 : null,
+            iconData: context.platformIcons.person,
           ),
           const SizedBox(
             height: 10,

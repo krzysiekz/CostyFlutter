@@ -23,7 +23,7 @@ const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
 Future<void> main() async {
   await initializeApp();
   runApp(DevicePreview(
-    enabled: false,
+    enabled: true,
     builder: (context) => MyApp(),
   ));
 }
@@ -80,7 +80,11 @@ class _MyAppState extends State<MyApp> {
             android: (_) => MaterialAppData(
               theme: ThemeData.light().copyWith(
                   iconTheme:
-                      ThemeData.light().iconTheme.copyWith(color: Colors.blue)),
+                      ThemeData.light().iconTheme.copyWith(color: Colors.blue),
+                  buttonTheme: ButtonThemeData(
+                    buttonColor: Colors.blueAccent,
+                    textTheme: ButtonTextTheme.primary,
+                  )),
               darkTheme: ThemeData.dark(),
             ),
             locale: DevicePreview.of(context).locale,

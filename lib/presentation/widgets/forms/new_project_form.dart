@@ -105,13 +105,12 @@ class _NewProjectFormState extends State<NewProjectForm> {
             textFormFieldKey: Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
             hintText: AppLocalizations.of(context)
                 .translate('project_form_project_name_hint'),
-            labelText: AppLocalizations.of(context)
-                .translate('project_form_project_name_label'),
             controller: _nameController,
             validator: (val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('project_form_project_name_error')
                 : null,
+            iconData: context.platformIcons.book,
           ),
           const SizedBox(
             height: 10,
@@ -120,8 +119,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
               key: Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
               initialValue: _defaultCurrency,
               currencies: state.currencies,
-              label: AppLocalizations.of(context)
-                  .translate('project_form_default_currency_label'),
               callback: (newValue) {
                 setState(() {
                   _defaultCurrency = newValue;
@@ -138,8 +135,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 : Text(AppLocalizations.of(context)
                     .translate('project_form_modify_project_button')),
             onPressed: _submitData,
-//            color: Theme.of(context).primaryColor,
-//            textColor: Theme.of(context).colo,
           )
         ],
       ),
