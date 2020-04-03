@@ -80,10 +80,12 @@ class _MyAppState extends State<MyApp> {
           child: PlatformApp(
             android: (_) => MaterialAppData(
               theme: ThemeData.light().copyWith(
-                  iconTheme:
-                      ThemeData.light().iconTheme.copyWith(color: Colors.blue),
+                  primaryColor: Colors.indigo,
+                  iconTheme: ThemeData.light()
+                      .iconTheme
+                      .copyWith(color: Colors.indigoAccent),
                   buttonTheme: ButtonThemeData(
-                    buttonColor: Colors.blueAccent,
+                    buttonColor: Colors.indigoAccent,
                     textTheme: ButtonTextTheme.primary,
                   )),
 //              darkTheme: ThemeData.dark(),
