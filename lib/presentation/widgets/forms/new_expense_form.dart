@@ -6,6 +6,7 @@ import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -187,14 +188,28 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           const SizedBox(
             height: 10,
           ),
-          PlatformButton(
-            key: Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
-            child: widget.expenseToEdit == null
-                ? Text(AppLocalizations.of(context)
-                    .translate('expense_form_add_expense_button'))
-                : Text(AppLocalizations.of(context)
-                    .translate('expense_form_modify_expense_button')),
-            onPressed: _submitData,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              PlatformButton(
+                androidFlat: (_) => MaterialFlatButtonData(
+                  textColor: Theme.of(context).errorColor,
+                ),
+                key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                child: Text(AppLocalizations.of(context)
+                    .translate('form_cancel_button')),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              PlatformButton(
+                key: Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
+                child: widget.expenseToEdit == null
+                    ? Text(AppLocalizations.of(context)
+                        .translate('expense_form_add_expense_button'))
+                    : Text(AppLocalizations.of(context)
+                        .translate('expense_form_modify_expense_button')),
+                onPressed: _submitData,
+              ),
+            ],
           )
         ],
       ),

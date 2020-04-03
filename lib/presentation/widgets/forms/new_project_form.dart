@@ -135,9 +135,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 androidFlat: (_) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                ios: (_) => CupertinoButtonData(
-                  color: CupertinoTheme.of(context).primaryColor,
-                ),
                 key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),

@@ -88,14 +88,28 @@ class _NewUserFormState extends State<NewUserForm> {
           const SizedBox(
             height: 10,
           ),
-          PlatformButton(
-            key: Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
-            child: widget.userToModify == null
-                ? Text(AppLocalizations.of(context)
-                    .translate('user_form_add_user_button'))
-                : Text(AppLocalizations.of(context)
-                    .translate('user_form_modify_user_button')),
-            onPressed: _submitData,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              PlatformButton(
+                androidFlat: (_) => MaterialFlatButtonData(
+                  textColor: Theme.of(context).errorColor,
+                ),
+                key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                child: Text(AppLocalizations.of(context)
+                    .translate('form_cancel_button')),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              PlatformButton(
+                key: Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
+                child: widget.userToModify == null
+                    ? Text(AppLocalizations.of(context)
+                        .translate('user_form_add_user_button'))
+                    : Text(AppLocalizations.of(context)
+                        .translate('user_form_modify_user_button')),
+                onPressed: _submitData,
+              ),
+            ],
           )
         ],
       ),
