@@ -21,18 +21,19 @@
   "project_list_page_deleted": "Project deleted.",
   "project_list_page_modified": "Project modified.",
 
-  "project_details_page_users": "USERS",
-  "project_details_page_expenses": "EXPENSES",
-  "project_details_page_report": "REPORT",
+  "project_details_page_users": "Users",
+  "project_details_page_expenses": "Expenses",
+  "project_details_page_report": "Report",
 
   "report_page_no_report": "No report to display.",
 
   "alert_dialog_delete_item_message": "Are you sure you wish to delete this item?",
-  "alert_dialog_delete_button": "DELETE",
-  "alert_dialog_cancel_button": "CANCEL",
+  "alert_dialog_delete_button": "Delete",
+  "alert_dialog_cancel_button": "Cancel",
 
   "form_currency_dropdown_error": "Please select a currency",
   "form_currency_dropdown_hint": "Currency",
+  "form_cancel_button": "Cancel",
 
   "expense_form_multi_select_chip_select_all_button": "Select all",
   "expense_form_multi_select_chip_select_none_button": "Select none",

@@ -211,7 +211,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                 filled: true,
-                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                fillColor: Color.fromRGBO(235, 235, 235, 1),
                 isDense: true,
                 errorText: formState.hasError ? formState.errorText : null,
                 border: new OutlineInputBorder(
@@ -280,10 +280,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             contentPadding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
             prefixIcon: Icon(
               context.platformIcons.person,
-              color: Theme.of(context).iconTheme.color,
+              color: IconTheme.of(context).color,
             ),
             filled: true,
-            fillColor: Color.fromRGBO(230, 230, 230, 1),
+            fillColor: Color.fromRGBO(235, 235, 235, 1),
             isDense: true,
             errorText: formState.hasError ? formState.errorText : null,
             hintText: AppLocalizations.of(context)
@@ -299,7 +299,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               isExpanded: true,
               icon: Icon(
                 Icons.arrow_downward,
-                color: Theme.of(context).iconTheme.color,
+                color: IconTheme.of(context).color,
               ),
               value: _user,
               isDense: true,
@@ -349,10 +349,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                         contentPadding: EdgeInsets.all(0.0),
                         prefixIcon: Icon(
                           context.platformIcons.group,
-                          color: Theme.of(context).iconTheme.color,
+                          color: IconTheme.of(context).color,
                         ),
                         filled: true,
-                        fillColor: Color.fromRGBO(230, 230, 230, 1),
+                        fillColor: Color.fromRGBO(235, 235, 235, 1),
                         isDense: true,
                         errorText:
                             formState.hasError ? formState.errorText : null,

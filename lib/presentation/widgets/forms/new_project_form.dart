@@ -2,6 +2,7 @@ import 'package:costy/data/models/project.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -127,14 +128,31 @@ class _NewProjectFormState extends State<NewProjectForm> {
           const SizedBox(
             height: 10,
           ),
-          PlatformButton(
-            key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
-            child: widget.projectToEdit == null
-                ? Text(AppLocalizations.of(context)
-                    .translate('project_form_add_project_button'))
-                : Text(AppLocalizations.of(context)
-                    .translate('project_form_modify_project_button')),
-            onPressed: _submitData,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              PlatformButton(
+                androidFlat: (_) => MaterialFlatButtonData(
+                  textColor: Theme.of(context).errorColor,
+                ),
+                ios: (_) => CupertinoButtonData(
+                  color: CupertinoTheme.of(context).primaryColor,
+                ),
+                key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                child: Text(AppLocalizations.of(context)
+                    .translate('form_cancel_button')),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              PlatformButton(
+                key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
+                child: widget.projectToEdit == null
+                    ? Text(AppLocalizations.of(context)
+                        .translate('project_form_add_project_button'))
+                    : Text(AppLocalizations.of(context)
+                        .translate('project_form_modify_project_button')),
+                onPressed: _submitData,
+              ),
+            ],
           )
         ],
       ),

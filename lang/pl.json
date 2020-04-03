@@ -21,15 +21,15 @@
   "project_list_page_deleted": "Projekt usunięty.",
   "project_list_page_modified": "Projekt zmodyfikowany.",
 
-  "project_details_page_users": "OSOBY",
-  "project_details_page_expenses": "WYDATKI",
-  "project_details_page_report": "RAPORT",
+  "project_details_page_users": "Osoby",
+  "project_details_page_expenses": "Wydatki",
+  "project_details_page_report": "Raport",
 
   "report_page_no_report": "Brak wpisów.",
 
   "alert_dialog_delete_item_message": "Czy na pewno chcesz usunąć ten element?",
-  "alert_dialog_delete_button": "USUŃ",
-  "alert_dialog_cancel_button": "ANULUJ",
+  "alert_dialog_delete_button": "Usuń",
+  "alert_dialog_cancel_button": "Anuluj",
 
   "form_currency_dropdown_error": "Proszę wybrać walutę",
   "form_currency_dropdown_hint": "Waluta",

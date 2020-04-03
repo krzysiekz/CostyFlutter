@@ -57,6 +57,9 @@ class DialogUtilities {
           .translate('alert_dialog_delete_item_message')),
       actions: <Widget>[
         PlatformDialogAction(
+            ios: (_) => CupertinoDialogActionData(
+                  isDestructiveAction: true,
+                ),
             key: Key(Keys.DELETE_CONFIRMATION_DELETE_BUTTON),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(AppLocalizations.of(context)

@@ -36,10 +36,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
           contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
           prefixIcon: Icon(
             widget.iconData,
-            color: Theme.of(context).iconTheme.color,
+            color: IconTheme.of(context).color,
           ),
           filled: true,
-          fillColor: Color.fromRGBO(230, 230, 230, 1),
+          fillColor: Color.fromRGBO(235, 235, 235, 1),
           isDense: true,
           border: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(15.0),

@@ -1,5 +1,6 @@
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -85,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                     buttonColor: Colors.blueAccent,
                     textTheme: ButtonTextTheme.primary,
                   )),
-              darkTheme: ThemeData.dark(),
+//              darkTheme: ThemeData.dark(),
             ),
             locale: DevicePreview.of(context).locale,
             builder: DevicePreview.appBuilder,
