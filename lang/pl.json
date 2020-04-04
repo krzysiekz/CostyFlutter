@@ -4,6 +4,7 @@
   "expenses_list_page_added": "Wydatek dodany.",
   "expenses_list_page_deleted": "Wydatek usunięty.",
   "expenses_list_page_modified": "Wydatek zmodyfikowany.",
+  "expenses_list_page_no_users": "Nie można dodać wydatku bez użytkowników.",
 
   "user_list_page_no_users": "Brak osób.",
   "user_list_page_cannot_add": "Nie można dodać osoby.",
@@ -62,5 +63,6 @@
 
   "error": "Błąd",
   "ok": "Ok",
-  "confirm": "Potwierdzenie"
+  "confirm": "Potwierdzenie",
+  "info": "Informacja"
 }

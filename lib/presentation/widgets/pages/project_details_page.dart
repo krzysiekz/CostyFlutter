@@ -1,6 +1,7 @@
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
 import 'package:costy/presentation/widgets/pages/user_list_page.dart';
+import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,9 +116,24 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
         ];
       case 1:
         return [
-          PlatformIconButton(
-            onPressed: () => _showAddExpenseForm(ctx, project),
-            icon: Icon(context.platformIcons.add),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (BuildContext context, UserState state) {
+              if (state is UserLoaded && state.users.isNotEmpty) {
+                return PlatformIconButton(
+                  onPressed: () => _showAddExpenseForm(ctx, project),
+                  icon: Icon(context.platformIcons.add),
+                );
+              } else {
+                return PlatformIconButton(
+                  onPressed: () => DialogUtilities.showAlertDialog(
+                      ctx,
+                      AppLocalizations.of(context).translate('info'),
+                      AppLocalizations.of(context)
+                          .translate('expenses_list_page_no_users')),
+                  icon: Icon(context.platformIcons.add),
+                );
+              }
+            },
           )
         ];
       case 2:

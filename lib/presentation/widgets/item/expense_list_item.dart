@@ -103,6 +103,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
 
   void _showAddExpenseForm(BuildContext ctx, Project project) {
     showPlatformModalSheet(
+      androidIsScrollControlled: true,
       context: ctx,
       builder: (_) {
         return NewExpenseForm(

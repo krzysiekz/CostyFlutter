@@ -68,7 +68,8 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
             FlatButton(
               key: Key(Keys.MULTI_SELECT_CHIP_SELECT_ALL),
               child: Text(AppLocalizations.of(context)
-                  .translate('expense_form_multi_select_chip_select_all_button')),
+                  .translate(
+                  'expense_form_multi_select_chip_select_all_button')),
               onPressed: () {
                 setState(() {
                   _selectedItems.addAll(widget.userList);
@@ -79,7 +80,8 @@ class _MultiSelectChipState<T> extends State<MultiSelectChip> {
             FlatButton(
               key: Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE),
               child: Text(AppLocalizations.of(context)
-                  .translate('expense_form_multi_select_chip_select_none_button')),
+                  .translate(
+                  'expense_form_multi_select_chip_select_none_button')),
               onPressed: () {
                 setState(() {
                   _selectedItems.clear();

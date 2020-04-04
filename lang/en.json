@@ -4,6 +4,7 @@
   "expenses_list_page_added": "Expense added.",
   "expenses_list_page_deleted": "Expense deleted.",
   "expenses_list_page_modified": "Expense modified.",
+  "expenses_list_page_no_users": "Please add some users first.",
 
   "user_list_page_no_users": "No users to display.",
   "user_list_page_cannot_add": "Cannot add user.",
@@ -62,5 +63,6 @@
 
   "error": "Error",
   "ok": "Ok",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "info": "Information"
 }
