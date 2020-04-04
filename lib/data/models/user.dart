@@ -8,7 +8,7 @@ class User extends Equatable {
   User({@required this.id, @required this.name});
 
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [id, name];
 
   @override
   String toString() {

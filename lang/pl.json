@@ -33,6 +33,7 @@
 
   "form_currency_dropdown_error": "Proszę wybrać walutę",
   "form_currency_dropdown_hint": "Waluta",
+  "form_cancel_button": "Anuluj",
 
   "expense_form_multi_select_chip_select_all_button": "Zaznacz",
   "expense_form_multi_select_chip_select_none_button": "Odznacz",
