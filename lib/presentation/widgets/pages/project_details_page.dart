@@ -53,7 +53,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   @override
   void initState() {
-    _tabController = PlatformTabController();
+    BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
+    _tabController = PlatformTabController(initialIndex: 1);
     super.initState();
   }
 
