@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../report_formatter.dart';
 
 class ReportFormatterImpl implements ReportFormatter {
-  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
+  static final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
 
   @override
   Future<String> format(Report report) async {

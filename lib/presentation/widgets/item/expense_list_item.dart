@@ -9,7 +9,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseListItem extends StatefulWidget {
-  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
+  static final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
 
   final UserExpense userExpense;
   final Project project;
@@ -71,7 +71,8 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
               Divider(
                 thickness: 0.4,
               ),
-              Text(widget.dateFormat.format(widget.userExpense.dateTime))
+              Text(ExpenseListItem.dateFormat
+                  .format(widget.userExpense.dateTime))
             ],
           ),
           isThreeLine: true,

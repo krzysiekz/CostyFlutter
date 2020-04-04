@@ -17,7 +17,7 @@ import '../../../data/models/project.dart';
 import '../../../keys.dart';
 
 class NewExpenseForm extends StatefulWidget {
-  final DateFormat dateFormat = DateFormat("dd/MM HH:mm");
+  static final DateFormat dateFormat = DateFormat("dd/MM HH:mm");
 
   final Project project;
   final UserExpense expenseToEdit;
@@ -241,7 +241,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 child: Text(_selectedDate == null
                     ? AppLocalizations.of(context)
                         .translate('expense_form_date_no_chosen')
-                    : widget.dateFormat.format(_selectedDate)),
+                    : NewExpenseForm.dateFormat.format(_selectedDate)),
               ));
         },
         validator: (val) {

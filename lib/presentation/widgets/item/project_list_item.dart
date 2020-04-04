@@ -11,7 +11,7 @@ import '../../../data/models/project.dart';
 import '../pages/project_details_page.dart';
 
 class ProjectListItem extends StatefulWidget {
-  final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
+  static final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
 
   final Project project;
 
@@ -45,7 +45,8 @@ class _ProjectListItemState extends State<ProjectListItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Divider(thickness: 0.4),
-                Text(widget.dateFormat.format(widget.project.creationDateTime)),
+                Text(ProjectListItem.dateFormat
+                    .format(widget.project.creationDateTime)),
               ],
             ),
             trailing: GestureDetector(
