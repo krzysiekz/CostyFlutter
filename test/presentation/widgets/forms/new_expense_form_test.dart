@@ -151,7 +151,7 @@ void main() {
         //assert
         expect(find.text('Add expense'), findsOneWidget);
         expect(find.text('Description is required.'), findsOneWidget);
-        expect(find.text('Amount is required.'), findsOneWidget);
+        expect(find.text('Field required.'), findsOneWidget);
         expect(find.text('Please select a user'), findsOneWidget);
 
         verify(currencyBloc.add(argThat(isA<GetCurrenciesEvent>())));

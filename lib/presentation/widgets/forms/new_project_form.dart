@@ -92,7 +92,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
     if (state is CurrencyLoaded) {
       return _showForm(context, state);
     } else {
-      return new Container();
+      return Container();
     }
   }
 

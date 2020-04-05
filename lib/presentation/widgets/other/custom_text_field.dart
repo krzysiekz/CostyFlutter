@@ -41,8 +41,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           filled: true,
           fillColor: Color.fromRGBO(235, 235, 235, 1),
           isDense: true,
-          border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(15.0),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
             borderSide: BorderSide.none,
           ),
           hintText: widget.hintText,

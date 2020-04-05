@@ -45,13 +45,13 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
                 color: IconTheme.of(context).color,
               ),
               filled: true,
-              fillColor: Color.fromRGBO(235, 235, 235, 1),
+              fillColor: const Color.fromRGBO(235, 235, 235, 1),
               isDense: true,
               hintText: AppLocalizations.of(context)
                   .translate('form_currency_dropdown_hint'),
               errorText: formState.hasError ? formState.errorText : null,
-              border: new OutlineInputBorder(
-                borderRadius: new BorderRadius.circular(15.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
                 borderSide: BorderSide.none,
               ),
             ),

@@ -3,7 +3,7 @@ import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
-import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
+import 'package:costy/presentation/widgets/other/receivers_widget.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -184,7 +184,13 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           const SizedBox(
             height: 10,
           ),
-          _createReceiversWidget(context),
+          ReceiversWidget(
+              initialReceivers: _receivers,
+              onSelectionChangedFunction: (selectedList) {
+                setState(() {
+                  _receivers = selectedList;
+                });
+              }),
           const SizedBox(
             height: 10,
           ),
@@ -226,11 +232,11 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                 filled: true,
-                fillColor: Color.fromRGBO(235, 235, 235, 1),
+                fillColor: const Color.fromRGBO(235, 235, 235, 1),
                 isDense: true,
                 errorText: formState.hasError ? formState.errorText : null,
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -298,19 +304,19 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               color: IconTheme.of(context).color,
             ),
             filled: true,
-            fillColor: Color.fromRGBO(235, 235, 235, 1),
+            fillColor: const Color.fromRGBO(235, 235, 235, 1),
             isDense: true,
             errorText: formState.hasError ? formState.errorText : null,
             hintText: AppLocalizations.of(context)
                 .translate('expense_form_user_hint'),
-            border: new OutlineInputBorder(
-              borderRadius: new BorderRadius.circular(15.0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
               borderSide: BorderSide.none,
             ),
           ),
           isEmpty: _user == null,
-          child: new DropdownButtonHideUnderline(
-            child: new DropdownButton<User>(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<User>(
               isExpanded: true,
               icon: Icon(
                 Icons.arrow_downward,
@@ -347,57 +353,5 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             overflow: TextOverflow.fade, maxLines: 1, softWrap: false),
       );
     }).toList();
-  }
-
-  Widget _createReceiversWidget(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-        bloc: BlocProvider.of<UserBloc>(context),
-        builder: (context, state) {
-          if (state is UserLoaded) {
-            return Container(
-              margin: const EdgeInsets.only(right: 5, left: 5),
-              child: FormField<List<User>>(
-                initialValue: _receivers == null ? state.users : _receivers,
-                builder: (FormFieldState<List<User>> formState) {
-                  return InputDecorator(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0.0),
-                        prefixIcon: Icon(
-                          context.platformIcons.group,
-                          color: IconTheme.of(context).color,
-                        ),
-                        filled: true,
-                        fillColor: Color.fromRGBO(235, 235, 235, 1),
-                        isDense: true,
-                        errorText:
-                            formState.hasError ? formState.errorText : null,
-                        border: new OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      child: MultiSelectChip(
-                        key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
-                        initialUserList: _receivers,
-                        userList: state.users,
-                        onSelectionChanged: (selectedList) {
-                          setState(() {
-                            _receivers = selectedList;
-                            formState.didChange(selectedList);
-                          });
-                        },
-                      ));
-                },
-                validator: (val) {
-                  return (val == null || val.length < 1)
-                      ? AppLocalizations.of(context)
-                          .translate('expense_form_receivers_error')
-                      : null;
-                },
-              ),
-            );
-          }
-          return Container();
-        });
   }
 }

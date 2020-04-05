@@ -37,7 +37,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     if (eitherExpenses.isLeft()) {
       yield ReportError(REPORT_GENERATION_FAILURE_MESSAGE);
     } else {
-      final Project project = new Project(
+      final Project project = Project(
           id: event.project.id,
           name: event.project.name,
           defaultCurrency: event.project.defaultCurrency,
@@ -64,7 +64,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     if (eitherExpenses.isLeft()) {
       yield ReportError(REPORT_GENERATION_FAILURE_MESSAGE);
     } else {
-      final Project project = new Project(
+      final Project project = Project(
           id: event.project.id,
           name: event.project.name,
           defaultCurrency: event.project.defaultCurrency,
