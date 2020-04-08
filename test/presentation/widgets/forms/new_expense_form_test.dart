@@ -326,10 +326,12 @@ void main() {
         final receiverJohn = find.byKey(Key("receiver_John"));
         expect(receiverJohn, findsOneWidget);
         await tester.tap(receiverJohn);
+        await tester.pumpAndSettle();
 
         final receiverKate = find.byKey(Key("receiver_Kate"));
         expect(receiverKate, findsOneWidget);
         await tester.tap(receiverKate);
+        await tester.pumpAndSettle();
 
         await tester
             .tap(find.byKey(Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY)));

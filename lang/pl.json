@@ -43,7 +43,6 @@
   "expense_form_description_hint": "Proszę podać opis",
   "expense_form_description_error": "Opis jest wymagany.",
   "expense_form_amount_hint": "Kwota",
-  "expense_form_date_no_chosen": "Nie wybrano daty",
   "expense_form_date_error": "Proszę wybrać datę",
   "expense_form_user_hint": "Płacący",
   "expense_form_user_error": "Proszę wybrać płacącego",

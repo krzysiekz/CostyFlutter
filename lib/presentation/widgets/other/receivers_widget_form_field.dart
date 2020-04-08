@@ -1,6 +1,8 @@
 import 'package:costy/data/models/user.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
+import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -9,11 +11,11 @@ import '../../../app_localizations.dart';
 import '../../../keys.dart';
 import 'multi_select_chip.dart';
 
-class ReceiversWidget extends StatelessWidget {
+class ReceiversWidgetFormField extends StatelessWidget {
   final List<User> initialReceivers;
   final Function onSelectionChangedFunction;
 
-  const ReceiversWidget(
+  const ReceiversWidgetFormField(
       {Key key, this.initialReceivers, this.onSelectionChangedFunction})
       : super(key: key);
 
@@ -23,6 +25,13 @@ class ReceiversWidget extends StatelessWidget {
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
+            if (initialReceivers == null) {
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                onSelectionChangedFunction(state.users);
+              });
+              return DialogUtilities.showLoadingIndicator(context);
+            }
+
             return Container(
               margin: const EdgeInsets.only(right: 5, left: 5),
               child: FormField<List<User>>(
@@ -48,9 +57,15 @@ class ReceiversWidget extends StatelessWidget {
                       ),
                       child: MultiSelectChip(
                         key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
-                        initialUserList: initialReceivers,
+                        selectedUserList: initialReceivers == null
+                            ? state.users
+                            : initialReceivers,
                         userList: state.users,
-                        onSelectionChanged: onSelectionChangedFunction,
+                        onSelectionChanged: (selected) {
+                          formState.didChange(selected);
+                          onSelectionChangedFunction(selected);
+                        },
+                        extractLabelFunction: (User u) => u.name,
                       ));
                 },
                 validator: (val) {

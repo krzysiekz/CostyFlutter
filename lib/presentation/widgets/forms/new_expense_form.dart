@@ -3,9 +3,10 @@ import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
-import 'package:costy/presentation/widgets/other/receivers_widget.dart';
+import 'package:costy/presentation/widgets/other/receivers_widget_form_field.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -91,17 +92,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
     }
   }
 
-  void _presentDatePicker() {
-    DatePicker.showDateTimePicker(context,
-        showTitleActions: true,
-        minTime: DateTime(DateTime.now().year - 1),
-        maxTime: DateTime.now(), onConfirm: (date) {
-      setState(() {
-        _selectedDate = date;
-      });
-    }, currentTime: _selectedDate == null ? DateTime.now() : _selectedDate);
-  }
-
   String _numberValidator(String value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context)
@@ -117,6 +107,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
         child: Card(
       elevation: 0,
@@ -178,13 +169,21 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             children: <Widget>[
               Expanded(child: _createUserDropDownList(context)),
               const SizedBox(width: 15),
-              Expanded(child: _createDatePicker(context)),
+              Expanded(
+                  child: _DateTimePickerFormField(
+                selectedValue: _selectedDate,
+                onConfirmFunction: (date) {
+                  setState(() {
+                    _selectedDate = date;
+                  });
+                },
+              )),
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-          ReceiversWidget(
+          ReceiversWidgetFormField(
               initialReceivers: _receivers,
               onSelectionChangedFunction: (selectedList) {
                 setState(() {
@@ -218,44 +217,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             ],
           )
         ],
-      ),
-    );
-  }
-
-  Widget _createDatePicker(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 5, left: 5),
-      child: FormField<DateTime>(
-        initialValue: _selectedDate == null ? DateTime.now() : _selectedDate,
-        builder: (FormFieldState<DateTime> formState) {
-          return InputDecorator(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                filled: true,
-                fillColor: const Color.fromRGBO(235, 235, 235, 1),
-                isDense: true,
-                errorText: formState.hasError ? formState.errorText : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              child: FlatButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: EdgeInsets.all(0),
-                onPressed: _presentDatePicker,
-                child: Text(_selectedDate == null
-                    ? AppLocalizations.of(context)
-                        .translate('expense_form_date_no_chosen')
-                    : NewExpenseForm.dateFormat.format(_selectedDate)),
-              ));
-        },
-        validator: (val) {
-          return (val == null)
-              ? AppLocalizations.of(context)
-                  .translate('expense_form_date_error')
-              : null;
-        },
       ),
     );
   }
@@ -353,5 +314,59 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             overflow: TextOverflow.fade, maxLines: 1, softWrap: false),
       );
     }).toList();
+  }
+}
+
+class _DateTimePickerFormField extends StatelessWidget {
+  final DateTime selectedValue;
+  final Function onConfirmFunction;
+
+  const _DateTimePickerFormField(
+      {Key key, this.selectedValue, this.onConfirmFunction})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 5, left: 5),
+      child: FormField<DateTime>(
+        initialValue: selectedValue == null ? DateTime.now() : selectedValue,
+        builder: (FormFieldState<DateTime> formState) {
+          return InputDecorator(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                filled: true,
+                fillColor: const Color.fromRGBO(235, 235, 235, 1),
+                isDense: true,
+                errorText: formState.hasError ? formState.errorText : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              child: FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: EdgeInsets.all(0),
+                onPressed: () => _presentDatePicker(context),
+                child: Text(NewExpenseForm.dateFormat.format(selectedValue)),
+              ));
+        },
+        validator: (val) {
+          return (val == null)
+              ? AppLocalizations.of(context)
+                  .translate('expense_form_date_error')
+              : null;
+        },
+      ),
+    );
+  }
+
+  void _presentDatePicker(BuildContext ctx) {
+    DatePicker.showDateTimePicker(ctx,
+        showTitleActions: true,
+        minTime: DateTime(DateTime.now().year - 1),
+        maxTime: DateTime.now(),
+        onConfirm: onConfirmFunction,
+        currentTime: selectedValue == null ? DateTime.now() : selectedValue);
   }
 }

@@ -43,7 +43,6 @@
   "expense_form_description_hint": "Enter description",
   "expense_form_description_error": "Description is required.",
   "expense_form_amount_hint": "Amount",
-  "expense_form_date_no_chosen": "No Date Chosen",
   "expense_form_date_error": "Please select date",
   "expense_form_user_hint": "User",
   "expense_form_user_error": "Please select a user",
