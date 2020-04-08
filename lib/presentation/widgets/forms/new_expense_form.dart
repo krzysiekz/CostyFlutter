@@ -6,7 +6,6 @@ import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:costy/presentation/widgets/other/receivers_widget_form_field.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -107,7 +106,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
         child: Card(
       elevation: 0,
@@ -167,7 +165,15 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Expanded(child: _createUserDropDownList(context)),
+              Expanded(
+                  child: _UserDropDownFormField(
+                initialValue: _user,
+                onChangedCallback: (User newValue) {
+                  setState(() {
+                    _user = newValue;
+                  });
+                },
+              )),
               const SizedBox(width: 15),
               Expanded(
                   child: _DateTimePickerFormField(
@@ -239,73 +245,80 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           return Container();
         });
   }
+}
 
-  Widget _createUserDropDownList(BuildContext context) {
+class _UserDropDownFormField extends StatelessWidget {
+  final User initialValue;
+  final Function onChangedCallback;
+
+  const _UserDropDownFormField(
+      {Key key, this.initialValue, this.onChangedCallback})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
             return Container(
                 margin: const EdgeInsets.only(right: 5, left: 5),
-                child: _createItemDropDown(context, state.users));
+                child: FormField<User>(
+                  key: Key(Keys.EXPENSE_FORM_USER_KEY),
+                  builder: (FormFieldState<User> formState) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                        prefixIcon: Icon(
+                          context.platformIcons.person,
+                          color: IconTheme.of(context).color,
+                        ),
+                        filled: true,
+                        fillColor: const Color.fromRGBO(235, 235, 235, 1),
+                        isDense: true,
+                        errorText:
+                            formState.hasError ? formState.errorText : null,
+                        hintText: AppLocalizations.of(context)
+                            .translate('expense_form_user_hint'),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      isEmpty: initialValue == null,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<User>(
+                          isExpanded: true,
+                          icon: Icon(
+                            Icons.arrow_downward,
+                            color: IconTheme.of(context).color,
+                          ),
+                          value: initialValue,
+                          isDense: true,
+                          onChanged: (User newValue) {
+                            formState.didChange(newValue);
+                            onChangedCallback(newValue);
+                          },
+                          items: _getUsersDropdownItems(state.users),
+                        ),
+                      ),
+                    );
+                  },
+                  validator: (val) {
+                    return (val == null)
+                        ? AppLocalizations.of(context)
+                            .translate('expense_form_user_error')
+                        : null;
+                  },
+                  initialValue: initialValue,
+                ));
           }
           return Container();
         });
   }
 
-  FormField<User> _createItemDropDown(BuildContext context, List<User> users) {
-    return FormField<User>(
-      key: Key(Keys.EXPENSE_FORM_USER_KEY),
-      builder: (FormFieldState<User> formState) {
-        return InputDecorator(
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-            prefixIcon: Icon(
-              context.platformIcons.person,
-              color: IconTheme.of(context).color,
-            ),
-            filled: true,
-            fillColor: const Color.fromRGBO(235, 235, 235, 1),
-            isDense: true,
-            errorText: formState.hasError ? formState.errorText : null,
-            hintText: AppLocalizations.of(context)
-                .translate('expense_form_user_hint'),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide.none,
-            ),
-          ),
-          isEmpty: _user == null,
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<User>(
-              isExpanded: true,
-              icon: Icon(
-                Icons.arrow_downward,
-                color: IconTheme.of(context).color,
-              ),
-              value: _user,
-              isDense: true,
-              onChanged: (User newValue) {
-                setState(() {
-                  _user = newValue;
-                  formState.didChange(newValue);
-                });
-              },
-              items: getUsersDropdownItems(users),
-            ),
-          ),
-        );
-      },
-      validator: (val) {
-        return (val == null)
-            ? AppLocalizations.of(context).translate('expense_form_user_error')
-            : null;
-      },
-      initialValue: _user,
-    );
-  }
-
-  List<DropdownMenuItem<User>> getUsersDropdownItems(List<User> users) {
+  List<DropdownMenuItem<User>> _getUsersDropdownItems(List<User> users) {
     return users.map<DropdownMenuItem<User>>((User user) {
       return DropdownMenuItem<User>(
         key: Key('user_${user.id}'),
