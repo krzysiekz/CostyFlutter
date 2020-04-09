@@ -61,7 +61,7 @@ class _NewUserFormState extends State<NewUserForm> {
           top: 10,
           left: 10,
           right: 10,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 5,
+          bottom: 10,
         ),
         child: _showForm(context),
       ),
