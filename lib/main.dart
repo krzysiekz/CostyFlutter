@@ -32,7 +32,7 @@ Future<void> main() async {
 Future initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  Hive.initFlutter();
+  await Hive.initFlutter();
   Hive.registerAdapter(CurrencyEntityAdapter());
   Hive.registerAdapter(ProjectEntityAdapter());
   Hive.registerAdapter(UserEntityAdapter());

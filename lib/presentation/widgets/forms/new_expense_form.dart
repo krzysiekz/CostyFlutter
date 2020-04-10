@@ -5,10 +5,10 @@ import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:costy/presentation/widgets/other/receivers_widget_form_field.dart';
 import 'package:decimal/decimal.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -374,12 +374,58 @@ class _DateTimePickerFormField extends StatelessWidget {
     );
   }
 
-  void _presentDatePicker(BuildContext ctx) {
-//    DatePicker.showDateTimePicker(ctx,
-//        showTitleActions: true,
-//        minTime: DateTime(DateTime.now().year - 1),
-//        maxTime: DateTime.now(),
-//        onConfirm: onConfirmFunction,
-//        currentTime: selectedValue == null ? DateTime.now() : selectedValue);
+  void _presentDatePicker(BuildContext ctx) async {
+    if (isMaterial(ctx)) {
+      final date = await showDatePicker(
+          context: ctx,
+          firstDate: DateTime(DateTime.now().year - 1),
+          initialDate: selectedValue ?? DateTime.now(),
+          lastDate: DateTime.now());
+      if (date != null) {
+        final time = await showTimePicker(
+          context: ctx,
+          initialTime: TimeOfDay.fromDateTime(selectedValue ?? DateTime.now()),
+        );
+        return onConfirmFunction(_combine(date, time));
+      } else {
+        return onConfirmFunction(selectedValue);
+      }
+    } else {
+      await showCupertinoModalPopup(
+          context: ctx,
+          builder: (BuildContext context) => _buildBottomPicker(
+              CupertinoDatePicker(
+                  use24hFormat: true,
+                  maximumDate: DateTime.now(),
+                  minimumDate: DateTime(DateTime.now().year - 1),
+                  initialDateTime: selectedValue ?? DateTime.now(),
+                  mode: CupertinoDatePickerMode.dateAndTime,
+                  onDateTimeChanged: onConfirmFunction)));
+    }
   }
+
+  Widget _buildBottomPicker(Widget picker) {
+    return Container(
+      height: 216.0,
+      padding: const EdgeInsets.only(top: 6.0),
+      color: CupertinoColors.white,
+      child: DefaultTextStyle(
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontSize: 22.0,
+        ),
+        child: GestureDetector(
+          // Blocks taps from propagating to the modal sheet and popping.
+          onTap: () {},
+          child: SafeArea(
+            top: false,
+            child: picker,
+          ),
+        ),
+      ),
+    );
+  }
+
+  DateTime _combine(DateTime date, TimeOfDay time) => DateTime(
+      date.year, date.month, date.day, time?.hour ?? 0, time?.minute ?? 0);
 }
