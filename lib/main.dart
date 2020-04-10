@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'app_localizations.dart';
 import 'data/datasources/currencies_datasource.dart';
@@ -32,8 +32,7 @@ Future<void> main() async {
 Future initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-  Hive.init(appDocumentDir.path);
+  Hive.initFlutter();
   Hive.registerAdapter(CurrencyEntityAdapter());
   Hive.registerAdapter(ProjectEntityAdapter());
   Hive.registerAdapter(UserEntityAdapter());

@@ -8,7 +8,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -375,11 +375,11 @@ class _DateTimePickerFormField extends StatelessWidget {
   }
 
   void _presentDatePicker(BuildContext ctx) {
-    DatePicker.showDateTimePicker(ctx,
-        showTitleActions: true,
-        minTime: DateTime(DateTime.now().year - 1),
-        maxTime: DateTime.now(),
-        onConfirm: onConfirmFunction,
-        currentTime: selectedValue == null ? DateTime.now() : selectedValue);
+//    DatePicker.showDateTimePicker(ctx,
+//        showTitleActions: true,
+//        minTime: DateTime(DateTime.now().year - 1),
+//        maxTime: DateTime.now(),
+//        onConfirm: onConfirmFunction,
+//        currentTime: selectedValue == null ? DateTime.now() : selectedValue);
   }
 }
