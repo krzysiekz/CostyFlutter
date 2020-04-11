@@ -55,6 +55,28 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  AppBarTheme _appBarTheme() {
+    return AppBarTheme(
+      color: Colors.white,
+      iconTheme: IconThemeData(
+        color: Colors.blue,
+      ),
+    );
+  }
+
+  ThemeData _buildLightTheme() {
+    final ThemeData base = ThemeData.light();
+    return base.copyWith(
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.blue,
+          textTheme: ButtonTextTheme.primary,
+        ),
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.blue),
+        primaryTextTheme:
+            Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.black),
+        appBarTheme: _appBarTheme());
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -78,15 +100,7 @@ class _MyAppState extends State<MyApp> {
         child: OKToast(
           child: PlatformApp(
             android: (_) => MaterialAppData(
-              theme: ThemeData.light().copyWith(
-                  primaryColor: Colors.indigo,
-                  iconTheme: ThemeData.light()
-                      .iconTheme
-                      .copyWith(color: Colors.indigoAccent),
-                  buttonTheme: ButtonThemeData(
-                    buttonColor: Colors.indigoAccent,
-                    textTheme: ButtonTextTheme.primary,
-                  )),
+              theme: _buildLightTheme(),
 //              darkTheme: ThemeData.dark(),
             ),
             locale: DevicePreview.of(context).locale,

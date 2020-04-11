@@ -100,9 +100,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
               onPressed: () => Navigator.of(context).pop(),
             ),
             automaticallyImplyLeading: true),
+        android: (_) => MaterialAppBarData(elevation: 1),
       ),
       bodyBuilder: (context, index) => _body(project, context, index),
       items: items(context),
+      androidTabs: (_) => MaterialNavBarData(elevation: 2),
     );
   }
 

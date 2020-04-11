@@ -111,6 +111,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   PlatformWidget _createSliverAppBar() {
     return PlatformWidget(
       android: (context) => SliverAppBar(
+        elevation: 1,
         actions: <Widget>[
           PlatformIconButton(
             key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
@@ -118,7 +119,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
             onPressed: () => _startAddNewProject(context),
           )
         ],
-        expandedHeight: 170,
+        expandedHeight: 110,
         pinned: true,
         flexibleSpace: FlexibleSpaceBar(
           title: Container(
@@ -128,10 +129,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                     .translate('project_list_page_title'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis),
-          ),
-          background: Image.asset(
-            'assets/background.png',
-            fit: BoxFit.cover,
           ),
         ),
       ),

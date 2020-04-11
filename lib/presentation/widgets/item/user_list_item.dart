@@ -35,7 +35,7 @@ class _UserListItemState extends State<UserListItem> {
           leading: Icon(
             context.platformIcons.personSolid,
             color: IconTheme.of(context).color,
-            size: 40,
+            size: 30,
           ),
           title: Text(
             widget.user.name,
