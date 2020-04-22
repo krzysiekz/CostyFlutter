@@ -9,6 +9,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../forms/new_user_form.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
@@ -35,8 +36,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   final items = (BuildContext context) => [
         BottomNavigationBarItem(
-          title: Text(AppLocalizations.of(context)
-              .translate('project_details_page_users')),
+          title: Text(
+            AppLocalizations.of(context)
+                .translate('project_details_page_users'),
+            key: Key(Keys.PROJECT_DETAILS_USERS_TAB),
+          ),
           icon: Icon(context.platformIcons.group),
         ),
         BottomNavigationBarItem(
@@ -113,6 +117,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       case 0:
         return [
           PlatformIconButton(
+            key: Key(Keys.PROJECT_DETAILS_ADD_USER_BUTTON),
             onPressed: () => _showAddUserForm(ctx, project),
             icon: Icon(context.platformIcons.personAdd),
           )

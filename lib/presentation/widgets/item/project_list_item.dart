@@ -50,6 +50,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
               ],
             ),
             trailing: GestureDetector(
+              key: Key("${widget.project.name}_edit"),
               onTap: () => _startEditProject(context),
               child: Icon(
                 context.platformIcons.create,
