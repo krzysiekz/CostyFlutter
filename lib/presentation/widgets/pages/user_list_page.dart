@@ -41,6 +41,7 @@ class _UserListPageState extends State<UserListPage> {
             padding: const EdgeInsets.all(15),
             itemBuilder: (cts, index) {
               return UserListItem(
+                key: Key("user_${state.users[index].id}"),
                 user: state.users[index],
                 project: widget.project,
               );

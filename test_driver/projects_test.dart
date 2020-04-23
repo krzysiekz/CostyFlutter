@@ -80,7 +80,7 @@ void main() {
   });
 
   test('should edit created project', () async {
-    await driver.tap(find.byValueKey("Project1_edit"));
+    await driver.tap(find.byValueKey("0_project_edit"));
 
     await expectPresent(
       projectNameTextFormFieldFinder,
@@ -112,7 +112,7 @@ void main() {
 
   test('should delete created project', () async {
     await driver.scroll(
-        find.byValueKey("Project2"), -400, 0, Duration(milliseconds: 300));
+        find.byValueKey("project_0"), -400, 0, Duration(milliseconds: 300));
 
     await expectPresent(
       find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON),

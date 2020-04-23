@@ -41,6 +41,7 @@ class _UserListItemState extends State<UserListItem> {
             widget.user.name,
           ),
           trailing: GestureDetector(
+            key: Key("${widget.user.id}_user_edit"),
             onTap: () => _showEditUserForm(context, widget.project),
             child: Icon(
               context.platformIcons.create,

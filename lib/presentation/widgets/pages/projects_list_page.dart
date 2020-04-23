@@ -100,7 +100,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         (BuildContext context, int index) {
           if (index >= state.projects.length) return null;
           return ProjectListItem(
-            key: Key(state.projects[index].name),
+            key: Key("project_${state.projects[index].id}"),
             project: state.projects[index],
           );
         },
