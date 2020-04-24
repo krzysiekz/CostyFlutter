@@ -17,6 +17,7 @@ class DialogUtilities {
               content: Text(content),
               actions: <Widget>[
                 PlatformDialogAction(
+                  key: Key(Keys.ALERT_DIALOG_OK_BUTTON),
                   child: Text(AppLocalizations.of(context).translate('ok')),
                   onPressed: () {
                     Navigator.of(context).pop();

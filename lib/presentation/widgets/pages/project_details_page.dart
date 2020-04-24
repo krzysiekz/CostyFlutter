@@ -128,11 +128,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
             builder: (BuildContext context, UserState state) {
               if (state is UserLoaded && state.users.isNotEmpty) {
                 return PlatformIconButton(
+                  key: Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
                   onPressed: () => _showAddExpenseForm(ctx, project),
                   icon: Icon(context.platformIcons.add),
                 );
               } else {
                 return PlatformIconButton(
+                  key: Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
                   onPressed: () => DialogUtilities.showAlertDialog(
                       ctx,
                       AppLocalizations.of(context).translate('info'),

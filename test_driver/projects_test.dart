@@ -4,6 +4,8 @@ import 'package:costy/keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+import 'test_utils.dart';
+
 void main() {
   FlutterDriver driver;
 
@@ -24,19 +26,6 @@ void main() {
     }
   });
 
-  expectPresent(
-    SerializableFinder byValueKey,
-    FlutterDriver driver, {
-    Duration timeout = const Duration(seconds: 1),
-    String objectName,
-  }) async {
-    try {
-      await driver.waitFor(byValueKey, timeout: timeout);
-    } catch (exception) {
-      throw TestFailure("Element not found: " + objectName);
-    }
-  }
-
   test('check flutter driver health', () async {
     final health = await driver.checkHealth();
     expect(health.status, HealthStatus.ok);
@@ -49,34 +38,7 @@ void main() {
   });
 
   test('should add new project', () async {
-    await driver.tap(find.byValueKey(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY));
-
-    await expectPresent(
-      projectNameTextFormFieldFinder,
-      driver,
-      objectName: Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY,
-    );
-    await driver.tap(projectNameTextFormFieldFinder);
-    await driver.enterText('Project1');
-    await driver.waitFor(find.text('Project1'));
-
-    await expectPresent(
-      find.byValueKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
-      driver,
-      objectName: Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY,
-    );
-    await driver.tap(find.byValueKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY));
-    await driver.tap(find.text('PLN'));
-
-    await expectPresent(
-      find.byValueKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
-      driver,
-      objectName: Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY,
-    );
-    await driver.tap(find.byValueKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY));
-
-    await expectPresent(find.text('Project1'), driver, objectName: 'Project1');
-    await expectPresent(find.text('PLN'), driver, objectName: 'PLN');
+    await createProject("Project1", "PLN", driver);
   });
 
   test('should edit created project', () async {
@@ -115,11 +77,9 @@ void main() {
         find.byValueKey("project_0"), -400, 0, Duration(milliseconds: 300));
 
     await expectPresent(
-      find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON),
-      driver,
-      objectName: Keys.DELETE_CONFIRMATION_DELETE_BUTTON,
-      timeout: Duration(seconds: 2)
-    );
+        find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON), driver,
+        objectName: Keys.DELETE_CONFIRMATION_DELETE_BUTTON,
+        timeout: Duration(seconds: 2));
 
     await driver.tap(find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON));
 
