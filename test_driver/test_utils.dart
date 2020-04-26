@@ -33,7 +33,7 @@ createUser(String name, FlutterDriver d) async {
 
   await expectKeyPresent(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY, d);
   await d.tap(find.byValueKey(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY));
-  await expectPresent(find.text(name), d, objectName: name);
+  await expectTextPresent(name, d);
 }
 
 createProject(String name, String currency, FlutterDriver d) async {
@@ -51,6 +51,6 @@ createProject(String name, String currency, FlutterDriver d) async {
   await expectKeyPresent(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, d);
   await d.tap(find.byValueKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY));
 
-  await expectPresent(find.text(name), d, objectName: name);
-  await expectPresent(find.text(currency), d, objectName: currency);
+  await expectTextPresent(name, d);
+  await expectTextPresent(currency, d);
 }
