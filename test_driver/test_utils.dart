@@ -2,22 +2,22 @@ import 'package:costy/keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-expectKeyPresent(String key, FlutterDriver driver) async {
-  await expectPresent(find.byValueKey(key), driver, objectName: key);
+expectKeyPresent(String key, FlutterDriver d) async {
+  await expectPresent(find.byValueKey(key), d, objectName: key);
 }
 
-expectTextPresent(String text, FlutterDriver driver) async {
-  await expectPresent(find.text(text), driver, objectName: text);
+expectTextPresent(String text, FlutterDriver d) async {
+  await expectPresent(find.text(text), d, objectName: text);
 }
 
 expectPresent(
   SerializableFinder byValueKey,
-  FlutterDriver driver, {
+  FlutterDriver d, {
   Duration timeout = const Duration(seconds: 1),
   String objectName,
 }) async {
   try {
-    await driver.waitFor(byValueKey, timeout: timeout);
+    await d.waitFor(byValueKey, timeout: timeout);
   } catch (exception) {
     throw TestFailure("Element not found: " + objectName);
   }
@@ -53,4 +53,30 @@ createProject(String name, String currency, FlutterDriver d) async {
 
   await expectTextPresent(name, d);
   await expectTextPresent(currency, d);
+}
+
+createExpense(String description, String amount, String user,
+    String expectedSummary, FlutterDriver d) async {
+  await d.tap(find.byValueKey(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON));
+
+  await expectKeyPresent(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY, d);
+  await d.tap(find.byValueKey(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY));
+  await d.enterText(description);
+  await d.waitFor(find.text(description));
+
+  await expectKeyPresent(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY, d);
+  await d.tap(find.byValueKey(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY));
+  await d.enterText(amount);
+  await d.waitFor(find.text(amount));
+
+  await expectKeyPresent(Keys.EXPENSE_FORM_USER_KEY, d);
+  await d.tap(find.byValueKey(Keys.EXPENSE_FORM_USER_KEY));
+  await d.tap(find.text(user));
+
+  await expectKeyPresent(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY, d);
+  await d.tap(find.byValueKey(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY));
+
+  await expectTextPresent(description, d);
+  await expectTextPresent(expectedSummary, d);
+  await expectTextPresent(amount, d);
 }

@@ -53,28 +53,9 @@ void main() {
     await createUser('Kate', driver);
 
     await driver.tap(find.byValueKey(Keys.PROJECT_DETAILS_EXPENSES_TAB));
-    await driver.tap(find.byValueKey(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON));
 
-    await expectKeyPresent(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY));
-    await driver.enterText("Test description");
-    await driver.waitFor(find.text('Test description'));
-
-    await expectKeyPresent(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY));
-    await driver.enterText("11");
-    await driver.waitFor(find.text('11'));
-
-    await expectKeyPresent(Keys.EXPENSE_FORM_USER_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.EXPENSE_FORM_USER_KEY));
-    await driver.tap(find.text("John"));
-
-    await expectKeyPresent(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY));
-
-    await expectTextPresent("Test description", driver);
-    await expectTextPresent("John => John, Kate", driver);
-    await expectTextPresent("11", driver);
+    await createExpense(
+        "Test description", "11", "John", "John => John, Kate", driver);
   });
 
   test('should edit created expense', () async {
