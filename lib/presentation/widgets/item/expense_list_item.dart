@@ -77,6 +77,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
           ),
           isThreeLine: true,
           trailing: GestureDetector(
+            key: Key("${widget.userExpense.id}_expense_edit"),
             onTap: () => _showAddExpenseForm(context, widget.project),
             child: Icon(
               context.platformIcons.create,

@@ -35,8 +35,7 @@ void main() {
     await driver.tap(find.text('Project1'));
     await driver.tap(find.byValueKey(Keys.PROJECT_DETAILS_USERS_TAB));
 
-    var textToFind = 'No users to display.';
-    await expectPresent(find.text(textToFind), driver, objectName: textToFind);
+    await expectTextPresent("No users to display.", driver);
   });
 
   test('should add new user', () async {
@@ -46,38 +45,24 @@ void main() {
   test('should edit created user', () async {
     await driver.tap(find.byValueKey("0_user_edit"));
 
-    await expectPresent(
-      find.byValueKey(Keys.USER_FORM_NAME_FIELD_KEY),
-      driver,
-      objectName: Keys.USER_FORM_NAME_FIELD_KEY,
-    );
+    await expectKeyPresent(Keys.USER_FORM_NAME_FIELD_KEY, driver);
     await driver.tap(find.byValueKey(Keys.USER_FORM_NAME_FIELD_KEY));
     await driver.enterText('Edited John');
     await driver.waitFor(find.text('Edited John'));
 
-    await expectPresent(
-      find.byValueKey(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
-      driver,
-      objectName: Keys.USER_FORM_ADD_EDIT_BUTTON_KEY,
-    );
+    await expectKeyPresent(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY, driver);
     await driver.tap(find.byValueKey(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY));
 
-    await expectPresent(find.text('Edited John'), driver,
-        objectName: 'Edited John');
+    await expectTextPresent("Edited John", driver);
   });
 
   test('should delete created user', () async {
     await driver.scroll(
         find.byValueKey("user_0"), -400, 0, Duration(milliseconds: 300));
 
-    await expectPresent(
-        find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON), driver,
-        objectName: Keys.DELETE_CONFIRMATION_DELETE_BUTTON,
-        timeout: Duration(seconds: 2));
-
+    await expectKeyPresent(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
     await driver.tap(find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON));
 
-    var textToFind = 'No users to display.';
-    await expectPresent(find.text(textToFind), driver, objectName: textToFind);
+    await expectTextPresent("No users to display.", driver);
   });
 }

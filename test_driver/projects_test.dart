@@ -9,9 +9,6 @@ import 'test_utils.dart';
 void main() {
   FlutterDriver driver;
 
-  var projectNameTextFormFieldFinder =
-      find.byValueKey(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY);
-
   // Connect to the Flutter driver before running any tests.
   setUpAll(() async {
     driver = await FlutterDriver.connect();
@@ -33,8 +30,7 @@ void main() {
   });
 
   test('should display proper text when there is no projects yet', () async {
-    var textToFind = 'No projects to display.';
-    await expectPresent(find.text(textToFind), driver, objectName: textToFind);
+    await expectTextPresent("No projects to display.", driver);
   });
 
   test('should add new project', () async {
@@ -44,46 +40,29 @@ void main() {
   test('should edit created project', () async {
     await driver.tap(find.byValueKey("0_project_edit"));
 
-    await expectPresent(
-      projectNameTextFormFieldFinder,
-      driver,
-      objectName: Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY,
-    );
-    await driver.tap(projectNameTextFormFieldFinder);
+    await expectKeyPresent(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, driver);
+    await driver.tap(find.byValueKey(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY));
     await driver.enterText('Project2');
     await driver.waitFor(find.text('Project2'));
 
-    await expectPresent(
-      find.byValueKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
-      driver,
-      objectName: Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY,
-    );
+    await expectKeyPresent(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, driver);
     await driver.tap(find.byValueKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY));
     await driver.tap(find.text('EUR'));
 
-    await expectPresent(
-      find.byValueKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
-      driver,
-      objectName: Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY,
-    );
+    await expectKeyPresent(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, driver);
     await driver.tap(find.byValueKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY));
 
-    await expectPresent(find.text('Project2'), driver, objectName: 'Project2');
-    await expectPresent(find.text('EUR'), driver, objectName: 'EUR');
+    await expectTextPresent("Project2", driver);
+    await expectTextPresent("EUR", driver);
   });
 
   test('should delete created project', () async {
     await driver.scroll(
         find.byValueKey("project_0"), -400, 0, Duration(milliseconds: 300));
 
-    await expectPresent(
-        find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON), driver,
-        objectName: Keys.DELETE_CONFIRMATION_DELETE_BUTTON,
-        timeout: Duration(seconds: 2));
-
+    await expectKeyPresent(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
     await driver.tap(find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON));
 
-    var textToFind = 'No projects to display.';
-    await expectPresent(find.text(textToFind), driver, objectName: textToFind);
+    await expectTextPresent("No projects to display.", driver);
   });
 }

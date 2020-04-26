@@ -40,6 +40,7 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
             padding: const EdgeInsets.all(15),
             itemBuilder: (cts, index) {
               return ExpenseListItem(
+                key: Key("expense_${state.expenses[index].id}"),
                 userExpense: state.expenses[index],
                 project: widget.project,
               );

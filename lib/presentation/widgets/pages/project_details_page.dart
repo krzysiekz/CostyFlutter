@@ -44,8 +44,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           icon: Icon(context.platformIcons.group),
         ),
         BottomNavigationBarItem(
-          title: Text(AppLocalizations.of(context)
-              .translate('project_details_page_expenses')),
+          title: Text(
+            AppLocalizations.of(context)
+                .translate('project_details_page_expenses'),
+            key: Key(Keys.PROJECT_DETAILS_EXPENSES_TAB),
+          ),
           icon: Icon(context.platformIcons.shoppingCart),
         ),
         BottomNavigationBarItem(
