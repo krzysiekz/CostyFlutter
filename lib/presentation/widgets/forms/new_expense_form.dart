@@ -275,7 +275,7 @@ class _UserDropDownFormField extends StatelessWidget {
                           color: IconTheme.of(context).color,
                         ),
                         filled: true,
-                        fillColor: const Color.fromRGBO(235, 235, 235, 1),
+                        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                         isDense: true,
                         errorText:
                             formState.hasError ? formState.errorText : null,
@@ -349,7 +349,7 @@ class _DateTimePickerFormField extends StatelessWidget {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                 filled: true,
-                fillColor: const Color.fromRGBO(235, 235, 235, 1),
+                fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                 isDense: true,
                 errorText: formState.hasError ? formState.errorText : null,
                 border: OutlineInputBorder(

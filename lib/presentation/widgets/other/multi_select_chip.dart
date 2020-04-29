@@ -40,25 +40,28 @@ class MultiSelectChip<T> extends StatelessWidget {
           ],
         ),
         Wrap(
-          children: _buildChoiceList(),
+          children: _buildChoiceList(context),
         ),
       ],
     );
   }
 
-  _buildChoiceList() {
+  _buildChoiceList(BuildContext ctx) {
     List<Widget> choices = List();
 
     userList.forEach((item) {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
+          selectedColor: Theme.of(ctx).iconTheme.color.withOpacity(0.8),
           key: Key("receiver_${extractLabelFunction(item)}"),
           label: Text(
             extractLabelFunction(item),
             overflow: TextOverflow.fade,
             maxLines: 1,
             softWrap: false,
+            style: TextStyle(
+                color: Theme.of(ctx).primaryTextTheme.bodyText1.color),
           ),
           selected: selectedUserList.contains(item),
           onSelected: (selected) {

@@ -45,7 +45,7 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
                 color: IconTheme.of(context).color,
               ),
               filled: true,
-              fillColor: const Color.fromRGBO(235, 235, 235, 1),
+              fillColor: Theme.of(context).inputDecorationTheme.fillColor,
               isDense: true,
               hintText: AppLocalizations.of(context)
                   .translate('form_currency_dropdown_hint'),

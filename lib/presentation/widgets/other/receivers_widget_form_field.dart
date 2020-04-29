@@ -46,7 +46,7 @@ class ReceiversWidgetFormField extends StatelessWidget {
                           color: IconTheme.of(context).color,
                         ),
                         filled: true,
-                        fillColor: const Color.fromRGBO(235, 235, 235, 1),
+                        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                         isDense: true,
                         errorText:
                             formState.hasError ? formState.errorText : null,

@@ -39,7 +39,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             color: IconTheme.of(context).color,
           ),
           filled: true,
-          fillColor: Color.fromRGBO(235, 235, 235, 1),
+          fillColor: Theme.of(context).inputDecorationTheme.fillColor,
           isDense: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
