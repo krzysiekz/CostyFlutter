@@ -1,6 +1,8 @@
 import 'package:costy/data/models/report_entry.dart';
 import 'package:flutter/material.dart';
 
+import '../../../app_localizations.dart';
+
 class ReportEntryListItem extends StatefulWidget {
   final ReportEntry reportEntry;
 
@@ -45,7 +47,7 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'From: ${widget.reportEntry.sender.name}',
+              '${AppLocalizations.of(context).translate('report_entry_item_from')} ${widget.reportEntry.sender.name}',
             ),
             Divider(
               thickness: 0.4,
@@ -53,7 +55,7 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
           ],
         ),
         subtitle: Text(
-          'To: ${widget.reportEntry.receiver.name}',
+          '${AppLocalizations.of(context).translate('report_entry_item_to')} ${widget.reportEntry.receiver.name}',
         ),
       ),
     );

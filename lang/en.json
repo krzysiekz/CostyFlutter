@@ -60,6 +60,9 @@
   "user_form_add_user_button": "Add user",
   "user_form_modify_user_button": "Modify user",
 
+  "report_entry_item_from": "From:",
+  "report_entry_item_to": "To:",
+
   "error": "Error",
   "ok": "Ok",
   "confirm": "Confirm",

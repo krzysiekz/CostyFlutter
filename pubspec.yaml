@@ -50,6 +50,7 @@ dev_dependencies:
   bloc_test: ^4.0.0
   build_runner:
   flutter_launcher_icons: ^0.7.4
+  ozzie: ^2.2.3
 
 flutter_icons:
   android: "launcher_icon"

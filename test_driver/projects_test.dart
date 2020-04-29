@@ -2,16 +2,19 @@ import 'dart:io';
 
 import 'package:costy/keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:ozzie/ozzie.dart';
 import 'package:test/test.dart';
 
 import 'test_utils.dart';
 
 void main() {
   FlutterDriver driver;
+  Ozzie ozzie;
 
   // Connect to the Flutter driver before running any tests.
   setUpAll(() async {
     driver = await FlutterDriver.connect();
+    ozzie = Ozzie.initWith(driver, groupName: 'projects');
     print('Waiting before running tests...');
     sleep(Duration(seconds: 1));
   });
@@ -21,6 +24,8 @@ void main() {
     if (driver != null) {
       driver.close();
     }
+    ozzie.generateHtmlReport();
+    print('Cleaned up...');
   });
 
   test('check flutter driver health', () async {
@@ -29,39 +34,41 @@ void main() {
     print(health.status);
   });
 
-  test('should display proper text when there is no projects yet', () async {
+  testWithScreenshots(
+      'should display proper text when there is no projects yet', () => ozzie,
+      () async {
     await expectTextPresent("No projects to display.", driver);
   });
 
-  test('should add new project', () async {
+  testWithScreenshots('should add new project', () => ozzie, () async {
     await createProject("Project1", "PLN", driver);
   });
 
-  test('should edit created project', () async {
-    await driver.tap(find.byValueKey("0_project_edit"));
+  testWithScreenshots('should edit created project', () => ozzie, () async {
+    await tapOnKey("0_project_edit", driver);
 
     await expectKeyPresent(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY));
+    await tapOnKey(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, driver);
     await driver.enterText('Project2');
     await driver.waitFor(find.text('Project2'));
 
     await expectKeyPresent(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY));
+    await tapOnKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, driver);
     await driver.tap(find.text('EUR'));
 
     await expectKeyPresent(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, driver);
-    await driver.tap(find.byValueKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY));
+    await tapOnKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, driver);
 
     await expectTextPresent("Project2", driver);
     await expectTextPresent("EUR", driver);
   });
 
-  test('should delete created project', () async {
+  testWithScreenshots('should delete created project', () => ozzie, () async {
     await driver.scroll(
         find.byValueKey("project_0"), -400, 0, Duration(milliseconds: 300));
 
     await expectKeyPresent(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
-    await driver.tap(find.byValueKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON));
+    await tapOnKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
 
     await expectTextPresent("No projects to display.", driver);
   });
