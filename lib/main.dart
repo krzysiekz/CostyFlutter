@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
 
   AppBarTheme _darkAppBarTheme() {
     return AppBarTheme(
-      color: Colors.black54,
+      color: Color.fromRGBO(40, 40, 40, 1),
       iconTheme: IconThemeData(
         color: Colors.blue,
       ),
