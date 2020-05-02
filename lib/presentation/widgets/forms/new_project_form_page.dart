@@ -1,6 +1,7 @@
 import 'package:costy/data/models/project.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
+import 'package:costy/presentation/widgets/other/custom_scaffold.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,14 @@ import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
 
 class NewProjectForm extends StatefulWidget {
+  static navigate(BuildContext buildContext, {Project projectToEdit}) {
+    Navigator.of(buildContext).push(platformPageRoute(
+      context: buildContext,
+      builder: (BuildContext context) =>
+          NewProjectForm(projectToEdit: projectToEdit),
+    ));
+  }
+
   final Project projectToEdit;
 
   const NewProjectForm({Key key, this.projectToEdit}) : super(key: key);
@@ -68,13 +77,18 @@ class _NewProjectFormState extends State<NewProjectForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocBuilder<CurrencyBloc, CurrencyState>(
-          bloc: BlocProvider.of<CurrencyBloc>(context),
-          builder: (context, state) {
-            return Card(
-              elevation: 0,
-              child: Container(
+    final title = widget.projectToEdit == null
+        ? AppLocalizations.of(context)
+            .translate('project_form_add_project_button')
+        : AppLocalizations.of(context)
+            .translate('project_form_modify_project_button');
+    return CustomScaffold(
+      appBarTitle: title,
+      body: SingleChildScrollView(
+        child: BlocBuilder<CurrencyBloc, CurrencyState>(
+            bloc: BlocProvider.of<CurrencyBloc>(context),
+            builder: (context, state) {
+              return Container(
                 padding: EdgeInsets.only(
                   top: 10,
                   left: 10,
@@ -82,9 +96,9 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   bottom: 10,
                 ),
                 child: _buildForm(context, state),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 

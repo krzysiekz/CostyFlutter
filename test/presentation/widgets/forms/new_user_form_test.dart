@@ -5,7 +5,7 @@ import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_user_form.dart';
+import 'package:costy/presentation/widgets/forms/new_user_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -61,7 +61,7 @@ void main() {
         await tester.tap(addUserButtonFinder);
         await tester.pumpAndSettle();
         //assert
-        expect(find.text('Add user'), findsOneWidget);
+        expect(find.text('Add user'), findsNWidgets(2));
         expect(find.text("User's name is required"), findsOneWidget);
 
         verifyNever(userBloc.add(argThat(isA<AddUserEvent>())));
@@ -118,7 +118,7 @@ void main() {
         await tester.pumpAndSettle();
         //assert
         expect(find.text('John'), findsOneWidget);
-        expect(find.text('Modify user'), findsOneWidget);
+        expect(find.text('Modify user'), findsNWidgets(2));
       });
     });
 

@@ -2,6 +2,7 @@ import 'package:costy/data/models/user.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
+import 'package:costy/presentation/widgets/other/custom_scaffold.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:costy/presentation/widgets/other/receivers_widget_form_field.dart';
 import 'package:decimal/decimal.dart';
@@ -17,6 +18,15 @@ import '../../../data/models/project.dart';
 import '../../../keys.dart';
 
 class NewExpenseForm extends StatefulWidget {
+  static navigate(BuildContext buildContext, Project project,
+      {UserExpense expenseToEdit}) {
+    Navigator.of(buildContext).push(platformPageRoute(
+      context: buildContext,
+      builder: (BuildContext context) =>
+          NewExpenseForm(project: project, expenseToEdit: expenseToEdit),
+    ));
+  }
+
   static final DateFormat dateFormat = DateFormat("dd/MM HH:mm");
 
   final Project project;
@@ -106,10 +116,15 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Card(
-      elevation: 0,
-      child: Container(
+    final title = widget.expenseToEdit == null
+        ? AppLocalizations.of(context)
+            .translate('expense_form_add_expense_button')
+        : AppLocalizations.of(context)
+            .translate('expense_form_modify_expense_button');
+    return CustomScaffold(
+      appBarTitle: title,
+      body: SingleChildScrollView(
+          child: Container(
         padding: EdgeInsets.only(
           top: 10,
           left: 10,
@@ -117,8 +132,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           bottom: 10,
         ),
         child: _showForm(context),
-      ),
-    ));
+      )),
+    );
   }
 
   Widget _showForm(BuildContext context) {
@@ -275,7 +290,8 @@ class _UserDropDownFormField extends StatelessWidget {
                           color: IconTheme.of(context).color,
                         ),
                         filled: true,
-                        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                        fillColor:
+                            Theme.of(context).inputDecorationTheme.fillColor,
                         isDense: true,
                         errorText:
                             formState.hasError ? formState.errorText : null,

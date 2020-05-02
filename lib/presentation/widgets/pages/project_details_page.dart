@@ -1,5 +1,6 @@
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
+import 'package:costy/presentation/widgets/forms/new_expense_form_page.dart';
+import 'package:costy/presentation/widgets/forms/new_user_form_page.dart';
 import 'package:costy/presentation/widgets/pages/user_list_page.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
-import '../forms/new_user_form.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
 
@@ -75,21 +75,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
   }
 
   void _showAddUserForm(BuildContext ctx, Project project) {
-    showPlatformModalSheet(
-      context: ctx,
-      builder: (_) {
-        return NewUserForm(project: project);
-      },
-    );
+    NewUserForm.navigate(ctx, project);
   }
 
   void _showAddExpenseForm(BuildContext ctx, Project project) {
-    showPlatformModalSheet(
-      context: ctx,
-      builder: (_) {
-        return NewExpenseForm(project: project);
-      },
-    );
+    NewExpenseForm.navigate(ctx, project);
   }
 
   @override

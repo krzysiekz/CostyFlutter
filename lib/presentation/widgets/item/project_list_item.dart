@@ -1,5 +1,5 @@
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_project_form.dart';
+import 'package:costy/presentation/widgets/forms/new_project_form_page.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -77,11 +77,6 @@ class _ProjectListItemState extends State<ProjectListItem> {
   }
 
   void _startEditProject(BuildContext ctx) {
-    showPlatformModalSheet(
-      context: ctx,
-      builder: (_) {
-        return NewProjectForm(projectToEdit: widget.project);
-      },
-    );
+    NewProjectForm.navigate(ctx, projectToEdit: widget.project);
   }
 }

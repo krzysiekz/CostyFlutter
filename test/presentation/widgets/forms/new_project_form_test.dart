@@ -4,7 +4,7 @@ import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_project_form.dart';
+import 'package:costy/presentation/widgets/forms/new_project_form_page.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +95,7 @@ void main() {
         await tester.tap(addProjectButtonFinder);
         await tester.pumpAndSettle();
         //assert
-        expect(find.text('Add project'), findsOneWidget);
+        expect(find.text('Add project'), findsNWidgets(2));
         expect(find.text('Project name is required.'), findsOneWidget);
         expect(find.text('Please select a currency'), findsOneWidget);
 
@@ -185,7 +185,7 @@ void main() {
         //assert
         expect(find.text('Project to edit'), findsOneWidget);
         expect(find.text('USD').hitTestable(), findsOneWidget);
-        expect(find.text('Modify project').hitTestable(), findsOneWidget);
+        expect(find.text('Modify project').hitTestable(), findsNWidgets(2));
       });
     });
 

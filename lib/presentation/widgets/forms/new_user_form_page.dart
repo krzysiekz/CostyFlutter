@@ -1,6 +1,8 @@
 import 'package:costy/data/models/user.dart';
 import 'package:costy/keys.dart';
+import 'package:costy/presentation/widgets/other/custom_scaffold.dart';
 import 'package:costy/presentation/widgets/other/custom_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -11,6 +13,15 @@ import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
 
 class NewUserForm extends StatefulWidget {
+  static navigate(BuildContext buildContext, Project project,
+      {User userToModify}) {
+    Navigator.of(buildContext).push(platformPageRoute(
+      context: buildContext,
+      builder: (BuildContext context) =>
+          NewUserForm(project: project, userToModify: userToModify),
+    ));
+  }
+
   final Project project;
   final User userToModify;
 
@@ -53,10 +64,14 @@ class _NewUserFormState extends State<NewUserForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Card(
-      elevation: 0,
-      child: Container(
+    final title = widget.userToModify == null
+        ? AppLocalizations.of(context).translate('user_form_add_user_button')
+        : AppLocalizations.of(context)
+            .translate('user_form_modify_user_button');
+    return CustomScaffold(
+      appBarTitle: title,
+      body: SingleChildScrollView(
+          child: Container(
         padding: EdgeInsets.only(
           top: 10,
           left: 10,
@@ -64,8 +79,8 @@ class _NewUserFormState extends State<NewUserForm> {
           bottom: 10,
         ),
         child: _showForm(context),
-      ),
-    ));
+      )),
+    );
   }
 
   Widget _showForm(BuildContext context) {

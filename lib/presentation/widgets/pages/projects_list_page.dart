@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/forms/new_project_form_page.dart';
 import 'package:costy/presentation/widgets/item/project_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import '../../../keys.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
-import '../forms/new_project_form.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {
@@ -32,12 +32,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   }
 
   void _startAddNewProject(BuildContext ctx) {
-    showPlatformModalSheet(
-      context: ctx,
-      builder: (_) {
-        return NewProjectForm();
-      },
-    );
+    NewProjectForm.navigate(ctx);
   }
 
   Widget buildBody(BuildContext context) {

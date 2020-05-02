@@ -1,7 +1,7 @@
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
+import 'package:costy/presentation/widgets/forms/new_expense_form_page.dart';
 import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,13 +104,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
   }
 
   void _showAddExpenseForm(BuildContext ctx, Project project) {
-    showPlatformModalSheet(
-      androidIsScrollControlled: true,
-      context: ctx,
-      builder: (_) {
-        return NewExpenseForm(
-            project: project, expenseToEdit: widget.userExpense);
-      },
-    );
+    NewExpenseForm.navigate(ctx, project, expenseToEdit: widget.userExpense);
   }
 }

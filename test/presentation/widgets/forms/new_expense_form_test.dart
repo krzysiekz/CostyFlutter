@@ -6,7 +6,7 @@ import 'package:costy/data/models/user.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_expense_form.dart';
+import 'package:costy/presentation/widgets/forms/new_expense_form_page.dart';
 import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
 import 'package:costy/presentation/widgets/other/multi_select_chip.dart';
 import 'package:decimal/decimal.dart';
@@ -149,7 +149,7 @@ void main() {
         await tester.tap(addExpenseButtonFinder);
         await tester.pumpAndSettle();
         //assert
-        expect(find.text('Add expense'), findsOneWidget);
+        expect(find.text('Add expense'), findsNWidgets(2));
         expect(find.text('Description is required.'), findsOneWidget);
         expect(find.text('Field required.'), findsOneWidget);
         expect(find.text('Please select a user'), findsOneWidget);
@@ -269,7 +269,7 @@ void main() {
         expect(find.byKey(Key('user_1')), findsOneWidget);
         expect(find.text('10'), findsOneWidget);
         expect(find.text('USD').hitTestable(), findsOneWidget);
-        expect(find.text('Modify expense'), findsOneWidget);
+        expect(find.text('Modify expense'), findsNWidgets(2));
 
         final receiverJohn = find.byKey(Key("receiver_John"));
         expect(receiverJohn, findsOneWidget);
