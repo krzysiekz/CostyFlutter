@@ -53,7 +53,7 @@ class MultiSelectChip<T> extends StatelessWidget {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
-          selectedColor: Theme.of(ctx).iconTheme.color.withOpacity(0.8),
+          selectedColor: Colors.blue.withOpacity(0.8),
           key: Key("receiver_${extractLabelFunction(item)}"),
           label: Text(
             extractLabelFunction(item),
@@ -61,7 +61,7 @@ class MultiSelectChip<T> extends StatelessWidget {
             maxLines: 1,
             softWrap: false,
             style: TextStyle(
-                color: Theme.of(ctx).primaryTextTheme.bodyText1.color),
+                color: Theme.of(ctx).textTheme.title.color),
           ),
           selected: selectedUserList.contains(item),
           onSelected: (selected) {

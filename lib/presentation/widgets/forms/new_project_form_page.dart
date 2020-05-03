@@ -153,6 +153,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
+                ios: (_) => CupertinoButtonData(),
               ),
               PlatformButton(
                 key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
