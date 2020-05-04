@@ -127,6 +127,7 @@ class _MyAppState extends State<MyApp> {
         ],
         child: OKToast(
           child: PlatformApp(
+            debugShowCheckedModeBanner: false,
             android: (_) => MaterialAppData(
               theme: _buildLightTheme(),
               darkTheme: _buildDarkTheme(),
