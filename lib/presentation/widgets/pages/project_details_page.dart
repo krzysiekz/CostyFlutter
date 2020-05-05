@@ -105,6 +105,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       bodyBuilder: (context, index) => _body(project, context, index),
       items: items(context),
       androidTabs: (_) => MaterialNavBarData(elevation: 2),
+      iosTabs: (_) =>
+          CupertinoTabBarData(backgroundColor: CupertinoColors.white),
     );
   }
 

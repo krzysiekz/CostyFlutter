@@ -287,7 +287,7 @@ class _UserDropDownFormField extends StatelessWidget {
                             EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
                         prefixIcon: Icon(
                           context.platformIcons.person,
-                          color: IconTheme.of(context).color,
+                          color: Colors.blue,
                         ),
                         filled: true,
                         fillColor:
@@ -308,7 +308,7 @@ class _UserDropDownFormField extends StatelessWidget {
                           isExpanded: true,
                           icon: Icon(
                             Icons.arrow_downward,
-                            color: IconTheme.of(context).color,
+                            color: Colors.blue,
                           ),
                           value: initialValue,
                           isDense: true,

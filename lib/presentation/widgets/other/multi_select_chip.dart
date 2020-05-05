@@ -60,8 +60,7 @@ class MultiSelectChip<T> extends StatelessWidget {
             overflow: TextOverflow.fade,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(
-                color: Theme.of(ctx).textTheme.title.color),
+            style: TextStyle(color: Colors.white),
           ),
           selected: selectedUserList.contains(item),
           onSelected: (selected) {

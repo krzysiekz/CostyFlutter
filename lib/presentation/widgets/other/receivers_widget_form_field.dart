@@ -43,7 +43,7 @@ class ReceiversWidgetFormField extends StatelessWidget {
                         contentPadding: const EdgeInsets.all(0.0),
                         prefixIcon: Icon(
                           context.platformIcons.group,
-                          color: IconTheme.of(context).color,
+                          color: Colors.blue,
                         ),
                         filled: true,
                         fillColor: Theme.of(context).inputDecorationTheme.fillColor,

@@ -128,6 +128,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         ),
       ),
       ios: (context) => CupertinoSliverNavigationBar(
+        backgroundColor: CupertinoColors.white,
         largeTitle: Text(
             AppLocalizations.of(context).translate('project_list_page_title')),
         trailing: PlatformIconButton(

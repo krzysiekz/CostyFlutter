@@ -81,7 +81,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             onTap: () => _showAddExpenseForm(context, widget.project),
             child: Icon(
               context.platformIcons.create,
-              color: IconTheme.of(context).color,
+              color: Colors.blue,
             ),
           ),
         ),

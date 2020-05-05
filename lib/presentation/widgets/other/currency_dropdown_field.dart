@@ -42,7 +42,7 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
               contentPadding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
               prefixIcon: Icon(
                 context.platformIcons.settings,
-                color: IconTheme.of(context).color,
+                color: Colors.blue,
               ),
               filled: true,
               fillColor: Theme.of(context).inputDecorationTheme.fillColor,
@@ -60,7 +60,7 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
               child: DropdownButton<Currency>(
                 icon: Icon(
                   Icons.arrow_downward,
-                  color: IconTheme.of(context).color,
+                  color: Colors.blue,
                 ),
                 value: _selected,
                 isDense: true,
