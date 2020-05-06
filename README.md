@@ -85,7 +85,7 @@ This is a rework of an Android app I wrote some time ago. This time written in F
 ## Some technical details
 - I used Hive for data persistence
 - I used BloC for state management
-- I used get_it package as service locator 
+- I used get_it package as service locator / dependency injection tool
 - Logic fully covered in unit tests
 - Widgets and Integration tests also in place when needed
 - Integration with Ozzie for taking screenshots during integration tests
