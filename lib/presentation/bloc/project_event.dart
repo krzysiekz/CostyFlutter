@@ -1,7 +1,7 @@
-import 'package:costy/data/models/project.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../data/models/currency.dart';
+import '../../data/models/project.dart';
 
 abstract class ProjectEvent extends Equatable {
   const ProjectEvent();

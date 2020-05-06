@@ -1,18 +1,18 @@
-import 'package:costy/data/models/project.dart';
-import 'package:costy/keys.dart';
-import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
-import 'package:costy/presentation/widgets/other/custom_scaffold.dart';
-import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
+import '../other/currency_dropdown_field.dart';
+import '../other/custom_scaffold.dart';
+import '../other/custom_text_field.dart';
 
 class NewProjectForm extends StatefulWidget {
   static navigate(BuildContext buildContext, {Project projectToEdit}) {

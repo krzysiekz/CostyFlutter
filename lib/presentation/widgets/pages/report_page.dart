@@ -1,11 +1,11 @@
-import 'package:costy/data/models/project.dart';
-import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/item/report_entry_list_item.dart';
-import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/project.dart';
+import '../../bloc/bloc.dart';
+import '../item/report_entry_list_item.dart';
+import '../utilities/dialog_utilities.dart';
 
 class ReportPage extends StatefulWidget {
   final Project project;

@@ -1,10 +1,3 @@
-import 'package:costy/data/models/user.dart';
-import 'package:costy/data/models/user_expense.dart';
-import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/other/currency_dropdown_field.dart';
-import 'package:costy/presentation/widgets/other/custom_scaffold.dart';
-import 'package:costy/presentation/widgets/other/custom_text_field.dart';
-import 'package:costy/presentation/widgets/other/receivers_widget_form_field.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +8,14 @@ import 'package:intl/intl.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../data/models/user.dart';
+import '../../../data/models/user_expense.dart';
 import '../../../keys.dart';
+import '../../bloc/bloc.dart';
+import '../other/currency_dropdown_field.dart';
+import '../other/custom_scaffold.dart';
+import '../other/custom_text_field.dart';
+import '../other/receivers_widget_form_field.dart';
 
 class NewExpenseForm extends StatefulWidget {
   static navigate(BuildContext buildContext, Project project,

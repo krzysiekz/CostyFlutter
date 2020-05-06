@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:costy/data/models/project.dart';
-import 'package:costy/data/models/user_expense.dart';
-import 'package:costy/data/usecases/impl/get_expenses.dart';
-import 'package:costy/data/usecases/impl/share_report.dart';
 
 import './bloc.dart';
+import '../../data/models/project.dart';
+import '../../data/models/user_expense.dart';
+import '../../data/usecases/impl/get_expenses.dart';
 import '../../data/usecases/impl/get_report.dart';
+import '../../data/usecases/impl/share_report.dart';
 
 class ReportBloc extends Bloc<ReportEvent, ReportState> {
   final GetReport getReport;

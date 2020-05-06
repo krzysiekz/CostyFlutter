@@ -1,6 +1,3 @@
-import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_project_form_page.dart';
-import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +5,10 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
+import '../../bloc/bloc.dart';
+import '../forms/new_project_form_page.dart';
 import '../pages/project_details_page.dart';
+import '../utilities/dialog_utilities.dart';
 
 class ProjectListItem extends StatefulWidget {
   static final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");

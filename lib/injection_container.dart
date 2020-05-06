@@ -1,5 +1,3 @@
-import 'package:costy/data/services/impl/report_formatter_impl.dart';
-import 'package:costy/data/usecases/impl/share_report.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/datasources/currencies_datasource.dart';
@@ -20,6 +18,7 @@ import 'data/repositories/impl/projects_repository_impl.dart';
 import 'data/repositories/impl/users_repository_impl.dart';
 import 'data/repositories/projects_repository.dart';
 import 'data/repositories/users_repository.dart';
+import 'data/services/impl/report_formatter_impl.dart';
 import 'data/services/impl/report_generator_impl.dart';
 import 'data/services/report_formatter.dart';
 import 'data/services/report_generator.dart';
@@ -37,6 +36,7 @@ import 'data/usecases/impl/get_users.dart';
 import 'data/usecases/impl/modify_expense.dart';
 import 'data/usecases/impl/modify_project.dart';
 import 'data/usecases/impl/modify_user.dart';
+import 'data/usecases/impl/share_report.dart';
 import 'presentation/bloc/bloc.dart';
 
 final ic = GetIt.instance;

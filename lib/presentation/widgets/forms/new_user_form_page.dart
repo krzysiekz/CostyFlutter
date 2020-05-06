@@ -1,7 +1,3 @@
-import 'package:costy/data/models/user.dart';
-import 'package:costy/keys.dart';
-import 'package:costy/presentation/widgets/other/custom_scaffold.dart';
-import 'package:costy/presentation/widgets/other/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +5,12 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../data/models/user.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
+import '../other/custom_scaffold.dart';
+import '../other/custom_text_field.dart';
 
 class NewUserForm extends StatefulWidget {
   static navigate(BuildContext buildContext, Project project,

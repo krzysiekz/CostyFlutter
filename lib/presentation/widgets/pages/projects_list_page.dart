@@ -1,5 +1,3 @@
-import 'package:costy/presentation/widgets/forms/new_project_form_page.dart';
-import 'package:costy/presentation/widgets/item/project_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +8,8 @@ import '../../../keys.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
+import '../forms/new_project_form_page.dart';
+import '../item/project_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {

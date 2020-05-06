@@ -1,9 +1,9 @@
-import 'package:costy/data/models/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/currency.dart';
 
 class CurrencyDropdownField extends StatefulWidget {
   final List<Currency> currencies;

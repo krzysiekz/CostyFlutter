@@ -1,12 +1,13 @@
-import 'package:costy/data/models/project.dart';
-import 'package:costy/data/models/user_expense.dart';
-import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/forms/new_expense_form_page.dart';
-import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
+
+import '../../../data/models/project.dart';
+import '../../../data/models/user_expense.dart';
+import '../../bloc/bloc.dart';
+import '../forms/new_expense_form_page.dart';
+import '../utilities/dialog_utilities.dart';
 
 class ExpenseListItem extends StatefulWidget {
   static final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");

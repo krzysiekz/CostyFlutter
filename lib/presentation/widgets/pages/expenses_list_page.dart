@@ -1,10 +1,10 @@
-import 'package:costy/presentation/widgets/item/expense_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../bloc/bloc.dart';
+import '../item/expense_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ExpensesListPage extends StatefulWidget {

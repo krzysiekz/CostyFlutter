@@ -1,7 +1,7 @@
-import 'package:costy/data/models/report_entry.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/report_entry.dart';
 
 class ReportEntryListItem extends StatefulWidget {
   final ReportEntry reportEntry;

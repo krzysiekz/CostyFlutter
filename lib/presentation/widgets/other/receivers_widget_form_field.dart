@@ -1,6 +1,3 @@
-import 'package:costy/data/models/user.dart';
-import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/utilities/dialog_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
@@ -8,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/user.dart';
 import '../../../keys.dart';
+import '../../bloc/bloc.dart';
+import '../utilities/dialog_utilities.dart';
 import 'multi_select_chip.dart';
 
 class ReceiversWidgetFormField extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:costy/presentation/bloc/bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
 import 'injection_container.dart' as di;
 import 'injection_container.dart';
+import 'presentation/bloc/bloc.dart';
 import 'presentation/widgets/pages/projects_list_page.dart';
 
 const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
