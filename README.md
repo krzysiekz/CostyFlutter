@@ -13,9 +13,9 @@ This is a rework of an Android app I wrote some time ago. This time written in F
 
 - Add/modify/delete projects, people and expenses
 - Generate and share expense report
-- Multilanguage (currently Polish and English)
+- Multi-language (currently Polish and English)
 - Support for dark/light theme (Android only)
-- Work on IOS, Android and Web (although it was not realy adjusted to proper Web experience)
+- Work on IOS, Android and Web (although it was not really adjusted to proper Web experience)
 - Adaptive look for Android and IOS
 
 ## Some screenshots
@@ -83,8 +83,8 @@ This is a rework of an Android app I wrote some time ago. This time written in F
 </p>
 
 ## Some technical details
-- I used Hive for data persistance
-- I used BloC for state managment
+- I used Hive for data persistence
+- I used BloC for state management
 - Logic fully covered in unit tests
 - Widgets and Integration tests also in place when needed
 - Integration with Ozzie for taking screenshots during integration tests
