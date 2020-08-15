@@ -26,7 +26,6 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ExpenseBloc, ExpenseState>(
-      bloc: BlocProvider.of<ExpenseBloc>(context),
       builder: (BuildContext context, ExpenseState state) {
         if (state is ExpenseEmpty) {
           return Text(AppLocalizations.of(context)

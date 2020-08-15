@@ -11,11 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockCurrencyBloc extends MockBloc<CurrencyEvent, CurrencyState>
-    implements CurrencyBloc {}
+class MockCurrencyBloc extends MockBloc<CurrencyState> implements CurrencyBloc {
+}
 
-class MockProjectBloc extends MockBloc<ProjectEvent, ProjectState>
-    implements ProjectBloc {}
+class MockProjectBloc extends MockBloc<ProjectState> implements ProjectBloc {}
 
 void main() {
   CurrencyBloc currencyBloc;

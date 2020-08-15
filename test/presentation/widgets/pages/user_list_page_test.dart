@@ -13,10 +13,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
+class MockUserBloc extends MockBloc<UserState> implements UserBloc {}
 
-class MockExpenseBloc extends MockBloc<ExpenseEvent, ExpenseState>
-    implements ExpenseBloc {}
+class MockExpenseBloc extends MockBloc<ExpenseState> implements ExpenseBloc {}
 
 void main() {
   UserBloc userBloc;
@@ -154,7 +153,9 @@ void main() {
       await tester.pumpAndSettle();
 
       //verify popup
-      expect(find.text('Cannot remove user that is used in expense. Please remove expense first.'),
+      expect(
+          find.text(
+              'Cannot remove user that is used in expense. Please remove expense first.'),
           findsOneWidget);
 
       //assert

@@ -52,102 +52,74 @@ void main() {
     User(id: 2, name: 'Kate'),
   ];
 
-  blocTest('should emit empty state initially', skip: 0, build: () async {
-    return bloc;
-  }, expect: [UserEmpty()]);
-
   blocTest('should emit proper states when getting users',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockGetUsers.call(any)).thenAnswer((_) async => Right(tUsers));
         return bloc;
       },
       act: (bloc) => bloc.add(GetUsersEvent(tProject)),
-      expect: [UserEmpty(), UserLoading(), UserLoaded(tUsers)]);
+      expect: [UserLoading(), UserLoaded(tUsers)]);
 
   blocTest('should emit proper states in case of error when getting users',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockGetUsers.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(GetUsersEvent(tProject)),
-      expect: [
-        UserEmpty(),
-        UserLoading(),
-        UserError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
 
   blocTest('should emit proper states when adding user',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockAddUser.call(any))
             .thenAnswer((_) async => Right(tUsers[0].id));
         return bloc;
       },
       act: (bloc) => bloc.add(AddUserEvent(tUsers[0].name, tProject)),
-      expect: [UserEmpty(), UserLoading(), UserAdded(tUsers[0].id)]);
+      expect: [UserLoading(), UserAdded(tUsers[0].id)]);
 
   blocTest('should emit proper states in case of error when adding user',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockAddUser.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(AddUserEvent(tUsers[0].name, tProject)),
-      expect: [
-        UserEmpty(),
-        UserLoading(),
-        UserError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
 
   blocTest('should emit proper states when deleting user',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockDeleteUser.call(any))
             .thenAnswer((_) async => Right(tUsers[0].id));
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteUserEvent(tUsers[0].id)),
-      expect: [UserEmpty(), UserLoading(), UserDeleted(tUsers[0].id)]);
+      expect: [UserLoading(), UserDeleted(tUsers[0].id)]);
 
   blocTest('should emit proper states in case of error when deleting user',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockDeleteUser.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteUserEvent(tUsers[0].id)),
-      expect: [
-        UserEmpty(),
-        UserLoading(),
-        UserError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
 
   blocTest('should emit proper states when modifying user',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockModifyUser.call(any))
             .thenAnswer((_) async => Right(tUsers[0].id));
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyUserEvent(tUsers[0])),
-      expect: [UserEmpty(), UserLoading(), UserModified(tUsers[0].id)]);
+      expect: [UserLoading(), UserModified(tUsers[0].id)]);
 
   blocTest('should emit proper states in case of error when modifying user',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockModifyUser.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyUserEvent(tUsers[0])),
-      expect: [
-        UserEmpty(),
-        UserLoading(),
-        UserError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
 }

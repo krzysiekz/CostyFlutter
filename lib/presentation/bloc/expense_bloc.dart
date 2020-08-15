@@ -19,10 +19,8 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       {@required this.addExpense,
       @required this.deleteExpense,
       @required this.modifyExpense,
-      @required this.getExpenses});
-
-  @override
-  ExpenseState get initialState => ExpenseEmpty();
+      @required this.getExpenses})
+      : super(ExpenseEmpty());
 
   @override
   Stream<ExpenseState> mapEventToState(ExpenseEvent event) async* {

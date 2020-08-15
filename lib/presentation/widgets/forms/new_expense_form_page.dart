@@ -244,7 +244,6 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
 
   Widget _createCurrencyDropDownList(BuildContext context) {
     return BlocBuilder<CurrencyBloc, CurrencyState>(
-        bloc: BlocProvider.of<CurrencyBloc>(context),
         builder: (context, state) {
           if (state is CurrencyLoaded) {
             return CurrencyDropdownField(
@@ -273,7 +272,6 @@ class _UserDropDownFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
-        bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
             return Container(

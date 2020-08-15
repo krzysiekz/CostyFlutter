@@ -14,10 +14,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final ModifyUser modifyUser;
   final DeleteUser deleteUser;
 
-  UserBloc({this.getUsers, this.addUser, this.modifyUser, this.deleteUser});
-
-  @override
-  UserState get initialState => UserEmpty();
+  UserBloc({this.getUsers, this.addUser, this.modifyUser, this.deleteUser})
+      : super(UserEmpty());
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {

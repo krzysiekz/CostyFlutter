@@ -26,7 +26,6 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReportBloc, ReportState>(
-      bloc: BlocProvider.of<ReportBloc>(context),
       builder: (BuildContext context, ReportState state) {
         if (state is ReportEmpty) {
           return Text(

@@ -37,7 +37,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
 
   Widget buildBody(BuildContext context) {
     return BlocConsumer<ProjectBloc, ProjectState>(
-        bloc: BlocProvider.of<ProjectBloc>(context),
         listener: (context, state) {
           if (state is ProjectError) {
             DialogUtilities.showAlertDialog(

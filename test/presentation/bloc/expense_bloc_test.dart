@@ -73,37 +73,26 @@ void main() {
         dateTime: tDateTime),
   ];
 
-  blocTest('should emit empty state initially', skip: 0, build: () async {
-    return bloc;
-  }, expect: [ExpenseEmpty()]);
-
   blocTest('should emit proper states when getting expenses',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Right(tExpensesList));
         return bloc;
       },
       act: (bloc) => bloc.add(GetExpensesEvent(tProject)),
-      expect: [ExpenseEmpty(), ExpenseLoading(), ExpenseLoaded(tExpensesList)]);
+      expect: [ExpenseLoading(), ExpenseLoaded(tExpensesList)]);
 
   blocTest('should emit proper states in case of error when getting expenses',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockGetExpenses.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(GetExpensesEvent(tProject)),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
 
   blocTest('should emit proper states when adding expense',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockAddExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
         return bloc;
@@ -116,15 +105,10 @@ void main() {
           project: tProject,
           receivers: tExpensesList[0].receivers,
           dateTime: tDateTime)),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseAdded(tExpensesList[0].id)
-      ]);
+      expect: [ExpenseLoading(), ExpenseAdded(tExpensesList[0].id)]);
 
   blocTest('should emit proper states in case of error when adding expense',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockAddExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
@@ -137,65 +121,41 @@ void main() {
           project: tProject,
           receivers: tExpensesList[0].receivers,
           dateTime: tDateTime)),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
 
   blocTest('should emit proper states when deleting expense',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockDeleteExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteExpenseEvent(tExpensesList[0].id)),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseDeleted(tExpensesList[0].id)
-      ]);
+      expect: [ExpenseLoading(), ExpenseDeleted(tExpensesList[0].id)]);
 
   blocTest('should emit proper states in case of error when deleting expense',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockDeleteExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteExpenseEvent(tExpensesList[0].id)),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
 
   blocTest('should emit proper states when modifying expense',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockModifyExpense.call(any))
             .thenAnswer((_) async => Right(tExpensesList[0].id));
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyExpenseEvent(tExpensesList[0])),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseModified(tExpensesList[0].id)
-      ]);
+      expect: [ExpenseLoading(), ExpenseModified(tExpensesList[0].id)]);
 
   blocTest('should emit proper states in case of error when modifying expense',
-      skip: 0,
-      build: () async {
+      build: () {
         when(mockModifyExpense.call(any))
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyExpenseEvent(tExpensesList[0])),
-      expect: [
-        ExpenseEmpty(),
-        ExpenseLoading(),
-        ExpenseError(DATASOURCE_FAILURE_MESSAGE)
-      ]);
+      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
 }

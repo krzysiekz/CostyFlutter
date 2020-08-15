@@ -22,7 +22,6 @@ class ReceiversWidgetFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
-        bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, state) {
           if (state is UserLoaded) {
             if (initialReceivers == null) {

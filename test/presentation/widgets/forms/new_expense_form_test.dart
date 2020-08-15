@@ -15,16 +15,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockCurrencyBloc extends MockBloc<CurrencyEvent, CurrencyState>
-    implements CurrencyBloc {}
+class MockCurrencyBloc extends MockBloc<CurrencyState> implements CurrencyBloc {
+}
 
-class MockUserBloc extends MockBloc<UserEvent, UserState> implements UserBloc {}
+class MockUserBloc extends MockBloc<UserState> implements UserBloc {}
 
-class MockReportBloc extends MockBloc<ReportEvent, ReportState>
-    implements ReportBloc {}
+class MockReportBloc extends MockBloc<ReportState> implements ReportBloc {}
 
-class MockExpenseBloc extends MockBloc<ExpenseEvent, ExpenseState>
-    implements ExpenseBloc {}
+class MockExpenseBloc extends MockBloc<ExpenseState> implements ExpenseBloc {}
 
 void main() {
   CurrencyBloc currencyBloc;

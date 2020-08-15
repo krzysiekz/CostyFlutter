@@ -12,10 +12,7 @@ import '../../data/usecases/usecase.dart';
 class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
   final GetCurrencies getCurrencies;
 
-  CurrencyBloc(this.getCurrencies);
-
-  @override
-  CurrencyState get initialState => CurrencyEmpty();
+  CurrencyBloc(this.getCurrencies) : super(CurrencyEmpty());
 
   @override
   Stream<CurrencyState> mapEventToState(CurrencyEvent event) async* {

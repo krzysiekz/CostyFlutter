@@ -86,7 +86,6 @@ class _NewProjectFormState extends State<NewProjectForm> {
       appBarTitle: title,
       body: SingleChildScrollView(
         child: BlocBuilder<CurrencyBloc, CurrencyState>(
-            bloc: BlocProvider.of<CurrencyBloc>(context),
             builder: (context, state) {
               return Container(
                 padding: EdgeInsets.only(

@@ -10,8 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockProjectBloc extends MockBloc<ProjectEvent, ProjectState>
-    implements ProjectBloc {}
+class MockProjectBloc extends MockBloc<ProjectState> implements ProjectBloc {}
 
 void main() {
   ProjectBloc projectBloc;

@@ -27,7 +27,6 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserBloc, UserState>(
-      bloc: BlocProvider.of<UserBloc>(context),
       builder: (BuildContext context, UserState state) {
         if (state is UserEmpty) {
           return Text(AppLocalizations.of(context)

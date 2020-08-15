@@ -14,10 +14,8 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
   final GetExpenses getExpenses;
   final ShareReport shareReport;
 
-  ReportBloc(this.getReport, this.getExpenses, this.shareReport);
-
-  @override
-  ReportState get initialState => ReportEmpty();
+  ReportBloc(this.getReport, this.getExpenses, this.shareReport)
+      : super(ReportEmpty());
 
   @override
   Stream<ReportState> mapEventToState(ReportEvent event) async* {

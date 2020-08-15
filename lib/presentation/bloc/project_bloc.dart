@@ -19,10 +19,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       {this.getProjects,
       this.addProject,
       this.modifyProject,
-      this.deleteProject});
-
-  @override
-  ProjectState get initialState => ProjectEmpty();
+      this.deleteProject})
+      : super(ProjectEmpty());
 
   @override
   Stream<ProjectState> mapEventToState(ProjectEvent event) async* {
