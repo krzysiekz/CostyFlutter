@@ -13,8 +13,6 @@ void main() {
   ReportFormatter reportFormatter;
   User kate;
   User john;
-  User bob;
-  User adam;
   Currency eur;
   Currency pln;
   DateTime projectCreationDateTime;
@@ -24,8 +22,6 @@ void main() {
     reportFormatter = ReportFormatterImpl();
     john = User(id: 1, name: 'John');
     kate = User(id: 2, name: 'Kate');
-    bob = User(id: 3, name: 'Bob');
-    adam = User(id: 4, name: 'Adam');
 
     eur = Currency(name: 'EUR');
     pln = Currency(name: 'PLN');

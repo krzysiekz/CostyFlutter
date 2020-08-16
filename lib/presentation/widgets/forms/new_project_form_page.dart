@@ -85,18 +85,18 @@ class _NewProjectFormState extends State<NewProjectForm> {
     return CustomScaffold(
       appBarTitle: title,
       body: SingleChildScrollView(
-        child: BlocBuilder<CurrencyBloc, CurrencyState>(
-            builder: (context, state) {
-              return Container(
-                padding: EdgeInsets.only(
-                  top: 10,
-                  left: 10,
-                  right: 10,
-                  bottom: 10,
-                ),
-                child: _buildForm(context, state),
-              );
-            }),
+        child:
+            BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
+          return Container(
+            padding: EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: 10,
+            ),
+            child: _buildForm(context, state),
+          );
+        }),
       ),
     );
   }
@@ -145,14 +145,14 @@ class _NewProjectFormState extends State<NewProjectForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               PlatformButton(
-                androidFlat: (_) => MaterialFlatButtonData(
+                materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
                 key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
-                ios: (_) => CupertinoButtonData(),
+                cupertino: (_, platform) => CupertinoButtonData(),
               ),
               PlatformButton(
                 key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),

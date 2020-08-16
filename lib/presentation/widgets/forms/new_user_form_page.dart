@@ -107,7 +107,7 @@ class _NewUserFormState extends State<NewUserForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               PlatformButton(
-                androidFlat: (_) => MaterialFlatButtonData(
+                materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
                 key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),

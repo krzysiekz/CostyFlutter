@@ -36,43 +36,39 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   }
 
   Widget buildBody(BuildContext context) {
-    return BlocConsumer<ProjectBloc, ProjectState>(
-        listener: (context, state) {
-          if (state is ProjectError) {
-            DialogUtilities.showAlertDialog(
-              context,
-              AppLocalizations.of(context).translate('error'),
-              AppLocalizations.of(context)
-                  .translate('project_list_page_cannot_add'),
-            );
-          } else if (state is ProjectAdded) {
-            DialogUtilities.showSnackBar(
-                context,
-                AppLocalizations.of(context)
-                    .translate('project_list_page_added'));
-          } else if (state is ProjectDeleted) {
-            DialogUtilities.showSnackBar(
-                context,
-                AppLocalizations.of(context)
-                    .translate('project_list_page_deleted'));
-          } else if (state is ProjectModified) {
-            DialogUtilities.showSnackBar(
-                context,
-                AppLocalizations.of(context)
-                    .translate('project_list_page_modified'));
-          }
-        },
-        builder: (context, state) {
-          if (state is ProjectLoaded) {
-            return CustomScrollView(
-              slivers: <Widget>[
-                _createSliverAppBar(),
-                _createRemainingSliverWidget(state),
-              ],
-            );
-          } else
-            return DialogUtilities.showLoadingIndicator(context);
-        });
+    return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
+      if (state is ProjectError) {
+        DialogUtilities.showAlertDialog(
+          context,
+          AppLocalizations.of(context).translate('error'),
+          AppLocalizations.of(context)
+              .translate('project_list_page_cannot_add'),
+        );
+      } else if (state is ProjectAdded) {
+        DialogUtilities.showSnackBar(context,
+            AppLocalizations.of(context).translate('project_list_page_added'));
+      } else if (state is ProjectDeleted) {
+        DialogUtilities.showSnackBar(
+            context,
+            AppLocalizations.of(context)
+                .translate('project_list_page_deleted'));
+      } else if (state is ProjectModified) {
+        DialogUtilities.showSnackBar(
+            context,
+            AppLocalizations.of(context)
+                .translate('project_list_page_modified'));
+      }
+    }, builder: (context, state) {
+      if (state is ProjectLoaded) {
+        return CustomScrollView(
+          slivers: <Widget>[
+            _createSliverAppBar(),
+            _createRemainingSliverWidget(state),
+          ],
+        );
+      } else
+        return DialogUtilities.showLoadingIndicator(context);
+    });
   }
 
   Widget _createRemainingSliverWidget(ProjectLoaded state) {
@@ -104,7 +100,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
 
   PlatformWidget _createSliverAppBar() {
     return PlatformWidget(
-      android: (context) => SliverAppBar(
+      material: (context, platform) => SliverAppBar(
         elevation: 1,
         actions: <Widget>[
           PlatformIconButton(
@@ -126,7 +122,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
           ),
         ),
       ),
-      ios: (context) => CupertinoSliverNavigationBar(
+      cupertino: (context, platform) => CupertinoSliverNavigationBar(
         backgroundColor: CupertinoColors.white,
         largeTitle: Text(
             AppLocalizations.of(context).translate('project_list_page_title')),

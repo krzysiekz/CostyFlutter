@@ -94,18 +94,18 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       appBarBuilder: (_, index) => PlatformAppBar(
         title: Text(project.name),
         trailingActions: _actionButtons(project, context, index),
-        ios: (_) => CupertinoNavigationBarData(
+        cupertino: (_, platform) => CupertinoNavigationBarData(
             title: items(context)[index].title,
             leading: CupertinoNavigationBarBackButton(
               onPressed: () => Navigator.of(context).pop(),
             ),
             automaticallyImplyLeading: true),
-        android: (_) => MaterialAppBarData(elevation: 1),
+        material: (_, platform) => MaterialAppBarData(elevation: 1),
       ),
       bodyBuilder: (context, index) => _body(project, context, index),
       items: items(context),
-      androidTabs: (_) => MaterialNavBarData(elevation: 2),
-      iosTabs: (_) =>
+      materialTabs: (_, plaform) => MaterialNavBarData(elevation: 2),
+      cupertinoTabs: (_, platform) =>
           CupertinoTabBarData(backgroundColor: CupertinoColors.white),
     );
   }
