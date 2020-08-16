@@ -16,7 +16,7 @@ void main() {
     driver = await FlutterDriver.connect();
     ozzie = Ozzie.initWith(driver, groupName: 'expenses');
     print('Waiting before running tests...');
-    sleep(Duration(seconds: 1));
+    sleep(const Duration(seconds: 1));
   });
 
   // Close the connection to the driver after the tests have completed.
@@ -47,21 +47,21 @@ void main() {
   testWithScreenshots(
       'should display message when user tries to add expense with no users',
       () => ozzie, () async {
-    await tapOnKey(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON, driver);
+    await tapOnKey(Keys.projectDetailsAddExpenseButton, driver);
 
     await expectTextPresent("Please add some users first.", driver);
 
-    await tapOnKey(Keys.ALERT_DIALOG_OK_BUTTON, driver);
+    await tapOnKey(Keys.alertDialogOkButton, driver);
   });
 
   testWithScreenshots('should add expense with default values', () => ozzie,
       () async {
-    await tapOnKey(Keys.PROJECT_DETAILS_USERS_TAB, driver);
+    await tapOnKey(Keys.projectDetailsUsersTab, driver);
 
     await createUser('John', driver);
     await createUser('Kate', driver);
 
-    await tapOnKey(Keys.PROJECT_DETAILS_EXPENSES_TAB, driver);
+    await tapOnKey(Keys.projectDetailsExpensesTab, driver);
 
     await createExpense(
         "Test description", "11", "John", "John => John, Kate", driver);
@@ -70,22 +70,22 @@ void main() {
   testWithScreenshots('should edit created expense', () => ozzie, () async {
     await driver.tap(find.byValueKey("0_expense_edit"));
 
-    await expectKeyPresent(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY, driver);
-    await tapOnKey(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY, driver);
+    await expectKeyPresent(Keys.expenseFormDescriptionFieldKey, driver);
+    await tapOnKey(Keys.expenseFormDescriptionFieldKey, driver);
     await driver.enterText("Edited description");
     await driver.waitFor(find.text('Edited description'));
 
-    await expectKeyPresent(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY, driver);
-    await tapOnKey(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY, driver);
+    await expectKeyPresent(Keys.expenseFormAcountFieldKey, driver);
+    await tapOnKey(Keys.expenseFormAcountFieldKey, driver);
     await driver.enterText("12");
     await driver.waitFor(find.text('12'));
 
-    await expectKeyPresent(Keys.EXPENSE_FORM_USER_KEY, driver);
-    await tapOnKey(Keys.EXPENSE_FORM_USER_KEY, driver);
+    await expectKeyPresent(Keys.expenseFormUserKey, driver);
+    await tapOnKey(Keys.expenseFormUserKey, driver);
     await driver.tap(find.text("Kate"));
 
-    await expectKeyPresent(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY, driver);
-    await tapOnKey(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY, driver);
+    await expectKeyPresent(Keys.expenseFormAddEditButtonKey, driver);
+    await tapOnKey(Keys.expenseFormAddEditButtonKey, driver);
 
     await expectTextPresent("Edited description", driver);
     await expectTextPresent("Kate => John, Kate", driver);
@@ -94,10 +94,10 @@ void main() {
 
   testWithScreenshots('should delete created expense', () => ozzie, () async {
     await driver.scroll(
-        find.byValueKey("expense_0"), -400, 0, Duration(milliseconds: 300));
+        find.byValueKey("expense_0"), -400, 0, const Duration(milliseconds: 300));
 
-    await expectKeyPresent(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
-    await tapOnKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
+    await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
+    await tapOnKey(Keys.deleteConfirmationDeleteButton, driver);
 
     await expectTextPresent("No expenses to display.", driver);
   });

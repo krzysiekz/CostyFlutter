@@ -16,18 +16,18 @@ export 'user_bloc.dart';
 export 'user_event.dart';
 export 'user_state.dart';
 
-const String DATASOURCE_FAILURE_MESSAGE = 'Data Source Failure';
-const String REPORT_GENERATION_FAILURE_MESSAGE =
+const String datasouceFailureMessage = 'Data Source Failure';
+const String reportGenerationFailureMessage =
     'Error occurred during report generation.';
-const String UNEXPECTED_ERROR_MESSAGE = 'Unexpected error';
+const String unexpectedErrorMessage = 'Unexpected error';
 
 String mapFailureToMessage(Failure failure) {
   switch (failure.runtimeType) {
     case DataSourceFailure:
-      return DATASOURCE_FAILURE_MESSAGE;
+      return datasouceFailureMessage;
     case ReportGenerationFailure:
-      return REPORT_GENERATION_FAILURE_MESSAGE;
+      return reportGenerationFailureMessage;
     default:
-      return UNEXPECTED_ERROR_MESSAGE;
+      return unexpectedErrorMessage;
   }
 }

@@ -15,11 +15,11 @@ void testWithScreenshots(description, ozzieProvider, dynamic Function() body) {
 }
 
 tapOnText(String text, FlutterDriver d) async {
-  await d.tap(find.text(text), timeout: Duration(seconds: 2));
+  await d.tap(find.text(text), timeout: const Duration(seconds: 2));
 }
 
 tapOnKey(String key, FlutterDriver d) async {
-  await d.tap(find.byValueKey(key), timeout: Duration(seconds: 2));
+  await d.tap(find.byValueKey(key), timeout: const Duration(seconds: 2));
 }
 
 expectKeyPresent(String key, FlutterDriver d) async {
@@ -44,32 +44,32 @@ expectPresent(
 }
 
 createUser(String name, FlutterDriver d) async {
-  await tapOnKey(Keys.PROJECT_DETAILS_ADD_USER_BUTTON, d);
+  await tapOnKey(Keys.projectDetailsAddUserButton, d);
 
-  await expectKeyPresent(Keys.USER_FORM_NAME_FIELD_KEY, d);
-  await tapOnKey(Keys.USER_FORM_NAME_FIELD_KEY, d);
+  await expectKeyPresent(Keys.userFormNameFieldKey, d);
+  await tapOnKey(Keys.userFormNameFieldKey, d);
   await d.enterText(name);
   await d.waitFor(find.text(name));
 
-  await expectKeyPresent(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY, d);
-  await tapOnKey(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY, d);
+  await expectKeyPresent(Keys.userFormAddEditButtonKey, d);
+  await tapOnKey(Keys.userFormAddEditButtonKey, d);
   await expectTextPresent(name, d);
 }
 
 createProject(String name, String currency, FlutterDriver d) async {
-  await tapOnKey(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY, d);
+  await tapOnKey(Keys.projectlistAddProjectButtonKey, d);
 
-  await expectKeyPresent(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, d);
-  await tapOnKey(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, d);
+  await expectKeyPresent(Keys.projectFormProjectNameFieldKey, d);
+  await tapOnKey(Keys.projectFormProjectNameFieldKey, d);
   await d.enterText(name);
   await d.waitFor(find.text(name));
 
-  await expectKeyPresent(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, d);
-  await tapOnKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, d);
+  await expectKeyPresent(Keys.projectFormDefaultCurrencyKey, d);
+  await tapOnKey(Keys.projectFormDefaultCurrencyKey, d);
   await tapOnText(currency, d);
 
-  await expectKeyPresent(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, d);
-  await tapOnKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, d);
+  await expectKeyPresent(Keys.projectFormAddEditButtonKey, d);
+  await tapOnKey(Keys.projectFormAddEditButtonKey, d);
 
   await expectTextPresent(name, d);
   await expectTextPresent(currency, d);
@@ -77,24 +77,24 @@ createProject(String name, String currency, FlutterDriver d) async {
 
 createExpense(String description, String amount, String user,
     String expectedSummary, FlutterDriver d) async {
-  await tapOnKey(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON, d);
+  await tapOnKey(Keys.projectDetailsAddExpenseButton, d);
 
-  await expectKeyPresent(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY, d);
-  await tapOnKey(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY, d);
+  await expectKeyPresent(Keys.expenseFormDescriptionFieldKey, d);
+  await tapOnKey(Keys.expenseFormDescriptionFieldKey, d);
   await d.enterText(description);
   await d.waitFor(find.text(description));
 
-  await expectKeyPresent(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY, d);
-  await tapOnKey(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY, d);
+  await expectKeyPresent(Keys.expenseFormAcountFieldKey, d);
+  await tapOnKey(Keys.expenseFormAcountFieldKey, d);
   await d.enterText(amount);
   await d.waitFor(find.text(amount));
 
-  await expectKeyPresent(Keys.EXPENSE_FORM_USER_KEY, d);
-  await tapOnKey(Keys.EXPENSE_FORM_USER_KEY, d);
+  await expectKeyPresent(Keys.expenseFormUserKey, d);
+  await tapOnKey(Keys.expenseFormUserKey, d);
   await tapOnText(user, d);
 
-  await expectKeyPresent(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY, d);
-  await tapOnKey(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY, d);
+  await expectKeyPresent(Keys.expenseFormAddEditButtonKey, d);
+  await tapOnKey(Keys.expenseFormAddEditButtonKey, d);
 
   await expectTextPresent(description, d);
   await expectTextPresent(expectedSummary, d);

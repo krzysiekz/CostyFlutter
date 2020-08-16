@@ -101,7 +101,7 @@ void main() {
         await tester.pumpAndSettle();
         //assert
         final currencyDropdownFinder =
-            find.byKey(Key(Keys.EXPENSE_FORM_CURRENCY_KEY));
+            find.byKey(Key(Keys.expenseFormCurrencyKey));
         expect(currencyDropdownFinder, findsOneWidget);
 
         CurrencyDropdownField currencyDropdownField = (currencyDropdownFinder
@@ -114,7 +114,7 @@ void main() {
             findsOneWidget);
 
         final receivers =
-            find.byKey(Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY));
+            find.byKey(Key(Keys.expenseFormReceiversFieldKey));
         expect(receivers, findsOneWidget);
         MultiSelectChip receiversWidget =
             (receivers.evaluate().first.widget as MultiSelectChip);
@@ -142,7 +142,7 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final addExpenseButtonFinder =
-            find.byKey(Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY));
+            find.byKey(Key(Keys.expenseFormAddEditButtonKey));
         expect(addExpenseButtonFinder, findsOneWidget);
         await tester.tap(addExpenseButtonFinder);
         await tester.pumpAndSettle();
@@ -167,18 +167,18 @@ void main() {
         await tester.pumpAndSettle();
         //act
         var descriptionFieldFinder =
-            find.byKey(Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY));
+            find.byKey(Key(Keys.expenseFormDescriptionFieldKey));
         expect(descriptionFieldFinder, findsOneWidget);
         await tester.enterText(descriptionFieldFinder, "Some description");
         await tester.pumpAndSettle();
 
         var amountFieldFinder =
-            find.byKey(Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY));
+            find.byKey(Key(Keys.expenseFormAcountFieldKey));
         expect(amountFieldFinder, findsOneWidget);
         await tester.enterText(amountFieldFinder, "10");
         await tester.pumpAndSettle();
 
-        var userFinder = find.byKey(Key(Keys.EXPENSE_FORM_USER_KEY));
+        var userFinder = find.byKey(Key(Keys.expenseFormUserKey));
         expect(userFinder, findsOneWidget);
         await tester.tap(userFinder);
         await tester.pumpAndSettle();
@@ -189,7 +189,7 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester
-            .tap(find.byKey(Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY)));
+            .tap(find.byKey(Key(Keys.expenseFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text('Description is required.'), findsNothing);
@@ -290,18 +290,18 @@ void main() {
         await tester.pumpAndSettle();
         //act
         var descriptionFieldFinder =
-            find.byKey(Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY));
+            find.byKey(Key(Keys.expenseFormDescriptionFieldKey));
         expect(descriptionFieldFinder, findsOneWidget);
         await tester.enterText(descriptionFieldFinder, "New description");
         await tester.pumpAndSettle();
 
         var amountFieldFinder =
-            find.byKey(Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY));
+            find.byKey(Key(Keys.expenseFormAcountFieldKey));
         expect(amountFieldFinder, findsOneWidget);
         await tester.enterText(amountFieldFinder, "20");
         await tester.pumpAndSettle();
 
-        var userFinder = find.byKey(Key(Keys.EXPENSE_FORM_USER_KEY));
+        var userFinder = find.byKey(Key(Keys.expenseFormUserKey));
         expect(userFinder, findsOneWidget);
         await tester.tap(userFinder);
         await tester.pumpAndSettle();
@@ -311,7 +311,7 @@ void main() {
         await tester.tap(userKate);
         await tester.pumpAndSettle();
 
-        var currencyDropDown = find.byKey(Key(Keys.EXPENSE_FORM_CURRENCY_KEY));
+        var currencyDropDown = find.byKey(Key(Keys.expenseFormCurrencyKey));
         expect(currencyDropDown, findsOneWidget);
         await tester.tap(currencyDropDown);
         await tester.pumpAndSettle();
@@ -332,7 +332,7 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester
-            .tap(find.byKey(Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY)));
+            .tap(find.byKey(Key(Keys.expenseFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text('Description is required'), findsNothing);

@@ -22,13 +22,13 @@ void main() {
   });
 
   final tCurrencyEntities = {
-    0: CurrencyEntity(name: 'USD'),
-    1: CurrencyEntity(name: 'EUR'),
+    0: const CurrencyEntity(name: 'USD'),
+    1: const CurrencyEntity(name: 'EUR'),
   };
 
   final tCurrencyList = [
-    Currency(name: 'USD'),
-    Currency(name: 'EUR'),
+    const Currency(name: 'USD'),
+    const Currency(name: 'EUR'),
   ];
 
   test('should return list of currencies', () async {
@@ -57,8 +57,8 @@ void main() {
     verify(mockHiveOperations.openBox('currencies'));
     verifyNoMoreInteractions(mockHiveOperations);
 
-    verify(mockBox.add(CurrencyEntity(name: 'USD')));
-    verify(mockBox.add(CurrencyEntity(name: 'EUR')));
+    verify(mockBox.add(const CurrencyEntity(name: 'USD')));
+    verify(mockBox.add(const CurrencyEntity(name: 'EUR')));
     verifyNoMoreInteractions(mockBox);
   });
 }

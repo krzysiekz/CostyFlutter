@@ -25,19 +25,19 @@ void main() {
     dataSource = ExpensesDataSourceImpl(mockHiveOperations);
   });
 
-  final john = User(id: 1, name: 'John');
-  final kate = User(id: 2, name: 'Kate');
+  const john = User(id: 1, name: 'John');
+  const kate = User(id: 2, name: 'Kate');
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
   final tAmount = Decimal.fromInt(10);
-  final tCurrency = Currency(name: 'USD');
-  final tDescription = 'First Expense';
-  final tExpenseId = 1;
+  const tCurrency = Currency(name: 'USD');
+  const tDescription = 'First Expense';
+  const tExpenseId = 1;
   final tDateTime = DateTime.now();
 
   final tExpensesList = [

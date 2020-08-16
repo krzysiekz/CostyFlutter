@@ -24,7 +24,7 @@ class ProjectDetailsPage extends StatefulWidget {
 
   final Project project;
 
-  ProjectDetailsPage({Key key, this.project}) : super(key: key);
+  const ProjectDetailsPage({Key key, this.project}) : super(key: key);
 
   @override
   _ProjectDetailsPageState createState() => _ProjectDetailsPageState();
@@ -39,7 +39,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           title: Text(
             AppLocalizations.of(context)
                 .translate('project_details_page_users'),
-            key: const Key(Keys.PROJECT_DETAILS_USERS_TAB),
+            key: const Key(Keys.projectDetailsUsersTab),
           ),
           icon: Icon(context.platformIcons.group),
         ),
@@ -47,7 +47,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           title: Text(
             AppLocalizations.of(context)
                 .translate('project_details_page_expenses'),
-            key: const Key(Keys.PROJECT_DETAILS_EXPENSES_TAB),
+            key: const Key(Keys.projectDetailsExpensesTab),
           ),
           icon: Icon(context.platformIcons.shoppingCart),
         ),
@@ -55,7 +55,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           title: Text(
             AppLocalizations.of(context)
                 .translate('project_details_page_report'),
-            key: const Key(Keys.PROJECT_DETAILS_REPORT_TAB),
+            key: const Key(Keys.projectDetailsReportTab),
           ),
           icon: Icon(context.platformIcons.mail),
         ),
@@ -115,7 +115,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       case 0:
         return [
           PlatformIconButton(
-            key: const Key(Keys.PROJECT_DETAILS_ADD_USER_BUTTON),
+            key: const Key(Keys.projectDetailsAddUserButton),
             onPressed: () => _showAddUserForm(ctx, project),
             icon: Icon(context.platformIcons.personAdd),
           )
@@ -126,13 +126,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
             builder: (BuildContext context, UserState state) {
               if (state is UserLoaded && state.users.isNotEmpty) {
                 return PlatformIconButton(
-                  key: const Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
+                  key: const Key(Keys.projectDetailsAddExpenseButton),
                   onPressed: () => _showAddExpenseForm(ctx, project),
                   icon: Icon(context.platformIcons.add),
                 );
               } else {
                 return PlatformIconButton(
-                  key: const Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
+                  key: const Key(Keys.projectDetailsAddExpenseButton),
                   onPressed: () => DialogUtilities.showAlertDialog(
                       ctx,
                       AppLocalizations.of(context).translate('info'),

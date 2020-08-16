@@ -145,7 +145,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         children: <Widget>[
           CustomTextField(
             textFormFieldKey:
-                const Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
+                const Key(Keys.expenseFormDescriptionFieldKey),
             hintText: AppLocalizations.of(context)
                 .translate('expense_form_description_hint'),
             controller: _descriptionController,
@@ -164,7 +164,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               Expanded(
                 child: CustomTextField(
                   textFormFieldKey:
-                      const Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
+                      const Key(Keys.expenseFormAcountFieldKey),
                   hintText: AppLocalizations.of(context)
                       .translate('expense_form_amount_hint'),
                   controller: _amountController,
@@ -225,13 +225,13 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                key: const Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                key: const Key(Keys.projectFormCancelButtonKey),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               PlatformButton(
-                key: const Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
+                key: const Key(Keys.expenseFormAddEditButtonKey),
                 child: widget.expenseToEdit == null
                     ? Text(AppLocalizations.of(context)
                         .translate('expense_form_add_expense_button'))
@@ -250,7 +250,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
     return BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
       if (state is CurrencyLoaded) {
         return CurrencyDropdownField(
-            key: const Key(Keys.EXPENSE_FORM_CURRENCY_KEY),
+            key: const Key(Keys.expenseFormCurrencyKey),
             currencies: state.currencies,
             initialValue: _currency,
             callback: (Currency newValue) {
@@ -279,7 +279,7 @@ class _UserDropDownFormField extends StatelessWidget {
         return Container(
             margin: const EdgeInsets.only(right: 5, left: 5),
             child: FormField<User>(
-              key: const Key(Keys.EXPENSE_FORM_USER_KEY),
+              key: const Key(Keys.expenseFormUserKey),
               builder: (FormFieldState<User> formState) {
                 return InputDecorator(
                   decoration: InputDecoration(

@@ -67,7 +67,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetUsersEvent(tProject)),
-      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when adding user',
       build: () {
@@ -85,7 +85,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(AddUserEvent(tUsers[0].name, tProject)),
-      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when deleting user',
       build: () {
@@ -103,7 +103,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteUserEvent(tUsers[0].id)),
-      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when modifying user',
       build: () {
@@ -121,5 +121,5 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyUserEvent(tUsers[0])),
-      expect: [UserLoading(), UserError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
 }

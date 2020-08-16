@@ -45,12 +45,12 @@ void main() {
     Project(
         id: 1,
         name: 'First',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime),
     Project(
         id: 2,
         name: 'Second',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime)
   ];
 
@@ -73,9 +73,9 @@ void main() {
 
   test('should add project', () async {
     //arrange
-    final tProjectId = 10;
-    final tProjectName = 'new project';
-    final tDefaultCurrency = Currency(name: 'USD');
+    const tProjectId = 10;
+    const tProjectName = 'new project';
+    const tDefaultCurrency = Currency(name: 'USD');
 
     when(mockHiveOperations.openBox(any))
         .thenAnswer((_) async => mockProjectsBox);
@@ -98,7 +98,7 @@ void main() {
 
   test('should delete project', () async {
     //arrange
-    final tProjectId = 1;
+    const tProjectId = 1;
 
     final tExpensesEntities = {
       1: UserExpenseEntity(
@@ -120,8 +120,8 @@ void main() {
     };
 
     final tUsersEntities = {
-      1: UserEntity(name: 'John', projectId: tProjectId),
-      2: UserEntity(name: 'Kate', projectId: tProjectId + 1),
+      1: const UserEntity(name: 'John', projectId: tProjectId),
+      2: const UserEntity(name: 'Kate', projectId: tProjectId + 1),
     };
 
     when(mockHiveOperations.openBox("projects"))
@@ -159,7 +159,7 @@ void main() {
     final tProject = Project(
         id: 5,
         name: 'First',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime);
 
     when(mockHiveOperations.openBox(any))

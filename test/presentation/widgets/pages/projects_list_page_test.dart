@@ -56,7 +56,7 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final deleteButtonFinder =
-          find.byKey(Key(Keys.DELETE_CONFIRMATION_DELETE_BUTTON));
+          find.byKey(Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
       await tester.drag(itemFinder, Offset(-500.0, 0.0));
@@ -86,7 +86,7 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final cancelButtonFinder =
-          find.byKey(Key(Keys.DELETE_CONFIRMATION_CANCEL_BUTTON));
+          find.byKey(Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
       await tester.drag(itemFinder, Offset(-500.0, 0.0));

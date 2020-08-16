@@ -52,7 +52,7 @@ class ReceiversWidgetFormField extends StatelessWidget {
                     ),
                   ),
                   child: MultiSelectChip(
-                    key: const Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
+                    key: const Key(Keys.expenseFormReceiversFieldKey),
                     selectedUserList: initialReceivers ?? state.users,
                     userList: state.users,
                     onSelectionChanged: (Iterable<User> selected) {

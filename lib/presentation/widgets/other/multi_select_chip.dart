@@ -26,13 +26,13 @@ class MultiSelectChip<T> extends StatelessWidget {
           alignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
-              key: const Key(Keys.MULTI_SELECT_CHIP_SELECT_ALL),
+              key: const Key(Keys.multiSelectChipSelectAll),
               child: Text(AppLocalizations.of(context).translate(
                   'expense_form_multi_select_chip_select_all_button')),
               onPressed: () => onSelectionChanged(userList),
             ),
             FlatButton(
-              key: const Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE),
+              key: const Key(Keys.multiSelectChipSelectNone),
               child: Text(AppLocalizations.of(context).translate(
                   'expense_form_multi_select_chip_select_none_button')),
               onPressed: () => onSelectionChanged([]),

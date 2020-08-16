@@ -19,7 +19,7 @@ class ExpenseLoading extends ExpenseState {
 class ExpenseLoaded extends ExpenseState {
   final List<UserExpense> expenses;
 
-  ExpenseLoaded(this.expenses);
+  const ExpenseLoaded(this.expenses);
 
   @override
   List<Object> get props => [expenses];
@@ -28,7 +28,7 @@ class ExpenseLoaded extends ExpenseState {
 class ExpenseAdded extends ExpenseState {
   final int expenseId;
 
-  ExpenseAdded(this.expenseId);
+  const ExpenseAdded(this.expenseId);
 
   @override
   List<Object> get props => [expenseId];
@@ -37,7 +37,7 @@ class ExpenseAdded extends ExpenseState {
 class ExpenseDeleted extends ExpenseState {
   final int expenseId;
 
-  ExpenseDeleted(this.expenseId);
+  const ExpenseDeleted(this.expenseId);
 
   @override
   List<Object> get props => [expenseId];
@@ -46,7 +46,7 @@ class ExpenseDeleted extends ExpenseState {
 class ExpenseModified extends ExpenseState {
   final int expenseId;
 
-  ExpenseModified(this.expenseId);
+  const ExpenseModified(this.expenseId);
 
   @override
   List<Object> get props => [expenseId];
@@ -55,7 +55,7 @@ class ExpenseModified extends ExpenseState {
 class ExpenseError extends ExpenseState {
   final String errorMessage;
 
-  ExpenseError(this.errorMessage);
+  const ExpenseError(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];

@@ -56,7 +56,7 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final addUserButtonFinder =
-            find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY));
+            find.byKey(Key(Keys.userFormAddEditButtonKey));
         expect(addUserButtonFinder, findsOneWidget);
         await tester.tap(addUserButtonFinder);
         await tester.pumpAndSettle();
@@ -74,12 +74,12 @@ void main() {
         await tester.pumpWidget(testedWidget);
         await tester.pumpAndSettle();
         //act
-        var nameFieldFinder = find.byKey(Key(Keys.USER_FORM_NAME_FIELD_KEY));
+        var nameFieldFinder = find.byKey(Key(Keys.userFormNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "John");
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY)));
+        await tester.tap(find.byKey(Key(Keys.userFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text("User's name is required"), findsNothing);
@@ -128,12 +128,12 @@ void main() {
         await tester.pumpWidget(testedWidget);
         await tester.pumpAndSettle();
         //act
-        var nameFieldFinder = find.byKey(Key(Keys.USER_FORM_NAME_FIELD_KEY));
+        var nameFieldFinder = find.byKey(Key(Keys.userFormNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "Kate");
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY)));
+        await tester.tap(find.byKey(Key(Keys.userFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text("Userk's name is required"), findsNothing);

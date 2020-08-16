@@ -17,7 +17,7 @@ class DialogUtilities {
               content: Text(content),
               actions: <Widget>[
                 PlatformDialogAction(
-                  key: Key(Keys.ALERT_DIALOG_OK_BUTTON),
+                  key: const Key(Keys.alertDialogOkButton),
                   child: Text(AppLocalizations.of(context).translate('ok')),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -31,7 +31,6 @@ class DialogUtilities {
 
   static Widget showLoadingIndicator(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Center(
@@ -61,12 +60,12 @@ class DialogUtilities {
             ios: (_) => CupertinoDialogActionData(
                   isDestructiveAction: true,
                 ),
-            key: Key(Keys.DELETE_CONFIRMATION_DELETE_BUTTON),
+            key: const Key(Keys.deleteConfirmationDeleteButton),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(AppLocalizations.of(context)
                 .translate('alert_dialog_delete_button'))),
         PlatformDialogAction(
-          key: Key(Keys.DELETE_CONFIRMATION_CANCEL_BUTTON),
+          key: const Key(Keys.deleteConfirmationCancelButton),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(AppLocalizations.of(context)
               .translate('alert_dialog_cancel_button')),
@@ -78,7 +77,7 @@ class DialogUtilities {
   static Widget createStackBehindDismiss(BuildContext context) {
     return Container(
       alignment: Alignment.centerRight,
-      padding: EdgeInsets.only(right: 20.0),
+      padding: const EdgeInsets.only(right: 20.0),
       child: Icon(context.platformIcons.delete,
           color: Theme.of(context).errorColor),
     );

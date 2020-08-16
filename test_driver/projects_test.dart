@@ -16,7 +16,7 @@ void main() {
     driver = await FlutterDriver.connect();
     ozzie = Ozzie.initWith(driver, groupName: 'projects');
     print('Waiting before running tests...');
-    sleep(Duration(seconds: 1));
+    sleep(const Duration(seconds: 1));
   });
 
   // Close the connection to the driver after the tests have completed.
@@ -47,17 +47,17 @@ void main() {
   testWithScreenshots('should edit created project', () => ozzie, () async {
     await tapOnKey("0_project_edit", driver);
 
-    await expectKeyPresent(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, driver);
-    await tapOnKey(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY, driver);
+    await expectKeyPresent(Keys.projectFormProjectNameFieldKey, driver);
+    await tapOnKey(Keys.projectFormProjectNameFieldKey, driver);
     await driver.enterText('Project2');
     await driver.waitFor(find.text('Project2'));
 
-    await expectKeyPresent(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, driver);
-    await tapOnKey(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY, driver);
+    await expectKeyPresent(Keys.projectFormDefaultCurrencyKey, driver);
+    await tapOnKey(Keys.projectFormDefaultCurrencyKey, driver);
     await driver.tap(find.text('EUR'));
 
-    await expectKeyPresent(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, driver);
-    await tapOnKey(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY, driver);
+    await expectKeyPresent(Keys.projectFormAddEditButtonKey, driver);
+    await tapOnKey(Keys.projectFormAddEditButtonKey, driver);
 
     await expectTextPresent("Project2", driver);
     await expectTextPresent("EUR", driver);
@@ -65,10 +65,10 @@ void main() {
 
   testWithScreenshots('should delete created project', () => ozzie, () async {
     await driver.scroll(
-        find.byValueKey("project_0"), -400, 0, Duration(milliseconds: 300));
+        find.byValueKey("project_0"), -400, 0, const Duration(milliseconds: 300));
 
-    await expectKeyPresent(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
-    await tapOnKey(Keys.DELETE_CONFIRMATION_DELETE_BUTTON, driver);
+    await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
+    await tapOnKey(Keys.deleteConfirmationDeleteButton, driver);
 
     await expectTextPresent("No projects to display.", driver);
   });

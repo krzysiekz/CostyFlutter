@@ -66,8 +66,9 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
             _createRemainingSliverWidget(state),
           ],
         );
-      } else
+      } else {
         return DialogUtilities.showLoadingIndicator(context);
+      }
     });
   }
 
@@ -104,7 +105,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         elevation: 1,
         actions: <Widget>[
           PlatformIconButton(
-            key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+            key: const Key(Keys.projectlistAddProjectButtonKey),
             icon: Icon(context.platformIcons.add),
             onPressed: () => _startAddNewProject(context),
           )
@@ -127,7 +128,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         largeTitle: Text(
             AppLocalizations.of(context).translate('project_list_page_title')),
         trailing: PlatformIconButton(
-          key: Key(Keys.PROJECT_LIST_ADD_PROJECT_BUTTON_KEY),
+          key: const Key(Keys.projectlistAddProjectButtonKey),
           icon: Icon(context.platformIcons.add),
           onPressed: () => _startAddNewProject(context),
         ),

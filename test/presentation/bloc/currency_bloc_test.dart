@@ -39,5 +39,5 @@ void main() {
         return CurrencyBloc(mockGetCurrencies);
       },
       act: (bloc) => bloc.add(GetCurrenciesEvent()),
-      expect: [CurrencyLoading(), CurrencyError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [CurrencyLoading(), CurrencyError(datasouceFailureMessage)]);
 }

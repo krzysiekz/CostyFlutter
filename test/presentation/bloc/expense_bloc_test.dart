@@ -89,7 +89,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetExpensesEvent(tProject)),
-      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when adding expense',
       build: () {
@@ -121,7 +121,7 @@ void main() {
           project: tProject,
           receivers: tExpensesList[0].receivers,
           dateTime: tDateTime)),
-      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when deleting expense',
       build: () {
@@ -139,7 +139,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteExpenseEvent(tExpensesList[0].id)),
-      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when modifying expense',
       build: () {
@@ -157,5 +157,5 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyExpenseEvent(tExpensesList[0])),
-      expect: [ExpenseLoading(), ExpenseError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
 }

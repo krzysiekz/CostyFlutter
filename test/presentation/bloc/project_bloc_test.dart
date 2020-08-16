@@ -74,7 +74,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetProjectsEvent()),
-      expect: [ProjectLoading(), ProjectError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when adding project',
       build: () {
@@ -94,7 +94,7 @@ void main() {
       },
       act: (bloc) => bloc.add(AddProjectEvent(
           projectName: tProjectName, defaultCurrency: tProjectDefaultCurrency)),
-      expect: [ProjectLoading(), ProjectError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when deleting project',
       build: () {
@@ -112,7 +112,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteProjectEvent(tProjectsList[0].id)),
-      expect: [ProjectLoading(), ProjectError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when modifying project',
       build: () {
@@ -130,5 +130,5 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyProjectEvent(tProjectsList[0])),
-      expect: [ProjectLoading(), ProjectError(DATASOURCE_FAILURE_MESSAGE)]);
+      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
 }

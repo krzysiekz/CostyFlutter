@@ -15,7 +15,7 @@ class ProjectListItem extends StatefulWidget {
 
   final Project project;
 
-  ProjectListItem({Key key, this.project}) : super(key: key);
+  const ProjectListItem({Key key, this.project}) : super(key: key);
 
   @override
   _ProjectListItemState createState() => _ProjectListItemState();
@@ -62,7 +62,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
         ),
       ),
       confirmDismiss: (DismissDirection direction) async {
-        return await showPlatformDialog(
+        return showPlatformDialog(
           context: context,
           builder: (BuildContext context) {
             return DialogUtilities.createDeleteConfirmationDialog(context);

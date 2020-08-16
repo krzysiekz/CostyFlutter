@@ -56,7 +56,7 @@ void main() {
       act: (bloc) => bloc.add(GetReportEvent(tProject)),
       expect: [
         ReportLoading(),
-        ReportError(REPORT_GENERATION_FAILURE_MESSAGE)
+        ReportError(reportGenerationFailureMessage)
       ]);
 
   blocTest('should emit proper states in case or error when getting expenses',
@@ -69,6 +69,6 @@ void main() {
       act: (bloc) => bloc.add(GetReportEvent(tProject)),
       expect: [
         ReportLoading(),
-        ReportError(REPORT_GENERATION_FAILURE_MESSAGE)
+        ReportError(reportGenerationFailureMessage)
       ]);
 }

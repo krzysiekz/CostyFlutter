@@ -16,7 +16,7 @@ class AddProjectEvent extends ProjectEvent {
   final String projectName;
   final Currency defaultCurrency;
 
-  AddProjectEvent({this.projectName, this.defaultCurrency});
+  const AddProjectEvent({this.projectName, this.defaultCurrency});
 
   @override
   List<Object> get props => [projectName, defaultCurrency];
@@ -25,7 +25,7 @@ class AddProjectEvent extends ProjectEvent {
 class DeleteProjectEvent extends ProjectEvent {
   final int projectId;
 
-  DeleteProjectEvent(this.projectId);
+  const DeleteProjectEvent(this.projectId);
 
   @override
   List<Object> get props => [projectId];
@@ -34,7 +34,7 @@ class DeleteProjectEvent extends ProjectEvent {
 class ModifyProjectEvent extends ProjectEvent {
   final Project project;
 
-  ModifyProjectEvent(this.project);
+  const ModifyProjectEvent(this.project);
 
   @override
   List<Object> get props => [project];

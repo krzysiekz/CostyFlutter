@@ -19,7 +19,7 @@ class ReportLoading extends ReportState {
 class ReportLoaded extends ReportState {
   final Report report;
 
-  ReportLoaded(this.report);
+  const ReportLoaded(this.report);
 
   @override
   List<Object> get props => [];
@@ -28,7 +28,7 @@ class ReportLoaded extends ReportState {
 class ReportError extends ReportState {
   final String errorMessage;
 
-  ReportError(this.errorMessage);
+  const ReportError(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];

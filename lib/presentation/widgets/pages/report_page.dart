@@ -10,7 +10,7 @@ import '../utilities/dialog_utilities.dart';
 class ReportPage extends StatefulWidget {
   final Project project;
 
-  ReportPage({Key key, @required this.project}) : super(key: key);
+  const ReportPage({Key key, @required this.project}) : super(key: key);
 
   @override
   _ReportPageState createState() => _ReportPageState();

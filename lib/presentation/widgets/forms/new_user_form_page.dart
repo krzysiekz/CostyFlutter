@@ -90,7 +90,7 @@ class _NewUserFormState extends State<NewUserForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
-            textFormFieldKey: const Key(Keys.USER_FORM_NAME_FIELD_KEY),
+            textFormFieldKey: const Key(Keys.userFormNameFieldKey),
             hintText: AppLocalizations.of(context)
                 .translate('user_form_user_name_hint'),
             controller: _nameController,
@@ -110,13 +110,13 @@ class _NewUserFormState extends State<NewUserForm> {
                 materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                key: const Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                key: const Key(Keys.projectFormCancelButtonKey),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               PlatformButton(
-                key: const Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
+                key: const Key(Keys.userFormAddEditButtonKey),
                 child: widget.userToModify == null
                     ? Text(AppLocalizations.of(context)
                         .translate('user_form_add_user_button'))

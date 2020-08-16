@@ -69,7 +69,7 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final currencyDropdownFinder =
-            find.byKey(Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY));
+            find.byKey(Key(Keys.projectFormDefaultCurrencyKey));
         expect(currencyDropdownFinder, findsOneWidget);
         //assert
         CurrencyDropdownField currencyDropdownField = (currencyDropdownFinder
@@ -89,7 +89,7 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final addProjectButtonFinder =
-            find.byKey(Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY));
+            find.byKey(Key(Keys.projectFormAddEditButtonKey));
         expect(addProjectButtonFinder, findsOneWidget);
         await tester.tap(addProjectButtonFinder);
         await tester.pumpAndSettle();
@@ -111,13 +111,13 @@ void main() {
         await tester.pumpAndSettle();
         //act
         var nameFieldFinder =
-            find.byKey(Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY));
+            find.byKey(Key(Keys.projectFormProjectNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "Some name");
         await tester.pumpAndSettle();
 
         var defaultCurrencyFinder =
-            find.byKey(Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY));
+            find.byKey(Key(Keys.projectFormDefaultCurrencyKey));
         expect(defaultCurrencyFinder, findsOneWidget);
         await tester.tap(defaultCurrencyFinder);
         await tester.pumpAndSettle();
@@ -128,7 +128,7 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester
-            .tap(find.byKey(Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY)));
+            .tap(find.byKey(Key(Keys.projectFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text('Project name is required'), findsNothing);
@@ -195,13 +195,13 @@ void main() {
         await tester.pumpAndSettle();
         //act
         var nameFieldFinder =
-            find.byKey(Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY));
+            find.byKey(Key(Keys.projectFormProjectNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "Edited name");
         await tester.pumpAndSettle();
 
         var defaultCurrencyFinder =
-            find.byKey(Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY));
+            find.byKey(Key(Keys.projectFormDefaultCurrencyKey));
         expect(defaultCurrencyFinder, findsOneWidget);
         await tester.tap(defaultCurrencyFinder);
         await tester.pumpAndSettle();
@@ -212,7 +212,7 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester
-            .tap(find.byKey(Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY)));
+            .tap(find.byKey(Key(Keys.projectFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text('Project name is required'), findsNothing);

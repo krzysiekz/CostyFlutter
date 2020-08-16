@@ -19,7 +19,7 @@ class UserLoading extends UserState {
 class UserLoaded extends UserState {
   final List<User> users;
 
-  UserLoaded(this.users);
+  const UserLoaded(this.users);
 
   @override
   List<Object> get props => [users];
@@ -28,7 +28,7 @@ class UserLoaded extends UserState {
 class UserAdded extends UserState {
   final int userId;
 
-  UserAdded(this.userId);
+  const UserAdded(this.userId);
 
   @override
   List<Object> get props => [userId];
@@ -37,7 +37,7 @@ class UserAdded extends UserState {
 class UserDeleted extends UserState {
   final int userId;
 
-  UserDeleted(this.userId);
+  const UserDeleted(this.userId);
 
   @override
   List<Object> get props => [userId];
@@ -46,7 +46,7 @@ class UserDeleted extends UserState {
 class UserModified extends UserState {
   final int userId;
 
-  UserModified(this.userId);
+  const UserModified(this.userId);
 
   @override
   List<Object> get props => [userId];
@@ -55,7 +55,7 @@ class UserModified extends UserState {
 class UserError extends UserState {
   final String errorMessage;
 
-  UserError(this.errorMessage);
+  const UserError(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];

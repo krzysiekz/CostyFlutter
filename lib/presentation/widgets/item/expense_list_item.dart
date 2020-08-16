@@ -42,15 +42,15 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: FittedBox(
                 child: Column(
                   children: <Widget>[
                     Text(widget.userExpense.amount.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     Text(widget.userExpense.currency.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 13)),
                   ],
                 ),
@@ -64,13 +64,13 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Divider(
+              const Divider(
                 thickness: 0.4,
               ),
               Text(
                 '${widget.userExpense.user.name} => ${widget.userExpense.receivers.map((user) => user.name).toList().join(', ')}',
               ),
-              Divider(
+              const Divider(
                 thickness: 0.4,
               ),
               Text(ExpenseListItem.dateFormat

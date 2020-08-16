@@ -28,20 +28,20 @@ void main() {
         ExpensesRepositoryImpl(mockExpensesDataSource, mockUsersDataSource);
   });
 
-  final john = User(id: 1, name: 'John');
-  final kate = User(id: 2, name: 'Kate');
+  const john = User(id: 1, name: 'John');
+  const kate = User(id: 2, name: 'Kate');
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
   final tAmount = Decimal.fromInt(10);
-  final tCurrency = Currency(name: 'USD');
-  final tDescription = 'First Expense';
+  const tCurrency = Currency(name: 'USD');
+  const tDescription = 'First Expense';
   final tReceivers = [john, kate];
-  final tExpenseId = 1;
+  const tExpenseId = 1;
   final DateTime tDateTime = DateTime.now();
 
   final tExpensesList = [
@@ -82,7 +82,7 @@ void main() {
         user: john,
         receivers: tReceivers);
     //assert
-    expect(result, Right(tExpenseId));
+    expect(result, const Right(tExpenseId));
     verify(mockExpensesDataSource.addExpense(
         project: tProject,
         amount: tAmount,
@@ -131,7 +131,7 @@ void main() {
     //act
     final result = await repository.deleteExpense(tExpenseId);
     //assert
-    expect(result, Right(tExpenseId));
+    expect(result, const Right(tExpenseId));
     verify(mockExpensesDataSource.deleteExpense(tExpenseId));
     verifyNoMoreInteractions(mockExpensesDataSource);
   });
@@ -187,7 +187,7 @@ void main() {
     //act
     final result = await repository.modifyExpense(tExpensesList[0]);
     //assert
-    expect(result, Right(tExpenseId));
+    expect(result, const Right(tExpenseId));
     verify(mockExpensesDataSource.modifyExpense(tExpensesList[0]));
     verifyNoMoreInteractions(mockExpensesDataSource);
   });

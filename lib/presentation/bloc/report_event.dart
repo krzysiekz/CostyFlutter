@@ -10,7 +10,7 @@ abstract class ReportEvent extends Equatable {
 class GetReportEvent extends ReportEvent {
   final Project project;
 
-  GetReportEvent(this.project);
+  const GetReportEvent(this.project);
 
   @override
   List<Object> get props => [project];
@@ -20,7 +20,7 @@ class ShareReportEvent extends ReportEvent {
   final Project project;
   final BuildContext buildContext;
 
-  ShareReportEvent(this.project, this.buildContext);
+  const ShareReportEvent(this.project, this.buildContext);
 
   @override
   List<Object> get props => [project];

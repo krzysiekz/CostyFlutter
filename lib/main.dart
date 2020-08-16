@@ -18,7 +18,7 @@ import 'injection.dart';
 import 'presentation/bloc/bloc.dart';
 import 'presentation/widgets/pages/projects_list_page.dart';
 
-const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'PLN', 'GBP'];
+const supportedCurrencies = ['USD', 'EUR', 'PLN', 'GBP'];
 
 Future<void> main() async {
   await initializeApp();
@@ -43,7 +43,7 @@ Future<void> _initHiveStaticData() async {
   final currenciesDataSource = ic<CurrenciesDataSource>();
   final currencies = await currenciesDataSource.getCurrencies();
   if (currencies.isEmpty) {
-    await currenciesDataSource.saveCurrencies(SUPPORTED_CURRENCIES);
+    await currenciesDataSource.saveCurrencies(supportedCurrencies);
   }
 }
 
@@ -64,9 +64,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   AppBarTheme _darkAppBarTheme() {
-    return AppBarTheme(
-      color: const Color.fromRGBO(40, 40, 40, 1),
-      iconTheme: const IconThemeData(
+    return const AppBarTheme(
+      color: Color.fromRGBO(40, 40, 40, 1),
+      iconTheme: IconThemeData(
         color: Colors.blue,
       ),
     );

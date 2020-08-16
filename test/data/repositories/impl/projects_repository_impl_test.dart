@@ -19,21 +19,21 @@ void main() {
     repository = ProjectsRepositoryImpl(mockDataSource);
   });
 
-  final tProjectName = 'Sample project.';
-  final tProjectDefaultCurrency = Currency(name: 'USD');
-  final tProjectId = 1;
+  const tProjectName = 'Sample project.';
+  const tProjectDefaultCurrency = Currency(name: 'USD');
+  const tProjectId = 1;
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
 
   final tProjectsList = [
     Project(
         id: 1,
         name: 'First',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime),
     Project(
         id: 2,
         name: 'Second',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime)
   ];
 
@@ -45,7 +45,7 @@ void main() {
     final result = await repository.addProject(
         tProjectName, tProjectDefaultCurrency, tCreationDateTime);
     //assert
-    expect(result, Right(tProjectId));
+    expect(result, const Right(tProjectId));
     verify(mockDataSource.addProject(
         tProjectName, tProjectDefaultCurrency, tCreationDateTime));
     verifyNoMoreInteractions(mockDataSource);
@@ -72,7 +72,7 @@ void main() {
     //act
     final result = await repository.deleteProject(tProjectId);
     //assert
-    expect(result, Right(tProjectId));
+    expect(result, const Right(tProjectId));
     verify(mockDataSource.deleteProject(tProjectId));
     verifyNoMoreInteractions(mockDataSource);
   });
@@ -118,7 +118,7 @@ void main() {
     //act
     final result = await repository.modifyProject(tProjectsList[0]);
     //assert
-    expect(result, Right(tProjectId));
+    expect(result, const Right(tProjectId));
     verify(mockDataSource.modifyProject(tProjectsList[0]));
     verifyNoMoreInteractions(mockDataSource);
   });

@@ -19,7 +19,6 @@ class CustomScaffold extends StatelessWidget {
               elevation: 1,
             )
           : CupertinoNavigationBar(
-              automaticallyImplyLeading: true,
               middle: Text(appBarTitle),
               leading: CupertinoNavigationBarBackButton(
                 onPressed: () => Navigator.of(context).pop(),

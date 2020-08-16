@@ -27,20 +27,20 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
 
   final tUsers = [
-    User(id: 1, name: 'John'),
-    User(id: 2, name: 'Kate'),
+    const User(id: 1, name: 'John'),
+    const User(id: 2, name: 'Kate'),
   ];
 
   final tUsersEntities = {
-    1: UserEntity(name: 'John', projectId: 1),
-    2: UserEntity(name: 'Kate', projectId: 1),
+    1: const UserEntity(name: 'John', projectId: 1),
+    2: const UserEntity(name: 'Kate', projectId: 1),
   };
 
-  final tUserId = 1;
+  const tUserId = 1;
 
   test('should return list of users', () async {
     //arrange
@@ -60,7 +60,7 @@ void main() {
 
   test('should add user', () async {
     //arrange
-    final tName = 'John';
+    const tName = 'John';
 
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
     when(mockBox.add(any)).thenAnswer((_) async => tUserId);
@@ -94,7 +94,7 @@ void main() {
 
   test('should modify user', () async {
     //arrange
-    final tUser = User(id: 1, name: 'First');
+    const tUser = User(id: 1, name: 'First');
 
     when(mockHiveOperations.openBox(any)).thenAnswer((_) async => mockBox);
     when(mockBox.get(any)).thenReturn(tUsersEntities[1]);

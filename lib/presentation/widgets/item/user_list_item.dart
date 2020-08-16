@@ -13,7 +13,7 @@ class UserListItem extends StatefulWidget {
   final User user;
   final Project project;
 
-  UserListItem({Key key, @required this.user, @required this.project})
+  const UserListItem({Key key, @required this.user, @required this.project})
       : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class _UserListItemState extends State<UserListItem> {
         ),
       ),
       confirmDismiss: (DismissDirection direction) async {
-        return await showDialog(
+        return showDialog(
           context: context,
           builder: (BuildContext context) {
             BlocProvider.of<ExpenseBloc>(context)

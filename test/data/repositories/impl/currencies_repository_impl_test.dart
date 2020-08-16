@@ -19,8 +19,8 @@ void main() {
   });
 
   final tCurrencyList = [
-    Currency(name: 'USD'),
-    Currency(name: 'PLN'),
+    const Currency(name: 'USD'),
+    const Currency(name: 'PLN'),
   ];
 
   test('should return currencies from data source', () async {

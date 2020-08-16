@@ -118,7 +118,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
         children: <Widget>[
           CustomTextField(
             textFormFieldKey:
-                const Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
+                const Key(Keys.projectFormProjectNameFieldKey),
             hintText: AppLocalizations.of(context)
                 .translate('project_form_project_name_hint'),
             controller: _nameController,
@@ -132,7 +132,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
             height: 10,
           ),
           CurrencyDropdownField(
-              key: const Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
+              key: const Key(Keys.projectFormDefaultCurrencyKey),
               initialValue: _defaultCurrency,
               currencies: state.currencies,
               callback: (Currency newValue) {
@@ -150,14 +150,14 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                key: const Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                key: const Key(Keys.projectFormCancelButtonKey),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
                 cupertino: (_, platform) => CupertinoButtonData(),
               ),
               PlatformButton(
-                key: Key(Keys.PROJECT_FORM_ADD_EDIT_BUTTON_KEY),
+                key: const Key(Keys.projectFormAddEditButtonKey),
                 child: widget.projectToEdit == null
                     ? Text(AppLocalizations.of(context)
                         .translate('project_form_add_project_button'))
