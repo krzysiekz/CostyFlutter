@@ -1,8 +1,11 @@
-import 'package:costy/data/models/report.dart';
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
+import '../../../injection.dart';
+import '../../models/report.dart';
 import '../report_formatter.dart';
 
+@Singleton(as: ReportFormatter, env: [Env.prod])
 class ReportFormatterImpl implements ReportFormatter {
   static final DateFormat dateFormat = DateFormat("dd/MM/yyyy HH:mm");
 

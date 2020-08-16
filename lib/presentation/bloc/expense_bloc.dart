@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 import './bloc.dart';
@@ -8,7 +9,9 @@ import '../../data/usecases/impl/add_expense.dart';
 import '../../data/usecases/impl/delete_expense.dart';
 import '../../data/usecases/impl/get_expenses.dart';
 import '../../data/usecases/impl/modify_expense.dart';
+import '../../injection.dart';
 
+@Singleton(env: [Env.prod])
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
   final AddExpense addExpense;
   final DeleteExpense deleteExpense;

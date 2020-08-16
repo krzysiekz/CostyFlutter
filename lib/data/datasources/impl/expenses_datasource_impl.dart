@@ -1,5 +1,7 @@
 import 'package:decimal/decimal.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../models/currency.dart';
 import '../../models/project.dart';
 import '../../models/user.dart';
@@ -8,6 +10,7 @@ import '../entities/user_expense_entity.dart';
 import '../expenses_datasource.dart';
 import '../hive_operations.dart';
 
+@Singleton(as: ExpensesDataSource, env: [Env.prod])
 class ExpensesDataSourceImpl implements ExpensesDataSource {
   static const BOX_NAME = 'expenses';
 

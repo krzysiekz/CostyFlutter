@@ -1,14 +1,17 @@
-import 'package:costy/data/datasources/entities/user_entity.dart';
-import 'package:costy/data/datasources/entities/user_expense_entity.dart';
-import 'package:costy/data/datasources/impl/users_datasource_impl.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../models/currency.dart';
 import '../../models/project.dart';
 import '../entities/project_entity.dart';
+import '../entities/user_entity.dart';
+import '../entities/user_expense_entity.dart';
 import '../hive_operations.dart';
 import '../projects_datasource.dart';
 import 'expenses_datasource_impl.dart';
+import 'users_datasource_impl.dart';
 
+@Singleton(as: ProjectsDataSource, env: [Env.prod])
 class ProjectsDataSourceImpl implements ProjectsDataSource {
   static const _BOX_NAME = 'projects';
   final HiveOperations _hiveOperations;

@@ -1,11 +1,14 @@
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../datasources/users_datasource.dart';
 import '../../errors/failures.dart';
 import '../../models/project.dart';
 import '../../models/user.dart';
 import '../users_repository.dart';
 
+@Singleton(as: UsersRepository, env: [Env.prod])
 class UsersRepositoryImpl implements UsersRepository {
   final UsersDataSource usersDataSource;
 

@@ -1,10 +1,13 @@
-import 'package:costy/data/datasources/entities/user_entity.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../models/project.dart';
 import '../../models/user.dart';
+import '../entities/user_entity.dart';
 import '../hive_operations.dart';
 import '../users_datasource.dart';
 
+@Singleton(as: UsersDataSource, env: [Env.prod])
 class UsersDataSourceImpl implements UsersDataSource {
   static const BOX_NAME = 'users';
 

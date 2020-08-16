@@ -14,8 +14,7 @@ import 'data/datasources/entities/currency_entity.dart';
 import 'data/datasources/entities/project_entity.dart';
 import 'data/datasources/entities/user_entity.dart';
 import 'data/datasources/entities/user_expense_entity.dart';
-import 'injection_container.dart' as di;
-import 'injection_container.dart';
+import 'injection.dart';
 import 'presentation/bloc/bloc.dart';
 import 'presentation/widgets/pages/projects_list_page.dart';
 
@@ -31,7 +30,7 @@ Future<void> main() async {
 
 Future initializeApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
+  configureInjection(Env.prod);
   await Hive.initFlutter();
   Hive.registerAdapter(CurrencyEntityAdapter());
   Hive.registerAdapter(ProjectEntityAdapter());
@@ -41,7 +40,7 @@ Future initializeApp() async {
 }
 
 Future<void> _initHiveStaticData() async {
-  final currenciesDataSource = di.ic<CurrenciesDataSource>();
+  final currenciesDataSource = ic<CurrenciesDataSource>();
   final currencies = await currenciesDataSource.getCurrencies();
   if (currencies.isEmpty) {
     await currenciesDataSource.saveCurrencies(SUPPORTED_CURRENCIES);

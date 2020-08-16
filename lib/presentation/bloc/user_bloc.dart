@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import './bloc.dart';
 import '../../data/usecases/impl/add_user.dart';
 import '../../data/usecases/impl/delete_user.dart';
 import '../../data/usecases/impl/get_users.dart';
 import '../../data/usecases/impl/modify_user.dart';
+import '../../injection.dart';
 
+@Singleton(env: [Env.prod])
 class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUsers getUsers;
   final AddUser addUser;

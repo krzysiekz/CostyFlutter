@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../datasources/expenses_datasource.dart';
 import '../../datasources/users_datasource.dart';
 import '../../errors/failures.dart';
@@ -10,6 +12,7 @@ import '../../models/user.dart';
 import '../../models/user_expense.dart';
 import '../expenses_repository.dart';
 
+@Singleton(as: ExpensesRepository, env: [Env.prod])
 class ExpensesRepositoryImpl implements ExpensesRepository {
   final ExpensesDataSource expensesDataSource;
   final UsersDataSource usersDataSource;

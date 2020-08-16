@@ -8,13 +8,13 @@ part of 'project_entity.dart';
 
 class ProjectEntityAdapter extends TypeAdapter<ProjectEntity> {
   @override
-  final typeId = 1;
+  final int typeId = 1;
 
   @override
   ProjectEntity read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ProjectEntity(
       name: fields[0] as String,
@@ -34,4 +34,14 @@ class ProjectEntityAdapter extends TypeAdapter<ProjectEntity> {
       ..writeByte(2)
       ..write(obj.creationDateTime);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProjectEntityAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

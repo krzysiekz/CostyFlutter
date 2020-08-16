@@ -1,8 +1,12 @@
+import 'package:costy/injection.dart';
+import 'package:injectable/injectable.dart';
+
 import '../../models/currency.dart';
 import '../currencies_datasource.dart';
 import '../entities/currency_entity.dart';
 import '../hive_operations.dart';
 
+@Singleton(as: CurrenciesDataSource, env: [Env.prod]) 
 class CurrenciesDataSourceImpl implements CurrenciesDataSource {
   static const _BOX_NAME = 'currencies';
 

@@ -8,13 +8,13 @@ part of 'currency_entity.dart';
 
 class CurrencyEntityAdapter extends TypeAdapter<CurrencyEntity> {
   @override
-  final typeId = 0;
+  final int typeId = 0;
 
   @override
   CurrencyEntity read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CurrencyEntity(
       name: fields[0] as String,
@@ -28,4 +28,14 @@ class CurrencyEntityAdapter extends TypeAdapter<CurrencyEntity> {
       ..writeByte(0)
       ..write(obj.name);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CurrencyEntityAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import './bloc.dart';
 import '../../data/models/project.dart';
@@ -8,7 +9,9 @@ import '../../data/models/user_expense.dart';
 import '../../data/usecases/impl/get_expenses.dart';
 import '../../data/usecases/impl/get_report.dart';
 import '../../data/usecases/impl/share_report.dart';
+import '../../injection.dart';
 
+@Singleton(env: [Env.prod])
 class ReportBloc extends Bloc<ReportEvent, ReportState> {
   final GetReport getReport;
   final GetExpenses getExpenses;

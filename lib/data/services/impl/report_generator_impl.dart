@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../models/currency.dart';
 import '../../models/project.dart';
 import '../../models/report.dart';
@@ -9,6 +11,7 @@ import '../../models/report_entry.dart';
 import '../../models/user.dart';
 import '../report_generator.dart';
 
+@Singleton(as: ReportGenerator, env: [Env.prod])
 class ReportGeneratorImpl implements ReportGenerator {
   @override
   Future<Report> generate(Project project) async {

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import './bloc.dart';
 import '../../data/usecases/impl/add_project.dart';
@@ -8,7 +9,9 @@ import '../../data/usecases/impl/delete_project.dart';
 import '../../data/usecases/impl/get_projects.dart';
 import '../../data/usecases/impl/modify_project.dart';
 import '../../data/usecases/usecase.dart';
+import '../../injection.dart';
 
+@Singleton(env: [Env.prod])
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   final GetProjects getProjects;
   final AddProject addProject;
