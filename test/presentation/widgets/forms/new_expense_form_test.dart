@@ -63,7 +63,7 @@ void main() {
   ];
 
   group('add new expense', () {
-    var testedWidget;
+    Widget testedWidget;
 
     setUp(() {
       //arrange
@@ -202,7 +202,7 @@ void main() {
         final AddExpenseEvent calledAddExpenseEvent =
             verify(expenseBloc.add(captureThat(isA<AddExpenseEvent>())))
                 .captured
-                .single;
+                .single as AddExpenseEvent;
         expect(calledAddExpenseEvent.currency, tProject.defaultCurrency);
         expect(calledAddExpenseEvent.project, tProject);
         expect(calledAddExpenseEvent.amount, Decimal.parse("10"));
@@ -216,8 +216,8 @@ void main() {
   });
 
   group('edit expense', () {
-    var tExpense;
-    var testedWidget;
+    UserExpense tExpense;
+    Widget testedWidget;
 
     setUp(() {
       //arrange
@@ -345,7 +345,7 @@ void main() {
         final ModifyExpenseEvent calledAddExpenseEvent =
             verify(expenseBloc.add(captureThat(isA<ModifyExpenseEvent>())))
                 .captured
-                .single;
+                .single as ModifyExpenseEvent;
         expect(calledAddExpenseEvent.expense.id, tExpense.id);
         expect(calledAddExpenseEvent.expense.currency, tCurrencies[1]);
         expect(calledAddExpenseEvent.expense.amount, Decimal.parse("20"));

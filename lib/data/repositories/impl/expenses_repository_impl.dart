@@ -62,7 +62,8 @@ class ExpensesRepositoryImpl implements ExpensesRepository {
     });
   }
 
-  Future<Either<Failure, T>> _getResponse<T>(Future<T> getter()) async {
+  Future<Either<Failure, T>> _getResponse<T>(
+      Future<T> Function() getter) async {
     try {
       final response = await getter();
       return Right(response);

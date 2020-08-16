@@ -11,10 +11,10 @@ class Report extends Equatable {
   Report({@required this.project});
 
   @override
-  List<Object> get props => [this.project, this.entries];
+  List<Object> get props => [project, entries];
 
   void addEntry(ReportEntry reportEntry) {
-    this.entries.add(reportEntry);
+    entries.add(reportEntry);
   }
 
   @override

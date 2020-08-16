@@ -11,15 +11,14 @@ class ReportEntry extends Equatable {
   final Decimal amount;
   final Currency currency;
 
-  ReportEntry(
+  const ReportEntry(
       {@required this.sender,
       @required this.receiver,
       @required this.amount,
       @required this.currency});
 
   @override
-  List<Object> get props =>
-      [this.sender, this.receiver, this.amount, this.currency];
+  List<Object> get props => [sender, receiver, amount, currency];
 
   @override
   String toString() {

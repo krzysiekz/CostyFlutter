@@ -21,62 +21,57 @@ class ReceiversWidgetFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-        builder: (context, state) {
-          if (state is UserLoaded) {
-            if (initialReceivers == null) {
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                onSelectionChangedFunction(state.users);
-              });
-              return DialogUtilities.showLoadingIndicator(context);
-            }
+    return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+      if (state is UserLoaded) {
+        if (initialReceivers == null) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            onSelectionChangedFunction(state.users);
+          });
+          return DialogUtilities.showLoadingIndicator(context);
+        }
 
-            return Container(
-              margin: const EdgeInsets.only(right: 5, left: 5),
-              child: FormField<List<User>>(
-                initialValue:
-                    initialReceivers == null ? state.users : initialReceivers,
-                builder: (FormFieldState<List<User>> formState) {
-                  return InputDecorator(
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        prefixIcon: Icon(
-                          context.platformIcons.group,
-                          color: Colors.blue,
-                        ),
-                        filled: true,
-                        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                        isDense: true,
-                        errorText:
-                            formState.hasError ? formState.errorText : null,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      child: MultiSelectChip(
-                        key: Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
-                        selectedUserList: initialReceivers == null
-                            ? state.users
-                            : initialReceivers,
-                        userList: state.users,
-                        onSelectionChanged: (selected) {
-                          formState.didChange(selected);
-                          onSelectionChangedFunction(selected);
-                        },
-                        extractLabelFunction: (User u) => u.name,
-                      ));
-                },
-                validator: (val) {
-                  return (val == null || val.length < 1)
-                      ? AppLocalizations.of(context)
-                          .translate('expense_form_receivers_error')
-                      : null;
-                },
-              ),
-            );
-          }
-          return Container();
-        });
+        return Container(
+          margin: const EdgeInsets.only(right: 5, left: 5),
+          child: FormField<Iterable<User>>(
+            initialValue: initialReceivers ?? state.users,
+            builder: (FormFieldState<Iterable<User>> formState) {
+              return InputDecorator(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(0.0),
+                    prefixIcon: Icon(
+                      context.platformIcons.group,
+                      color: Colors.blue,
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                    isDense: true,
+                    errorText: formState.hasError ? formState.errorText : null,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  child: MultiSelectChip(
+                    key: const Key(Keys.EXPENSE_FORM_RECEIVERS_FIELD_KEY),
+                    selectedUserList: initialReceivers ?? state.users,
+                    userList: state.users,
+                    onSelectionChanged: (Iterable<User> selected) {
+                      formState.didChange(selected);
+                      onSelectionChangedFunction(selected);
+                    },
+                    extractLabelFunction: (User u) => u.name,
+                  ));
+            },
+            validator: (val) {
+              return (val == null || val.isEmpty)
+                  ? AppLocalizations.of(context)
+                      .translate('expense_form_receivers_error')
+                  : null;
+            },
+          ),
+        );
+      }
+      return Container();
+    });
   }
 }

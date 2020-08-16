@@ -37,7 +37,7 @@ void main() {
   ];
 
   group('add new project', () {
-    var testedWidget;
+    Widget testedWidget;
 
     setUp(() {
       //arrange
@@ -50,7 +50,7 @@ void main() {
           BlocProvider<CurrencyBloc>.value(value: currencyBloc),
           BlocProvider<ProjectBloc>.value(value: projectBloc),
         ],
-        child: MaterialApp(
+        child: const MaterialApp(
             locale: Locale('en'),
             home: Scaffold(
               body: NewProjectForm(),
@@ -151,7 +151,7 @@ void main() {
         defaultCurrency: Currency(name: "USD"),
         creationDateTime: DateTime.now());
 
-    var testedWidget;
+    Widget testedWidget;
 
     setUp(() {
       //arrange
@@ -165,7 +165,7 @@ void main() {
           BlocProvider<ProjectBloc>.value(value: projectBloc),
         ],
         child: MaterialApp(
-            locale: Locale('en'),
+            locale: const Locale('en'),
             home: Scaffold(
               body: NewProjectForm(projectToEdit: tProject),
             ),

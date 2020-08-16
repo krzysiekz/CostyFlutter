@@ -16,10 +16,10 @@ class ReportGeneratorImpl implements ReportGenerator {
   @override
   Future<Report> generate(Project project) async {
     final report = Report(project: project);
-    final Map<CalculationKey, Decimal> calculationsMap = Map();
+    final Map<CalculationKey, Decimal> calculationsMap = {};
 
     project.expenses.forEach((expense) {
-      Decimal baseAmount =
+      final Decimal baseAmount =
           expense.amount / Decimal.fromInt(expense.receivers.length);
 
       expense.receivers.forEach((receiver) {
@@ -55,7 +55,7 @@ class ReportGeneratorImpl implements ReportGenerator {
     Report report,
   ) {
     while (_doesCycleExist(report)) {
-      for (ReportEntry entry in report.entries) {
+      for (final ReportEntry entry in report.entries) {
         final cycle = _findCycle(
             entry.sender, entry.sender, report.entries, entry.currency, []);
         if (cycle.isNotEmpty) {
@@ -145,7 +145,7 @@ class ReportGeneratorImpl implements ReportGenerator {
       return [rootConnection];
     } else {
       visited.add(currentPair);
-      for (ReportEntry entry in connected) {
+      for (final ReportEntry entry in connected) {
         final cycle =
             _findCycle(root, entry.receiver, entries, currency, visited);
         if (cycle.isNotEmpty) {
@@ -170,8 +170,8 @@ class CalculationKey extends Equatable {
   final User receiver;
   final Currency currency;
 
-  CalculationKey({this.sender, this.receiver, this.currency});
+  const CalculationKey({this.sender, this.receiver, this.currency});
 
   @override
-  List<Object> get props => [this.sender, this.receiver, this.currency];
+  List<Object> get props => [sender, receiver, currency];
 }

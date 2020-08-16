@@ -12,7 +12,7 @@ import '../hive_operations.dart';
 
 @Singleton(as: ExpensesDataSource, env: [Env.prod])
 class ExpensesDataSourceImpl implements ExpensesDataSource {
-  static const BOX_NAME = 'expenses';
+  static const boxName = 'expenses';
 
   final HiveOperations _hiveOperations;
 
@@ -27,7 +27,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
       User user,
       List<User> receivers,
       DateTime dateTime}) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     final entity = UserExpenseEntity(
         projectId: project.id,
         userId: user.id,
@@ -36,13 +36,13 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
         description: description,
         receiversIds: receivers.map((r) => r.id).toList(),
         dateTime: dateTime.toIso8601String());
-    int response = await box.add(entity);
+    final int response = await box.add(entity);
     return response;
   }
 
   @override
   Future<int> deleteExpense(int expenseId) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     await box.delete(expenseId);
     return expenseId;
   }
@@ -50,9 +50,9 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
   @override
   Future<List<UserExpense>> getExpenses(
       Project project, List<User> users) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     final entityMap = box.toMap();
-    var expensesList = entityMap.entries
+    final expensesList = entityMap.entries
         .where((e) => (e.value as UserExpenseEntity).projectId == project.id)
         .map((entity) => _mapEntityToUserExpense(entity, users))
         .toList();
@@ -62,7 +62,7 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
 
   @override
   Future<int> modifyExpense(UserExpense expense) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     final oldEntity = box.get(expense.id) as UserExpenseEntity;
     final newEntity = UserExpenseEntity(
         projectId: oldEntity.projectId,
@@ -77,9 +77,9 @@ class ExpensesDataSourceImpl implements ExpensesDataSource {
   }
 
   UserExpense _mapEntityToUserExpense(e, List<User> users) {
-    final UserExpenseEntity entity = e.value;
+    final UserExpenseEntity entity = e.value as UserExpenseEntity;
     return UserExpense(
-        id: e.key,
+        id: e.key as int,
         description: entity.description,
         amount: Decimal.parse(entity.amount),
         currency: Currency(name: entity.currency),

@@ -44,7 +44,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
           defaultCurrency: event.project.defaultCurrency,
           creationDateTime: event.project.creationDateTime);
 
-      List<UserExpense> expenses = eitherExpenses.getOrElse(() => List());
+      final List<UserExpense> expenses = eitherExpenses.getOrElse(() => List());
       expenses.forEach((expense) => project.addExpense(expense));
 
       final dataOrFailure =

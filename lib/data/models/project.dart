@@ -20,10 +20,10 @@ class Project extends Equatable {
   });
 
   @override
-  List<Object> get props => [this.id];
+  List<Object> get props => [id];
 
   void addExpense(UserExpense userExpense) {
-    this.expenses.add(userExpense);
+    expenses.add(userExpense);
   }
 
   @override

@@ -15,7 +15,7 @@ class ProjectEntity extends Equatable {
   @HiveField(2)
   final String creationDateTime;
 
-  ProjectEntity(
+  const ProjectEntity(
       {@required this.name,
       @required this.defaultCurrency,
       @required this.creationDateTime});

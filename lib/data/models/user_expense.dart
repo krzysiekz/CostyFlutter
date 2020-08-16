@@ -14,7 +14,7 @@ class UserExpense extends Equatable {
   final Currency currency;
   final DateTime dateTime;
 
-  UserExpense(
+  const UserExpense(
       {@required this.id,
       @required this.receivers,
       @required this.user,
@@ -24,14 +24,8 @@ class UserExpense extends Equatable {
       @required this.dateTime});
 
   @override
-  List<Object> get props => [
-        this.receivers,
-        this.user,
-        this.amount,
-        this.description,
-        this.currency,
-        this.dateTime
-      ];
+  List<Object> get props =>
+      [receivers, user, amount, description, currency, dateTime];
 
   @override
   String toString() {

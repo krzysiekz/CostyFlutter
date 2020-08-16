@@ -9,7 +9,7 @@ import '../users_datasource.dart';
 
 @Singleton(as: UsersDataSource, env: [Env.prod])
 class UsersDataSourceImpl implements UsersDataSource {
-  static const BOX_NAME = 'users';
+  static const boxName = 'users';
 
   final HiveOperations _hiveOperations;
 
@@ -17,23 +17,23 @@ class UsersDataSourceImpl implements UsersDataSource {
 
   @override
   Future<int> addUser({Project project, String name}) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     final entity = UserEntity(name: name, projectId: project.id);
     return box.add(entity);
   }
 
   @override
   Future<int> deleteUser(int userId) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     await box.delete(userId);
     return userId;
   }
 
   @override
   Future<List<User>> getUsers(Project project) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     final entityMap = box.toMap();
-    var users = entityMap.entries
+    final users = entityMap.entries
         .where((e) => (e.value as UserEntity).projectId == project.id)
         .map(_mapEntityToUser)
         .toList();
@@ -43,7 +43,7 @@ class UsersDataSourceImpl implements UsersDataSource {
 
   @override
   Future<int> modifyUser(User user) async {
-    final box = await _hiveOperations.openBox(BOX_NAME);
+    final box = await _hiveOperations.openBox(boxName);
     final oldUserEntity = box.get(user.id) as UserEntity;
     if (oldUserEntity != null) {
       final newUserEntity =
@@ -54,5 +54,5 @@ class UsersDataSourceImpl implements UsersDataSource {
   }
 
   User _mapEntityToUser(e) =>
-      User(id: e.key, name: (e.value as UserEntity).name);
+      User(id: e.key as int, name: (e.value as UserEntity).name);
 }

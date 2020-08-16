@@ -24,8 +24,8 @@ class ModifyExpense implements UseCase<int, ModifyExpenseParams> {
 class ModifyExpenseParams extends Equatable {
   final UserExpense expense;
 
-  ModifyExpenseParams({@required this.expense});
+  const ModifyExpenseParams({@required this.expense});
 
   @override
-  List<Object> get props => [this.expense];
+  List<Object> get props => [expense];
 }

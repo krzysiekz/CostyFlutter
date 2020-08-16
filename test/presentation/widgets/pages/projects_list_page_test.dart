@@ -16,7 +16,7 @@ void main() {
   ProjectBloc projectBloc;
   Project tProject;
 
-  var testedWidget;
+  Widget testedWidget;
 
   setUp(() {
     tProject = Project(

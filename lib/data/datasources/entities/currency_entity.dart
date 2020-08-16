@@ -9,7 +9,7 @@ class CurrencyEntity extends Equatable {
   @HiveField(0)
   final String name;
 
-  CurrencyEntity({@required this.name});
+  const CurrencyEntity({@required this.name});
 
   @override
   List<Object> get props => [name];

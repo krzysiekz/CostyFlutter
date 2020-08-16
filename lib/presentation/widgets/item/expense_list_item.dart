@@ -15,7 +15,8 @@ class ExpenseListItem extends StatefulWidget {
   final UserExpense userExpense;
   final Project project;
 
-  ExpenseListItem({Key key, @required this.userExpense, @required this.project})
+  const ExpenseListItem(
+      {Key key, @required this.userExpense, @required this.project})
       : super(key: key);
 
   @override
@@ -88,7 +89,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
         ),
       ),
       confirmDismiss: (DismissDirection direction) async {
-        return await showDialog(
+        return showDialog(
           context: context,
           builder: (BuildContext context) {
             return DialogUtilities.createDeleteConfirmationDialog(context);

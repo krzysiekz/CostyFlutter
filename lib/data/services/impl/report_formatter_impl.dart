@@ -11,7 +11,7 @@ class ReportFormatterImpl implements ReportFormatter {
 
   @override
   Future<String> format(Report report) async {
-    var reportBuffer = StringBuffer();
+    final reportBuffer = StringBuffer();
     reportBuffer.writeln(report.project.name);
     reportBuffer.writeln();
 

@@ -38,13 +38,14 @@ class _ProjectListItemState extends State<ProjectListItem> {
           child: ListTile(
             leading: Container(
               child: Text(widget.project.defaultCurrency.name,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20)),
             ),
             title: Text(widget.project.name),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Divider(thickness: 0.4),
+                const Divider(thickness: 0.4),
                 Text(ProjectListItem.dateFormat
                     .format(widget.project.creationDateTime)),
               ],

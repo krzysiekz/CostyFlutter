@@ -23,8 +23,8 @@ class DeleteProject implements UseCase<int, DeleteProjectParams> {
 class DeleteProjectParams extends Equatable {
   final int projectId;
 
-  DeleteProjectParams({@required this.projectId});
+  const DeleteProjectParams({@required this.projectId});
 
   @override
-  List<Object> get props => [this.projectId];
+  List<Object> get props => [projectId];
 }

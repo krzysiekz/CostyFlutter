@@ -7,7 +7,7 @@ import '../../../keys.dart';
 class MultiSelectChip<T> extends StatelessWidget {
   final Iterable<T> userList;
   final Iterable<T> selectedUserList;
-  final Function(List<T>) onSelectionChanged;
+  final Function(Iterable<T>) onSelectionChanged;
   final Function(T item) extractLabelFunction;
 
   const MultiSelectChip({
@@ -26,13 +26,13 @@ class MultiSelectChip<T> extends StatelessWidget {
           alignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
-              key: Key(Keys.MULTI_SELECT_CHIP_SELECT_ALL),
+              key: const Key(Keys.MULTI_SELECT_CHIP_SELECT_ALL),
               child: Text(AppLocalizations.of(context).translate(
                   'expense_form_multi_select_chip_select_all_button')),
               onPressed: () => onSelectionChanged(userList),
             ),
             FlatButton(
-              key: Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE),
+              key: const Key(Keys.MULTI_SELECT_CHIP_SELECT_NONE),
               child: Text(AppLocalizations.of(context).translate(
                   'expense_form_multi_select_chip_select_none_button')),
               onPressed: () => onSelectionChanged([]),
@@ -46,21 +46,21 @@ class MultiSelectChip<T> extends StatelessWidget {
     );
   }
 
-  _buildChoiceList(BuildContext ctx) {
-    List<Widget> choices = List();
+  List<Widget> _buildChoiceList(BuildContext ctx) {
+    final List<Widget> choices = [];
 
-    userList.forEach((item) {
+    for (final item in userList) {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
           selectedColor: Colors.blue.withOpacity(0.8),
           key: Key("receiver_${extractLabelFunction(item)}"),
           label: Text(
-            extractLabelFunction(item),
+            extractLabelFunction(item) as String,
             overflow: TextOverflow.fade,
             maxLines: 1,
             softWrap: false,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           selected: selectedUserList.contains(item),
           onSelected: (selected) {
@@ -71,7 +71,8 @@ class MultiSelectChip<T> extends StatelessWidget {
           },
         ),
       ));
-    });
+    }
+
     return choices;
   }
 }

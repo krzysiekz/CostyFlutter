@@ -24,8 +24,8 @@ class ModifyUser implements UseCase<int, ModifyUserParams> {
 class ModifyUserParams extends Equatable {
   final User user;
 
-  ModifyUserParams({@required this.user});
+  const ModifyUserParams({@required this.user});
 
   @override
-  List<Object> get props => [this.user];
+  List<Object> get props => [user];
 }

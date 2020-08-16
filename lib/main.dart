@@ -55,7 +55,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   AppBarTheme _appBarTheme() {
-    return AppBarTheme(
+    return const AppBarTheme(
       color: Colors.white,
       iconTheme: IconThemeData(
         color: Colors.blue,
@@ -65,8 +65,8 @@ class _MyAppState extends State<MyApp> {
 
   AppBarTheme _darkAppBarTheme() {
     return AppBarTheme(
-      color: Color.fromRGBO(40, 40, 40, 1),
-      iconTheme: IconThemeData(
+      color: const Color.fromRGBO(40, 40, 40, 1),
+      iconTheme: const IconThemeData(
         color: Colors.blue,
       ),
     );
@@ -77,8 +77,8 @@ class _MyAppState extends State<MyApp> {
     return base.copyWith(
         inputDecorationTheme: Theme.of(context)
             .inputDecorationTheme
-            .copyWith(fillColor: Color.fromRGBO(235, 235, 235, 1)),
-        buttonTheme: ButtonThemeData(
+            .copyWith(fillColor: const Color.fromRGBO(235, 235, 235, 1)),
+        buttonTheme: const ButtonThemeData(
           buttonColor: Colors.blue,
           textTheme: ButtonTextTheme.primary,
         ),
@@ -93,8 +93,8 @@ class _MyAppState extends State<MyApp> {
     return base.copyWith(
         inputDecorationTheme: Theme.of(context)
             .inputDecorationTheme
-            .copyWith(fillColor: Color.fromRGBO(100, 100, 100, 1)),
-        buttonTheme: ButtonThemeData(
+            .copyWith(fillColor: const Color.fromRGBO(100, 100, 100, 1)),
+        buttonTheme: const ButtonThemeData(
           buttonColor: Colors.blue,
           textTheme: ButtonTextTheme.primary,
         ),
@@ -135,8 +135,8 @@ class _MyAppState extends State<MyApp> {
             builder: DevicePreview.appBuilder,
             title: 'Costy',
             supportedLocales: [
-              Locale('en', 'US'),
-              Locale('pl', 'PL'),
+              const Locale('en', 'US'),
+              const Locale('pl', 'PL'),
             ],
             // These delegates make sure that the localization data for the proper language is loaded
             localizationsDelegates: [
@@ -150,7 +150,7 @@ class _MyAppState extends State<MyApp> {
             // Returns a locale which will be used by the app
             localeResolutionCallback: (locale, supportedLocales) {
               // Check if the current device locale is supported
-              for (var supportedLocale in supportedLocales) {
+              for (final supportedLocale in supportedLocales) {
                 if (supportedLocale.languageCode == locale.languageCode &&
                     supportedLocale.countryCode == locale.countryCode) {
                   return supportedLocale;

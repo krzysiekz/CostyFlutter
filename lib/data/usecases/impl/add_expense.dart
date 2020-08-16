@@ -40,7 +40,7 @@ class AddExpenseParams extends Equatable {
   final List<User> receivers;
   final DateTime dateTime;
 
-  AddExpenseParams(
+  const AddExpenseParams(
       {@required this.amount,
       @required this.description,
       @required this.currency,
@@ -50,13 +50,6 @@ class AddExpenseParams extends Equatable {
       @required this.dateTime});
 
   @override
-  List<Object> get props => [
-        this.amount,
-        this.description,
-        this.currency,
-        this.user,
-        this.receivers,
-        this.project,
-        this.dateTime
-      ];
+  List<Object> get props =>
+      [amount, description, currency, user, receivers, project, dateTime];
 }

@@ -24,7 +24,7 @@ void main() {
   Project tProject;
   User tUser;
 
-  var testedWidget;
+  Widget testedWidget;
 
   setUp(() {
     tProject = Project(

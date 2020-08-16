@@ -26,8 +26,9 @@ class AddProjectParams extends Equatable {
   final String projectName;
   final Currency defaultCurrency;
 
-  AddProjectParams({@required this.projectName, @required this.defaultCurrency});
+  const AddProjectParams(
+      {@required this.projectName, @required this.defaultCurrency});
 
   @override
-  List<Object> get props => [this.projectName, this.defaultCurrency];
+  List<Object> get props => [projectName, defaultCurrency];
 }

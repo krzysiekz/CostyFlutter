@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/currency.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
 import '../../bloc/bloc.dart';
@@ -15,7 +16,7 @@ import '../other/custom_scaffold.dart';
 import '../other/custom_text_field.dart';
 
 class NewProjectForm extends StatefulWidget {
-  static navigate(BuildContext buildContext, {Project projectToEdit}) {
+  static void navigate(BuildContext buildContext, {Project projectToEdit}) {
     Navigator.of(buildContext).push(platformPageRoute(
       context: buildContext,
       builder: (BuildContext context) =>
@@ -33,7 +34,7 @@ class NewProjectForm extends StatefulWidget {
 
 class _NewProjectFormState extends State<NewProjectForm> {
   final _nameController = TextEditingController();
-  var _defaultCurrency;
+  Currency _defaultCurrency;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -88,7 +89,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
         child:
             BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
           return Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 10,
               left: 10,
               right: 10,
@@ -116,11 +117,12 @@ class _NewProjectFormState extends State<NewProjectForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
-            textFormFieldKey: Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
+            textFormFieldKey:
+                const Key(Keys.PROJECT_FORM_PROJECT_NAME_FIELD_KEY),
             hintText: AppLocalizations.of(context)
                 .translate('project_form_project_name_hint'),
             controller: _nameController,
-            validator: (val) => val.isEmpty
+            validator: (String val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('project_form_project_name_error')
                 : null,
@@ -130,10 +132,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
             height: 10,
           ),
           CurrencyDropdownField(
-              key: Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
+              key: const Key(Keys.PROJECT_FORM_DEFAULT_CURRENCY_KEY),
               initialValue: _defaultCurrency,
               currencies: state.currencies,
-              callback: (newValue) {
+              callback: (Currency newValue) {
                 setState(() {
                   _defaultCurrency = newValue;
                 });
@@ -148,7 +150,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
                 materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                key: const Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),

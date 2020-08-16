@@ -24,8 +24,8 @@ class ModifyProject implements UseCase<int, ModifyProjectParams> {
 class ModifyProjectParams extends Equatable {
   final Project project;
 
-  ModifyProjectParams({@required this.project});
+  const ModifyProjectParams({@required this.project});
 
   @override
-  List<Object> get props => [this.project];
+  List<Object> get props => [project];
 }

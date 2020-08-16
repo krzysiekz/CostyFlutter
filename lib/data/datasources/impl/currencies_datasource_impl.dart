@@ -1,14 +1,14 @@
-import 'package:costy/injection.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../injection.dart';
 import '../../models/currency.dart';
 import '../currencies_datasource.dart';
 import '../entities/currency_entity.dart';
 import '../hive_operations.dart';
 
-@Singleton(as: CurrenciesDataSource, env: [Env.prod]) 
+@Singleton(as: CurrenciesDataSource, env: [Env.prod])
 class CurrenciesDataSourceImpl implements CurrenciesDataSource {
-  static const _BOX_NAME = 'currencies';
+  static const _boxName = 'currencies';
 
   final HiveOperations _hiveOperations;
 
@@ -16,17 +16,19 @@ class CurrenciesDataSourceImpl implements CurrenciesDataSource {
 
   @override
   Future<List<Currency>> getCurrencies() async {
-    var box = await _hiveOperations.openBox(_BOX_NAME);
-    var entries = box.values;
-    var currencyList =
-        entries.map((entity) => Currency(name: entity.name)).toList();
+    final box = await _hiveOperations.openBox(_boxName);
+    final entries = box.values;
+    final currencyList = entries
+        .map((entity) => Currency(name: (entity as CurrencyEntity).name))
+        .toList();
     return currencyList;
   }
 
   @override
   Future<void> saveCurrencies(List<String> currencies) async {
-    var box = await _hiveOperations.openBox(_BOX_NAME);
-    currencies.forEach(
-        (currency) async => await box.add(CurrencyEntity(name: currency)));
+    final box = await _hiveOperations.openBox(_boxName);
+    for (final currency in currencies) {
+      box.add(CurrencyEntity(name: currency));
+    }
   }
 }

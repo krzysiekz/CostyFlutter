@@ -7,6 +7,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app_localizations.dart';
+import '../../../data/models/currency.dart';
 import '../../../data/models/project.dart';
 import '../../../data/models/user.dart';
 import '../../../data/models/user_expense.dart';
@@ -18,7 +19,7 @@ import '../other/custom_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
 
 class NewExpenseForm extends StatefulWidget {
-  static navigate(BuildContext buildContext, Project project,
+  static void navigate(BuildContext buildContext, Project project,
       {UserExpense expenseToEdit}) {
     Navigator.of(buildContext).push(platformPageRoute(
       context: buildContext,
@@ -32,7 +33,7 @@ class NewExpenseForm extends StatefulWidget {
   final Project project;
   final UserExpense expenseToEdit;
 
-  NewExpenseForm({Key key, @required this.project, this.expenseToEdit})
+  const NewExpenseForm({Key key, @required this.project, this.expenseToEdit})
       : super(key: key);
 
   @override
@@ -43,10 +44,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
 
-  var _currency;
-  var _user;
-  var _receivers;
-  var _selectedDate;
+  Currency _currency;
+  User _user;
+  List<User> _receivers;
+  DateTime _selectedDate;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -125,7 +126,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       appBarTitle: title,
       body: SingleChildScrollView(
           child: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: 10,
           left: 10,
           right: 10,
@@ -143,11 +144,12 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
-            textFormFieldKey: Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
+            textFormFieldKey:
+                const Key(Keys.EXPENSE_FORM_DESCRIPTION_FIELD_KEY),
             hintText: AppLocalizations.of(context)
                 .translate('expense_form_description_hint'),
             controller: _descriptionController,
-            validator: (val) => val.isEmpty
+            validator: (String val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('expense_form_description_error')
                 : null,
@@ -161,12 +163,14 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             children: <Widget>[
               Expanded(
                 child: CustomTextField(
-                  textFormFieldKey: Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
+                  textFormFieldKey:
+                      const Key(Keys.EXPENSE_FORM_AMOUNT_FIELD_KEY),
                   hintText: AppLocalizations.of(context)
                       .translate('expense_form_amount_hint'),
                   controller: _amountController,
                   validator: _numberValidator,
-                  textInputType: TextInputType.numberWithOptions(decimal: true),
+                  textInputType:
+                      const TextInputType.numberWithOptions(decimal: true),
                   iconData: context.platformIcons.tag,
                 ),
               ),
@@ -193,7 +197,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               Expanded(
                   child: _DateTimePickerFormField(
                 selectedValue: _selectedDate,
-                onConfirmFunction: (date) {
+                onConfirmFunction: (DateTime date) {
                   setState(() {
                     _selectedDate = date;
                   });
@@ -206,7 +210,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           ),
           ReceiversWidgetFormField(
               initialReceivers: _receivers,
-              onSelectionChangedFunction: (selectedList) {
+              onSelectionChangedFunction: (List<User> selectedList) {
                 setState(() {
                   _receivers = selectedList;
                 });
@@ -221,13 +225,13 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                 materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                key: const Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               PlatformButton(
-                key: Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
+                key: const Key(Keys.EXPENSE_FORM_ADD_EDIT_BUTTON_KEY),
                 child: widget.expenseToEdit == null
                     ? Text(AppLocalizations.of(context)
                         .translate('expense_form_add_expense_button'))
@@ -243,21 +247,20 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
   }
 
   Widget _createCurrencyDropDownList(BuildContext context) {
-    return BlocBuilder<CurrencyBloc, CurrencyState>(
-        builder: (context, state) {
-          if (state is CurrencyLoaded) {
-            return CurrencyDropdownField(
-                key: Key(Keys.EXPENSE_FORM_CURRENCY_KEY),
-                currencies: state.currencies,
-                initialValue: _currency,
-                callback: (newValue) {
-                  setState(() {
-                    _currency = newValue;
-                  });
-                });
-          }
-          return Container();
-        });
+    return BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
+      if (state is CurrencyLoaded) {
+        return CurrencyDropdownField(
+            key: const Key(Keys.EXPENSE_FORM_CURRENCY_KEY),
+            currencies: state.currencies,
+            initialValue: _currency,
+            callback: (Currency newValue) {
+              setState(() {
+                _currency = newValue;
+              });
+            });
+      }
+      return Container();
+    });
   }
 }
 
@@ -271,65 +274,62 @@ class _UserDropDownFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-        builder: (context, state) {
-          if (state is UserLoaded) {
-            return Container(
-                margin: const EdgeInsets.only(right: 5, left: 5),
-                child: FormField<User>(
-                  key: Key(Keys.EXPENSE_FORM_USER_KEY),
-                  builder: (FormFieldState<User> formState) {
-                    return InputDecorator(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                        prefixIcon: Icon(
-                          context.platformIcons.person,
-                          color: Colors.blue,
-                        ),
-                        filled: true,
-                        fillColor:
-                            Theme.of(context).inputDecorationTheme.fillColor,
-                        isDense: true,
-                        errorText:
-                            formState.hasError ? formState.errorText : null,
-                        hintText: AppLocalizations.of(context)
-                            .translate('expense_form_user_hint'),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: BorderSide.none,
-                        ),
+    return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+      if (state is UserLoaded) {
+        return Container(
+            margin: const EdgeInsets.only(right: 5, left: 5),
+            child: FormField<User>(
+              key: const Key(Keys.EXPENSE_FORM_USER_KEY),
+              builder: (FormFieldState<User> formState) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                    prefixIcon: Icon(
+                      context.platformIcons.person,
+                      color: Colors.blue,
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+                    isDense: true,
+                    errorText: formState.hasError ? formState.errorText : null,
+                    hintText: AppLocalizations.of(context)
+                        .translate('expense_form_user_hint'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  isEmpty: initialValue == null,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<User>(
+                      isExpanded: true,
+                      icon: const Icon(
+                        Icons.arrow_downward,
+                        color: Colors.blue,
                       ),
-                      isEmpty: initialValue == null,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<User>(
-                          isExpanded: true,
-                          icon: Icon(
-                            Icons.arrow_downward,
-                            color: Colors.blue,
-                          ),
-                          value: initialValue,
-                          isDense: true,
-                          onChanged: (User newValue) {
-                            formState.didChange(newValue);
-                            onChangedCallback(newValue);
-                          },
-                          items: _getUsersDropdownItems(state.users),
-                        ),
-                      ),
-                    );
-                  },
-                  validator: (val) {
-                    return (val == null)
-                        ? AppLocalizations.of(context)
-                            .translate('expense_form_user_error')
-                        : null;
-                  },
-                  initialValue: initialValue,
-                ));
-          }
-          return Container();
-        });
+                      value: initialValue,
+                      isDense: true,
+                      onChanged: (User newValue) {
+                        formState.didChange(newValue);
+                        onChangedCallback(newValue);
+                      },
+                      items: _getUsersDropdownItems(state.users),
+                    ),
+                  ),
+                );
+              },
+              validator: (val) {
+                return (val == null)
+                    ? AppLocalizations.of(context)
+                        .translate('expense_form_user_error')
+                    : null;
+              },
+              initialValue: initialValue,
+            ));
+      }
+      return Container();
+    });
   }
 
   List<DropdownMenuItem<User>> _getUsersDropdownItems(List<User> users) {
@@ -346,7 +346,7 @@ class _UserDropDownFormField extends StatelessWidget {
 
 class _DateTimePickerFormField extends StatelessWidget {
   final DateTime selectedValue;
-  final Function onConfirmFunction;
+  final Function(DateTime) onConfirmFunction;
 
   const _DateTimePickerFormField(
       {Key key, this.selectedValue, this.onConfirmFunction})
@@ -357,11 +357,12 @@ class _DateTimePickerFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 5, left: 5),
       child: FormField<DateTime>(
-        initialValue: selectedValue == null ? DateTime.now() : selectedValue,
+        initialValue: selectedValue ?? DateTime.now(),
         builder: (FormFieldState<DateTime> formState) {
           return InputDecorator(
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                contentPadding:
+                    const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                 filled: true,
                 fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                 isDense: true,
@@ -373,7 +374,7 @@ class _DateTimePickerFormField extends StatelessWidget {
               ),
               child: FlatButton(
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 onPressed: () => _presentDatePicker(context),
                 child: Text(NewExpenseForm.dateFormat.format(selectedValue)),
               ));
@@ -413,7 +414,6 @@ class _DateTimePickerFormField extends StatelessWidget {
                   maximumDate: DateTime.now(),
                   minimumDate: DateTime(DateTime.now().year - 1),
                   initialDateTime: selectedValue ?? DateTime.now(),
-                  mode: CupertinoDatePickerMode.dateAndTime,
                   onDateTimeChanged: onConfirmFunction)));
     }
   }

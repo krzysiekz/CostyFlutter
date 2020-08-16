@@ -23,8 +23,8 @@ class DeleteExpense implements UseCase<int, DeleteExpenseParams> {
 class DeleteExpenseParams extends Equatable {
   final int expenseId;
 
-  DeleteExpenseParams({@required this.expenseId});
+  const DeleteExpenseParams({@required this.expenseId});
 
   @override
-  List<Object> get props => [this.expenseId];
+  List<Object> get props => [expenseId];
 }

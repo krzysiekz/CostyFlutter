@@ -32,7 +32,7 @@ void main() {
   );
 
   group('add new user', () {
-    var testedWidget;
+    Widget testedWidget;
 
     setUp(() {
       testedWidget = BlocProvider(
@@ -91,8 +91,8 @@ void main() {
   });
 
   group('modify user', () {
-    var userToModify;
-    var testedWidget;
+    User userToModify;
+    Widget testedWidget;
 
     setUp(() {
       userToModify = User(id: 1, name: "John");
@@ -100,7 +100,7 @@ void main() {
       testedWidget = BlocProvider(
         create: (_) => userBloc,
         child: MaterialApp(
-            locale: Locale('en'),
+            locale: const Locale('en'),
             home: Scaffold(
               body: NewUserForm(project: tProject, userToModify: userToModify),
             ),

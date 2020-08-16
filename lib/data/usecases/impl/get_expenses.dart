@@ -25,8 +25,8 @@ class GetExpenses implements UseCase<List<UserExpense>, GetExpensesParams> {
 class GetExpensesParams extends Equatable {
   final Project project;
 
-  GetExpensesParams({@required this.project});
+  const GetExpensesParams({@required this.project});
 
   @override
-  List<Object> get props => [this.project];
+  List<Object> get props => [project];
 }

@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 class Currency extends Equatable {
   final String name;
 
-  Currency({@required this.name});
+  const Currency({@required this.name});
 
   @override
   List<Object> get props => [name];

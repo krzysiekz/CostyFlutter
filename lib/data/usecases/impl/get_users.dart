@@ -25,8 +25,8 @@ class GetUsers implements UseCase<List<User>, GetUsersParams> {
 class GetUsersParams extends Equatable {
   final Project project;
 
-  GetUsersParams({@required this.project});
+  const GetUsersParams({@required this.project});
 
   @override
-  List<Object> get props => [this.project];
+  List<Object> get props => [project];
 }

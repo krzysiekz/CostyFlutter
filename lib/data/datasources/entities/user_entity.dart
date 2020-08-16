@@ -12,7 +12,7 @@ class UserEntity extends Equatable {
   @HiveField(1)
   final int projectId;
 
-  UserEntity({@required this.name, @required this.projectId});
+  const UserEntity({@required this.name, @required this.projectId});
 
   @override
   List<Object> get props => [name, projectId];

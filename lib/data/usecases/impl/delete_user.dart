@@ -23,8 +23,8 @@ class DeleteUser implements UseCase<int, DeleteUserParams> {
 class DeleteUserParams extends Equatable {
   final int userId;
 
-  DeleteUserParams({@required this.userId});
+  const DeleteUserParams({@required this.userId});
 
   @override
-  List<Object> get props => [this.userId];
+  List<Object> get props => [userId];
 }

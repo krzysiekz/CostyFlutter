@@ -72,7 +72,7 @@ class _NewUserFormState extends State<NewUserForm> {
       appBarTitle: title,
       body: SingleChildScrollView(
           child: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: 10,
           left: 10,
           right: 10,
@@ -90,11 +90,11 @@ class _NewUserFormState extends State<NewUserForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
-            textFormFieldKey: Key(Keys.USER_FORM_NAME_FIELD_KEY),
+            textFormFieldKey: const Key(Keys.USER_FORM_NAME_FIELD_KEY),
             hintText: AppLocalizations.of(context)
                 .translate('user_form_user_name_hint'),
             controller: _nameController,
-            validator: (val) => val.isEmpty
+            validator: (String val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('user_form_user_name_error')
                 : null,
@@ -110,13 +110,13 @@ class _NewUserFormState extends State<NewUserForm> {
                 materialFlat: (_, platform) => MaterialFlatButtonData(
                   textColor: Theme.of(context).errorColor,
                 ),
-                key: Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
+                key: const Key(Keys.PROJECT_FORM_CANCEL_BUTTON_KEY),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               PlatformButton(
-                key: Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
+                key: const Key(Keys.USER_FORM_ADD_EDIT_BUTTON_KEY),
                 child: widget.userToModify == null
                     ? Text(AppLocalizations.of(context)
                         .translate('user_form_add_user_button'))

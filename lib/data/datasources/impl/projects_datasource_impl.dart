@@ -13,7 +13,7 @@ import 'users_datasource_impl.dart';
 
 @Singleton(as: ProjectsDataSource, env: [Env.prod])
 class ProjectsDataSourceImpl implements ProjectsDataSource {
-  static const _BOX_NAME = 'projects';
+  static const _boxName = 'projects';
   final HiveOperations _hiveOperations;
 
   ProjectsDataSourceImpl(this._hiveOperations);
@@ -24,7 +24,7 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
     Currency defaultCurrency,
     DateTime creationDateTime,
   ) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(_boxName);
     final entity = ProjectEntity(
       name: projectName,
       defaultCurrency: defaultCurrency.name,
@@ -38,14 +38,14 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
     await deleteExpenses(projectId);
     await deleteUsers(projectId);
 
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(_boxName);
     await box.delete(projectId);
     return projectId;
   }
 
   Future deleteExpenses(int projectId) async {
     final expensesBox =
-        await _hiveOperations.openBox(ExpensesDataSourceImpl.BOX_NAME);
+        await _hiveOperations.openBox(ExpensesDataSourceImpl.boxName);
     final entityMap = expensesBox.toMap();
     entityMap.entries
         .where((e) => (e.value as UserExpenseEntity).projectId == projectId)
@@ -54,7 +54,7 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
 
   Future deleteUsers(int projectId) async {
     final usersBox =
-        await _hiveOperations.openBox(UsersDataSourceImpl.BOX_NAME);
+        await _hiveOperations.openBox(UsersDataSourceImpl.boxName);
     final entityMap = usersBox.toMap();
     entityMap.entries
         .where((e) => (e.value as UserEntity).projectId == projectId)
@@ -63,14 +63,14 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
 
   @override
   Future<List<Project>> getProjects() async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(_boxName);
     final entityMap = box.toMap();
     return entityMap.entries.map(_mapEntityToProject).toList();
   }
 
   @override
   Future<int> modifyProject(Project project) async {
-    final box = await _hiveOperations.openBox(_BOX_NAME);
+    final box = await _hiveOperations.openBox(_boxName);
     final newProjectEntity = ProjectEntity(
       name: project.name,
       defaultCurrency: project.defaultCurrency.name,
@@ -81,7 +81,7 @@ class ProjectsDataSourceImpl implements ProjectsDataSource {
   }
 
   Project _mapEntityToProject(e) => Project(
-      id: e.key,
+      id: e.key as int,
       name: (e.value as ProjectEntity).name,
       defaultCurrency:
           Currency(name: (e.value as ProjectEntity).defaultCurrency),

@@ -6,7 +6,7 @@ import '../../../data/models/report_entry.dart';
 class ReportEntryListItem extends StatefulWidget {
   final ReportEntry reportEntry;
 
-  ReportEntryListItem({Key key, this.reportEntry}) : super(key: key);
+  const ReportEntryListItem({Key key, this.reportEntry}) : super(key: key);
 
   @override
   _ReportEntryListItemState createState() => _ReportEntryListItemState();
@@ -27,16 +27,16 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             child: FittedBox(
               child: Column(
                 children: <Widget>[
                   Text(widget.reportEntry.amount.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20)),
                   Text(widget.reportEntry.currency.name,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 13)),
                 ],
               ),
               fit: BoxFit.scaleDown,
@@ -49,7 +49,7 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
             Text(
               '${AppLocalizations.of(context).translate('report_entry_item_from')} ${widget.reportEntry.sender.name}',
             ),
-            Divider(
+            const Divider(
               thickness: 0.4,
             ),
           ],

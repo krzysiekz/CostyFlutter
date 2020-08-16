@@ -10,7 +10,7 @@ import '../utilities/dialog_utilities.dart';
 class ExpensesListPage extends StatefulWidget {
   final Project project;
 
-  ExpensesListPage({Key key, @required this.project}) : super(key: key);
+  const ExpensesListPage({Key key, @required this.project}) : super(key: key);
 
   @override
   _ExpensesListPageState createState() => _ExpensesListPageState();

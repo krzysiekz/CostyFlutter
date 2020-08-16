@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class CustomTextField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
-  final Function validator;
+  final String Function(String) validator;
   final TextInputType textInputType;
   final Key textFormFieldKey;
   final IconData iconData;
@@ -33,7 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         textCapitalization: TextCapitalization.sentences,
         keyboardType: widget.textInputType,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+          contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
           prefixIcon: Icon(
             widget.iconData,
             color: Colors.blue,

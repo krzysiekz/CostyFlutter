@@ -19,7 +19,7 @@ class ProjectLoading extends ProjectState {
 class ProjectLoaded extends ProjectState {
   final List<Project> projects;
 
-  ProjectLoaded(this.projects);
+  const ProjectLoaded(this.projects);
 
   @override
   List<Object> get props => [projects];
@@ -28,7 +28,7 @@ class ProjectLoaded extends ProjectState {
 class ProjectAdded extends ProjectState {
   final int projectId;
 
-  ProjectAdded(this.projectId);
+  const ProjectAdded(this.projectId);
 
   @override
   List<Object> get props => [projectId];
@@ -37,7 +37,7 @@ class ProjectAdded extends ProjectState {
 class ProjectModified extends ProjectState {
   final int projectId;
 
-  ProjectModified(this.projectId);
+  const ProjectModified(this.projectId);
 
   @override
   List<Object> get props => [projectId];
@@ -46,7 +46,7 @@ class ProjectModified extends ProjectState {
 class ProjectDeleted extends ProjectState {
   final int projectId;
 
-  ProjectDeleted(this.projectId);
+  const ProjectDeleted(this.projectId);
 
   @override
   List<Object> get props => [projectId];
@@ -55,7 +55,7 @@ class ProjectDeleted extends ProjectState {
 class ProjectError extends ProjectState {
   final String errorMessage;
 
-  ProjectError(this.errorMessage);
+  const ProjectError(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];

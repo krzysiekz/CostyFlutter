@@ -24,7 +24,7 @@ class CustomScaffold extends StatelessWidget {
               leading: CupertinoNavigationBarBackButton(
                 onPressed: () => Navigator.of(context).pop(),
               ),
-            ),
+            ) as PreferredSizeWidget,
       body: body,
     );
   }

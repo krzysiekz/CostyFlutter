@@ -15,7 +15,7 @@ import 'report_page.dart';
 import 'user_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
-  static navigate(BuildContext buildContext, Project project) {
+  static void navigate(BuildContext buildContext, Project project) {
     Navigator.of(buildContext).push(platformPageRoute(
       context: buildContext,
       builder: (BuildContext context) => ProjectDetailsPage(project: project),
@@ -39,7 +39,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           title: Text(
             AppLocalizations.of(context)
                 .translate('project_details_page_users'),
-            key: Key(Keys.PROJECT_DETAILS_USERS_TAB),
+            key: const Key(Keys.PROJECT_DETAILS_USERS_TAB),
           ),
           icon: Icon(context.platformIcons.group),
         ),
@@ -47,7 +47,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           title: Text(
             AppLocalizations.of(context)
                 .translate('project_details_page_expenses'),
-            key: Key(Keys.PROJECT_DETAILS_EXPENSES_TAB),
+            key: const Key(Keys.PROJECT_DETAILS_EXPENSES_TAB),
           ),
           icon: Icon(context.platformIcons.shoppingCart),
         ),
@@ -55,7 +55,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
           title: Text(
             AppLocalizations.of(context)
                 .translate('project_details_page_report'),
-            key: Key(Keys.PROJECT_DETAILS_REPORT_TAB),
+            key: const Key(Keys.PROJECT_DETAILS_REPORT_TAB),
           ),
           icon: Icon(context.platformIcons.mail),
         ),
@@ -115,7 +115,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
       case 0:
         return [
           PlatformIconButton(
-            key: Key(Keys.PROJECT_DETAILS_ADD_USER_BUTTON),
+            key: const Key(Keys.PROJECT_DETAILS_ADD_USER_BUTTON),
             onPressed: () => _showAddUserForm(ctx, project),
             icon: Icon(context.platformIcons.personAdd),
           )
@@ -126,13 +126,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
             builder: (BuildContext context, UserState state) {
               if (state is UserLoaded && state.users.isNotEmpty) {
                 return PlatformIconButton(
-                  key: Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
+                  key: const Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
                   onPressed: () => _showAddExpenseForm(ctx, project),
                   icon: Icon(context.platformIcons.add),
                 );
               } else {
                 return PlatformIconButton(
-                  key: Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
+                  key: const Key(Keys.PROJECT_DETAILS_ADD_EXPENSE_BUTTON),
                   onPressed: () => DialogUtilities.showAlertDialog(
                       ctx,
                       AppLocalizations.of(context).translate('info'),
@@ -169,7 +169,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     }
   }
 
-  _shareReport(BuildContext ctx, Project project) {
+  void _shareReport(BuildContext ctx, Project project) {
     BlocProvider.of<ReportBloc>(context).add(ShareReportEvent(project, ctx));
     BlocProvider.of<ReportBloc>(context).add(GetReportEvent(project));
   }

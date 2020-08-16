@@ -30,8 +30,8 @@ class GetReport implements UseCase<Report, GetReportParams> {
 class GetReportParams extends Equatable {
   final Project project;
 
-  GetReportParams({@required this.project});
+  const GetReportParams({@required this.project});
 
   @override
-  List<Object> get props => [this.project];
+  List<Object> get props => [project];
 }

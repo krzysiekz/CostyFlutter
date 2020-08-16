@@ -22,7 +22,7 @@ class CurrencyDropdownField extends StatefulWidget {
 }
 
 class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
-  var _selected;
+  Currency _selected;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
         builder: (FormFieldState<Currency> formState) {
           return InputDecorator(
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+              contentPadding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
               prefixIcon: Icon(
                 context.platformIcons.settings,
                 color: Colors.blue,
@@ -58,7 +58,7 @@ class _CurrencyDropdownFieldState extends State<CurrencyDropdownField> {
             isEmpty: _selected == null,
             child: DropdownButtonHideUnderline(
               child: DropdownButton<Currency>(
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_downward,
                   color: Colors.blue,
                 ),

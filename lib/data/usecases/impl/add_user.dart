@@ -25,8 +25,8 @@ class AddUserParams extends Equatable {
   final Project project;
   final String name;
 
-  AddUserParams({@required this.name, @required this.project});
+  const AddUserParams({@required this.name, @required this.project});
 
   @override
-  List<Object> get props => [this.name, this.project];
+  List<Object> get props => [name, project];
 }

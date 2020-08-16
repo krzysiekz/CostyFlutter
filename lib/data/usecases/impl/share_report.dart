@@ -26,17 +26,17 @@ class ShareReport implements UseCase<bool, ShareReportParams> {
       if (report.entries.isNotEmpty) {
         final reportAsString = await reportFormatter.format(report);
         _shareReport(reportAsString, params.buildContext);
-        return Right(true);
+        return const Right(true);
       } else {
-        return Right(false);
+        return const Right(false);
       }
     } on Exception {
       return Left(ReportGenerationFailure());
     }
   }
 
-  _shareReport(String reportAsString, BuildContext context) {
-    final RenderBox box = context.findRenderObject();
+  void _shareReport(String reportAsString, BuildContext context) {
+    final RenderBox box = context.findRenderObject() as RenderBox;
 
     Share.share(reportAsString,
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
@@ -47,8 +47,9 @@ class ShareReportParams extends Equatable {
   final Project project;
   final BuildContext buildContext;
 
-  ShareReportParams({@required this.buildContext, @required this.project});
+  const ShareReportParams(
+      {@required this.buildContext, @required this.project});
 
   @override
-  List<Object> get props => [this.project];
+  List<Object> get props => [project];
 }
