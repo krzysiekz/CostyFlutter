@@ -22,13 +22,13 @@ void main() {
 
   setUp(() {
     reportGenerator = ReportGeneratorImpl();
-    john = User(id: 1, name: 'John');
-    kate = User(id: 2, name: 'Kate');
-    bob = User(id: 3, name: 'Bob');
-    adam = User(id: 4, name: 'Adam');
+    john = const User(id: 1, name: 'John');
+    kate = const User(id: 2, name: 'Kate');
+    bob = const User(id: 3, name: 'Bob');
+    adam = const User(id: 4, name: 'Adam');
 
-    eur = Currency(name: 'EUR');
-    pln = Currency(name: 'PLN');
+    eur = const Currency(name: 'EUR');
+    pln = const Currency(name: 'PLN');
 
     projectCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
     expenseDateTime = DateTime.now();

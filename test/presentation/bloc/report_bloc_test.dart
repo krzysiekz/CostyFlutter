@@ -33,14 +33,15 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
   final tReport = Report(project: tProject);
 
   blocTest('should emit proper states when getting report',
       build: () {
         when(mockGetReport.call(any)).thenAnswer((_) async => Right(tReport));
-        when(mockGetExpenses.call(any)).thenAnswer((_) async => Right(List()));
+        when(mockGetExpenses.call(any))
+            .thenAnswer((_) async => const Right([]));
         return bloc;
       },
       act: (bloc) => bloc.add(GetReportEvent(tProject)),
@@ -50,13 +51,14 @@ void main() {
       build: () {
         when(mockGetReport.call(any))
             .thenAnswer((_) async => Left(ReportGenerationFailure()));
-        when(mockGetExpenses.call(any)).thenAnswer((_) async => Right(List()));
+        when(mockGetExpenses.call(any))
+            .thenAnswer((_) async => const Right([]));
         return bloc;
       },
       act: (bloc) => bloc.add(GetReportEvent(tProject)),
       expect: [
         ReportLoading(),
-        ReportError(reportGenerationFailureMessage)
+        const ReportError(reportGenerationFailureMessage)
       ]);
 
   blocTest('should emit proper states in case or error when getting expenses',
@@ -69,6 +71,6 @@ void main() {
       act: (bloc) => bloc.add(GetReportEvent(tProject)),
       expect: [
         ReportLoading(),
-        ReportError(reportGenerationFailureMessage)
+        const ReportError(reportGenerationFailureMessage)
       ]);
 }

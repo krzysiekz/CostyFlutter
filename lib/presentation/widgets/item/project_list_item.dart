@@ -28,19 +28,30 @@ class _ProjectListItemState extends State<ProjectListItem> {
       direction: DismissDirection.endToStart,
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.project),
+      confirmDismiss: (DismissDirection direction) async {
+        return showPlatformDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return DialogUtilities.createDeleteConfirmationDialog(context);
+          },
+        );
+      },
+      onDismissed: (DismissDirection direction) {
+        BlocProvider.of<ProjectBloc>(context)
+            .add(DeleteProjectEvent(widget.project.id));
+        BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
+      },
       child: GestureDetector(
         onTap: () => ProjectDetailsPage.navigate(context, widget.project),
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: ListTile(
-            leading: Container(
-              child: Text(widget.project.defaultCurrency.name,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20)),
-            ),
+            leading: Text(widget.project.defaultCurrency.name,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             title: Text(widget.project.name),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,19 +72,6 @@ class _ProjectListItemState extends State<ProjectListItem> {
           ),
         ),
       ),
-      confirmDismiss: (DismissDirection direction) async {
-        return showPlatformDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return DialogUtilities.createDeleteConfirmationDialog(context);
-          },
-        );
-      },
-      onDismissed: (DismissDirection direction) {
-        BlocProvider.of<ProjectBloc>(context)
-            .add(DeleteProjectEvent(widget.project.id));
-        BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
-      },
     );
   }
 

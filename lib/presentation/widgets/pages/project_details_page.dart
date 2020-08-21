@@ -34,32 +34,33 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
     with SingleTickerProviderStateMixin {
   PlatformTabController _tabController;
 
-  final items = (BuildContext context) => [
-        BottomNavigationBarItem(
-          title: Text(
-            AppLocalizations.of(context)
-                .translate('project_details_page_users'),
-            key: const Key(Keys.projectDetailsUsersTab),
-          ),
-          icon: Icon(context.platformIcons.group),
-        ),
-        BottomNavigationBarItem(
-          title: Text(
-            AppLocalizations.of(context)
-                .translate('project_details_page_expenses'),
-            key: const Key(Keys.projectDetailsExpensesTab),
-          ),
-          icon: Icon(context.platformIcons.shoppingCart),
-        ),
-        BottomNavigationBarItem(
-          title: Text(
-            AppLocalizations.of(context)
-                .translate('project_details_page_report'),
-            key: const Key(Keys.projectDetailsReportTab),
-          ),
-          icon: Icon(context.platformIcons.mail),
-        ),
-      ];
+  List<BottomNavigationBarItem> Function(BuildContext context) get items =>
+      (BuildContext context) => [
+            BottomNavigationBarItem(
+              title: Text(
+                AppLocalizations.of(context)
+                    .translate('project_details_page_users'),
+                key: const Key(Keys.projectDetailsUsersTab),
+              ),
+              icon: Icon(context.platformIcons.group),
+            ),
+            BottomNavigationBarItem(
+              title: Text(
+                AppLocalizations.of(context)
+                    .translate('project_details_page_expenses'),
+                key: const Key(Keys.projectDetailsExpensesTab),
+              ),
+              icon: Icon(context.platformIcons.shoppingCart),
+            ),
+            BottomNavigationBarItem(
+              title: Text(
+                AppLocalizations.of(context)
+                    .translate('project_details_page_report'),
+                key: const Key(Keys.projectDetailsReportTab),
+              ),
+              icon: Icon(context.platformIcons.mail),
+            ),
+          ];
 
   @override
   void initState() {

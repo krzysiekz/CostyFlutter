@@ -20,11 +20,11 @@ void main() {
 
   setUp(() {
     reportFormatter = ReportFormatterImpl();
-    john = User(id: 1, name: 'John');
-    kate = User(id: 2, name: 'Kate');
+    john = const User(id: 1, name: 'John');
+    kate = const User(id: 2, name: 'Kate');
 
-    eur = Currency(name: 'EUR');
-    pln = Currency(name: 'PLN');
+    eur = const Currency(name: 'EUR');
+    pln = const Currency(name: 'PLN');
 
     projectCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
     expenseDateTime = DateTime(2020, 1, 1, 10, 10, 10);
@@ -66,7 +66,7 @@ void main() {
     report.addEntry(createReportEntry(john, kate, pln, 10));
     report.addEntry(createReportEntry(kate, john, eur, 25));
 
-    final expectedText = """
+    const expectedText = """
 Test Project
 
 01/01/2020 10:10, 50.00 EUR, Test, John -> John, Kate

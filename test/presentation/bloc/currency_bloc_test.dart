@@ -17,7 +17,7 @@ void main() {
     mockGetCurrencies = MockGetCurrencies();
   });
 
-  final tCurrencyList = [
+  const tCurrencyList = [
     Currency(name: 'USD'),
     Currency(name: 'PLN'),
   ];
@@ -26,11 +26,11 @@ void main() {
       skip: 0,
       build: () {
         when(mockGetCurrencies.call(any))
-            .thenAnswer((_) async => Right(tCurrencyList));
+            .thenAnswer((_) async => const Right(tCurrencyList));
         return CurrencyBloc(mockGetCurrencies);
       },
       act: (bloc) => bloc.add(GetCurrenciesEvent()),
-      expect: [CurrencyLoading(), CurrencyLoaded(tCurrencyList)]);
+      expect: [CurrencyLoading(), const CurrencyLoaded(tCurrencyList)]);
 
   blocTest('should emit proper states in case or error',
       build: () {
@@ -39,5 +39,8 @@ void main() {
         return CurrencyBloc(mockGetCurrencies);
       },
       act: (bloc) => bloc.add(GetCurrenciesEvent()),
-      expect: [CurrencyLoading(), CurrencyError(datasouceFailureMessage)]);
+      expect: [
+        CurrencyLoading(),
+        const CurrencyError(datasouceFailureMessage)
+      ]);
 }

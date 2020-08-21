@@ -30,6 +30,20 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
       direction: DismissDirection.endToStart,
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.userExpense),
+      confirmDismiss: (DismissDirection direction) async {
+        return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return DialogUtilities.createDeleteConfirmationDialog(context);
+          },
+        );
+      },
+      onDismissed: (DismissDirection direction) {
+        BlocProvider.of<ExpenseBloc>(context)
+            .add(DeleteExpenseEvent(widget.userExpense.id));
+        BlocProvider.of<ExpenseBloc>(context)
+            .add(GetExpensesEvent(widget.project));
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -44,6 +58,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
             child: Padding(
               padding: const EdgeInsets.all(5),
               child: FittedBox(
+                fit: BoxFit.scaleDown,
                 child: Column(
                   children: <Widget>[
                     Text(widget.userExpense.amount.toString(),
@@ -54,7 +69,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
                             fontWeight: FontWeight.bold, fontSize: 13)),
                   ],
                 ),
-                fit: BoxFit.scaleDown,
               ),
             ),
           ),
@@ -88,20 +102,6 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
           ),
         ),
       ),
-      confirmDismiss: (DismissDirection direction) async {
-        return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return DialogUtilities.createDeleteConfirmationDialog(context);
-          },
-        );
-      },
-      onDismissed: (DismissDirection direction) {
-        BlocProvider.of<ExpenseBloc>(context)
-            .add(DeleteExpenseEvent(widget.userExpense.id));
-        BlocProvider.of<ExpenseBloc>(context)
-            .add(GetExpensesEvent(widget.project));
-      },
     );
   }
 

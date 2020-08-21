@@ -16,19 +16,19 @@ void main() {
     addProject = AddProject(projectsRepository: mockProjectsRepository);
   });
 
-  final tProjectName = 'Sample project.';
-  final tProjectDefaultCurrency = Currency(name: 'USD');
-  final tProjectId = 1;
+  const tProjectName = 'Sample project.';
+  const tProjectDefaultCurrency = Currency(name: 'USD');
+  const tProjectId = 1;
 
   test('should add project using a repository', () async {
     //arrange
     when(mockProjectsRepository.addProject(any, any, any))
-        .thenAnswer((_) async => Right(tProjectId));
+        .thenAnswer((_) async => const Right(tProjectId));
     //act
-    final result = await addProject.call(AddProjectParams(
+    final result = await addProject.call(const AddProjectParams(
         projectName: tProjectName, defaultCurrency: tProjectDefaultCurrency));
     //assert
-    expect(result, Right(tProjectId));
+    expect(result, const Right(tProjectId));
     verify(mockProjectsRepository.addProject(
       argThat(equals(tProjectName)),
       argThat(equals(tProjectDefaultCurrency)),

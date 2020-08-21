@@ -21,7 +21,7 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Sample project.',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
 
   test('should modify project using a repository', () async {

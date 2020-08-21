@@ -18,11 +18,11 @@ class ReportGeneratorImpl implements ReportGenerator {
     final report = Report(project: project);
     final Map<CalculationKey, Decimal> calculationsMap = {};
 
-    project.expenses.forEach((expense) {
+    for (final expense in project.expenses) {
       final Decimal baseAmount =
           expense.amount / Decimal.fromInt(expense.receivers.length);
 
-      expense.receivers.forEach((receiver) {
+      for (final receiver in expense.receivers) {
         final key = CalculationKey(
             sender: expense.user,
             receiver: receiver,
@@ -41,8 +41,8 @@ class ReportGeneratorImpl implements ReportGenerator {
         } else {
           calculationsMap.putIfAbsent(key, () => baseAmount);
         }
-      });
-    });
+      }
+    }
 
     _createReportEntries(calculationsMap, report);
     _removeRedundantEntriesFromCycles(report);

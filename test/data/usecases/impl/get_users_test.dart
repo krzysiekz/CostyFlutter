@@ -22,11 +22,11 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
   final tUsers = [
-    User(id: 1, name: 'John'),
-    User(id: 2, name: 'Kate'),
+    const User(id: 1, name: 'John'),
+    const User(id: 2, name: 'Kate'),
   ];
 
   test('should get users for project', () async {

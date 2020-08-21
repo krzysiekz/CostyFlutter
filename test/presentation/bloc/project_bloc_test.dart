@@ -40,20 +40,20 @@ void main() {
         modifyProject: mockModifyProject);
   });
 
-  final tProjectName = 'Sample project.';
-  final tProjectDefaultCurrency = Currency(name: 'USD');
+  const tProjectName = 'Sample project.';
+  const tProjectDefaultCurrency = Currency(name: 'USD');
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProjectsList = [
     Project(
         id: 1,
         name: 'First',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime),
     Project(
         id: 2,
         name: 'Second',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime)
   ];
 
@@ -74,7 +74,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetProjectsEvent()),
-      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
+      expect: [ProjectLoading(), const ProjectError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when adding project',
       build: () {
@@ -82,7 +82,7 @@ void main() {
             .thenAnswer((_) async => Right(tProjectsList[0].id));
         return bloc;
       },
-      act: (bloc) => bloc.add(AddProjectEvent(
+      act: (bloc) => bloc.add(const AddProjectEvent(
           projectName: tProjectName, defaultCurrency: tProjectDefaultCurrency)),
       expect: [ProjectLoading(), ProjectAdded(tProjectsList[0].id)]);
 
@@ -92,9 +92,9 @@ void main() {
             .thenAnswer((_) async => Left(DataSourceFailure()));
         return bloc;
       },
-      act: (bloc) => bloc.add(AddProjectEvent(
+      act: (bloc) => bloc.add(const AddProjectEvent(
           projectName: tProjectName, defaultCurrency: tProjectDefaultCurrency)),
-      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
+      expect: [ProjectLoading(), const ProjectError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when deleting project',
       build: () {
@@ -112,7 +112,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteProjectEvent(tProjectsList[0].id)),
-      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
+      expect: [ProjectLoading(), const ProjectError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when modifying project',
       build: () {
@@ -130,5 +130,5 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyProjectEvent(tProjectsList[0])),
-      expect: [ProjectLoading(), ProjectError(datasouceFailureMessage)]);
+      expect: [ProjectLoading(), const ProjectError(datasouceFailureMessage)]);
 }

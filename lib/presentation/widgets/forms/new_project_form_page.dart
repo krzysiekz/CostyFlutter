@@ -117,8 +117,7 @@ class _NewProjectFormState extends State<NewProjectForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
-            textFormFieldKey:
-                const Key(Keys.projectFormProjectNameFieldKey),
+            textFormFieldKey: const Key(Keys.projectFormProjectNameFieldKey),
             hintText: AppLocalizations.of(context)
                 .translate('project_form_project_name_hint'),
             controller: _nameController,
@@ -151,19 +150,19 @@ class _NewProjectFormState extends State<NewProjectForm> {
                   textColor: Theme.of(context).errorColor,
                 ),
                 key: const Key(Keys.projectFormCancelButtonKey),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
                 onPressed: () => Navigator.of(context).pop(),
                 cupertino: (_, platform) => CupertinoButtonData(),
+                child: Text(AppLocalizations.of(context)
+                    .translate('form_cancel_button')),
               ),
               PlatformButton(
                 key: const Key(Keys.projectFormAddEditButtonKey),
+                onPressed: _submitData,
                 child: widget.projectToEdit == null
                     ? Text(AppLocalizations.of(context)
                         .translate('project_form_add_project_button'))
                     : Text(AppLocalizations.of(context)
                         .translate('project_form_modify_project_button')),
-                onPressed: _submitData,
               ),
             ],
           )

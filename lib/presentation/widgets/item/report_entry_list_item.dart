@@ -29,6 +29,7 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: FittedBox(
+              fit: BoxFit.scaleDown,
               child: Column(
                 children: <Widget>[
                   Text(widget.reportEntry.amount.toStringAsFixed(2),
@@ -39,7 +40,6 @@ class _ReportEntryListItemState extends State<ReportEntryListItem> {
                           fontWeight: FontWeight.bold, fontSize: 13)),
                 ],
               ),
-              fit: BoxFit.scaleDown,
             ),
           ),
         ),

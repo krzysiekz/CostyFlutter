@@ -27,29 +27,6 @@ class _UserListItemState extends State<UserListItem> {
       direction: DismissDirection.endToStart,
       background: DialogUtilities.createStackBehindDismiss(context),
       key: ObjectKey(widget.user),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: ListTile(
-          leading: Icon(
-            context.platformIcons.personSolid,
-            color: Colors.blue,
-            size: 30,
-          ),
-          title: Text(
-            widget.user.name,
-          ),
-          trailing: GestureDetector(
-            key: Key("${widget.user.id}_user_edit"),
-            onTap: () => _showEditUserForm(context, widget.project),
-            child: Icon(
-              context.platformIcons.create,
-              color: Colors.blue,
-            ),
-          ),
-        ),
-      ),
       confirmDismiss: (DismissDirection direction) async {
         return showDialog(
           context: context,
@@ -102,6 +79,29 @@ class _UserListItemState extends State<UserListItem> {
         BlocProvider.of<UserBloc>(context).add(DeleteUserEvent(widget.user.id));
         BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
       },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: ListTile(
+          leading: Icon(
+            context.platformIcons.personSolid,
+            color: Colors.blue,
+            size: 30,
+          ),
+          title: Text(
+            widget.user.name,
+          ),
+          trailing: GestureDetector(
+            key: Key("${widget.user.id}_user_edit"),
+            onTap: () => _showEditUserForm(context, widget.project),
+            child: Icon(
+              context.platformIcons.create,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
     );
   }
 

@@ -19,9 +19,9 @@ void main() {
     modifyExpense = ModifyExpense(expensesRepository: mockExpensesRepository);
   });
 
-  final john = User(id: 1, name: 'John');
-  final kate = User(id: 2, name: 'Kate');
-  final currency = Currency(name: 'USD');
+  const john = User(id: 1, name: 'John');
+  const kate = User(id: 2, name: 'Kate');
+  const currency = Currency(name: 'USD');
   final dateTime = DateTime.now();
 
   final tExpense = UserExpense(
@@ -30,7 +30,7 @@ void main() {
       currency: currency,
       description: 'First Expense',
       user: john,
-      receivers: [john, kate],
+      receivers: const [john, kate],
       dateTime: dateTime);
 
   test('should modify expense', () async {

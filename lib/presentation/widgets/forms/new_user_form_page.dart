@@ -13,7 +13,7 @@ import '../other/custom_scaffold.dart';
 import '../other/custom_text_field.dart';
 
 class NewUserForm extends StatefulWidget {
-  static navigate(BuildContext buildContext, Project project,
+  static void navigate(BuildContext buildContext, Project project,
       {User userToModify}) {
     Navigator.of(buildContext).push(platformPageRoute(
       context: buildContext,
@@ -111,18 +111,18 @@ class _NewUserFormState extends State<NewUserForm> {
                   textColor: Theme.of(context).errorColor,
                 ),
                 key: const Key(Keys.projectFormCancelButtonKey),
+                onPressed: () => Navigator.of(context).pop(),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
-                onPressed: () => Navigator.of(context).pop(),
               ),
               PlatformButton(
                 key: const Key(Keys.userFormAddEditButtonKey),
+                onPressed: _submitData,
                 child: widget.userToModify == null
                     ? Text(AppLocalizations.of(context)
                         .translate('user_form_add_user_button'))
                     : Text(AppLocalizations.of(context)
                         .translate('user_form_modify_user_button')),
-                onPressed: _submitData,
               ),
             ],
           )

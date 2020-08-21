@@ -134,12 +134,12 @@ class _MyAppState extends State<MyApp> {
             locale: DevicePreview.of(context).locale,
             builder: DevicePreview.appBuilder,
             title: 'Costy',
-            supportedLocales: [
-              const Locale('en', 'US'),
-              const Locale('pl', 'PL'),
+            supportedLocales: const [
+              Locale('en', 'US'),
+              Locale('pl', 'PL'),
             ],
             // These delegates make sure that the localization data for the proper language is loaded
-            localizationsDelegates: [
+            localizationsDelegates: const [
               // A class which loads the translations from JSON files
               AppLocalizations.delegate,
               // Built-in localization of basic text for Material widgets

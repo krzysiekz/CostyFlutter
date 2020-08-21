@@ -21,21 +21,21 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
-  final tName = 'John';
-  final tUserId = 1;
+  const tName = 'John';
+  const tUserId = 1;
 
   test('should add user to project', () async {
     //arrange
     when(mockUsersRepository.addUser(
             project: anyNamed('project'), name: anyNamed('name')))
-        .thenAnswer((_) async => Right(tUserId));
+        .thenAnswer((_) async => const Right(tUserId));
     //act
     final result =
         await addUser.call(AddUserParams(project: tProject, name: tName));
     //assert
-    expect(result, Right(tUserId));
+    expect(result, const Right(tUserId));
     verify(mockUsersRepository.addUser(project: tProject, name: tName));
     verifyNoMoreInteractions(mockUsersRepository);
   });

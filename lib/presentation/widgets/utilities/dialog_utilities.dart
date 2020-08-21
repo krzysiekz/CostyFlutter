@@ -18,10 +18,10 @@ class DialogUtilities {
               actions: <Widget>[
                 PlatformDialogAction(
                   key: const Key(Keys.alertDialogOkButton),
-                  child: Text(AppLocalizations.of(context).translate('ok')),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
+                  child: Text(AppLocalizations.of(context).translate('ok')),
                 ),
               ],
             );

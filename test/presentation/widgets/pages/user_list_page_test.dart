@@ -30,11 +30,11 @@ void main() {
     tProject = Project(
       id: 1,
       name: "Tested Project",
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: DateTime.now(),
     );
 
-    tUser = User(id: 1, name: "John");
+    tUser = const User(id: 1, name: "John");
 
     userBloc = MockUserBloc();
     expenseBloc = MockExpenseBloc();
@@ -45,7 +45,7 @@ void main() {
     );
 
     when(expenseBloc.state).thenAnswer(
-      (_) => ExpenseLoaded([]),
+      (_) => const ExpenseLoaded([]),
     );
 
     testedWidget = MultiBlocProvider(
@@ -54,9 +54,9 @@ void main() {
         BlocProvider<UserBloc>.value(value: userBloc),
       ],
       child: MaterialApp(
-          locale: Locale('en'),
+          locale: const Locale('en'),
           home: UserListPage(project: tProject),
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
           ]),
     );
@@ -75,10 +75,10 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final deleteButtonFinder =
-          find.byKey(Key(Keys.deleteConfirmationDeleteButton));
+          find.byKey(const Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup
@@ -105,10 +105,10 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final cancelButtonFinder =
-          find.byKey(Key(Keys.deleteConfirmationCancelButton));
+          find.byKey(const Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup
@@ -133,7 +133,7 @@ void main() {
       final tExpense = UserExpense(
           id: 1,
           amount: Decimal.fromInt(10),
-          currency: Currency(name: "USD"),
+          currency: const Currency(name: "USD"),
           description: 'First Expense',
           user: tUser,
           receivers: [tUser],
@@ -149,7 +149,7 @@ void main() {
       final itemFinder = find.byType(Dismissible);
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup

@@ -30,7 +30,7 @@ void main() {
     projectBloc.close();
   });
 
-  final List<Currency> tCurrencies = [
+  const List<Currency> tCurrencies = [
     Currency(name: "USD"),
     Currency(name: "PLN"),
     Currency(name: "EUR")
@@ -42,7 +42,7 @@ void main() {
     setUp(() {
       //arrange
       when(currencyBloc.state).thenAnswer(
-        (_) => CurrencyLoaded(tCurrencies),
+        (_) => const CurrencyLoaded(tCurrencies),
       );
 
       testedWidget = MultiBlocProvider(
@@ -69,13 +69,12 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final currencyDropdownFinder =
-            find.byKey(Key(Keys.projectFormDefaultCurrencyKey));
+            find.byKey(const Key(Keys.projectFormDefaultCurrencyKey));
         expect(currencyDropdownFinder, findsOneWidget);
         //assert
-        CurrencyDropdownField currencyDropdownField = (currencyDropdownFinder
-            .evaluate()
-            .first
-            .widget as CurrencyDropdownField);
+        final CurrencyDropdownField currencyDropdownField =
+            currencyDropdownFinder.evaluate().first.widget
+                as CurrencyDropdownField;
 
         expect(currencyDropdownField.currencies, tCurrencies);
       });
@@ -89,7 +88,7 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final addProjectButtonFinder =
-            find.byKey(Key(Keys.projectFormAddEditButtonKey));
+            find.byKey(const Key(Keys.projectFormAddEditButtonKey));
         expect(addProjectButtonFinder, findsOneWidget);
         await tester.tap(addProjectButtonFinder);
         await tester.pumpAndSettle();
@@ -110,32 +109,32 @@ void main() {
         await tester.pumpWidget(testedWidget);
         await tester.pumpAndSettle();
         //act
-        var nameFieldFinder =
-            find.byKey(Key(Keys.projectFormProjectNameFieldKey));
+        final nameFieldFinder =
+            find.byKey(const Key(Keys.projectFormProjectNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "Some name");
         await tester.pumpAndSettle();
 
-        var defaultCurrencyFinder =
-            find.byKey(Key(Keys.projectFormDefaultCurrencyKey));
+        final defaultCurrencyFinder =
+            find.byKey(const Key(Keys.projectFormDefaultCurrencyKey));
         expect(defaultCurrencyFinder, findsOneWidget);
         await tester.tap(defaultCurrencyFinder);
         await tester.pumpAndSettle();
 
-        var plnCurrency = find.byKey(Key("currency_PLN")).hitTestable();
+        final plnCurrency = find.byKey(const Key("currency_PLN")).hitTestable();
         expect(plnCurrency, findsOneWidget);
         await tester.tap(plnCurrency);
         await tester.pumpAndSettle();
 
         await tester
-            .tap(find.byKey(Key(Keys.projectFormAddEditButtonKey)));
+            .tap(find.byKey(const Key(Keys.projectFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text('Project name is required'), findsNothing);
         expect(find.text('Please select a currency'), findsNothing);
 
         verify(currencyBloc.add(argThat(isA<GetCurrenciesEvent>())));
-        verify(projectBloc.add(AddProjectEvent(
+        verify(projectBloc.add(const AddProjectEvent(
           projectName: "Some name",
           defaultCurrency: Currency(name: "PLN"),
         )));
@@ -148,7 +147,7 @@ void main() {
     final tProject = Project(
         id: 1,
         name: "Project to edit",
-        defaultCurrency: Currency(name: "USD"),
+        defaultCurrency: const Currency(name: "USD"),
         creationDateTime: DateTime.now());
 
     Widget testedWidget;
@@ -156,7 +155,7 @@ void main() {
     setUp(() {
       //arrange
       when(currencyBloc.state).thenAnswer(
-        (_) => CurrencyLoaded(tCurrencies),
+        (_) => const CurrencyLoaded(tCurrencies),
       );
 
       testedWidget = MultiBlocProvider(
@@ -169,7 +168,7 @@ void main() {
             home: Scaffold(
               body: NewProjectForm(projectToEdit: tProject),
             ),
-            localizationsDelegates: [
+            localizationsDelegates: const [
               AppLocalizations.delegate,
             ]),
       );
@@ -194,25 +193,25 @@ void main() {
         await tester.pumpWidget(testedWidget);
         await tester.pumpAndSettle();
         //act
-        var nameFieldFinder =
-            find.byKey(Key(Keys.projectFormProjectNameFieldKey));
+        final nameFieldFinder =
+            find.byKey(const Key(Keys.projectFormProjectNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "Edited name");
         await tester.pumpAndSettle();
 
-        var defaultCurrencyFinder =
-            find.byKey(Key(Keys.projectFormDefaultCurrencyKey));
+        final defaultCurrencyFinder =
+            find.byKey(const Key(Keys.projectFormDefaultCurrencyKey));
         expect(defaultCurrencyFinder, findsOneWidget);
         await tester.tap(defaultCurrencyFinder);
         await tester.pumpAndSettle();
 
-        var plnCurrency = find.byKey(Key("currency_PLN")).hitTestable();
+        final plnCurrency = find.byKey(const Key("currency_PLN")).hitTestable();
         expect(plnCurrency, findsOneWidget);
         await tester.tap(plnCurrency);
         await tester.pumpAndSettle();
 
         await tester
-            .tap(find.byKey(Key(Keys.projectFormAddEditButtonKey)));
+            .tap(find.byKey(const Key(Keys.projectFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text('Project name is required'), findsNothing);
@@ -222,7 +221,7 @@ void main() {
         verify(projectBloc.add(ModifyProjectEvent(Project(
             id: tProject.id,
             name: "Edited name",
-            defaultCurrency: Currency(name: "PLN"),
+            defaultCurrency: const Currency(name: "PLN"),
             creationDateTime: tProject.creationDateTime))));
         verify(projectBloc.add(argThat(isA<GetProjectsEvent>())));
       });

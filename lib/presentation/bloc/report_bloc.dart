@@ -36,7 +36,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
         await getExpenses.call(GetExpensesParams(project: event.project));
 
     if (eitherExpenses.isLeft()) {
-      yield ReportError(reportGenerationFailureMessage);
+      yield const ReportError(reportGenerationFailureMessage);
     } else {
       final Project project = Project(
           id: event.project.id,
@@ -45,7 +45,9 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
           creationDateTime: event.project.creationDateTime);
 
       final List<UserExpense> expenses = eitherExpenses.getOrElse(() => []);
-      expenses.forEach((expense) => project.addExpense(expense));
+      for (final expense in expenses) {
+        project.addExpense(expense);
+      }
 
       final dataOrFailure =
           await getReport.call(GetReportParams(project: project));
@@ -63,7 +65,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
         await getExpenses.call(GetExpensesParams(project: event.project));
 
     if (eitherExpenses.isLeft()) {
-      yield ReportError(reportGenerationFailureMessage);
+      yield const ReportError(reportGenerationFailureMessage);
     } else {
       final Project project = Project(
           id: event.project.id,
@@ -72,7 +74,9 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
           creationDateTime: event.project.creationDateTime);
 
       final List<UserExpense> expenses = eitherExpenses.getOrElse(() => []);
-      expenses.forEach((expense) => project.addExpense(expense));
+      for (final expense in expenses) {
+        project.addExpense(expense);
+      }
 
       final dataOrFailure = await shareReport.call(ShareReportParams(
           buildContext: event.buildContext, project: project));

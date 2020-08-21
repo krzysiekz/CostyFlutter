@@ -27,7 +27,7 @@ void main() {
   final Project tProject = Project(
     id: 1,
     name: "Test project",
-    defaultCurrency: Currency(name: "PLN"),
+    defaultCurrency: const Currency(name: "PLN"),
     creationDateTime: DateTime.now(),
   );
 
@@ -38,11 +38,11 @@ void main() {
       testedWidget = BlocProvider(
         create: (_) => userBloc,
         child: MaterialApp(
-            locale: Locale('en'),
+            locale: const Locale('en'),
             home: Scaffold(
               body: NewUserForm(project: tProject),
             ),
-            localizationsDelegates: [
+            localizationsDelegates: const [
               AppLocalizations.delegate,
             ]),
       );
@@ -56,7 +56,7 @@ void main() {
         await tester.pumpAndSettle();
         //act
         final addUserButtonFinder =
-            find.byKey(Key(Keys.userFormAddEditButtonKey));
+            find.byKey(const Key(Keys.userFormAddEditButtonKey));
         expect(addUserButtonFinder, findsOneWidget);
         await tester.tap(addUserButtonFinder);
         await tester.pumpAndSettle();
@@ -74,12 +74,13 @@ void main() {
         await tester.pumpWidget(testedWidget);
         await tester.pumpAndSettle();
         //act
-        var nameFieldFinder = find.byKey(Key(Keys.userFormNameFieldKey));
+        final nameFieldFinder =
+            find.byKey(const Key(Keys.userFormNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "John");
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(Key(Keys.userFormAddEditButtonKey)));
+        await tester.tap(find.byKey(const Key(Keys.userFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text("User's name is required"), findsNothing);
@@ -95,7 +96,7 @@ void main() {
     Widget testedWidget;
 
     setUp(() {
-      userToModify = User(id: 1, name: "John");
+      userToModify = const User(id: 1, name: "John");
 
       testedWidget = BlocProvider(
         create: (_) => userBloc,
@@ -104,7 +105,7 @@ void main() {
             home: Scaffold(
               body: NewUserForm(project: tProject, userToModify: userToModify),
             ),
-            localizationsDelegates: [
+            localizationsDelegates: const [
               AppLocalizations.delegate,
             ]),
       );
@@ -128,12 +129,13 @@ void main() {
         await tester.pumpWidget(testedWidget);
         await tester.pumpAndSettle();
         //act
-        var nameFieldFinder = find.byKey(Key(Keys.userFormNameFieldKey));
+        final nameFieldFinder =
+            find.byKey(const Key(Keys.userFormNameFieldKey));
         expect(nameFieldFinder, findsOneWidget);
         await tester.enterText(nameFieldFinder, "Kate");
         await tester.pumpAndSettle();
 
-        await tester.tap(find.byKey(Key(Keys.userFormAddEditButtonKey)));
+        await tester.tap(find.byKey(const Key(Keys.userFormAddEditButtonKey)));
         await tester.pumpAndSettle();
         //assert
         expect(find.text("Userk's name is required"), findsNothing);

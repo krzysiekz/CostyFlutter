@@ -15,7 +15,6 @@ void main() {
   setUpAll(() async {
     driver = await FlutterDriver.connect();
     ozzie = Ozzie.initWith(driver, groupName: 'expenses');
-    print('Waiting before running tests...');
     sleep(const Duration(seconds: 1));
   });
 
@@ -25,13 +24,11 @@ void main() {
       driver.close();
     }
     ozzie.generateHtmlReport();
-    print('Cleaned up...');
   });
 
   test('check flutter driver health', () async {
     final health = await driver.checkHealth();
     expect(health.status, HealthStatus.ok);
-    print(health.status);
   });
 
   testWithScreenshots(
@@ -93,8 +90,8 @@ void main() {
   });
 
   testWithScreenshots('should delete created expense', () => ozzie, () async {
-    await driver.scroll(
-        find.byValueKey("expense_0"), -400, 0, const Duration(milliseconds: 300));
+    await driver.scroll(find.byValueKey("expense_0"), -400, 0,
+        const Duration(milliseconds: 300));
 
     await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
     await tapOnKey(Keys.deleteConfirmationDeleteButton, driver);

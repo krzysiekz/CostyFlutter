@@ -15,16 +15,17 @@ void main() {
     deleteExpense = DeleteExpense(expensesRepository: mockExpensesRepository);
   });
 
-  final tExpenseId = 1;
+  const tExpenseId = 1;
 
   test('should delete expense', () async {
     //arrange
     when(mockExpensesRepository.deleteExpense(any))
-        .thenAnswer((_) async => Right(tExpenseId));
+        .thenAnswer((_) async => const Right(tExpenseId));
     //act
-    final result = await deleteExpense.call(DeleteExpenseParams(expenseId: tExpenseId));
+    final result = await deleteExpense
+        .call(const DeleteExpenseParams(expenseId: tExpenseId));
     //assert
-    expect(result, Right(tExpenseId));
+    expect(result, const Right(tExpenseId));
     verify(mockExpensesRepository.deleteExpense(tExpenseId));
     verifyNoMoreInteractions(mockExpensesRepository);
   });

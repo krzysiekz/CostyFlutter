@@ -15,7 +15,6 @@ void main() {
   setUpAll(() async {
     driver = await FlutterDriver.connect();
     ozzie = Ozzie.initWith(driver, groupName: 'report');
-    print('Waiting before running tests...');
     sleep(const Duration(seconds: 1));
   });
 
@@ -25,13 +24,11 @@ void main() {
       driver.close();
     }
     ozzie.generateHtmlReport();
-    print('Cleaned up...');
   });
 
   test('check flutter driver health', () async {
     final health = await driver.checkHealth();
     expect(health.status, HealthStatus.ok);
-    print(health.status);
   });
 
   testWithScreenshots('should display report properly', () => ozzie, () async {

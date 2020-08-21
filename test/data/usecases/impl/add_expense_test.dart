@@ -19,20 +19,20 @@ void main() {
     addExpense = AddExpense(expensesRepository: mockExpensesRepository);
   });
 
-  final john = User(id: 1, name: 'John');
-  final kate = User(id: 2, name: 'Kate');
+  const john = User(id: 1, name: 'John');
+  const kate = User(id: 2, name: 'Kate');
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
   final tAmount = Decimal.fromInt(10);
-  final tCurrency = Currency(name: 'USD');
-  final tDescription = 'First Expense';
-  final tReceivers = [john, kate];
-  final tExpenseId = 1;
+  const tCurrency = Currency(name: 'USD');
+  const tDescription = 'First Expense';
+  const tReceivers = [john, kate];
+  const tExpenseId = 1;
   final tDateTime = DateTime.now();
 
   test('should add expense to project', () async {
@@ -45,7 +45,7 @@ void main() {
             user: anyNamed('user'),
             receivers: anyNamed('receivers'),
             dateTime: anyNamed('dateTime')))
-        .thenAnswer((_) async => Right(tExpenseId));
+        .thenAnswer((_) async => const Right(tExpenseId));
     //act
     final result = await addExpense.call(AddExpenseParams(
         project: tProject,
@@ -56,7 +56,7 @@ void main() {
         receivers: tReceivers,
         dateTime: tDateTime));
     //assert
-    expect(result, Right(tExpenseId));
+    expect(result, const Right(tExpenseId));
     verify(mockExpensesRepository.addExpense(
         project: tProject,
         amount: tAmount,

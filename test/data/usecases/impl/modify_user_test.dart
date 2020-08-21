@@ -16,14 +16,14 @@ void main() {
     modifyUser = ModifyUser(usersRepository: mockUsersRepository);
   });
 
-  final tUser = User(id: 1, name: 'John');
+  const tUser = User(id: 1, name: 'John');
 
   test('should modify user', () async {
     //arrange
     when(mockUsersRepository.modifyUser(tUser))
         .thenAnswer((_) async => Right(tUser.id));
     //act
-    final result = await modifyUser.call(ModifyUserParams(user: tUser));
+    final result = await modifyUser.call(const ModifyUserParams(user: tUser));
     //assert
     expect(result, Right(tUser.id));
     verify(mockUsersRepository.modifyUser(tUser));

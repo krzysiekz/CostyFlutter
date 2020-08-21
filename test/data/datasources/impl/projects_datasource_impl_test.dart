@@ -107,7 +107,7 @@ void main() {
           currency: "USD",
           description: 'First Expense',
           userId: 1,
-          receiversIds: [1, 2],
+          receiversIds: const [1, 2],
           dateTime: DateTime.now().toIso8601String()),
       2: UserExpenseEntity(
           projectId: tProjectId + 1,
@@ -115,7 +115,7 @@ void main() {
           currency: "USD",
           description: 'First Expense',
           userId: 1,
-          receiversIds: [1, 2],
+          receiversIds: const [1, 2],
           dateTime: DateTime.now().toIso8601String()),
     };
 

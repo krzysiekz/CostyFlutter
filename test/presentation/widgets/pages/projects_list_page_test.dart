@@ -22,7 +22,7 @@ void main() {
     tProject = Project(
       id: 1,
       name: "Tested Project",
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: DateTime.now(),
     );
 
@@ -36,9 +36,9 @@ void main() {
     testedWidget = BlocProvider(
       create: (_) => projectBloc,
       child: MaterialApp(
-          locale: Locale('en'),
+          locale: const Locale('en'),
           home: ProjectsListPage(),
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
           ]),
     );
@@ -56,10 +56,10 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final deleteButtonFinder =
-          find.byKey(Key(Keys.deleteConfirmationDeleteButton));
+          find.byKey(const Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup
@@ -86,10 +86,10 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final cancelButtonFinder =
-          find.byKey(Key(Keys.deleteConfirmationCancelButton));
+          find.byKey(const Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup

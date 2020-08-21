@@ -24,13 +24,13 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
-  final tName = 'John';
-  final tUserId = 1;
+  const tName = 'John';
+  const tUserId = 1;
   final tUsers = [
-    User(id: 1, name: 'John'),
-    User(id: 2, name: 'Kate'),
+    const User(id: 1, name: 'John'),
+    const User(id: 2, name: 'Kate'),
   ];
 
   test('should return object from data source when adding user', () async {
@@ -41,7 +41,7 @@ void main() {
     //act
     final result = await repository.addUser(project: tProject, name: tName);
     //assert
-    expect(result, Right(tUserId));
+    expect(result, const Right(tUserId));
     verify(mockDataSource.addUser(project: tProject, name: tName));
     verifyNoMoreInteractions(mockDataSource);
   });
@@ -66,7 +66,7 @@ void main() {
     //act
     final result = await repository.deleteUser(tUserId);
     //assert
-    expect(result, Right(tUserId));
+    expect(result, const Right(tUserId));
     verify(mockDataSource.deleteUser(tUserId));
     verifyNoMoreInteractions(mockDataSource);
   });
@@ -112,7 +112,7 @@ void main() {
     //act
     final result = await repository.modifyUser(tUsers[0]);
     //assert
-    expect(result, Right(tUserId));
+    expect(result, const Right(tUserId));
     verify(mockDataSource.modifyUser(tUsers[0]));
     verifyNoMoreInteractions(mockDataSource);
   });

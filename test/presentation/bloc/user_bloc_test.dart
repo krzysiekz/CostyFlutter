@@ -45,20 +45,21 @@ void main() {
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
-  final tUsers = [
+  const tUsers = [
     User(id: 1, name: 'John'),
     User(id: 2, name: 'Kate'),
   ];
 
   blocTest('should emit proper states when getting users',
       build: () {
-        when(mockGetUsers.call(any)).thenAnswer((_) async => Right(tUsers));
+        when(mockGetUsers.call(any))
+            .thenAnswer((_) async => const Right(tUsers));
         return bloc;
       },
       act: (bloc) => bloc.add(GetUsersEvent(tProject)),
-      expect: [UserLoading(), UserLoaded(tUsers)]);
+      expect: [UserLoading(), const UserLoaded(tUsers)]);
 
   blocTest('should emit proper states in case of error when getting users',
       build: () {
@@ -67,7 +68,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetUsersEvent(tProject)),
-      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
+      expect: [UserLoading(), const UserError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when adding user',
       build: () {
@@ -85,7 +86,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(AddUserEvent(tUsers[0].name, tProject)),
-      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
+      expect: [UserLoading(), const UserError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when deleting user',
       build: () {
@@ -103,7 +104,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteUserEvent(tUsers[0].id)),
-      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
+      expect: [UserLoading(), const UserError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when modifying user',
       build: () {
@@ -121,5 +122,5 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyUserEvent(tUsers[0])),
-      expect: [UserLoading(), UserError(datasouceFailureMessage)]);
+      expect: [UserLoading(), const UserError(datasouceFailureMessage)]);
 }

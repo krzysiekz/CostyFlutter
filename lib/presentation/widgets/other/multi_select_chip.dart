@@ -27,15 +27,15 @@ class MultiSelectChip<T> extends StatelessWidget {
           children: <Widget>[
             FlatButton(
               key: const Key(Keys.multiSelectChipSelectAll),
+              onPressed: () => onSelectionChanged(userList),
               child: Text(AppLocalizations.of(context).translate(
                   'expense_form_multi_select_chip_select_all_button')),
-              onPressed: () => onSelectionChanged(userList),
             ),
             FlatButton(
               key: const Key(Keys.multiSelectChipSelectNone),
+              onPressed: () => onSelectionChanged([]),
               child: Text(AppLocalizations.of(context).translate(
                   'expense_form_multi_select_chip_select_none_button')),
-              onPressed: () => onSelectionChanged([]),
             )
           ],
         ),
@@ -64,7 +64,7 @@ class MultiSelectChip<T> extends StatelessWidget {
           ),
           selected: selectedUserList.contains(item),
           onSelected: (selected) {
-            List.from(selectedUserList)..add(item);
+            List.from(selectedUserList).add(item);
             selectedUserList.contains(item)
                 ? onSelectionChanged(List.from(selectedUserList)..remove(item))
                 : onSelectionChanged(List.from(selectedUserList)..add(item));

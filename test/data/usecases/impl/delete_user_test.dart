@@ -15,16 +15,17 @@ void main() {
     deleteUser = DeleteUser(usersRepository: mockUsersRepository);
   });
 
-  final tUserId = 1;
+  const tUserId = 1;
 
   test('should delete user', () async {
     //arrange
     when(mockUsersRepository.deleteUser(any))
-        .thenAnswer((_) async => Right(tUserId));
+        .thenAnswer((_) async => const Right(tUserId));
     //act
-    final result = await deleteUser.call(DeleteUserParams(userId: tUserId));
+    final result =
+        await deleteUser.call(const DeleteUserParams(userId: tUserId));
     //assert
-    expect(result, Right(tUserId));
+    expect(result, const Right(tUserId));
     verify(mockUsersRepository.deleteUser(tUserId));
     verifyNoMoreInteractions(mockUsersRepository);
   });

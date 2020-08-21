@@ -43,15 +43,15 @@ void main() {
         deleteExpense: mockDeleteExpense);
   });
 
-  final currency = Currency(name: 'USD');
-  final john = User(id: 1, name: 'John');
-  final kate = User(id: 2, name: 'Kate');
+  const currency = Currency(name: 'USD');
+  const john = User(id: 1, name: 'John');
+  const kate = User(id: 2, name: 'Kate');
 
   final tCreationDateTime = DateTime(2020, 1, 1, 10, 10, 10);
   final tProject = Project(
       id: 1,
       name: 'Test project',
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: tCreationDateTime);
   final tDateTime = DateTime.now();
   final tExpensesList = [
@@ -61,7 +61,7 @@ void main() {
         currency: currency,
         description: 'First Expense',
         user: john,
-        receivers: [john, kate],
+        receivers: const [john, kate],
         dateTime: tDateTime),
     UserExpense(
         id: 2,
@@ -69,7 +69,7 @@ void main() {
         currency: currency,
         description: 'Second Expense',
         user: kate,
-        receivers: [john, kate],
+        receivers: const [john, kate],
         dateTime: tDateTime),
   ];
 
@@ -89,7 +89,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetExpensesEvent(tProject)),
-      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
+      expect: [ExpenseLoading(), const ExpenseError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when adding expense',
       build: () {
@@ -121,7 +121,7 @@ void main() {
           project: tProject,
           receivers: tExpensesList[0].receivers,
           dateTime: tDateTime)),
-      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
+      expect: [ExpenseLoading(), const ExpenseError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when deleting expense',
       build: () {
@@ -139,7 +139,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(DeleteExpenseEvent(tExpensesList[0].id)),
-      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
+      expect: [ExpenseLoading(), const ExpenseError(datasouceFailureMessage)]);
 
   blocTest('should emit proper states when modifying expense',
       build: () {
@@ -157,5 +157,5 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(ModifyExpenseEvent(tExpensesList[0])),
-      expect: [ExpenseLoading(), ExpenseError(datasouceFailureMessage)]);
+      expect: [ExpenseLoading(), const ExpenseError(datasouceFailureMessage)]);
 }

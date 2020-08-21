@@ -144,8 +144,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomTextField(
-            textFormFieldKey:
-                const Key(Keys.expenseFormDescriptionFieldKey),
+            textFormFieldKey: const Key(Keys.expenseFormDescriptionFieldKey),
             hintText: AppLocalizations.of(context)
                 .translate('expense_form_description_hint'),
             controller: _descriptionController,
@@ -163,8 +162,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             children: <Widget>[
               Expanded(
                 child: CustomTextField(
-                  textFormFieldKey:
-                      const Key(Keys.expenseFormAcountFieldKey),
+                  textFormFieldKey: const Key(Keys.expenseFormAcountFieldKey),
                   hintText: AppLocalizations.of(context)
                       .translate('expense_form_amount_hint'),
                   controller: _amountController,
@@ -226,18 +224,18 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                   textColor: Theme.of(context).errorColor,
                 ),
                 key: const Key(Keys.projectFormCancelButtonKey),
+                onPressed: () => Navigator.of(context).pop(),
                 child: Text(AppLocalizations.of(context)
                     .translate('form_cancel_button')),
-                onPressed: () => Navigator.of(context).pop(),
               ),
               PlatformButton(
                 key: const Key(Keys.expenseFormAddEditButtonKey),
+                onPressed: _submitData,
                 child: widget.expenseToEdit == null
                     ? Text(AppLocalizations.of(context)
                         .translate('expense_form_add_expense_button'))
                     : Text(AppLocalizations.of(context)
                         .translate('expense_form_modify_expense_button')),
-                onPressed: _submitData,
               ),
             ],
           )
@@ -389,7 +387,7 @@ class _DateTimePickerFormField extends StatelessWidget {
     );
   }
 
-  void _presentDatePicker(BuildContext ctx) async {
+  Future<void> _presentDatePicker(BuildContext ctx) async {
     if (isMaterial(ctx)) {
       final date = await showDatePicker(
           context: ctx,

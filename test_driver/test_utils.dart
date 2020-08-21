@@ -2,35 +2,36 @@ import 'package:costy/keys.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-void testWithScreenshots(description, ozzieProvider, dynamic Function() body) {
+void testWithScreenshots(
+    String description, Function ozzieProvider, dynamic Function() body) {
   test(description, () async {
     try {
       await body();
       await ozzieProvider().takeScreenshot('SUCCESS_$description');
     } catch (e) {
       await ozzieProvider().takeScreenshot('ERROR_$description');
-      throw e;
+      rethrow;
     }
   });
 }
 
-tapOnText(String text, FlutterDriver d) async {
+Future<void> tapOnText(String text, FlutterDriver d) async {
   await d.tap(find.text(text), timeout: const Duration(seconds: 2));
 }
 
-tapOnKey(String key, FlutterDriver d) async {
+Future<void> tapOnKey(String key, FlutterDriver d) async {
   await d.tap(find.byValueKey(key), timeout: const Duration(seconds: 2));
 }
 
-expectKeyPresent(String key, FlutterDriver d) async {
+Future<void> expectKeyPresent(String key, FlutterDriver d) async {
   await expectPresent(find.byValueKey(key), d, objectName: key);
 }
 
-expectTextPresent(String text, FlutterDriver d) async {
+Future<void> expectTextPresent(String text, FlutterDriver d) async {
   await expectPresent(find.text(text), d, objectName: text);
 }
 
-expectPresent(
+Future<void> expectPresent(
   SerializableFinder byValueKey,
   FlutterDriver d, {
   Duration timeout = const Duration(seconds: 1),
@@ -39,11 +40,11 @@ expectPresent(
   try {
     await d.waitFor(byValueKey, timeout: timeout);
   } catch (exception) {
-    throw TestFailure("Element not found: " + objectName);
+    throw TestFailure("Element not found: $objectName");
   }
 }
 
-createUser(String name, FlutterDriver d) async {
+Future<void> createUser(String name, FlutterDriver d) async {
   await tapOnKey(Keys.projectDetailsAddUserButton, d);
 
   await expectKeyPresent(Keys.userFormNameFieldKey, d);
@@ -56,7 +57,8 @@ createUser(String name, FlutterDriver d) async {
   await expectTextPresent(name, d);
 }
 
-createProject(String name, String currency, FlutterDriver d) async {
+Future<void> createProject(
+    String name, String currency, FlutterDriver d) async {
   await tapOnKey(Keys.projectlistAddProjectButtonKey, d);
 
   await expectKeyPresent(Keys.projectFormProjectNameFieldKey, d);
@@ -75,7 +77,7 @@ createProject(String name, String currency, FlutterDriver d) async {
   await expectTextPresent(currency, d);
 }
 
-createExpense(String description, String amount, String user,
+Future<void> createExpense(String description, String amount, String user,
     String expectedSummary, FlutterDriver d) async {
   await tapOnKey(Keys.projectDetailsAddExpenseButton, d);
 

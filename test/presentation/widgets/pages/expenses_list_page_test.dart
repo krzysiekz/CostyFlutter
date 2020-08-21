@@ -26,17 +26,17 @@ void main() {
     tProject = Project(
       id: 1,
       name: "Tested Project",
-      defaultCurrency: Currency(name: 'USD'),
+      defaultCurrency: const Currency(name: 'USD'),
       creationDateTime: DateTime.now(),
     );
 
     tExpense = UserExpense(
         id: 2,
         amount: Decimal.fromInt(10),
-        currency: Currency(name: "USD"),
+        currency: const Currency(name: "USD"),
         description: 'First Expense',
-        user: User(id: 3, name: "John"),
-        receivers: [User(id: 3, name: "John"), User(id: 4, name: "Kate")],
+        user: const User(id: 3, name: "John"),
+        receivers: const [User(id: 3, name: "John"), User(id: 4, name: "Kate")],
         dateTime: DateTime.now());
 
     expenseBloc = MockExpenseBloc();
@@ -49,9 +49,9 @@ void main() {
     testedWidget = BlocProvider(
       create: (_) => expenseBloc,
       child: MaterialApp(
-          locale: Locale('en'),
+          locale: const Locale('en'),
           home: ExpensesListPage(project: tProject),
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
           ]),
     );
@@ -69,10 +69,10 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final deleteButtonFinder =
-          find.byKey(Key(Keys.deleteConfirmationDeleteButton));
+          find.byKey(const Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup
@@ -99,10 +99,10 @@ void main() {
 
       final itemFinder = find.byType(Dismissible);
       final cancelButtonFinder =
-          find.byKey(Key(Keys.deleteConfirmationCancelButton));
+          find.byKey(const Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
       expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, Offset(-500.0, 0.0));
+      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
       await tester.pumpAndSettle();
 
       //verify popup

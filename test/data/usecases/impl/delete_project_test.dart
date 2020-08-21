@@ -15,16 +15,17 @@ void main() {
     deleteProject = DeleteProject(projectsRepository: mockProjectsRepository);
   });
 
-  final tProjectId = 1;
+  const tProjectId = 1;
 
   test('should delete project using a repository', () async {
     //arrange
     when(mockProjectsRepository.deleteProject(any))
-        .thenAnswer((_) async => Right(tProjectId));
+        .thenAnswer((_) async => const Right(tProjectId));
     //act
-    final result = await deleteProject.call(DeleteProjectParams(projectId: tProjectId));
+    final result = await deleteProject
+        .call(const DeleteProjectParams(projectId: tProjectId));
     //assert
-    expect(result, Right(tProjectId));
+    expect(result, const Right(tProjectId));
     verify(mockProjectsRepository.deleteProject(tProjectId));
     verifyNoMoreInteractions(mockProjectsRepository);
   });

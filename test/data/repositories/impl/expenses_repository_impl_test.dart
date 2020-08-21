@@ -51,7 +51,7 @@ void main() {
         currency: tCurrency,
         description: 'First Expense',
         user: john,
-        receivers: [john, kate],
+        receivers: const [john, kate],
         dateTime: tDateTime),
     UserExpense(
         id: 2,
@@ -59,7 +59,7 @@ void main() {
         currency: tCurrency,
         description: 'Second Expense',
         user: kate,
-        receivers: [john, kate],
+        receivers: const [john, kate],
         dateTime: tDateTime),
   ];
 

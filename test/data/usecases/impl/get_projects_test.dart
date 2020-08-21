@@ -23,12 +23,12 @@ void main() {
     Project(
         id: 1,
         name: 'First',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime),
     Project(
         id: 2,
         name: 'Second',
-        defaultCurrency: Currency(name: 'USD'),
+        defaultCurrency: const Currency(name: 'USD'),
         creationDateTime: tCreationDateTime)
   ];
 
