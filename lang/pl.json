@@ -16,6 +16,7 @@
   "user_list_item_cannot_remove": "Nie można usunąć osoby.",
 
   "project_list_page_title": "Projekty",
+  "project_list_page_description": "Dodawaj, modyfikuj lub \nusuwaj projekty",
   "project_list_page_no_projects": "Brak projektów.",
   "project_list_page_cannot_add": "Nie można dodać projektu.",
   "project_list_page_added": "Projekt dodany.",
@@ -64,6 +65,7 @@
   "report_entry_item_to": "Dla:",
 
   "error": "Błąd",
+  "add": "Dodaj",
   "ok": "Ok",
   "confirm": "Potwierdzenie",
   "info": "Informacja"

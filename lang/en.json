@@ -16,6 +16,7 @@
   "user_list_item_cannot_remove": "Cannot remove user.",
 
   "project_list_page_title": "Projects",
+  "project_list_page_description": "Add, modify or \ndelete projects",
   "project_list_page_no_projects": "No projects to display.",
   "project_list_page_cannot_add": "Cannot add project.",
   "project_list_page_added": "Project added.",
@@ -64,6 +65,7 @@
   "report_entry_item_to": "To:",
 
   "error": "Error",
+  "add": "Add",
   "ok": "Ok",
   "confirm": "Confirm",
   "info": "Information"
