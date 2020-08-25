@@ -32,12 +32,59 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
   Widget build(BuildContext context) {
     return PlatformScaffold(
       backgroundColor: StyleConstants.backgroundColor,
-      body: Stack(
+      body: Column(
         children: [
-          buildHeaderBackground(),
-          buildHeaderDescription(context),
+          buildHeader(context),
+          Expanded(child: buildContent()),
         ],
       ),
+    );
+  }
+
+  BlocConsumer<ProjectBloc, ProjectState> buildContent() {
+    return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
+      if (state is ProjectError) {
+        DialogUtilities.showAlertDialog(
+          context,
+          AppLocalizations.of(context).translate('error'),
+          AppLocalizations.of(context)
+              .translate('project_list_page_cannot_add'),
+        );
+      } else if (state is ProjectAdded) {
+        DialogUtilities.showSnackBar(context,
+            AppLocalizations.of(context).translate('project_list_page_added'));
+      } else if (state is ProjectDeleted) {
+        DialogUtilities.showSnackBar(
+            context,
+            AppLocalizations.of(context)
+                .translate('project_list_page_deleted'));
+      } else if (state is ProjectModified) {
+        DialogUtilities.showSnackBar(
+            context,
+            AppLocalizations.of(context)
+                .translate('project_list_page_modified'));
+      }
+    }, builder: (context, state) {
+      if (state is ProjectLoaded) {
+        return ListView.builder(
+          itemCount: state.projects.length,
+          itemBuilder: (ctx, index) => ProjectListItem(
+            key: Key("project_${state.projects[index].id}"),
+            project: state.projects[index],
+          ),
+        );
+      } else {
+        return DialogUtilities.showLoadingIndicator(context);
+      }
+    });
+  }
+
+  Stack buildHeader(BuildContext context) {
+    return Stack(
+      children: [
+        buildHeaderBackground(),
+        buildHeaderDescription(context),
+      ],
     );
   }
 
@@ -50,7 +97,6 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         children: [
           Text(
               AppLocalizations.of(context).translate('project_list_page_title'),
-              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontWeight: StyleConstants.primaryFontWeight,

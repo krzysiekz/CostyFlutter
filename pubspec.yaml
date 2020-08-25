@@ -72,3 +72,6 @@ flutter:
     - lang/en.json
     - lang/pl.json
     - assets/images/grow.svg
+    - assets/images/globe.svg
+    - assets/images/delete.svg
+    - assets/images/edit.svg

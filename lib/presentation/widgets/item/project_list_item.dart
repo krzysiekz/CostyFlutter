@@ -1,13 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/project.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../forms/new_project_form_page.dart';
-import '../pages/project_details_page.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectListItem extends StatefulWidget {
@@ -24,55 +26,126 @@ class ProjectListItem extends StatefulWidget {
 class _ProjectListItemState extends State<ProjectListItem> {
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      direction: DismissDirection.endToStart,
-      background: DialogUtilities.createStackBehindDismiss(context),
-      key: ObjectKey(widget.project),
-      confirmDismiss: (DismissDirection direction) async {
-        return showPlatformDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return DialogUtilities.createDeleteConfirmationDialog(context);
-          },
-        );
-      },
-      onDismissed: (DismissDirection direction) {
-        BlocProvider.of<ProjectBloc>(context)
-            .add(DeleteProjectEvent(widget.project.id));
-        BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
-      },
-      child: GestureDetector(
-        onTap: () => ProjectDetailsPage.navigate(context, widget.project),
-        child: Card(
-          shape: RoundedRectangleBorder(
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 2),
+      child: Stack(
+        children: [
+          buildBottomCard(),
+          buildTopCard(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildLeadingImage(),
+              buildTextSection(),
+              buildActionButtons(context)
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container buildTopCard() {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: StyleConstants.secondaryGradient),
+    );
+  }
+
+  Transform buildBottomCard() {
+    return Transform.rotate(
+      angle: -5 * pi / 180,
+      child: Container(
+        height: 70,
+        decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-          ),
-          margin: const EdgeInsets.all(10),
-          child: ListTile(
-            leading: Text(widget.project.defaultCurrency.name,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-            title: Text(widget.project.name),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Divider(thickness: 0.4),
-                Text(ProjectListItem.dateFormat
-                    .format(widget.project.creationDateTime)),
-              ],
+            gradient: StyleConstants.primaryGradient),
+      ),
+    );
+  }
+
+  Transform buildLeadingImage() {
+    return Transform.translate(
+      offset: const Offset(-10, -12),
+      child:
+          SvgPicture.asset('assets/images/globe.svg', semanticsLabel: 'Globe'),
+    );
+  }
+
+  Expanded buildTextSection() {
+    return Expanded(
+      child: Transform.translate(
+        offset: const Offset(0, -20),
+        child: Column(
+          children: [
+            Text(widget.project.name,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: StyleConstants.primaryFontWeight,
+                  color: StyleConstants.primaryTextColor,
+                  fontSize: StyleConstants.secondaryTextSize,
+                )),
+            const SizedBox(
+              height: 8,
             ),
-            trailing: GestureDetector(
-              key: Key("${widget.project.id}_project_edit"),
-              onTap: () => _startEditProject(context),
-              child: Icon(
-                context.platformIcons.create,
-                color: Colors.blue,
-              ),
-            ),
-          ),
+            Text(
+                ProjectListItem.dateFormat
+                    .format(widget.project.creationDateTime),
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: StyleConstants.primaryFontWeight,
+                  color: StyleConstants.primaryTextColor,
+                  fontSize: StyleConstants.descriptionTextSize,
+                ))
+          ],
         ),
       ),
     );
+  }
+
+  Widget buildActionButtons(BuildContext context) {
+    return Transform.translate(
+      offset: const Offset(10, -20),
+      child: Column(
+        children: [
+          buildDeleteButton(context),
+          const SizedBox(
+            height: 8,
+          ),
+          buildEditButton(context)
+        ],
+      ),
+    );
+  }
+
+  IconButton buildEditButton(BuildContext context) {
+    return IconButton(
+        padding: EdgeInsets.zero,
+        icon:
+            SvgPicture.asset('assets/images/edit.svg', semanticsLabel: 'Edit'),
+        onPressed: () => _startEditProject(context));
+  }
+
+  IconButton buildDeleteButton(BuildContext context) {
+    return IconButton(
+        padding: EdgeInsets.zero,
+        icon: SvgPicture.asset('assets/images/delete.svg',
+            semanticsLabel: 'Delete'),
+        onPressed: () async {
+          final bool result = await showDialog<bool>(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return DialogUtilities.createDeleteConfirmationDialog(context);
+              });
+          if (result) {
+            BlocProvider.of<ProjectBloc>(context)
+                .add(DeleteProjectEvent(widget.project.id));
+            BlocProvider.of<ProjectBloc>(context).add(GetProjectsEvent());
+          }
+        });
   }
 
   void _startEditProject(BuildContext ctx) {
