@@ -1,10 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter_svg/svg.dart';
 
-import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../data/models/user.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../forms/new_user_form_page.dart';
 import '../utilities/dialog_utilities.dart';
@@ -23,86 +25,83 @@ class UserListItem extends StatefulWidget {
 class _UserListItemState extends State<UserListItem> {
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      direction: DismissDirection.endToStart,
-      background: DialogUtilities.createStackBehindDismiss(context),
-      key: ObjectKey(widget.user),
-      confirmDismiss: (DismissDirection direction) async {
-        return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            BlocProvider.of<ExpenseBloc>(context)
-                .add(GetExpensesEvent(widget.project));
-            return BlocBuilder<ExpenseBloc, ExpenseState>(
-              builder: (BuildContext context, ExpenseState state) {
-                if (state is ExpenseLoaded) {
-                  if (state.expenses.isNotEmpty &&
-                      state.expenses.any((expense) =>
-                          expense.user == widget.user ||
-                          expense.receivers.contains(widget.user))) {
-                    return PlatformAlertDialog(
-                      title:
-                          Text(AppLocalizations.of(context).translate('error')),
-                      content: Text(AppLocalizations.of(context)
-                          .translate('user_list_item_used_in_expense_error')),
-                      actions: <Widget>[
-                        PlatformDialogAction(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: Text(
-                                AppLocalizations.of(context).translate('ok'))),
-                      ],
-                    );
-                  }
-                  return DialogUtilities.createDeleteConfirmationDialog(
-                      context);
-                } else if (state is ExpenseError) {
-                  return AlertDialog(
-                    title:
-                        Text(AppLocalizations.of(context).translate('error')),
-                    content: Text(AppLocalizations.of(context)
-                        .translate('user_list_item_cannot_remove')),
-                    actions: <Widget>[
-                      FlatButton(
-                          onPressed: () => Navigator.of(context).pop(false),
-                          child: Text(
-                              AppLocalizations.of(context).translate('ok'))),
-                    ],
-                  );
-                }
-                return DialogUtilities.showLoadingIndicator(context);
-              },
-            );
-          },
-        );
-      },
-      onDismissed: (DismissDirection direction) {
-        BlocProvider.of<UserBloc>(context).add(DeleteUserEvent(widget.user.id));
-        BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: ListTile(
-          leading: Icon(
-            context.platformIcons.personSolid,
-            color: Colors.blue,
-            size: 30,
-          ),
-          title: Text(
-            widget.user.name,
-          ),
-          trailing: GestureDetector(
-            key: Key("${widget.user.id}_user_edit"),
-            onTap: () => _showEditUserForm(context, widget.project),
-            child: Icon(
-              context.platformIcons.create,
-              color: Colors.blue,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Stack(
+        children: [
+          buildBottomCard(),
+          buildTopCard(),
+          Positioned(bottom: 0, left: 0, child: buildDeleteButton(context)),
+          Positioned(bottom: 0, right: 0, child: buildEditButton(context)),
+          Positioned.fill(
+            top: 10,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(widget.user.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.primaryFontWeight,
+                      color: StyleConstants.primaryTextColor,
+                      fontSize: StyleConstants.secondaryTextSize,
+                    )),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
+  }
+
+  Container buildTopCard() {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: StyleConstants.secondaryGradient),
+    );
+  }
+
+  Transform buildBottomCard() {
+    return Transform.rotate(
+      angle: -5 * pi / 180,
+      child: Container(
+        height: 70,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            gradient: StyleConstants.primaryGradient),
+      ),
+    );
+  }
+
+  IconButton buildEditButton(BuildContext context) {
+    return IconButton(
+        padding: EdgeInsets.zero,
+        icon:
+            SvgPicture.asset('assets/images/edit.svg', semanticsLabel: 'Edit'),
+        onPressed: () => _showEditUserForm(context, widget.project));
+  }
+
+  IconButton buildDeleteButton(BuildContext context) {
+    return IconButton(
+        padding: EdgeInsets.zero,
+        icon: SvgPicture.asset('assets/images/delete.svg',
+            semanticsLabel: 'Delete'),
+        onPressed: () async {
+          final bool result = await showDialog<bool>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return DialogUtilities.createDeleteConfirmationDialog(context);
+              });
+          if (result) {
+            BlocProvider.of<UserBloc>(context)
+                .add(DeleteUserEvent(widget.user.id));
+            BlocProvider.of<UserBloc>(context)
+                .add(GetUsersEvent(widget.project));
+          }
+        });
   }
 
   void _showEditUserForm(BuildContext ctx, Project project) {

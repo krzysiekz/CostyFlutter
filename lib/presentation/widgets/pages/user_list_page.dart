@@ -1,8 +1,13 @@
+import 'dart:math';
+
+import 'package:costy/presentation/widgets/forms/new_user_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
 import '../item/user_list_item.dart';
@@ -26,6 +31,114 @@ class _UserListPageState extends State<UserListPage> {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        buildHeader(context),
+        Expanded(child: buildBody()),
+      ],
+    );
+  }
+
+  Stack buildHeader(BuildContext context) {
+    return Stack(
+      children: [
+        buildHeaderBackground(),
+        Positioned(
+          top: 50,
+          left: 40,
+          child: SvgPicture.asset('assets/images/users.svg',
+              semanticsLabel: 'Projects image'),
+        ),
+        Positioned(top: 40, right: 20, child: buildHeaderDescription(context)),
+      ],
+    );
+  }
+
+  Transform buildHeaderBackground() {
+    return Transform.translate(
+      offset: const Offset(0, -80),
+      child: Transform.scale(
+        scale: 1.2,
+        child: Stack(
+          children: [
+            buildBottomCard(),
+            buildTopCard(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Transform buildTopCard() {
+    return Transform.translate(
+      offset: const Offset(30, 0),
+      child: Transform.rotate(
+        angle: -15 * pi / 180,
+        child: Container(
+          height: 300,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(60),
+              gradient: StyleConstants.primaryGradient),
+        ),
+      ),
+    );
+  }
+
+  Transform buildBottomCard() {
+    return Transform.rotate(
+      angle: -5 * pi / 180,
+      child: Container(
+        height: 300,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(60),
+            gradient: StyleConstants.secondaryGradient),
+      ),
+    );
+  }
+
+  Widget buildHeaderDescription(BuildContext context) {
+    return Wrap(
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.end,
+      spacing: 15,
+      children: [
+        Text(
+            AppLocalizations.of(context)
+                .translate('project_details_page_users'),
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontWeight: StyleConstants.primaryFontWeight,
+              color: StyleConstants.primaryTextColor,
+              fontSize: StyleConstants.primaryTextSize,
+            )),
+        Text(
+            AppLocalizations.of(context)
+                .translate('user_list_page_description'),
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontWeight: StyleConstants.secondaryFontWeight,
+              color: StyleConstants.primaryTextColor,
+              fontSize: StyleConstants.secondaryTextSize,
+            )),
+        FlatButton(
+          onPressed: () => _showAddUserForm(context, widget.project),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22.0),
+          ),
+          color: Colors.white,
+          child: Text(AppLocalizations.of(context).translate('add'),
+              style: const TextStyle(
+                fontWeight: StyleConstants.secondaryFontWeight,
+                color: Colors.black,
+                fontSize: StyleConstants.secondaryTextSize,
+              )),
+        ),
+      ],
+    );
+  }
+
+  BlocConsumer<UserBloc, UserState> buildBody() {
     return BlocConsumer<UserBloc, UserState>(
       builder: (BuildContext context, UserState state) {
         if (state is UserEmpty) {
@@ -36,8 +149,12 @@ class _UserListPageState extends State<UserListPage> {
             return Text(AppLocalizations.of(context)
                 .translate('user_list_page_no_users'));
           }
-          return ListView.builder(
-            padding: const EdgeInsets.all(15),
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 15,
+                crossAxisSpacing: 15,
+                childAspectRatio: 2.2),
             itemBuilder: (cts, index) {
               return UserListItem(
                 key: Key("user_${state.users[index].id}"),
@@ -73,5 +190,9 @@ class _UserListPageState extends State<UserListPage> {
         }
       },
     );
+  }
+
+  void _showAddUserForm(BuildContext ctx, Project project) {
+    NewUserForm.navigate(ctx, project);
   }
 }

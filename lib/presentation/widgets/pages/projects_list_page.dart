@@ -92,8 +92,8 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 40),
       child: Wrap(
-        direction: Axis.vertical, // make sure to set this
-        spacing: 15, // set your spacing
+        direction: Axis.vertical,
+        spacing: 15,
         children: [
           Text(
               AppLocalizations.of(context).translate('project_list_page_title'),

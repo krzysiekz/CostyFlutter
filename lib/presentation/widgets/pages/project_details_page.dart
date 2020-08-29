@@ -6,6 +6,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../forms/new_expense_form_page.dart';
 import '../forms/new_user_form_page.dart';
@@ -90,6 +91,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
 
   Widget buildProjectDetailsPage(Project project, BuildContext context) {
     return PlatformTabScaffold(
+      pageBackgroundColor: StyleConstants.backgroundColor,
       iosContentPadding: true,
       tabController: _tabController,
       appBarBuilder: (_, index) => PlatformAppBar(

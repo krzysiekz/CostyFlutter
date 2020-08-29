@@ -23,7 +23,9 @@
   "project_list_page_deleted": "Project deleted.",
   "project_list_page_modified": "Project modified.",
 
-  "project_details_page_users": "Users",
+  "user_list_page_description": "Add, modify or \ndelete people",
+
+  "project_details_page_users": "People",
   "project_details_page_expenses": "Expenses",
   "project_details_page_report": "Report",
 

@@ -10,6 +10,7 @@ import '../../../data/models/project.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../forms/new_project_form_page.dart';
+import '../pages/project_details_page.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectListItem extends StatefulWidget {
@@ -26,21 +27,24 @@ class ProjectListItem extends StatefulWidget {
 class _ProjectListItemState extends State<ProjectListItem> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 2),
-      child: Stack(
-        children: [
-          buildBottomCard(),
-          buildTopCard(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildLeadingImage(),
-              buildTextSection(),
-              buildActionButtons(context)
-            ],
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => ProjectDetailsPage.navigate(context, widget.project),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 2),
+        child: Stack(
+          children: [
+            buildBottomCard(),
+            buildTopCard(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildLeadingImage(),
+                buildTextSection(),
+                buildActionButtons(context)
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -136,7 +140,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
         onPressed: () async {
           final bool result = await showDialog<bool>(
               context: context,
-              barrierDismissible: true,
+              barrierDismissible: false,
               builder: (BuildContext context) {
                 return DialogUtilities.createDeleteConfirmationDialog(context);
               });
