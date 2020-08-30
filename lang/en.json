@@ -24,6 +24,7 @@
   "project_list_page_modified": "Project modified.",
 
   "user_list_page_description": "Add, modify or \ndelete people",
+  "expenses_list_page_description": "Add, modify or \ndelete expenses",
 
   "project_details_page_users": "People",
   "project_details_page_expenses": "Expenses",

@@ -34,7 +34,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
       backgroundColor: StyleConstants.backgroundColor,
       body: Column(
         children: [
-          buildHeader(context),
+          ClipRect(child: buildHeader(context)),
           Expanded(child: buildContent()),
         ],
       ),

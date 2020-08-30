@@ -33,7 +33,7 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildHeader(context),
+        ClipRect(child: buildHeader(context)),
         Expanded(child: buildBody()),
       ],
     );
