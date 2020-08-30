@@ -49,7 +49,7 @@ class _UserListPageState extends State<UserListPage> {
           child: SvgPicture.asset('assets/images/users.svg',
               semanticsLabel: 'Projects image'),
         ),
-        Positioned(top: 20, right: 20, child: buildHeaderDescription(context)),
+        Positioned(top: 40, right: 20, child: buildHeaderDescription(context)),
       ],
     );
   }
@@ -140,7 +140,7 @@ class _UserListPageState extends State<UserListPage> {
 
   Widget buildBody() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: BlocConsumer<UserBloc, UserState>(
         builder: (BuildContext context, UserState state) {
           if (state is UserEmpty) {
@@ -155,7 +155,7 @@ class _UserListPageState extends State<UserListPage> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
-                  crossAxisSpacing: 15,
+                  crossAxisSpacing: 25,
                   childAspectRatio: 2.1),
               itemBuilder: (cts, index) {
                 return UserListItem(
