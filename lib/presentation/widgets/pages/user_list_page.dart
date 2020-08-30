@@ -49,7 +49,7 @@ class _UserListPageState extends State<UserListPage> {
           child: SvgPicture.asset('assets/images/users.svg',
               semanticsLabel: 'Projects image'),
         ),
-        Positioned(top: 40, right: 20, child: buildHeaderDescription(context)),
+        Positioned(top: 20, right: 20, child: buildHeaderDescription(context)),
       ],
     );
   }
@@ -138,57 +138,62 @@ class _UserListPageState extends State<UserListPage> {
     );
   }
 
-  BlocConsumer<UserBloc, UserState> buildBody() {
-    return BlocConsumer<UserBloc, UserState>(
-      builder: (BuildContext context, UserState state) {
-        if (state is UserEmpty) {
-          return Text(AppLocalizations.of(context)
-              .translate('user_list_page_no_users'));
-        } else if (state is UserLoaded) {
-          if (state.users.isEmpty) {
+  Widget buildBody() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: BlocConsumer<UserBloc, UserState>(
+        builder: (BuildContext context, UserState state) {
+          if (state is UserEmpty) {
             return Text(AppLocalizations.of(context)
                 .translate('user_list_page_no_users'));
+          } else if (state is UserLoaded) {
+            if (state.users.isEmpty) {
+              return Text(AppLocalizations.of(context)
+                  .translate('user_list_page_no_users'));
+            }
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: 2.1),
+              itemBuilder: (cts, index) {
+                return UserListItem(
+                  key: Key("user_${state.users[index].id}"),
+                  user: state.users[index],
+                  project: widget.project,
+                );
+              },
+              itemCount: state.users.length,
+            );
+          } else if (state is UserLoading) {
+            return DialogUtilities.showLoadingIndicator(context);
           }
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
-                childAspectRatio: 2.2),
-            itemBuilder: (cts, index) {
-              return UserListItem(
-                key: Key("user_${state.users[index].id}"),
-                user: state.users[index],
-                project: widget.project,
-              );
-            },
-            itemCount: state.users.length,
-          );
-        } else if (state is UserLoading) {
-          return DialogUtilities.showLoadingIndicator(context);
-        }
-        return Container();
-      },
-      listener: (BuildContext context, UserState state) {
-        if (state is UserError) {
-          DialogUtilities.showAlertDialog(
-              context,
-              AppLocalizations.of(context).translate('error'),
-              AppLocalizations.of(context)
-                  .translate('user_list_page_cannot_add'));
-        } else if (state is UserAdded) {
-          DialogUtilities.showSnackBar(context,
-              AppLocalizations.of(context).translate('user_list_page_added'));
-        } else if (state is UserDeleted) {
-          DialogUtilities.showSnackBar(context,
-              AppLocalizations.of(context).translate('user_list_page_deleted'));
-        } else if (state is UserModified) {
-          DialogUtilities.showSnackBar(
-              context,
-              AppLocalizations.of(context)
-                  .translate('user_list_page_modified'));
-        }
-      },
+          return Container();
+        },
+        listener: (BuildContext context, UserState state) {
+          if (state is UserError) {
+            DialogUtilities.showAlertDialog(
+                context,
+                AppLocalizations.of(context).translate('error'),
+                AppLocalizations.of(context)
+                    .translate('user_list_page_cannot_add'));
+          } else if (state is UserAdded) {
+            DialogUtilities.showSnackBar(context,
+                AppLocalizations.of(context).translate('user_list_page_added'));
+          } else if (state is UserDeleted) {
+            DialogUtilities.showSnackBar(
+                context,
+                AppLocalizations.of(context)
+                    .translate('user_list_page_deleted'));
+          } else if (state is UserModified) {
+            DialogUtilities.showSnackBar(
+                context,
+                AppLocalizations.of(context)
+                    .translate('user_list_page_modified'));
+          }
+        },
+      ),
     );
   }
 

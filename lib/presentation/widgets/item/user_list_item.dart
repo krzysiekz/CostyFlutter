@@ -31,23 +31,32 @@ class _UserListItemState extends State<UserListItem> {
         children: [
           buildBottomCard(),
           buildTopCard(),
-          Positioned(bottom: 0, left: 0, child: buildDeleteButton(context)),
-          Positioned(bottom: 0, right: 0, child: buildEditButton(context)),
-          Positioned.fill(
-            top: 10,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: Text(widget.user.name,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
                     style: const TextStyle(
                       fontWeight: StyleConstants.primaryFontWeight,
                       color: StyleConstants.primaryTextColor,
                       fontSize: StyleConstants.secondaryTextSize,
                     )),
               ),
-            ),
+              Expanded(
+                child: Transform.translate(
+                  offset: const Offset(0, 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildDeleteButton(context),
+                      buildEditButton(context)
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
