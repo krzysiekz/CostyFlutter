@@ -40,7 +40,7 @@ void main() {
         child: MaterialApp(
             locale: const Locale('en'),
             home: Scaffold(
-              body: NewUserForm(project: tProject),
+              body: NewPersonForm(project: tProject),
             ),
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -103,7 +103,7 @@ void main() {
         child: MaterialApp(
             locale: const Locale('en'),
             home: Scaffold(
-              body: NewUserForm(project: tProject, userToModify: userToModify),
+              body: NewPersonForm(project: tProject, userToModify: userToModify),
             ),
             localizationsDelegates: const [
               AppLocalizations.delegate,

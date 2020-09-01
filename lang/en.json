@@ -25,6 +25,7 @@
 
   "user_list_page_description": "Add, modify or \ndelete people",
   "expenses_list_page_description": "Add, modify or \ndelete expenses",
+  "expenses_item_paid_description": " paid for ",
 
   "project_details_page_users": "People",
   "project_details_page_expenses": "Expenses",

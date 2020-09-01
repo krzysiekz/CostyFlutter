@@ -12,7 +12,7 @@
   "user_list_page_deleted": "Osoba usunięta.",
   "user_list_page_modified": "Osoba zmodyfikowana.",
 
-  "user_list_item_used_in_expense_error": "Nie można usunąć osoby poneiważ jest używana w wydatku.",
+  "user_list_item_used_in_expense_error": "Nie można usunąć osoby ponieważ używana w wydatku.",
   "user_list_item_cannot_remove": "Nie można usunąć osoby.",
 
   "project_list_page_title": "Projekty",
@@ -25,6 +25,7 @@
 
   "user_list_page_description": "Dodawaj, modyfikuj lub \nusuwaj osoby",
   "expenses_list_page_description": "Dodawaj, modyfikuj lub \nusuwaj wydatki",
+  "expenses_item_paid_description": " zapłacił(a) za ",
 
   "project_details_page_users": "Osoby",
   "project_details_page_expenses": "Wydatki",

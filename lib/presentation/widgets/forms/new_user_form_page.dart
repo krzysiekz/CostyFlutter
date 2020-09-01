@@ -12,27 +12,27 @@ import '../../bloc/user_bloc.dart';
 import '../other/custom_scaffold.dart';
 import '../other/custom_text_field.dart';
 
-class NewUserForm extends StatefulWidget {
+class NewPersonForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
       {User userToModify}) {
     Navigator.of(buildContext).push(platformPageRoute(
       context: buildContext,
       builder: (BuildContext context) =>
-          NewUserForm(project: project, userToModify: userToModify),
+          NewPersonForm(project: project, userToModify: userToModify),
     ));
   }
 
   final Project project;
   final User userToModify;
 
-  const NewUserForm({Key key, @required this.project, this.userToModify})
+  const NewPersonForm({Key key, @required this.project, this.userToModify})
       : super(key: key);
 
   @override
-  _NewUserFormState createState() => _NewUserFormState();
+  _NewPersonFormState createState() => _NewPersonFormState();
 }
 
-class _NewUserFormState extends State<NewUserForm> {
+class _NewPersonFormState extends State<NewPersonForm> {
   final _nameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();

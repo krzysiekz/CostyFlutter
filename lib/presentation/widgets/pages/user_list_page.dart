@@ -198,6 +198,6 @@ class _UserListPageState extends State<UserListPage> {
   }
 
   void _showAddUserForm(BuildContext ctx, Project project) {
-    NewUserForm.navigate(ctx, project);
+    NewPersonForm.navigate(ctx, project);
   }
 }

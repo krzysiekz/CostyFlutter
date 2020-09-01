@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class StyleConstants {
   static const primaryTextColor = Colors.white;
   static const primaryTextSize = 36.0;
-  static const primaryFontWeight = FontWeight.w400;
+  static const primaryFontWeight = FontWeight.w500;
 
   static const secondaryTextSize = 17.0;
   static const secondaryFontWeight = FontWeight.w300;

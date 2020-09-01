@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -127,16 +128,36 @@ class _ProjectListItemState extends State<ProjectListItem> {
   IconButton buildEditButton(BuildContext context) {
     return IconButton(
         padding: EdgeInsets.zero,
-        icon:
-            SvgPicture.asset('assets/images/edit.svg', semanticsLabel: 'Edit'),
+        icon: Container(
+          height: 44,
+          width: 44,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Icon(
+            FeatherIcons.edit3,
+            color: StyleConstants.primaryColor,
+          ),
+        ),
         onPressed: () => _startEditProject(context));
   }
 
   IconButton buildDeleteButton(BuildContext context) {
     return IconButton(
         padding: EdgeInsets.zero,
-        icon: SvgPicture.asset('assets/images/delete.svg',
-            semanticsLabel: 'Delete'),
+        icon: Container(
+          height: 44,
+          width: 44,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(
+            FeatherIcons.trash2,
+            color: Colors.red,
+          ),
+        ),
         onPressed: () async {
           final bool result = await showDialog<bool>(
               context: context,
