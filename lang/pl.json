@@ -25,7 +25,9 @@
 
   "user_list_page_description": "Dodawaj, modyfikuj lub \nusuwaj osoby",
   "expenses_list_page_description": "Dodawaj, modyfikuj lub \nusuwaj wydatki",
+  "report_page_description": "Zobacz oraz udostępniaj\nraport",
   "expenses_item_paid_description": " zapłacił(a) za ",
+  "report_entry_item_pays": "płaci",
 
   "project_details_page_users": "Osoby",
   "project_details_page_expenses": "Wydatki",
@@ -72,5 +74,6 @@
   "add": "Dodaj",
   "ok": "Ok",
   "confirm": "Potwierdzenie",
-  "info": "Informacja"
+  "info": "Informacja",
+  "share": "Udostępnij"
 }

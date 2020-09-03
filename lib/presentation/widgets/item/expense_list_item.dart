@@ -79,7 +79,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
         children: [
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(widget.userExpense.amount.toString(),
+            child: Text(widget.userExpense.amount.toStringAsFixed(2),
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontWeight: StyleConstants.primaryFontWeight,

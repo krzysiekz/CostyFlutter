@@ -13,16 +13,16 @@ import '../../bloc/user_bloc.dart';
 import '../item/user_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
-class UserListPage extends StatefulWidget {
+class PeopleListPage extends StatefulWidget {
   final Project project;
 
-  const UserListPage({Key key, @required this.project}) : super(key: key);
+  const PeopleListPage({Key key, @required this.project}) : super(key: key);
 
   @override
-  _UserListPageState createState() => _UserListPageState();
+  _PeopleListPageState createState() => _PeopleListPageState();
 }
 
-class _UserListPageState extends State<UserListPage> {
+class _PeopleListPageState extends State<PeopleListPage> {
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
@@ -152,6 +152,7 @@ class _UserListPageState extends State<UserListPage> {
                   .translate('user_list_page_no_users'));
             }
             return GridView.builder(
+              padding: const EdgeInsetsDirectional.only(bottom: 15),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,

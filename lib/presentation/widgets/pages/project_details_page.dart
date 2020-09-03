@@ -11,7 +11,7 @@ import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
-import 'user_list_page.dart';
+import 'people_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project) {
@@ -30,33 +30,6 @@ class ProjectDetailsPage extends StatefulWidget {
 }
 
 class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
-  // List<BottomNavigationBarItem> Function(BuildContext context) get items =>
-  //     (BuildContext context) => [
-  //           BottomNavigationBarItem(
-  //             title: Text(
-  //               AppLocalizations.of(context)
-  //                   .translate('project_details_page_users'),
-  //               key: const Key(Keys.projectDetailsUsersTab),
-  //             ),
-  //             icon: Icon(context.platformIcons.group),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             title: Text(
-  //               AppLocalizations.of(context)
-  //                   .translate('project_details_page_expenses'),
-  //               key: const Key(Keys.projectDetailsExpensesTab),
-  //             ),
-  //             icon: Icon(context.platformIcons.shoppingCart),
-  //           ),
-  //           BottomNavigationBarItem(
-  //             title: Text(
-  //               AppLocalizations.of(context)
-  //                   .translate('project_details_page_report'),
-  //               key: const Key(Keys.projectDetailsReportTab),
-  //             ),
-  //             icon: Icon(context.platformIcons.mail),
-  //           ),
-  //         ];
 
   @override
   void initState() {
@@ -69,14 +42,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     super.dispose();
   }
 
-  // void _showAddUserForm(BuildContext ctx, Project project) {
-  //   NewUserForm.navigate(ctx, project);
-  // }
-
-  // void _showAddExpenseForm(BuildContext ctx, Project project) {
-  //   NewExpenseForm.navigate(ctx, project);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return buildProjectDetailsPage(widget.project, context);
@@ -88,7 +53,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       child: Scaffold(
         backgroundColor: StyleConstants.backgroundColor,
         body: TabBarView(children: [
-          Center(child: UserListPage(project: project)),
+          Center(child: PeopleListPage(project: project)),
           Center(child: ExpensesListPage(project: project)),
           Center(child: ReportPage(project: project)),
         ]),
@@ -100,7 +65,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             boxShadow: [
               BoxShadow(
                 blurRadius: 2,
-                offset: Offset(0.0, 1.0), // shadow direction: bottom right
+                offset: Offset(0.0, 1.0),
               )
             ],
           ),

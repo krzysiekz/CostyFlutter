@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
@@ -35,16 +34,18 @@ class _UserListItemState extends State<UserListItem> {
           buildTopCard(),
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                child: Text(widget.user.name,
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.primaryFontWeight,
-                      color: StyleConstants.primaryTextColor,
-                      fontSize: StyleConstants.secondaryTextSize,
-                    )),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                  child: Text(widget.user.name,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      style: const TextStyle(
+                        fontWeight: StyleConstants.primaryFontWeight,
+                        color: StyleConstants.primaryTextColor,
+                        fontSize: StyleConstants.secondaryTextSize,
+                      )),
+                ),
               ),
               Expanded(
                 child: Transform.translate(
@@ -146,7 +147,7 @@ class _UserListItemState extends State<UserListItem> {
           ],
         );
       }
-      return null;
+      return Container();
     });
   }
 

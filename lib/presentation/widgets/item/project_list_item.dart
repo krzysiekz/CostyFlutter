@@ -153,7 +153,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(
+          child: const Icon(
             FeatherIcons.trash2,
             color: Colors.red,
           ),

@@ -25,7 +25,9 @@
 
   "user_list_page_description": "Add, modify or \ndelete people",
   "expenses_list_page_description": "Add, modify or \ndelete expenses",
+  "report_page_description": "View and share\nreport",
   "expenses_item_paid_description": " paid for ",
+  "report_entry_item_pays": "pays",
 
   "project_details_page_users": "People",
   "project_details_page_expenses": "Expenses",
@@ -72,5 +74,6 @@
   "add": "Add",
   "ok": "Ok",
   "confirm": "Confirm",
-  "info": "Information"
+  "info": "Information",
+  "share": "Share"
 }
