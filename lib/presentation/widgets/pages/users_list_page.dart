@@ -13,16 +13,16 @@ import '../../bloc/user_bloc.dart';
 import '../item/user_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
-class PeopleListPage extends StatefulWidget {
+class UsersListPage extends StatefulWidget {
   final Project project;
 
-  const PeopleListPage({Key key, @required this.project}) : super(key: key);
+  const UsersListPage({Key key, @required this.project}) : super(key: key);
 
   @override
-  _PeopleListPageState createState() => _PeopleListPageState();
+  _UsersListPageState createState() => _UsersListPageState();
 }
 
-class _PeopleListPageState extends State<PeopleListPage> {
+class _UsersListPageState extends State<UsersListPage> {
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
@@ -45,7 +45,7 @@ class _PeopleListPageState extends State<PeopleListPage> {
         buildHeaderBackground(),
         Positioned(
           top: 50,
-          left: 40,
+          left: 20,
           child: SvgPicture.asset('assets/images/users.svg',
               semanticsLabel: 'Projects image'),
         ),
@@ -157,7 +157,7 @@ class _PeopleListPageState extends State<PeopleListPage> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 25,
-                  childAspectRatio: 2.1),
+                  childAspectRatio: 1.9),
               itemBuilder: (cts, index) {
                 return UserListItem(
                   key: Key("user_${state.users[index].id}"),

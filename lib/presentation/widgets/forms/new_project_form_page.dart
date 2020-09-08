@@ -7,6 +7,7 @@ import '../../../app_localizations.dart';
 import '../../../data/models/currency.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
@@ -83,21 +84,52 @@ class _NewProjectFormState extends State<NewProjectForm> {
             .translate('project_form_add_project_button')
         : AppLocalizations.of(context)
             .translate('project_form_modify_project_button');
-    return CustomScaffold(
-      appBarTitle: title,
-      body: SingleChildScrollView(
-        child:
-            BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
-          return Container(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-              bottom: 10,
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+              decoration: const BoxDecoration(
+                  gradient: StyleConstants.primaryGradient)),
+          Positioned.fill(
+            top: 36,
+            child: Column(
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.formsTitleFontWeight,
+                      color: StyleConstants.primaryTextColor,
+                      fontSize: StyleConstants.formsTitleTextSize,
+                    )),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                        color: StyleConstants.backgroundColor),
+                    child: SingleChildScrollView(
+                      child: BlocBuilder<CurrencyBloc, CurrencyState>(
+                          builder: (context, state) {
+                        return Container(
+                          padding: const EdgeInsets.only(
+                            top: 10,
+                            left: 10,
+                            right: 10,
+                            bottom: 10,
+                          ),
+                          child: _buildForm(context, state),
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: _buildForm(context, state),
-          );
-        }),
+          ),
+        ],
       ),
     );
   }
@@ -145,24 +177,34 @@ class _NewProjectFormState extends State<NewProjectForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              PlatformButton(
-                materialFlat: (_, platform) => MaterialFlatButtonData(
-                  textColor: Theme.of(context).errorColor,
-                ),
+              FlatButton(
                 key: const Key(Keys.projectFormCancelButtonKey),
                 onPressed: () => Navigator.of(context).pop(),
-                cupertino: (_, platform) => CupertinoButtonData(),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
+                child: Text(
+                    AppLocalizations.of(context)
+                        .translate('form_cancel_button'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.secondaryFontWeight,
+                      color: Colors.red,
+                      fontSize: StyleConstants.secondaryTextSize,
+                    )),
               ),
-              PlatformButton(
+              FlatButton(
                 key: const Key(Keys.projectFormAddEditButtonKey),
-                onPressed: _submitData,
-                child: widget.projectToEdit == null
-                    ? Text(AppLocalizations.of(context)
-                        .translate('project_form_add_project_button'))
-                    : Text(AppLocalizations.of(context)
-                        .translate('project_form_modify_project_button')),
+                onPressed: () => _submitData,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                color: StyleConstants.primaryColor,
+                child: Text(
+                    widget.projectToEdit == null
+                        ? AppLocalizations.of(context).translate('add')
+                        : AppLocalizations.of(context).translate('edit'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.secondaryFontWeight,
+                      color: Colors.white,
+                      fontSize: StyleConstants.secondaryTextSize,
+                    )),
               ),
             ],
           )

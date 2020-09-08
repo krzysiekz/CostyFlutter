@@ -6,7 +6,7 @@ import 'package:costy/data/models/user.dart';
 import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/pages/people_list_page.dart';
+import 'package:costy/presentation/widgets/pages/users_list_page.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +55,7 @@ void main() {
       ],
       child: MaterialApp(
           locale: const Locale('en'),
-          home: PeopleListPage(project: tProject),
+          home: UsersListPage(project: tProject),
           localizationsDelegates: const [
             AppLocalizations.delegate,
           ]),

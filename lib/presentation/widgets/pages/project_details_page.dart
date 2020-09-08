@@ -11,7 +11,7 @@ import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
-import 'people_list_page.dart';
+import 'users_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project) {
@@ -53,7 +53,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       child: Scaffold(
         backgroundColor: StyleConstants.backgroundColor,
         body: TabBarView(children: [
-          Center(child: PeopleListPage(project: project)),
+          Center(child: UsersListPage(project: project)),
           Center(child: ExpensesListPage(project: project)),
           Center(child: ReportPage(project: project)),
         ]),
