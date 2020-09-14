@@ -7,10 +7,9 @@ import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../data/models/user.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
-import '../other/custom_scaffold.dart';
-import '../other/custom_text_field.dart';
 
 class NewPersonForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
@@ -18,14 +17,14 @@ class NewPersonForm extends StatefulWidget {
     Navigator.of(buildContext).push(platformPageRoute(
       context: buildContext,
       builder: (BuildContext context) =>
-          NewPersonForm(project: project, userToModify: userToModify),
+          NewPersonForm(project: project, userToEdit: userToModify),
     ));
   }
 
   final Project project;
-  final User userToModify;
+  final User userToEdit;
 
-  const NewPersonForm({Key key, @required this.project, this.userToModify})
+  const NewPersonForm({Key key, @required this.project, this.userToEdit})
       : super(key: key);
 
   @override
@@ -39,8 +38,8 @@ class _NewPersonFormState extends State<NewPersonForm> {
 
   @override
   void initState() {
-    if (widget.userToModify != null) {
-      _nameController.text = widget.userToModify.name;
+    if (widget.userToEdit != null) {
+      _nameController.text = widget.userToEdit.name;
     }
     super.initState();
   }
@@ -49,11 +48,11 @@ class _NewPersonFormState extends State<NewPersonForm> {
     if (_formKey.currentState.validate()) {
       final enteredName = _nameController.text;
 
-      if (widget.userToModify == null) {
+      if (widget.userToEdit == null) {
         BlocProvider.of<UserBloc>(context)
             .add(AddUserEvent(enteredName, widget.project));
       } else {
-        final User edited = User(id: widget.userToModify.id, name: enteredName);
+        final User edited = User(id: widget.userToEdit.id, name: enteredName);
         BlocProvider.of<UserBloc>(context).add(ModifyUserEvent(edited));
       }
 
@@ -64,22 +63,53 @@ class _NewPersonFormState extends State<NewPersonForm> {
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.userToModify == null
+    final title = widget.userToEdit == null
         ? AppLocalizations.of(context).translate('user_form_add_user_button')
         : AppLocalizations.of(context)
             .translate('user_form_modify_user_button');
-    return CustomScaffold(
-      appBarTitle: title,
-      body: SingleChildScrollView(
-          child: Container(
-        padding: const EdgeInsets.only(
-          top: 10,
-          left: 10,
-          right: 10,
-          bottom: 10,
-        ),
-        child: _showForm(context),
-      )),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+              decoration: const BoxDecoration(
+                  gradient: StyleConstants.primaryGradient)),
+          Positioned.fill(
+            top: 36,
+            child: Column(
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.formsTitleFontWeight,
+                      color: StyleConstants.primaryTextColor,
+                      fontSize: StyleConstants.formsTitleTextSize,
+                    )),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                        color: StyleConstants.backgroundColor),
+                    child: SingleChildScrollView(
+                        child: Container(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                        bottom: 10,
+                      ),
+                      child: _showForm(context),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -89,40 +119,63 @@ class _NewPersonFormState extends State<NewPersonForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          CustomTextField(
-            textFormFieldKey: const Key(Keys.userFormNameFieldKey),
-            hintText: AppLocalizations.of(context)
-                .translate('user_form_user_name_hint'),
-            controller: _nameController,
-            validator: (String val) => val.isEmpty
-                ? AppLocalizations.of(context)
-                    .translate('user_form_user_name_error')
-                : null,
-            iconData: context.platformIcons.person,
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    AppLocalizations.of(context)
+                        .translate('user_form_user_name_hint'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: StyleConstants.formLabelColor,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
+                TextFormField(
+                  key: const Key(Keys.userFormNameFieldKey),
+                  controller: _nameController,
+                  validator: (String val) => val.isEmpty
+                      ? AppLocalizations.of(context)
+                          .translate('user_form_user_name_error')
+                      : null,
+                ),
+              ],
+            ),
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              PlatformButton(
-                materialFlat: (_, platform) => MaterialFlatButtonData(
-                  textColor: Theme.of(context).errorColor,
-                ),
-                key: const Key(Keys.projectFormCancelButtonKey),
+              FlatButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
+                child: Text(
+                    AppLocalizations.of(context)
+                        .translate('form_cancel_button'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: Colors.red,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
               ),
-              PlatformButton(
-                key: const Key(Keys.userFormAddEditButtonKey),
+              FlatButton(
+                key: const Key(Keys.userFormNameFieldKey),
                 onPressed: _submitData,
-                child: widget.userToModify == null
-                    ? Text(AppLocalizations.of(context)
-                        .translate('user_form_add_user_button'))
-                    : Text(AppLocalizations.of(context)
-                        .translate('user_form_modify_user_button')),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                color: StyleConstants.primaryColor,
+                child: Text(
+                    widget.userToEdit == null
+                        ? AppLocalizations.of(context).translate('add')
+                        : AppLocalizations.of(context).translate('edit'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: Colors.white,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
               ),
             ],
           )

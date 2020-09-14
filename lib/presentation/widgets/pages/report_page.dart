@@ -108,9 +108,7 @@ class _ReportPageState extends State<ReportPage> {
               color: StyleConstants.primaryTextColor,
               fontSize: StyleConstants.primaryTextSize,
             )),
-        Text(
-            AppLocalizations.of(context)
-                .translate('report_page_description'),
+        Text(AppLocalizations.of(context).translate('report_page_description'),
             textAlign: TextAlign.left,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -126,9 +124,9 @@ class _ReportPageState extends State<ReportPage> {
           color: Colors.white,
           child: Text(AppLocalizations.of(context).translate('share'),
               style: const TextStyle(
-                fontWeight: StyleConstants.secondaryFontWeight,
+                fontWeight: StyleConstants.buttonsTextFontWeight,
                 color: Colors.black,
-                fontSize: StyleConstants.secondaryTextSize,
+                fontSize: StyleConstants.buttonsTextSize,
               )),
         ),
       ],

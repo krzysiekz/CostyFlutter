@@ -63,15 +63,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  AppBarTheme _darkAppBarTheme() {
-    return const AppBarTheme(
-      color: Color.fromRGBO(40, 40, 40, 1),
-      iconTheme: IconThemeData(
-        color: Colors.blue,
-      ),
-    );
-  }
-
   ThemeData _buildLightTheme() {
     final ThemeData base = ThemeData.light();
     return base.copyWith(
@@ -86,22 +77,6 @@ class _MyAppState extends State<MyApp> {
         primaryTextTheme:
             Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.black),
         appBarTheme: _appBarTheme());
-  }
-
-  ThemeData _buildDarkTheme() {
-    final ThemeData base = ThemeData.dark();
-    return base.copyWith(
-        inputDecorationTheme: Theme.of(context)
-            .inputDecorationTheme
-            .copyWith(fillColor: const Color.fromRGBO(100, 100, 100, 1)),
-        buttonTheme: const ButtonThemeData(
-          buttonColor: Colors.blue,
-          textTheme: ButtonTextTheme.primary,
-        ),
-        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.blue),
-        primaryTextTheme:
-            Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.white),
-        appBarTheme: _darkAppBarTheme());
   }
 
   @override
@@ -129,7 +104,6 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             material: (_, platform) => MaterialAppData(
               theme: _buildLightTheme(),
-              darkTheme: _buildDarkTheme(),
             ),
             locale: DevicePreview.of(context).locale,
             builder: DevicePreview.appBuilder,

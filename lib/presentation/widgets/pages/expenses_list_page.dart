@@ -132,9 +132,9 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
             color: Colors.white,
             child: Text(AppLocalizations.of(context).translate('add'),
                 style: const TextStyle(
-                  fontWeight: StyleConstants.secondaryFontWeight,
+                  fontWeight: StyleConstants.buttonsTextFontWeight,
                   color: Colors.black,
-                  fontSize: StyleConstants.secondaryTextSize,
+                  fontSize: StyleConstants.buttonsTextSize,
                 )),
           ),
         ],

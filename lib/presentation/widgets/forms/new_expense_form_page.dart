@@ -12,10 +12,9 @@ import '../../../data/models/project.dart';
 import '../../../data/models/user.dart';
 import '../../../data/models/user_expense.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../other/currency_dropdown_field.dart';
-import '../other/custom_scaffold.dart';
-import '../other/custom_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
 
 class NewExpenseForm extends StatefulWidget {
@@ -122,18 +121,51 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             .translate('expense_form_add_expense_button')
         : AppLocalizations.of(context)
             .translate('expense_form_modify_expense_button');
-    return CustomScaffold(
-      appBarTitle: title,
-      body: SingleChildScrollView(
-          child: Container(
-        padding: const EdgeInsets.only(
-          top: 10,
-          left: 10,
-          right: 10,
-          bottom: 10,
-        ),
-        child: _showForm(context),
-      )),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+                decoration: const BoxDecoration(
+                    gradient: StyleConstants.primaryGradient)),
+          ),
+          Positioned.fill(
+            top: 36,
+            child: Column(
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.formsTitleFontWeight,
+                      color: StyleConstants.primaryTextColor,
+                      fontSize: StyleConstants.formsTitleTextSize,
+                    )),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                        color: StyleConstants.backgroundColor),
+                    child: SingleChildScrollView(
+                        child: Container(
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                        bottom: 10,
+                      ),
+                      child: _showForm(context),
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -143,33 +175,58 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          CustomTextField(
-            textFormFieldKey: const Key(Keys.expenseFormDescriptionFieldKey),
-            hintText: AppLocalizations.of(context)
-                .translate('expense_form_description_hint'),
-            controller: _descriptionController,
-            validator: (String val) => val.isEmpty
-                ? AppLocalizations.of(context)
-                    .translate('expense_form_description_error')
-                : null,
-            iconData: context.platformIcons.shoppingCart,
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    AppLocalizations.of(context)
+                        .translate('expense_form_description_hint'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: StyleConstants.formLabelColor,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
+                TextFormField(
+                  key: const Key(Keys.expenseFormDescriptionFieldKey),
+                  controller: _descriptionController,
+                  validator: (String val) => val.isEmpty
+                      ? AppLocalizations.of(context)
+                          .translate('expense_form_description_error')
+                      : null,
+                ),
+              ],
+            ),
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Expanded(
-                child: CustomTextField(
-                  textFormFieldKey: const Key(Keys.expenseFormAcountFieldKey),
-                  hintText: AppLocalizations.of(context)
-                      .translate('expense_form_amount_hint'),
-                  controller: _amountController,
-                  validator: _numberValidator,
-                  textInputType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  iconData: context.platformIcons.tag,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          AppLocalizations.of(context)
+                              .translate('expense_form_amount_hint'),
+                          style: const TextStyle(
+                            fontWeight: StyleConstants.buttonsTextFontWeight,
+                            color: StyleConstants.formLabelColor,
+                            fontSize: StyleConstants.buttonsTextSize,
+                          )),
+                      TextFormField(
+                        key: const Key(Keys.expenseFormAcountFieldKey),
+                        controller: _descriptionController,
+                        validator: _numberValidator,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 15),
@@ -177,10 +234,9 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Expanded(
                   child: _UserDropDownFormField(
@@ -204,7 +260,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           ReceiversWidgetFormField(
               initialReceivers: _receivers,
@@ -213,29 +269,36 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                   _receivers = selectedList;
                 });
               }),
-          const SizedBox(
-            height: 10,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              PlatformButton(
-                materialFlat: (_, platform) => MaterialFlatButtonData(
-                  textColor: Theme.of(context).errorColor,
-                ),
-                key: const Key(Keys.projectFormCancelButtonKey),
+              FlatButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
+                child: Text(
+                    AppLocalizations.of(context)
+                        .translate('form_cancel_button'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: Colors.red,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
               ),
-              PlatformButton(
-                key: const Key(Keys.expenseFormAddEditButtonKey),
+              FlatButton(
+                key: const Key(Keys.userFormNameFieldKey),
                 onPressed: _submitData,
-                child: widget.expenseToEdit == null
-                    ? Text(AppLocalizations.of(context)
-                        .translate('expense_form_add_expense_button'))
-                    : Text(AppLocalizations.of(context)
-                        .translate('expense_form_modify_expense_button')),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                color: StyleConstants.primaryColor,
+                child: Text(
+                    widget.expenseToEdit == null
+                        ? AppLocalizations.of(context).translate('add')
+                        : AppLocalizations.of(context).translate('edit'),
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: Colors.white,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
               ),
             ],
           )
@@ -275,46 +338,47 @@ class _UserDropDownFormField extends StatelessWidget {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserLoaded) {
         return Container(
-            margin: const EdgeInsets.only(right: 5, left: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: FormField<User>(
               key: const Key(Keys.expenseFormUserKey),
               builder: (FormFieldState<User> formState) {
-                return InputDecorator(
-                  decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                    prefixIcon: Icon(
-                      context.platformIcons.person,
-                      color: Colors.blue,
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                    isDense: true,
-                    errorText: formState.hasError ? formState.errorText : null,
-                    hintText: AppLocalizations.of(context)
-                        .translate('expense_form_user_hint'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  isEmpty: initialValue == null,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<User>(
-                      isExpanded: true,
-                      icon: const Icon(
-                        Icons.arrow_downward,
-                        color: Colors.blue,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        AppLocalizations.of(context)
+                            .translate('expense_form_user_hint'),
+                        style: const TextStyle(
+                          fontWeight: StyleConstants.buttonsTextFontWeight,
+                          color: StyleConstants.formLabelColor,
+                          fontSize: StyleConstants.buttonsTextSize,
+                        )),
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        errorText:
+                            formState.hasError ? formState.errorText : null,
+                        border: const UnderlineInputBorder(),
                       ),
-                      value: initialValue,
-                      isDense: true,
-                      onChanged: (User newValue) {
-                        formState.didChange(newValue);
-                        onChangedCallback(newValue);
-                      },
-                      items: _getUsersDropdownItems(state.users),
+                      isEmpty: initialValue == null,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<User>(
+                          isExpanded: true,
+                          icon: const Icon(
+                            Icons.arrow_downward,
+                            color: Colors.blue,
+                          ),
+                          value: initialValue,
+                          isDense: true,
+                          onChanged: (User newValue) {
+                            formState.didChange(newValue);
+                            onChangedCallback(newValue);
+                          },
+                          items: _getUsersDropdownItems(state.users),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 );
               },
               validator: (val) {
@@ -357,25 +421,32 @@ class _DateTimePickerFormField extends StatelessWidget {
       child: FormField<DateTime>(
         initialValue: selectedValue ?? DateTime.now(),
         builder: (FormFieldState<DateTime> formState) {
-          return InputDecorator(
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                filled: true,
-                fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                isDense: true,
-                errorText: formState.hasError ? formState.errorText : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              child: FlatButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.all(0),
-                onPressed: () => _presentDatePicker(context),
-                child: Text(NewExpenseForm.dateFormat.format(selectedValue)),
-              ));
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  AppLocalizations.of(context)
+                      .translate('expense_form_date_hint'),
+                  style: const TextStyle(
+                    fontWeight: StyleConstants.buttonsTextFontWeight,
+                    color: StyleConstants.formLabelColor,
+                    fontSize: StyleConstants.buttonsTextSize,
+                  )),
+              InputDecorator(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    errorText: formState.hasError ? formState.errorText : null,
+                    border: const UnderlineInputBorder(),
+                  ),
+                  child: FlatButton(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () => _presentDatePicker(context),
+                    child:
+                        Text(NewExpenseForm.dateFormat.format(selectedValue)),
+                  )),
+            ],
+          );
         },
         validator: (val) {
           return (val == null)
