@@ -220,7 +220,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                           )),
                       TextFormField(
                         key: const Key(Keys.expenseFormAcountFieldKey),
-                        controller: _descriptionController,
+                        controller: _amountController,
                         validator: _numberValidator,
                         keyboardType: const TextInputType.numberWithOptions(
                             decimal: true),
@@ -284,7 +284,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                     )),
               ),
               FlatButton(
-                key: const Key(Keys.userFormNameFieldKey),
+                key: const Key(Keys.expenseFormAddEditButtonKey),
                 onPressed: _submitData,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22.0),

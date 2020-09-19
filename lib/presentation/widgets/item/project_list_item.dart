@@ -145,6 +145,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
 
   IconButton buildDeleteButton(BuildContext context) {
     return IconButton(
+        key: Key('delete_project_${widget.project.id}'),
         padding: EdgeInsets.zero,
         icon: Container(
           height: 44,

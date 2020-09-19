@@ -93,7 +93,7 @@ void main() {
         await tester.tap(addProjectButtonFinder);
         await tester.pumpAndSettle();
         //assert
-        expect(find.text('Add project'), findsNWidgets(2));
+        expect(find.text('Add project'), findsOneWidget);
         expect(find.text('Project name is required.'), findsOneWidget);
         expect(find.text('Please select a currency'), findsOneWidget);
 
@@ -183,7 +183,7 @@ void main() {
         //assert
         expect(find.text('Project to edit'), findsOneWidget);
         expect(find.text('USD').hitTestable(), findsOneWidget);
-        expect(find.text('Modify project').hitTestable(), findsNWidgets(2));
+        expect(find.text('Edit project').hitTestable(), findsOneWidget);
       });
     });
 

@@ -112,6 +112,7 @@ class _UserListItemState extends State<UserListItem> {
       if (state is ExpenseLoaded) {
         final bool used = isPersonUsedInExpense(state);
         return IconButton(
+            key: Key('delete_user_${widget.user.id}'),
             padding: EdgeInsets.zero,
             icon: Container(
               height: 44,

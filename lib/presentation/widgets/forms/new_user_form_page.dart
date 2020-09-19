@@ -161,7 +161,7 @@ class _NewPersonFormState extends State<NewPersonForm> {
                     )),
               ),
               FlatButton(
-                key: const Key(Keys.userFormNameFieldKey),
+                key: const Key(Keys.userFormAddEditButtonKey),
                 onPressed: _submitData,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22.0),

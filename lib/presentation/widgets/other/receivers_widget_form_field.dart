@@ -8,7 +8,6 @@ import '../../../data/models/user.dart';
 import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
-import '../utilities/dialog_utilities.dart';
 import 'multi_select_chip.dart';
 
 class ReceiversWidgetFormField extends StatelessWidget {
@@ -27,7 +26,6 @@ class ReceiversWidgetFormField extends StatelessWidget {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             onSelectionChangedFunction(state.users);
           });
-          return DialogUtilities.showLoadingIndicator(context);
         }
 
         return Container(
@@ -47,21 +45,22 @@ class ReceiversWidgetFormField extends StatelessWidget {
                         fontSize: StyleConstants.buttonsTextSize,
                       )),
                   InputDecorator(
-                      decoration: InputDecoration(
-                          isDense: true,
-                          errorText:
-                              formState.hasError ? formState.errorText : null,
-                          border: InputBorder.none),
-                      child: MultiSelectChip(
-                        key: const Key(Keys.expenseFormReceiversFieldKey),
-                        selectedUserList: initialReceivers ?? state.users,
-                        userList: state.users,
-                        onSelectionChanged: (Iterable<User> selected) {
-                          formState.didChange(selected);
-                          onSelectionChangedFunction(selected);
-                        },
-                        extractLabelFunction: (User u) => u.name,
-                      )),
+                    decoration: InputDecoration(
+                        isDense: true,
+                        errorText:
+                            formState.hasError ? formState.errorText : null,
+                        border: InputBorder.none),
+                    child: MultiSelectChip(
+                      key: const Key(Keys.expenseFormReceiversFieldKey),
+                      selectedUserList: initialReceivers ?? state.users,
+                      userList: state.users,
+                      onSelectionChanged: (Iterable<User> selected) {
+                        formState.didChange(selected);
+                        onSelectionChangedFunction(selected);
+                      },
+                      extractLabelFunction: (User u) => u.name,
+                    ),
+                  ),
                 ],
               );
             },

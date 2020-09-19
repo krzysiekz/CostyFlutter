@@ -54,21 +54,21 @@ void main() {
       await tester.pumpWidget(testedWidget);
       await tester.pumpAndSettle();
 
-      final itemFinder = find.byType(Dismissible);
-      final deleteButtonFinder =
+      final deleteButtonFinder = find.byKey(const Key('delete_project_1'));
+      final confirmDeleteButtonFinder =
           find.byKey(const Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
+      expect(deleteButtonFinder, findsOneWidget);
+      await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
       //verify popup
       expect(find.text('Are you sure you wish to delete this item?'),
           findsOneWidget);
-      expect(deleteButtonFinder, findsOneWidget);
+      expect(confirmDeleteButtonFinder, findsOneWidget);
 
       //click delete
-      await tester.tap(deleteButtonFinder);
+      await tester.tap(confirmDeleteButtonFinder);
       await tester.pumpAndSettle();
 
       //assert
@@ -84,12 +84,12 @@ void main() {
       await tester.pumpWidget(testedWidget);
       await tester.pumpAndSettle();
 
-      final itemFinder = find.byType(Dismissible);
+      final deleteButtonFinder = find.byKey(const Key('delete_project_1'));
       final cancelButtonFinder =
           find.byKey(const Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
+      expect(deleteButtonFinder, findsOneWidget);
+      await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
       //verify popup

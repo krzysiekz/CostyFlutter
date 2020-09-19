@@ -61,7 +61,7 @@ void main() {
         await tester.tap(addUserButtonFinder);
         await tester.pumpAndSettle();
         //assert
-        expect(find.text('Add user'), findsNWidgets(2));
+        expect(find.text('Add user'), findsOneWidget);
         expect(find.text("User's name is required"), findsOneWidget);
 
         verifyNever(userBloc.add(argThat(isA<AddUserEvent>())));
@@ -119,7 +119,7 @@ void main() {
         await tester.pumpAndSettle();
         //assert
         expect(find.text('John'), findsOneWidget);
-        expect(find.text('Modify user'), findsNWidgets(2));
+        expect(find.text('Edit user'), findsOneWidget);
       });
     });
 
