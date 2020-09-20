@@ -4,13 +4,13 @@ This is a rework of an Android app I wrote some time ago. This time written in F
 
 [Google Play Store link.](https://play.google.com/store/apps/details?id=com.krzysiekz.costy)
 
-
 - [Functionality](#functionality)
 - [Some screenshots](#some-screenshots)
   - [Android light theme](#android-light-theme)
   - [Android dark theme](#android-dark-theme)
   - [IOS](#ios)
 - [Some technical details](#some-technical-details)
+- [Running tests](#running-tests)
 
 ## Functionality
 
@@ -92,3 +92,29 @@ This is a rework of an Android app I wrote some time ago. This time written in F
 - Logic fully covered in unit tests
 - Widgets and Integration tests also in place when needed
 - Integration with Ozzie for taking screenshots during integration tests
+
+## Running tests
+To run unit and widget tests simply type:
+```
+flutter test
+```
+Integration tests are separated into multiple files, one for each category, to run single file type:
+```
+flutter drive --target=test_driver/projects.dart
+or
+flutter drive --target=test_driver/users.dart
+or
+flutter drive --target=test_driver/expenses.dart
+or
+flutter drive --target=test_driver/report.dart
+```
+There is one special integration test just for generating screenshots for application:
+
+```
+flutter drive --target=test_driver/screenshots.dart
+```
+In order to run integration test device or emulated must be connected.
+You can also run all integration tests on all configured devices using screenshots package [link](https://pub.dev/packages/screenshots). Tu run it, simple type:
+```
+screenshots
+```

@@ -43,12 +43,12 @@ void main() {
     await tapOnKey(Keys.projectDetailsExpensesTab, driver);
 
     await createExpense(
-        "Some expense", "20", "John", "John => John, Kate", driver);
+        "Some expense", "20.00", "John", "John paid for John, Kate", driver);
 
     await tapOnKey(Keys.projectDetailsReportTab, driver);
 
-    await expectTextPresent("From: Kate", driver);
-    await expectTextPresent("To: John", driver);
+    await expectTextPresent("Kate", driver);
+    await expectTextPresent("John", driver);
     await expectTextPresent("10.00", driver);
     await expectTextPresent("PLN", driver);
   });

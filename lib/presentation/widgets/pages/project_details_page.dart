@@ -30,7 +30,6 @@ class ProjectDetailsPage extends StatefulWidget {
 }
 
 class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
-
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
@@ -81,22 +80,28 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             ),
             tabs: [
               Tab(
-                key: const Key(Keys.projectDetailsUsersTab),
                 text: AppLocalizations.of(context)
                     .translate('project_details_page_users'),
-                icon: const Icon(FeatherIcons.users),
+                icon: const Icon(
+                  FeatherIcons.users,
+                  key: Key(Keys.projectDetailsUsersTab),
+                ),
               ),
               Tab(
-                key: const Key(Keys.projectDetailsExpensesTab),
                 text: AppLocalizations.of(context)
                     .translate('project_details_page_expenses'),
-                icon: const Icon(FeatherIcons.dollarSign),
+                icon: const Icon(
+                  FeatherIcons.dollarSign,
+                  key: Key(Keys.projectDetailsExpensesTab),
+                ),
               ),
               Tab(
-                key: const Key(Keys.projectDetailsReportTab),
                 text: AppLocalizations.of(context)
                     .translate('project_details_page_report'),
-                icon: const Icon(FeatherIcons.fileText),
+                icon: const Icon(
+                  FeatherIcons.fileText,
+                  key: Key(Keys.projectDetailsReportTab),
+                ),
               ),
             ],
           ),

@@ -175,6 +175,7 @@ class _ExpenseListItemState extends State<ExpenseListItem> {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: IconButton(
+          key: Key('edit_expense_${widget.userExpense.id}'),
           padding: EdgeInsets.zero,
           icon: Container(
             height: 44,

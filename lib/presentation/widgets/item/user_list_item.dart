@@ -89,6 +89,7 @@ class _UserListItemState extends State<UserListItem> {
 
   IconButton buildEditButton(BuildContext context) {
     return IconButton(
+        key: Key('edit_user_${widget.user.id}'),
         padding: EdgeInsets.zero,
         icon: Container(
           height: 44,

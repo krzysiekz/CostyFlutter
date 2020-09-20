@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
@@ -122,6 +123,7 @@ class _UsersListPageState extends State<UsersListPage> {
               fontSize: StyleConstants.secondaryTextSize,
             )),
         FlatButton(
+          key: const Key(Keys.projectDetailsAddUserButton),
           onPressed: () => _showAddUserForm(context, widget.project),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(22.0),
@@ -148,8 +150,10 @@ class _UsersListPageState extends State<UsersListPage> {
                 .translate('user_list_page_no_users'));
           } else if (state is UserLoaded) {
             if (state.users.isEmpty) {
-              return Text(AppLocalizations.of(context)
-                  .translate('user_list_page_no_users'));
+              return Center(
+                child: Text(AppLocalizations.of(context)
+                    .translate('user_list_page_no_users')),
+              );
             }
             return GridView.builder(
               padding: const EdgeInsetsDirectional.only(bottom: 15),

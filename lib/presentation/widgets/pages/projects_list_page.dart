@@ -66,13 +66,20 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
       }
     }, builder: (context, state) {
       if (state is ProjectLoaded) {
-        return ListView.builder(
-          itemCount: state.projects.length,
-          itemBuilder: (ctx, index) => ProjectListItem(
-            key: Key("project_${state.projects[index].id}"),
-            project: state.projects[index],
-          ),
-        );
+        if (state.projects.isEmpty) {
+          return Center(
+            child: Text(AppLocalizations.of(context)
+                .translate('project_list_page_no_projects')),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: state.projects.length,
+            itemBuilder: (ctx, index) => ProjectListItem(
+              key: Key("project_${state.projects[index].id}"),
+              project: state.projects[index],
+            ),
+          );
+        }
       } else {
         return DialogUtilities.showLoadingIndicator(context);
       }
@@ -113,6 +120,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
                 fontSize: StyleConstants.secondaryTextSize,
               )),
           FlatButton(
+            key: const Key(Keys.projectlistAddProjectButtonKey),
             onPressed: () => _startAddNewProject(context),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(22.0),

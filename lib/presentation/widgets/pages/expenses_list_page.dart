@@ -1,14 +1,15 @@
 import 'dart:math';
 
-import 'package:costy/presentation/widgets/forms/new_expense_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
+import '../forms/new_expense_form_page.dart';
 import '../item/expense_list_item.dart';
 import '../utilities/dialog_utilities.dart';
 
@@ -124,21 +125,40 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
                 color: StyleConstants.primaryTextColor,
                 fontSize: StyleConstants.secondaryTextSize,
               )),
-          FlatButton(
-            onPressed: () => _showAddExpenseForm(context, widget.project),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22.0),
-            ),
-            color: Colors.white,
-            child: Text(AppLocalizations.of(context).translate('add'),
-                style: const TextStyle(
-                  fontWeight: StyleConstants.buttonsTextFontWeight,
-                  color: Colors.black,
-                  fontSize: StyleConstants.buttonsTextSize,
-                )),
-          ),
+          BlocBuilder<UserBloc, UserState>(
+              builder: (BuildContext context, UserState state) {
+            if (state is UserLoaded && state.users.isNotEmpty) {
+              return buildAddUserButton(
+                  context, () => _showAddExpenseForm(context, widget.project));
+            } else {
+              return buildAddUserButton(
+                  context,
+                  () => DialogUtilities.showAlertDialog(
+                      context,
+                      AppLocalizations.of(context).translate('info'),
+                      AppLocalizations.of(context)
+                          .translate('expenses_list_page_no_users')));
+            }
+          }),
         ],
       ),
+    );
+  }
+
+  FlatButton buildAddUserButton(BuildContext context, VoidCallback callback) {
+    return FlatButton(
+      key: const Key(Keys.projectDetailsAddExpenseButton),
+      onPressed: callback,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(22.0),
+      ),
+      color: Colors.white,
+      child: Text(AppLocalizations.of(context).translate('add'),
+          style: const TextStyle(
+            fontWeight: StyleConstants.buttonsTextFontWeight,
+            color: Colors.black,
+            fontSize: StyleConstants.buttonsTextSize,
+          )),
     );
   }
 
@@ -150,12 +170,16 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
     return BlocConsumer<ExpenseBloc, ExpenseState>(
       builder: (BuildContext context, ExpenseState state) {
         if (state is ExpenseEmpty) {
-          return Text(AppLocalizations.of(context)
-              .translate('expenses_list_page_no_expenses'));
+          return Center(
+            child: Text(AppLocalizations.of(context)
+                .translate('expenses_list_page_no_expenses')),
+          );
         } else if (state is ExpenseLoaded) {
           if (state.expenses.isEmpty) {
-            return Text(AppLocalizations.of(context)
-                .translate('expenses_list_page_no_expenses'));
+            return Center(
+              child: Text(AppLocalizations.of(context)
+                  .translate('expenses_list_page_no_expenses')),
+            );
           }
           return ListView.builder(
             padding: const EdgeInsets.all(15),

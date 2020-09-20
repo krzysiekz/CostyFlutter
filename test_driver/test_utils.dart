@@ -74,7 +74,6 @@ Future<void> createProject(
   await tapOnKey(Keys.projectFormAddEditButtonKey, d);
 
   await expectTextPresent(name, d);
-  await expectTextPresent(currency, d);
 }
 
 Future<void> createExpense(String description, String amount, String user,
@@ -99,6 +98,7 @@ Future<void> createExpense(String description, String amount, String user,
   await tapOnKey(Keys.expenseFormAddEditButtonKey, d);
 
   await expectTextPresent(description, d);
-  await expectTextPresent(expectedSummary, d);
+  //TODO uncomment when https://github.com/flutter/flutter/issues/62489 is done
+  // await expectTextPresent(expectedSummary, d);
   await expectTextPresent(amount, d);
 }

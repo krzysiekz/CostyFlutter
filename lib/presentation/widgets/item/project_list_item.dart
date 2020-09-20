@@ -127,6 +127,7 @@ class _ProjectListItemState extends State<ProjectListItem> {
 
   IconButton buildEditButton(BuildContext context) {
     return IconButton(
+        key: Key('edit_project_${widget.project.id}'),
         padding: EdgeInsets.zero,
         icon: Container(
           height: 44,

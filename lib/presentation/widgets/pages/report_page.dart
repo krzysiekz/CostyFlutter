@@ -141,8 +141,10 @@ class _ReportPageState extends State<ReportPage> {
               AppLocalizations.of(context).translate('report_page_no_report'));
         } else if (state is ReportLoaded) {
           if (state.report != null && state.report.entries.isEmpty) {
-            return Text(AppLocalizations.of(context)
-                .translate('report_page_no_report'));
+            return Center(
+              child: Text(AppLocalizations.of(context)
+                  .translate('report_page_no_report')),
+            );
           } else if (state.report != null) {
             return ListView.builder(
               padding: const EdgeInsets.all(15),

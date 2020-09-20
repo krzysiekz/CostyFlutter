@@ -115,7 +115,7 @@ void main() {
     await expectTextPresent('50.24', driver);
 
     await createExpense(
-        "Evening beer", "26", "Bob", "Bob => Andrew, Bob, John, Kate", driver);
+        "Evening beer", "26", "Bob", "Bob paid for Andrew, Bob, John, Kate", driver);
 
     await ozzie.takeScreenshot('9_expense_list');
 
