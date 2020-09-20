@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/other/form_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -117,29 +118,15 @@ class _NewPersonFormState extends State<NewPersonForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    AppLocalizations.of(context)
-                        .translate('user_form_user_name_hint'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: StyleConstants.formLabelColor,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
-                TextFormField(
-                  key: const Key(Keys.userFormNameFieldKey),
-                  controller: _nameController,
-                  validator: (String val) => val.isEmpty
-                      ? AppLocalizations.of(context)
-                          .translate('user_form_user_name_error')
-                      : null,
-                ),
-              ],
-            ),
+          FormTextField(
+            controller: _nameController,
+            hint: AppLocalizations.of(context)
+                .translate('user_form_user_name_hint'),
+            textFieldKey: Keys.userFormNameFieldKey,
+            validator: (String val) => val.isEmpty
+                ? AppLocalizations.of(context)
+                    .translate('user_form_user_name_error')
+                : null,
           ),
           const SizedBox(
             height: 30,

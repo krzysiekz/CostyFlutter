@@ -16,6 +16,7 @@ import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../other/currency_dropdown_field.dart';
+import '../other/form_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
 
 class NewExpenseForm extends StatefulWidget {
@@ -175,29 +176,15 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    AppLocalizations.of(context)
-                        .translate('expense_form_description_hint'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: StyleConstants.formLabelColor,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
-                TextFormField(
-                  key: const Key(Keys.expenseFormDescriptionFieldKey),
-                  controller: _descriptionController,
-                  validator: (String val) => val.isEmpty
-                      ? AppLocalizations.of(context)
-                          .translate('expense_form_description_error')
-                      : null,
-                ),
-              ],
-            ),
+          FormTextField(
+            controller: _descriptionController,
+            hint: AppLocalizations.of(context)
+                .translate('expense_form_description_hint'),
+            textFieldKey: Keys.expenseFormDescriptionFieldKey,
+            validator: (String val) => val.isEmpty
+                ? AppLocalizations.of(context)
+                    .translate('expense_form_description_error')
+                : null,
           ),
           const SizedBox(
             height: 15,
@@ -205,29 +192,14 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           Row(
             children: <Widget>[
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('expense_form_amount_hint'),
-                          style: const TextStyle(
-                            fontWeight: StyleConstants.buttonsTextFontWeight,
-                            color: StyleConstants.formLabelColor,
-                            fontSize: StyleConstants.buttonsTextSize,
-                          )),
-                      TextFormField(
-                        key: const Key(Keys.expenseFormAcountFieldKey),
-                        controller: _amountController,
-                        validator: _numberValidator,
-                        keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
-                      ),
-                    ],
-                  ),
-                ),
+                child: FormTextField(
+                    controller: _amountController,
+                    hint: AppLocalizations.of(context)
+                        .translate('expense_form_amount_hint'),
+                    textFieldKey: Keys.projectFormProjectNameFieldKey,
+                    validator: _numberValidator,
+                    textInputType:
+                        const TextInputType.numberWithOptions(decimal: true)),
               ),
               const SizedBox(width: 15),
               Expanded(child: _createCurrencyDropDownList(context)),

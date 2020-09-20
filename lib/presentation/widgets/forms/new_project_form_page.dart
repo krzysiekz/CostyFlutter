@@ -12,6 +12,7 @@ import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
 import '../other/currency_dropdown_field.dart';
+import '../other/form_text_field.dart';
 
 class NewProjectForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, {Project projectToEdit}) {
@@ -144,29 +145,15 @@ class _NewProjectFormState extends State<NewProjectForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    AppLocalizations.of(context)
-                        .translate('project_form_project_name_hint'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: StyleConstants.formLabelColor,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
-                TextFormField(
-                  key: const Key(Keys.projectFormProjectNameFieldKey),
-                  controller: _nameController,
-                  validator: (String val) => val.isEmpty
-                      ? AppLocalizations.of(context)
-                          .translate('project_form_project_name_error')
-                      : null,
-                ),
-              ],
-            ),
+          FormTextField(
+            controller: _nameController,
+            hint: AppLocalizations.of(context)
+                .translate('project_form_project_name_hint'),
+            textFieldKey: Keys.projectFormProjectNameFieldKey,
+            validator: (String val) => val.isEmpty
+                ? AppLocalizations.of(context)
+                    .translate('project_form_project_name_error')
+                : null,
           ),
           const SizedBox(
             height: 30,
