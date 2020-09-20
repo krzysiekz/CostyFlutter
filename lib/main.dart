@@ -1,15 +1,14 @@
-import 'package:costy/custom_asset_bundle.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'app_localizations.dart';
+import 'custom_asset_bundle.dart';
 import 'data/datasources/currencies_datasource.dart';
 import 'data/datasources/entities/currency_entity.dart';
 import 'data/datasources/entities/project_entity.dart';
@@ -58,31 +57,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppBarTheme _appBarTheme() {
-    return const AppBarTheme(
-      color: Colors.white,
-      iconTheme: IconThemeData(
-        color: Colors.blue,
-      ),
-    );
-  }
-
-  ThemeData _buildLightTheme() {
-    final ThemeData base = ThemeData.light();
-    return base.copyWith(
-        inputDecorationTheme: Theme.of(context)
-            .inputDecorationTheme
-            .copyWith(fillColor: const Color.fromRGBO(235, 235, 235, 1)),
-        buttonTheme: const ButtonThemeData(
-          buttonColor: Colors.blue,
-          textTheme: ButtonTextTheme.primary,
-        ),
-        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.blue),
-        primaryTextTheme:
-            Theme.of(context).primaryTextTheme.apply(bodyColor: Colors.black),
-        appBarTheme: _appBarTheme());
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -104,11 +78,8 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
         child: OKToast(
-          child: PlatformApp(
+          child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            material: (_, platform) => MaterialAppData(
-              theme: _buildLightTheme(),
-            ),
             locale: DevicePreview.of(context).locale,
             builder: DevicePreview.appBuilder,
             title: 'Costy',

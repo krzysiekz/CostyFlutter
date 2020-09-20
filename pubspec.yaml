@@ -21,7 +21,6 @@ dependencies:
   get_it: ^4.0.4
   injectable: ^1.0.4
   intl: ^0.16.1
-  flutter_platform_widgets: ^0.60.1
   oktoast: ^2.3.2
   share: ^0.6.4+3
   device_preview: ^0.4.7

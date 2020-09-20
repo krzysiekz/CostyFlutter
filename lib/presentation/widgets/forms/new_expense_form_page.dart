@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app_localizations.dart';
@@ -20,8 +21,7 @@ import '../other/receivers_widget_form_field.dart';
 class NewExpenseForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
       {UserExpense expenseToEdit}) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) =>
           NewExpenseForm(project: project, expenseToEdit: expenseToEdit),
     ));
@@ -459,7 +459,7 @@ class _DateTimePickerFormField extends StatelessWidget {
   }
 
   Future<void> _presentDatePicker(BuildContext ctx) async {
-    if (isMaterial(ctx)) {
+    if (Platform.isAndroid) {
       final date = await showDatePicker(
           context: ctx,
           firstDate: DateTime(DateTime.now().year - 1),

@@ -50,15 +50,13 @@ void main() {
     await tapOnKey(Keys.projectFormAddEditButtonKey, driver);
 
     await expectTextPresent('Weekend trip', driver);
-    await expectTextPresent('USD', driver);
 
     //create second project
     await createProject('Shopping in Paris', 'EUR', driver);
     await ozzie.takeScreenshot('3_project_list');
 
     //remove second project
-    await driver.scroll(find.byValueKey("project_1"), -400, 0,
-        const Duration(milliseconds: 300));
+    await tapOnKey("delete_project_1", driver);
 
     await ozzie.takeScreenshot('4_delete_project');
     await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
@@ -111,11 +109,10 @@ void main() {
     await tapOnKey(Keys.expenseFormAddEditButtonKey, driver);
 
     await expectTextPresent('Dinner', driver);
-    await expectTextPresent("John => Andrew, Bob, John, Kate", driver);
     await expectTextPresent('50.24', driver);
 
     await createExpense(
-        "Evening beer", "26", "Bob", "Bob paid for Andrew, Bob, John, Kate", driver);
+        "Evening beer", "26.00", "Bob", "Bob paid for Andrew, Bob, John, Kate", driver);
 
     await ozzie.takeScreenshot('9_expense_list');
 

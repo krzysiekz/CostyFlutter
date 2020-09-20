@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/currency.dart';
@@ -16,8 +15,7 @@ import '../other/currency_dropdown_field.dart';
 
 class NewProjectForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, {Project projectToEdit}) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) =>
           NewProjectForm(projectToEdit: projectToEdit),
     ));

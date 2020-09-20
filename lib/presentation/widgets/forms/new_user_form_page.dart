@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
@@ -14,8 +13,7 @@ import '../../bloc/user_bloc.dart';
 class NewPersonForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
       {User userToModify}) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) =>
           NewPersonForm(project: project, userToEdit: userToModify),
     ));
