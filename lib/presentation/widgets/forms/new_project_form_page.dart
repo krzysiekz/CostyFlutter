@@ -12,6 +12,7 @@ import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
 import '../other/currency_dropdown_field.dart';
+import '../other/form_cancel_button.dart';
 import '../other/form_text_field.dart';
 
 class NewProjectForm extends StatefulWidget {
@@ -173,17 +174,8 @@ class _NewProjectFormState extends State<NewProjectForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              FlatButton(
-                key: const Key(Keys.projectFormCancelButtonKey),
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                    AppLocalizations.of(context)
-                        .translate('form_cancel_button'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: Colors.red,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
+              const FormCancelButton(
+                buttonKey: Keys.projectFormCancelButtonKey,
               ),
               FlatButton(
                 key: const Key(Keys.projectFormAddEditButtonKey),

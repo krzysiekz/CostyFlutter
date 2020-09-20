@@ -16,6 +16,7 @@ import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../other/currency_dropdown_field.dart';
+import '../other/form_cancel_button.dart';
 import '../other/form_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
 
@@ -196,7 +197,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                     controller: _amountController,
                     hint: AppLocalizations.of(context)
                         .translate('expense_form_amount_hint'),
-                    textFieldKey: Keys.projectFormProjectNameFieldKey,
+                    textFieldKey: Keys.expenseFormAmountFieldKey,
                     validator: _numberValidator,
                     textInputType:
                         const TextInputType.numberWithOptions(decimal: true)),
@@ -244,16 +245,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              FlatButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                    AppLocalizations.of(context)
-                        .translate('form_cancel_button'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: Colors.red,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
+              const FormCancelButton(
+                buttonKey: Keys.expenseFormCancelButtonKey,
               ),
               FlatButton(
                 key: const Key(Keys.expenseFormAddEditButtonKey),

@@ -172,7 +172,7 @@ void main() {
         await tester.pumpAndSettle();
 
         final amountFieldFinder =
-            find.byKey(const Key(Keys.expenseFormAcountFieldKey));
+            find.byKey(const Key(Keys.expenseFormAmountFieldKey));
         expect(amountFieldFinder, findsOneWidget);
         await tester.enterText(amountFieldFinder, "10");
         await tester.pumpAndSettle();
@@ -295,7 +295,7 @@ void main() {
         await tester.pumpAndSettle();
 
         final amountFieldFinder =
-            find.byKey(const Key(Keys.expenseFormAcountFieldKey));
+            find.byKey(const Key(Keys.expenseFormAmountFieldKey));
         expect(amountFieldFinder, findsOneWidget);
         await tester.enterText(amountFieldFinder, "20");
         await tester.pumpAndSettle();

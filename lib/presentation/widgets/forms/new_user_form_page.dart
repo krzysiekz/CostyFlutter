@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/other/form_cancel_button.dart';
 import 'package:costy/presentation/widgets/other/form_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -134,16 +135,8 @@ class _NewPersonFormState extends State<NewPersonForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              FlatButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                    AppLocalizations.of(context)
-                        .translate('form_cancel_button'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: Colors.red,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
+              const FormCancelButton(
+                buttonKey: Keys.userFormCancelButtonKey,
               ),
               FlatButton(
                 key: const Key(Keys.userFormAddEditButtonKey),

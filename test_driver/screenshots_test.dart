@@ -96,8 +96,8 @@ void main() {
     await driver.enterText('Dinner');
     await driver.waitFor(find.text('Dinner'));
 
-    await expectKeyPresent(Keys.expenseFormAcountFieldKey, driver);
-    await tapOnKey(Keys.expenseFormAcountFieldKey, driver);
+    await expectKeyPresent(Keys.expenseFormAmountFieldKey, driver);
+    await tapOnKey(Keys.expenseFormAmountFieldKey, driver);
     await driver.enterText('50.24');
     await driver.waitFor(find.text('50.24'));
 
