@@ -6,11 +6,11 @@ import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../data/models/user.dart';
 import '../../../keys.dart';
-import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
 import '../other/form_add_edit_button.dart';
 import '../other/form_cancel_button.dart';
+import '../other/form_decoration.dart';
 import '../other/form_text_field.dart';
 
 class NewPersonForm extends StatefulWidget {
@@ -69,48 +69,7 @@ class _NewPersonFormState extends State<NewPersonForm> {
         : AppLocalizations.of(context)
             .translate('user_form_modify_user_button');
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-              decoration: const BoxDecoration(
-                  gradient: StyleConstants.primaryGradient)),
-          Positioned.fill(
-            top: 36,
-            child: Column(
-              children: [
-                Text(title,
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.formsTitleFontWeight,
-                      color: StyleConstants.primaryTextColor,
-                      fontSize: StyleConstants.formsTitleTextSize,
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30)),
-                        color: StyleConstants.backgroundColor),
-                    child: SingleChildScrollView(
-                        child: Container(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 10,
-                        right: 10,
-                        bottom: 10,
-                      ),
-                      child: _showForm(context),
-                    )),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: FormDecoration(title: title, content: _showForm(context)),
     );
   }
 

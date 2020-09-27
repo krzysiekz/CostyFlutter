@@ -1,4 +1,3 @@
-import 'package:costy/presentation/widgets/other/form_add_edit_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,13 +6,14 @@ import '../../../app_localizations.dart';
 import '../../../data/models/currency.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
-import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
 import '../other/currency_dropdown_field.dart';
+import '../other/form_add_edit_button.dart';
 import '../other/form_cancel_button.dart';
+import '../other/form_decoration.dart';
 import '../other/form_text_field.dart';
 
 class NewProjectForm extends StatefulWidget {
@@ -84,52 +84,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
         : AppLocalizations.of(context)
             .translate('project_form_modify_project_button');
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-              decoration: const BoxDecoration(
-                  gradient: StyleConstants.primaryGradient)),
-          Positioned.fill(
-            top: 36,
-            child: Column(
-              children: [
-                Text(title,
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.formsTitleFontWeight,
-                      color: StyleConstants.primaryTextColor,
-                      fontSize: StyleConstants.formsTitleTextSize,
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30)),
-                        color: StyleConstants.backgroundColor),
-                    child: SingleChildScrollView(
-                      child: BlocBuilder<CurrencyBloc, CurrencyState>(
-                          builder: (context, state) {
-                        return Container(
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                            left: 10,
-                            right: 10,
-                            bottom: 10,
-                          ),
-                          child: _buildForm(context, state),
-                        );
-                      }),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
+        return FormDecoration(
+            title: title, content: _buildForm(context, state));
+      }),
     );
   }
 

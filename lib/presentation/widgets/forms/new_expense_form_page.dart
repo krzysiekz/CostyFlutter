@@ -18,6 +18,7 @@ import '../../bloc/bloc.dart';
 import '../other/currency_dropdown_field.dart';
 import '../other/form_add_edit_button.dart';
 import '../other/form_cancel_button.dart';
+import '../other/form_decoration.dart';
 import '../other/form_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
 
@@ -125,50 +126,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
         : AppLocalizations.of(context)
             .translate('expense_form_modify_expense_button');
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-                decoration: const BoxDecoration(
-                    gradient: StyleConstants.primaryGradient)),
-          ),
-          Positioned.fill(
-            top: 36,
-            child: Column(
-              children: [
-                Text(title,
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.formsTitleFontWeight,
-                      color: StyleConstants.primaryTextColor,
-                      fontSize: StyleConstants.formsTitleTextSize,
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30)),
-                        color: StyleConstants.backgroundColor),
-                    child: SingleChildScrollView(
-                        child: Container(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 10,
-                        right: 10,
-                        bottom: 10,
-                      ),
-                      child: _showForm(context),
-                    )),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: FormDecoration(title: title, content: _showForm(context)),
     );
   }
 
