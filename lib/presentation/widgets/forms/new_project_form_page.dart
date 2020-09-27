@@ -1,3 +1,4 @@
+import 'package:costy/presentation/widgets/other/form_add_edit_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -177,22 +178,10 @@ class _NewProjectFormState extends State<NewProjectForm> {
               const FormCancelButton(
                 buttonKey: Keys.projectFormCancelButtonKey,
               ),
-              FlatButton(
+              FormAddEditButton(
                 key: const Key(Keys.projectFormAddEditButtonKey),
                 onPressed: _submitData,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22.0),
-                ),
-                color: StyleConstants.primaryColor,
-                child: Text(
-                    widget.projectToEdit == null
-                        ? AppLocalizations.of(context).translate('add')
-                        : AppLocalizations.of(context).translate('edit'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: Colors.white,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
+                isEdit: widget.projectToEdit != null,
               ),
             ],
           )

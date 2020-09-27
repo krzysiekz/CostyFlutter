@@ -1,5 +1,3 @@
-import 'package:costy/presentation/widgets/other/form_cancel_button.dart';
-import 'package:costy/presentation/widgets/other/form_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +9,9 @@ import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
+import '../other/form_add_edit_button.dart';
+import '../other/form_cancel_button.dart';
+import '../other/form_text_field.dart';
 
 class NewPersonForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
@@ -138,22 +139,10 @@ class _NewPersonFormState extends State<NewPersonForm> {
               const FormCancelButton(
                 buttonKey: Keys.userFormCancelButtonKey,
               ),
-              FlatButton(
+              FormAddEditButton(
                 key: const Key(Keys.userFormAddEditButtonKey),
                 onPressed: _submitData,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22.0),
-                ),
-                color: StyleConstants.primaryColor,
-                child: Text(
-                    widget.userToEdit == null
-                        ? AppLocalizations.of(context).translate('add')
-                        : AppLocalizations.of(context).translate('edit'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: Colors.white,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
+                isEdit: widget.userToEdit != null,
               ),
             ],
           )

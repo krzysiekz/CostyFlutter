@@ -16,6 +16,7 @@ import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../other/currency_dropdown_field.dart';
+import '../other/form_add_edit_button.dart';
 import '../other/form_cancel_button.dart';
 import '../other/form_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
@@ -248,22 +249,10 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
               const FormCancelButton(
                 buttonKey: Keys.expenseFormCancelButtonKey,
               ),
-              FlatButton(
+              FormAddEditButton(
                 key: const Key(Keys.expenseFormAddEditButtonKey),
                 onPressed: _submitData,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22.0),
-                ),
-                color: StyleConstants.primaryColor,
-                child: Text(
-                    widget.expenseToEdit == null
-                        ? AppLocalizations.of(context).translate('add')
-                        : AppLocalizations.of(context).translate('edit'),
-                    style: const TextStyle(
-                      fontWeight: StyleConstants.buttonsTextFontWeight,
-                      color: Colors.white,
-                      fontSize: StyleConstants.buttonsTextSize,
-                    )),
+                isEdit: widget.expenseToEdit != null,
               ),
             ],
           )
