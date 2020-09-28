@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../item/report_entry_list_item.dart';
 import '../other/page_header.dart';
@@ -35,6 +36,8 @@ class _ReportPageState extends State<ReportPage> {
       description:
           AppLocalizations.of(context).translate('report_page_description'),
       buttonLabel: AppLocalizations.of(context).translate('share'),
+      includeBackButton: true,
+      buttonKey: Keys.projectDetailsShareReportButton,
     );
   }
 

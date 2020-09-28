@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
 import '../forms/new_user_form_page.dart';
@@ -37,6 +38,8 @@ class _UsersListPageState extends State<UsersListPage> {
       description:
           AppLocalizations.of(context).translate('user_list_page_description'),
       buttonLabel: AppLocalizations.of(context).translate('add'),
+      includeBackButton: true,
+      buttonKey: Keys.projectDetailsAddUserButton,
     );
   }
 

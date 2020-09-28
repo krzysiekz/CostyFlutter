@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
+import '../../../keys.dart';
 import '../../../style_constants.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
@@ -37,6 +38,7 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
         description: AppLocalizations.of(context)
             .translate('project_list_page_description'),
         buttonLabel: AppLocalizations.of(context).translate('add'),
+        buttonKey: Keys.projectlistAddProjectButtonKey,
       ),
     );
   }

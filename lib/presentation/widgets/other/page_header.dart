@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../keys.dart';
 import '../../../style_constants.dart';
 
 class PageHeader extends StatelessWidget {
@@ -14,6 +14,8 @@ class PageHeader extends StatelessWidget {
   final String _title;
   final String _description;
   final String _buttonLabel;
+  final bool _includeBackButton;
+  final String _buttonKey;
 
   const PageHeader({
     Key key,
@@ -23,12 +25,16 @@ class PageHeader extends StatelessWidget {
     @required String title,
     @required String description,
     @required String buttonLabel,
+    @required String buttonKey,
+    bool includeBackButton = false,
   })  : _content = content,
         _buttonOnPressed = buttonOnPressed,
         _svgAsset = svgAsset,
         _title = title,
         _description = description,
         _buttonLabel = buttonLabel,
+        _includeBackButton = includeBackButton,
+        _buttonKey = buttonKey,
         super(key: key);
 
   @override
@@ -52,7 +58,7 @@ class PageHeader extends StatelessWidget {
 
   Transform buildHeaderBackground() {
     return Transform.translate(
-      offset: const Offset(0, -80),
+      offset: const Offset(0, -90),
       child: Transform.scale(
         scale: 1.2,
         child: Stack(
@@ -78,8 +84,13 @@ class PageHeader extends StatelessWidget {
                 gradient: StyleConstants.primaryGradient),
           ),
           Positioned(
-            bottom: -5,
-            child: SvgPicture.asset(_svgAsset, semanticsLabel: 'Header image'),
+            bottom: -20,
+            child: Transform.scale(
+                scale: 0.8,
+                child: SvgPicture.asset(
+                  _svgAsset,
+                  semanticsLabel: 'Header image',
+                )),
           )
         ]),
       ),
@@ -99,39 +110,53 @@ class PageHeader extends StatelessWidget {
   }
 
   Padding buildHeaderDescription(BuildContext context) {
+    final double leftPadding = _includeBackButton ? 0 : 30;
     return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 40),
-      child: Wrap(
-        direction: Axis.vertical,
-        spacing: 15,
+      padding: EdgeInsets.only(left: leftPadding, top: 40),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_title,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: StyleConstants.primaryFontWeight,
-                color: StyleConstants.primaryTextColor,
-                fontSize: StyleConstants.primaryTextSize,
-              )),
-          Text(_description,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: StyleConstants.secondaryFontWeight,
-                color: StyleConstants.primaryTextColor,
-                fontSize: StyleConstants.secondaryTextSize,
-              )),
-          FlatButton(
-            key: const Key(Keys.projectlistAddProjectButtonKey),
-            onPressed: _buttonOnPressed,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22.0),
+          if (_includeBackButton)
+            IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(
+                FeatherIcons.chevronLeft,
+                color: Colors.white,
+              ),
             ),
-            color: Colors.white,
-            child: Text(_buttonLabel,
-                style: const TextStyle(
-                  fontWeight: StyleConstants.buttonsTextFontWeight,
-                  color: Colors.black,
-                  fontSize: StyleConstants.buttonsTextSize,
-                )),
+          Wrap(
+            direction: Axis.vertical,
+            spacing: 15,
+            children: [
+              Text(_title,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: StyleConstants.primaryFontWeight,
+                    color: StyleConstants.primaryTextColor,
+                    fontSize: StyleConstants.primaryTextSize,
+                  )),
+              Text(_description,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: StyleConstants.secondaryFontWeight,
+                    color: StyleConstants.primaryTextColor,
+                    fontSize: StyleConstants.secondaryTextSize,
+                  )),
+              FlatButton(
+                key: Key(_buttonKey),
+                onPressed: _buttonOnPressed,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                color: Colors.white,
+                child: Text(_buttonLabel,
+                    style: const TextStyle(
+                      fontWeight: StyleConstants.buttonsTextFontWeight,
+                      color: Colors.black,
+                      fontSize: StyleConstants.buttonsTextSize,
+                    )),
+              ),
+            ],
           ),
         ],
       ),

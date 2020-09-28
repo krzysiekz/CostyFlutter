@@ -16,6 +16,8 @@ class Keys {
   static const projectDetailsAddUserButton = 'PROJECT_DETAILS_ADD_USER_BUTTON';
   static const projectDetailsAddExpenseButton =
       'PROJECT_DETAILS_ADD_EXPENSE_BUTTON';
+  static const projectDetailsShareReportButton =
+      'PROJECT_DETAILS_SHARE_REPORT_BUTTON';
 
   static const deleteConfirmationDeleteButton =
       'DELETE_CONFIRMATION_DELETE_BUTTON';

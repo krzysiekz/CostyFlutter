@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../forms/new_expense_form_page.dart';
 import '../item/expense_list_item.dart';
@@ -39,6 +40,8 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
         description: AppLocalizations.of(context)
             .translate('expenses_list_page_description'),
         buttonLabel: AppLocalizations.of(context).translate('add'),
+        includeBackButton: true,
+        buttonKey: Keys.projectDetailsAddExpenseButton,
       );
     });
   }
