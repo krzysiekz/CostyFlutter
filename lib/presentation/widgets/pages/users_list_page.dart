@@ -1,17 +1,13 @@
-import 'dart:math';
-
-import 'package:costy/presentation/widgets/forms/new_user_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
-import '../../../keys.dart';
-import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
+import '../forms/new_user_form_page.dart';
 import '../item/user_list_item.dart';
+import '../other/page_header.dart';
 import '../utilities/dialog_utilities.dart';
 
 class UsersListPage extends StatefulWidget {
@@ -32,111 +28,15 @@ class _UsersListPageState extends State<UsersListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRect(child: buildHeader(context)),
-        Expanded(child: buildBody()),
-      ],
-    );
-  }
-
-  Stack buildHeader(BuildContext context) {
-    return Stack(
-      children: [
-        buildHeaderBackground(),
-        Positioned(
-          top: 50,
-          left: 20,
-          child: SvgPicture.asset('assets/images/users.svg',
-              semanticsLabel: 'Projects image'),
-        ),
-        Positioned(top: 40, right: 20, child: buildHeaderDescription(context)),
-      ],
-    );
-  }
-
-  Transform buildHeaderBackground() {
-    return Transform.translate(
-      offset: const Offset(0, -80),
-      child: Transform.scale(
-        scale: 1.2,
-        child: Stack(
-          children: [
-            buildBottomCard(),
-            buildTopCard(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Transform buildTopCard() {
-    return Transform.translate(
-      offset: const Offset(30, 0),
-      child: Transform.rotate(
-        angle: -15 * pi / 180,
-        child: Container(
-          height: 300,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(60),
-              gradient: StyleConstants.primaryGradient),
-        ),
-      ),
-    );
-  }
-
-  Transform buildBottomCard() {
-    return Transform.rotate(
-      angle: -5 * pi / 180,
-      child: Container(
-        height: 300,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(60),
-            gradient: StyleConstants.secondaryGradient),
-      ),
-    );
-  }
-
-  Widget buildHeaderDescription(BuildContext context) {
-    return Wrap(
-      direction: Axis.vertical,
-      crossAxisAlignment: WrapCrossAlignment.end,
-      spacing: 15,
-      children: [
-        Text(
-            AppLocalizations.of(context)
-                .translate('project_details_page_users'),
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontWeight: StyleConstants.primaryFontWeight,
-              color: StyleConstants.primaryTextColor,
-              fontSize: StyleConstants.primaryTextSize,
-            )),
-        Text(
-            AppLocalizations.of(context)
-                .translate('user_list_page_description'),
-            textAlign: TextAlign.right,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontWeight: StyleConstants.secondaryFontWeight,
-              color: StyleConstants.primaryTextColor,
-              fontSize: StyleConstants.secondaryTextSize,
-            )),
-        FlatButton(
-          key: const Key(Keys.projectDetailsAddUserButton),
-          onPressed: () => _showAddUserForm(context, widget.project),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22.0),
-          ),
-          color: Colors.white,
-          child: Text(AppLocalizations.of(context).translate('add'),
-              style: const TextStyle(
-                fontWeight: StyleConstants.buttonsTextFontWeight,
-                color: Colors.black,
-                fontSize: StyleConstants.buttonsTextSize,
-              )),
-        ),
-      ],
+    return PageHeader(
+      content: buildBody(),
+      buttonOnPressed: () => _showAddUserForm(context, widget.project),
+      svgAsset: 'assets/images/users.svg',
+      title:
+          AppLocalizations.of(context).translate('project_details_page_users'),
+      description:
+          AppLocalizations.of(context).translate('user_list_page_description'),
+      buttonLabel: AppLocalizations.of(context).translate('add'),
     );
   }
 
