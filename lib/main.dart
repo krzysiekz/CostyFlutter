@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as services;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
@@ -22,13 +23,19 @@ const supportedCurrencies = ['USD', 'EUR', 'PLN', 'GBP'];
 
 Future<void> main() async {
   await initializeApp();
-  runApp(DevicePreview(
-    enabled: false,
-    builder: (context) => DefaultAssetBundle(
-      bundle: CustomAssetBundle(),
-      child: MyApp(),
-    ),
-  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  services.SystemChrome.setPreferredOrientations([
+    services.DeviceOrientation.portraitUp,
+    services.DeviceOrientation.portraitDown
+  ]).then((_) {
+    runApp(DevicePreview(
+      enabled: false,
+      builder: (context) => DefaultAssetBundle(
+        bundle: CustomAssetBundle(),
+        child: MyApp(),
+      ),
+    ));
+  });
 }
 
 Future initializeApp() async {
