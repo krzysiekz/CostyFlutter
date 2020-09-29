@@ -21,10 +21,11 @@ dependencies:
   get_it: ^4.0.4
   injectable: ^1.0.4
   intl: ^0.16.1
-  flutter_platform_widgets: ^0.60.1
   oktoast: ^2.3.2
   share: ^0.6.4+3
-  device_preview: ^0.4.7
+  device_preview: ^0.4.8
+  flutter_svg: ^0.18.1
+  feather_icons_flutter: ^4.7.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,3 +71,8 @@ flutter:
   assets:
     - lang/en.json
     - lang/pl.json
+    - assets/images/grow.svg
+    - assets/images/globe.svg
+    - assets/images/users.svg
+    - assets/images/idea.svg
+    - assets/images/social.svg

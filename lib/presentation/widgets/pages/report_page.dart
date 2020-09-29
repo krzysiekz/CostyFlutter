@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../item/report_entry_list_item.dart';
+import '../other/page_header.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ReportPage extends StatefulWidget {
@@ -25,6 +27,21 @@ class _ReportPageState extends State<ReportPage> {
 
   @override
   Widget build(BuildContext context) {
+    return PageHeader(
+      content: buildBody(),
+      buttonOnPressed: () => _shareReport(context, widget.project),
+      svgAsset: 'assets/images/social.svg',
+      title:
+          AppLocalizations.of(context).translate('project_details_page_report'),
+      description:
+          AppLocalizations.of(context).translate('report_page_description'),
+      buttonLabel: AppLocalizations.of(context).translate('share'),
+      includeBackButton: true,
+      buttonKey: Keys.projectDetailsShareReportButton,
+    );
+  }
+
+  BlocBuilder<ReportBloc, ReportState> buildBody() {
     return BlocBuilder<ReportBloc, ReportState>(
       builder: (BuildContext context, ReportState state) {
         if (state is ReportEmpty) {
@@ -32,8 +49,10 @@ class _ReportPageState extends State<ReportPage> {
               AppLocalizations.of(context).translate('report_page_no_report'));
         } else if (state is ReportLoaded) {
           if (state.report != null && state.report.entries.isEmpty) {
-            return Text(AppLocalizations.of(context)
-                .translate('report_page_no_report'));
+            return Center(
+              child: Text(AppLocalizations.of(context)
+                  .translate('report_page_no_report')),
+            );
           } else if (state.report != null) {
             return ListView.builder(
               padding: const EdgeInsets.all(15),
@@ -50,5 +69,10 @@ class _ReportPageState extends State<ReportPage> {
         return Container();
       },
     );
+  }
+
+  void _shareReport(BuildContext ctx, Project project) {
+    BlocProvider.of<ReportBloc>(context).add(ShareReportEvent(project, ctx));
+    BlocProvider.of<ReportBloc>(context).add(GetReportEvent(project));
   }
 }

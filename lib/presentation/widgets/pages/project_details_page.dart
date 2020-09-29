@@ -1,23 +1,20 @@
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
-import '../forms/new_expense_form_page.dart';
-import '../forms/new_user_form_page.dart';
-import '../utilities/dialog_utilities.dart';
 import 'expenses_list_page.dart';
 import 'report_page.dart';
-import 'user_list_page.dart';
+import 'users_list_page.dart';
 
 class ProjectDetailsPage extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) => ProjectDetailsPage(project: project),
     ));
   }
@@ -30,57 +27,16 @@ class ProjectDetailsPage extends StatefulWidget {
   _ProjectDetailsPageState createState() => _ProjectDetailsPageState();
 }
 
-class _ProjectDetailsPageState extends State<ProjectDetailsPage>
-    with SingleTickerProviderStateMixin {
-  PlatformTabController _tabController;
-
-  List<BottomNavigationBarItem> Function(BuildContext context) get items =>
-      (BuildContext context) => [
-            BottomNavigationBarItem(
-              title: Text(
-                AppLocalizations.of(context)
-                    .translate('project_details_page_users'),
-                key: const Key(Keys.projectDetailsUsersTab),
-              ),
-              icon: Icon(context.platformIcons.group),
-            ),
-            BottomNavigationBarItem(
-              title: Text(
-                AppLocalizations.of(context)
-                    .translate('project_details_page_expenses'),
-                key: const Key(Keys.projectDetailsExpensesTab),
-              ),
-              icon: Icon(context.platformIcons.shoppingCart),
-            ),
-            BottomNavigationBarItem(
-              title: Text(
-                AppLocalizations.of(context)
-                    .translate('project_details_page_report'),
-                key: const Key(Keys.projectDetailsReportTab),
-              ),
-              icon: Icon(context.platformIcons.mail),
-            ),
-          ];
-
+class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(GetUsersEvent(widget.project));
-    _tabController = PlatformTabController(initialIndex: 1);
     super.initState();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
-  }
-
-  void _showAddUserForm(BuildContext ctx, Project project) {
-    NewUserForm.navigate(ctx, project);
-  }
-
-  void _showAddExpenseForm(BuildContext ctx, Project project) {
-    NewExpenseForm.navigate(ctx, project);
   }
 
   @override
@@ -89,89 +45,66 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage>
   }
 
   Widget buildProjectDetailsPage(Project project, BuildContext context) {
-    return PlatformTabScaffold(
-      iosContentPadding: true,
-      tabController: _tabController,
-      appBarBuilder: (_, index) => PlatformAppBar(
-        title: Text(project.name),
-        trailingActions: _actionButtons(project, context, index),
-        cupertino: (_, platform) => CupertinoNavigationBarData(
-            title: items(context)[index].title,
-            leading: CupertinoNavigationBarBackButton(
-              onPressed: () => Navigator.of(context).pop(),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: StyleConstants.backgroundColor,
+        body: TabBarView(children: [
+          Center(child: UsersListPage(project: project)),
+          Center(child: ExpensesListPage(project: project)),
+          Center(child: ReportPage(project: project)),
+        ]),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 2,
+                offset: Offset(0.0, 1.0),
+              )
+            ],
+          ),
+          child: TabBar(
+            labelColor: StyleConstants.primaryColor,
+            unselectedLabelColor: Colors.grey,
+            indicator: const UnderlineTabIndicator(
+              borderSide: BorderSide(
+                width: 3.0,
+                color: StyleConstants.primaryColor,
+              ),
+              insets: EdgeInsets.symmetric(horizontal: 5.0),
             ),
-            automaticallyImplyLeading: true),
-        material: (_, platform) => MaterialAppBarData(elevation: 1),
+            tabs: [
+              Tab(
+                text: AppLocalizations.of(context)
+                    .translate('project_details_page_users'),
+                icon: const Icon(
+                  FeatherIcons.users,
+                  key: Key(Keys.projectDetailsUsersTab),
+                ),
+              ),
+              Tab(
+                text: AppLocalizations.of(context)
+                    .translate('project_details_page_expenses'),
+                icon: const Icon(
+                  FeatherIcons.dollarSign,
+                  key: Key(Keys.projectDetailsExpensesTab),
+                ),
+              ),
+              Tab(
+                text: AppLocalizations.of(context)
+                    .translate('project_details_page_report'),
+                icon: const Icon(
+                  FeatherIcons.fileText,
+                  key: Key(Keys.projectDetailsReportTab),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      bodyBuilder: (context, index) => _body(project, context, index),
-      items: items(context),
-      materialTabs: (_, plaform) => MaterialNavBarData(elevation: 2),
-      cupertinoTabs: (_, platform) =>
-          CupertinoTabBarData(backgroundColor: CupertinoColors.white),
     );
-  }
-
-  List<Widget> _actionButtons(Project project, BuildContext ctx, int index) {
-    switch (index) {
-      case 0:
-        return [
-          PlatformIconButton(
-            key: const Key(Keys.projectDetailsAddUserButton),
-            onPressed: () => _showAddUserForm(ctx, project),
-            icon: Icon(context.platformIcons.personAdd),
-          )
-        ];
-      case 1:
-        return [
-          BlocBuilder<UserBloc, UserState>(
-            builder: (BuildContext context, UserState state) {
-              if (state is UserLoaded && state.users.isNotEmpty) {
-                return PlatformIconButton(
-                  key: const Key(Keys.projectDetailsAddExpenseButton),
-                  onPressed: () => _showAddExpenseForm(ctx, project),
-                  icon: Icon(context.platformIcons.add),
-                );
-              } else {
-                return PlatformIconButton(
-                  key: const Key(Keys.projectDetailsAddExpenseButton),
-                  onPressed: () => DialogUtilities.showAlertDialog(
-                      ctx,
-                      AppLocalizations.of(context).translate('info'),
-                      AppLocalizations.of(context)
-                          .translate('expenses_list_page_no_users')),
-                  icon: Icon(context.platformIcons.add),
-                );
-              }
-            },
-          )
-        ];
-      case 2:
-        return [
-          PlatformIconButton(
-            onPressed: () => _shareReport(ctx, project),
-            icon: Icon(context.platformIcons.share),
-          )
-        ];
-      default:
-        return null;
-    }
-  }
-
-  Widget _body(Project project, BuildContext ctx, int index) {
-    switch (index) {
-      case 0:
-        return Center(child: UserListPage(project: project));
-      case 1:
-        return Center(child: ExpensesListPage(project: project));
-      case 2:
-        return Center(child: ReportPage(project: project));
-      default:
-        return null;
-    }
-  }
-
-  void _shareReport(BuildContext ctx, Project project) {
-    BlocProvider.of<ReportBloc>(context).add(ShareReportEvent(project, ctx));
-    BlocProvider.of<ReportBloc>(context).add(GetReportEvent(project));
   }
 }

@@ -16,6 +16,8 @@ class Keys {
   static const projectDetailsAddUserButton = 'PROJECT_DETAILS_ADD_USER_BUTTON';
   static const projectDetailsAddExpenseButton =
       'PROJECT_DETAILS_ADD_EXPENSE_BUTTON';
+  static const projectDetailsShareReportButton =
+      'PROJECT_DETAILS_SHARE_REPORT_BUTTON';
 
   static const deleteConfirmationDeleteButton =
       'DELETE_CONFIRMATION_DELETE_BUTTON';
@@ -25,12 +27,14 @@ class Keys {
 
   static const userFormNameFieldKey = 'USER_FORM_NAME_FIELD_KEY';
   static const userFormAddEditButtonKey = 'USER_FORM_ADD_EDIT_BUTTON_KEY';
+  static const userFormCancelButtonKey = 'USER_FORM_CANCEL_BUTTON_KEY';
 
   static const expenseFormCurrencyKey = 'EXPENSE_FORM_CURRENCY_KEY';
   static const expenseFormAddEditButtonKey = 'EXPENSE_FORM_ADD_EDIT_BUTTON_KEY';
+  static const expenseFormCancelButtonKey = 'EXPENSE_FORM_CANCEL_BUTTON_KEY';
   static const expenseFormDescriptionFieldKey =
       'EXPENSE_FORM_DESCRIPTION_FIELD_KEY';
-  static const expenseFormAcountFieldKey = 'EXPENSE_FORM_AMOUNT_FIELD_KEY';
+  static const expenseFormAmountFieldKey = 'EXPENSE_FORM_AMOUNT_FIELD_KEY';
   static const expenseFormUserKey = 'EXPENSE_FORM_USER_KEY';
   static const expenseFormReceiversFieldKey =
       'EXPENSE_FORM_RECEIVERS_FIELD_KEY';

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/currency.dart';
@@ -12,13 +11,14 @@ import '../../bloc/currency_bloc.dart';
 import '../../bloc/currency_state.dart';
 import '../../bloc/project_bloc.dart';
 import '../other/currency_dropdown_field.dart';
-import '../other/custom_scaffold.dart';
-import '../other/custom_text_field.dart';
+import '../other/form_add_edit_button.dart';
+import '../other/form_cancel_button.dart';
+import '../other/form_decoration.dart';
+import '../other/form_text_field.dart';
 
 class NewProjectForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, {Project projectToEdit}) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) =>
           NewProjectForm(projectToEdit: projectToEdit),
     ));
@@ -83,22 +83,11 @@ class _NewProjectFormState extends State<NewProjectForm> {
             .translate('project_form_add_project_button')
         : AppLocalizations.of(context)
             .translate('project_form_modify_project_button');
-    return CustomScaffold(
-      appBarTitle: title,
-      body: SingleChildScrollView(
-        child:
-            BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
-          return Container(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 10,
-              right: 10,
-              bottom: 10,
-            ),
-            child: _buildForm(context, state),
-          );
-        }),
-      ),
+    return Scaffold(
+      body: BlocBuilder<CurrencyBloc, CurrencyState>(builder: (context, state) {
+        return FormDecoration(
+            title: title, content: _buildForm(context, state));
+      }),
     );
   }
 
@@ -116,19 +105,18 @@ class _NewProjectFormState extends State<NewProjectForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          CustomTextField(
-            textFormFieldKey: const Key(Keys.projectFormProjectNameFieldKey),
-            hintText: AppLocalizations.of(context)
-                .translate('project_form_project_name_hint'),
+          FormTextField(
             controller: _nameController,
+            hint: AppLocalizations.of(context)
+                .translate('project_form_project_name_hint'),
+            textFieldKey: Keys.projectFormProjectNameFieldKey,
             validator: (String val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('project_form_project_name_error')
                 : null,
-            iconData: context.platformIcons.book,
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
           CurrencyDropdownField(
               key: const Key(Keys.projectFormDefaultCurrencyKey),
@@ -145,24 +133,13 @@ class _NewProjectFormState extends State<NewProjectForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              PlatformButton(
-                materialFlat: (_, platform) => MaterialFlatButtonData(
-                  textColor: Theme.of(context).errorColor,
-                ),
-                key: const Key(Keys.projectFormCancelButtonKey),
-                onPressed: () => Navigator.of(context).pop(),
-                cupertino: (_, platform) => CupertinoButtonData(),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
+              const FormCancelButton(
+                buttonKey: Keys.projectFormCancelButtonKey,
               ),
-              PlatformButton(
+              FormAddEditButton(
                 key: const Key(Keys.projectFormAddEditButtonKey),
                 onPressed: _submitData,
-                child: widget.projectToEdit == null
-                    ? Text(AppLocalizations.of(context)
-                        .translate('project_form_add_project_button'))
-                    : Text(AppLocalizations.of(context)
-                        .translate('project_form_modify_project_button')),
+                isEdit: widget.projectToEdit != null,
               ),
             ],
           )

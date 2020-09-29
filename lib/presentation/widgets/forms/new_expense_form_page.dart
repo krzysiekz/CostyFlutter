@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app_localizations.dart';
@@ -12,17 +13,19 @@ import '../../../data/models/project.dart';
 import '../../../data/models/user.dart';
 import '../../../data/models/user_expense.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/bloc.dart';
 import '../other/currency_dropdown_field.dart';
-import '../other/custom_scaffold.dart';
-import '../other/custom_text_field.dart';
+import '../other/form_add_edit_button.dart';
+import '../other/form_cancel_button.dart';
+import '../other/form_decoration.dart';
+import '../other/form_text_field.dart';
 import '../other/receivers_widget_form_field.dart';
 
 class NewExpenseForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
       {UserExpense expenseToEdit}) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) =>
           NewExpenseForm(project: project, expenseToEdit: expenseToEdit),
     ));
@@ -122,18 +125,8 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             .translate('expense_form_add_expense_button')
         : AppLocalizations.of(context)
             .translate('expense_form_modify_expense_button');
-    return CustomScaffold(
-      appBarTitle: title,
-      body: SingleChildScrollView(
-          child: Container(
-        padding: const EdgeInsets.only(
-          top: 10,
-          left: 10,
-          right: 10,
-          bottom: 10,
-        ),
-        child: _showForm(context),
-      )),
+    return Scaffold(
+      body: FormDecoration(title: title, content: _showForm(context)),
     );
   }
 
@@ -143,44 +136,39 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          CustomTextField(
-            textFormFieldKey: const Key(Keys.expenseFormDescriptionFieldKey),
-            hintText: AppLocalizations.of(context)
-                .translate('expense_form_description_hint'),
+          FormTextField(
             controller: _descriptionController,
+            hint: AppLocalizations.of(context)
+                .translate('expense_form_description_hint'),
+            textFieldKey: Keys.expenseFormDescriptionFieldKey,
             validator: (String val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('expense_form_description_error')
                 : null,
-            iconData: context.platformIcons.shoppingCart,
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Expanded(
-                child: CustomTextField(
-                  textFormFieldKey: const Key(Keys.expenseFormAcountFieldKey),
-                  hintText: AppLocalizations.of(context)
-                      .translate('expense_form_amount_hint'),
-                  controller: _amountController,
-                  validator: _numberValidator,
-                  textInputType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  iconData: context.platformIcons.tag,
-                ),
+                child: FormTextField(
+                    controller: _amountController,
+                    hint: AppLocalizations.of(context)
+                        .translate('expense_form_amount_hint'),
+                    textFieldKey: Keys.expenseFormAmountFieldKey,
+                    validator: _numberValidator,
+                    textInputType:
+                        const TextInputType.numberWithOptions(decimal: true)),
               ),
               const SizedBox(width: 15),
               Expanded(child: _createCurrencyDropDownList(context)),
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Expanded(
                   child: _UserDropDownFormField(
@@ -204,7 +192,7 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           ReceiversWidgetFormField(
               initialReceivers: _receivers,
@@ -213,29 +201,16 @@ class _NewExpenseFormState extends State<NewExpenseForm> {
                   _receivers = selectedList;
                 });
               }),
-          const SizedBox(
-            height: 10,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              PlatformButton(
-                materialFlat: (_, platform) => MaterialFlatButtonData(
-                  textColor: Theme.of(context).errorColor,
-                ),
-                key: const Key(Keys.projectFormCancelButtonKey),
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
+              const FormCancelButton(
+                buttonKey: Keys.expenseFormCancelButtonKey,
               ),
-              PlatformButton(
+              FormAddEditButton(
                 key: const Key(Keys.expenseFormAddEditButtonKey),
                 onPressed: _submitData,
-                child: widget.expenseToEdit == null
-                    ? Text(AppLocalizations.of(context)
-                        .translate('expense_form_add_expense_button'))
-                    : Text(AppLocalizations.of(context)
-                        .translate('expense_form_modify_expense_button')),
+                isEdit: widget.expenseToEdit != null,
               ),
             ],
           )
@@ -275,46 +250,47 @@ class _UserDropDownFormField extends StatelessWidget {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserLoaded) {
         return Container(
-            margin: const EdgeInsets.only(right: 5, left: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: FormField<User>(
               key: const Key(Keys.expenseFormUserKey),
               builder: (FormFieldState<User> formState) {
-                return InputDecorator(
-                  decoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-                    prefixIcon: Icon(
-                      context.platformIcons.person,
-                      color: Colors.blue,
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                    isDense: true,
-                    errorText: formState.hasError ? formState.errorText : null,
-                    hintText: AppLocalizations.of(context)
-                        .translate('expense_form_user_hint'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  isEmpty: initialValue == null,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<User>(
-                      isExpanded: true,
-                      icon: const Icon(
-                        Icons.arrow_downward,
-                        color: Colors.blue,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        AppLocalizations.of(context)
+                            .translate('expense_form_user_hint'),
+                        style: const TextStyle(
+                          fontWeight: StyleConstants.buttonsTextFontWeight,
+                          color: StyleConstants.formLabelColor,
+                          fontSize: StyleConstants.buttonsTextSize,
+                        )),
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        errorText:
+                            formState.hasError ? formState.errorText : null,
+                        border: const UnderlineInputBorder(),
                       ),
-                      value: initialValue,
-                      isDense: true,
-                      onChanged: (User newValue) {
-                        formState.didChange(newValue);
-                        onChangedCallback(newValue);
-                      },
-                      items: _getUsersDropdownItems(state.users),
+                      isEmpty: initialValue == null,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<User>(
+                          isExpanded: true,
+                          icon: const Icon(
+                            Icons.arrow_downward,
+                            color: Colors.blue,
+                          ),
+                          value: initialValue,
+                          isDense: true,
+                          onChanged: (User newValue) {
+                            formState.didChange(newValue);
+                            onChangedCallback(newValue);
+                          },
+                          items: _getUsersDropdownItems(state.users),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 );
               },
               validator: (val) {
@@ -357,25 +333,32 @@ class _DateTimePickerFormField extends StatelessWidget {
       child: FormField<DateTime>(
         initialValue: selectedValue ?? DateTime.now(),
         builder: (FormFieldState<DateTime> formState) {
-          return InputDecorator(
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                filled: true,
-                fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-                isDense: true,
-                errorText: formState.hasError ? formState.errorText : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              child: FlatButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.all(0),
-                onPressed: () => _presentDatePicker(context),
-                child: Text(NewExpenseForm.dateFormat.format(selectedValue)),
-              ));
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  AppLocalizations.of(context)
+                      .translate('expense_form_date_hint'),
+                  style: const TextStyle(
+                    fontWeight: StyleConstants.buttonsTextFontWeight,
+                    color: StyleConstants.formLabelColor,
+                    fontSize: StyleConstants.buttonsTextSize,
+                  )),
+              InputDecorator(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    errorText: formState.hasError ? formState.errorText : null,
+                    border: const UnderlineInputBorder(),
+                  ),
+                  child: FlatButton(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () => _presentDatePicker(context),
+                    child:
+                        Text(NewExpenseForm.dateFormat.format(selectedValue)),
+                  )),
+            ],
+          );
         },
         validator: (val) {
           return (val == null)
@@ -388,7 +371,7 @@ class _DateTimePickerFormField extends StatelessWidget {
   }
 
   Future<void> _presentDatePicker(BuildContext ctx) async {
-    if (isMaterial(ctx)) {
+    if (Platform.isAndroid) {
       final date = await showDatePicker(
           context: ctx,
           firstDate: DateTime(DateTime.now().year - 1),

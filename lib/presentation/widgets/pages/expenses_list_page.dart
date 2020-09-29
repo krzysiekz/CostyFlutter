@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
+import '../../../keys.dart';
 import '../../bloc/bloc.dart';
+import '../forms/new_expense_form_page.dart';
 import '../item/expense_list_item.dart';
+import '../other/page_header.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ExpensesListPage extends StatefulWidget {
@@ -25,15 +28,42 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+        builder: (BuildContext context, UserState state) {
+      return PageHeader(
+        content: buildBody(),
+        buttonOnPressed: () =>
+            _handleButtonClick(context, widget.project, state),
+        svgAsset: 'assets/images/idea.svg',
+        title: AppLocalizations.of(context)
+            .translate('project_details_page_expenses'),
+        description: AppLocalizations.of(context)
+            .translate('expenses_list_page_description'),
+        buttonLabel: AppLocalizations.of(context).translate('add'),
+        includeBackButton: true,
+        buttonKey: Keys.projectDetailsAddExpenseButton,
+      );
+    });
+  }
+
+  void _showAddExpenseForm(BuildContext ctx, Project project) {
+    NewExpenseForm.navigate(ctx, project);
+  }
+
+  BlocConsumer<ExpenseBloc, ExpenseState> buildBody() {
     return BlocConsumer<ExpenseBloc, ExpenseState>(
       builder: (BuildContext context, ExpenseState state) {
         if (state is ExpenseEmpty) {
-          return Text(AppLocalizations.of(context)
-              .translate('expenses_list_page_no_expenses'));
+          return Center(
+            child: Text(AppLocalizations.of(context)
+                .translate('expenses_list_page_no_expenses')),
+          );
         } else if (state is ExpenseLoaded) {
           if (state.expenses.isEmpty) {
-            return Text(AppLocalizations.of(context)
-                .translate('expenses_list_page_no_expenses'));
+            return Center(
+              child: Text(AppLocalizations.of(context)
+                  .translate('expenses_list_page_no_expenses')),
+            );
           }
           return ListView.builder(
             padding: const EdgeInsets.all(15),
@@ -76,5 +106,18 @@ class _ExpensesListPageState extends State<ExpensesListPage> {
         }
       },
     );
+  }
+
+  void _handleButtonClick(
+      BuildContext context, Project project, UserState state) {
+    if (state is UserLoaded && state.users.isNotEmpty) {
+      _showAddExpenseForm(context, widget.project);
+    } else {
+      DialogUtilities.showAlertDialog(
+          context,
+          AppLocalizations.of(context).translate('info'),
+          AppLocalizations.of(context)
+              .translate('expenses_list_page_no_users'));
+    }
   }
 }

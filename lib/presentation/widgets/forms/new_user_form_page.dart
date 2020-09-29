@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../data/models/project.dart';
@@ -9,38 +8,39 @@ import '../../../data/models/user.dart';
 import '../../../keys.dart';
 import '../../bloc/bloc.dart';
 import '../../bloc/user_bloc.dart';
-import '../other/custom_scaffold.dart';
-import '../other/custom_text_field.dart';
+import '../other/form_add_edit_button.dart';
+import '../other/form_cancel_button.dart';
+import '../other/form_decoration.dart';
+import '../other/form_text_field.dart';
 
-class NewUserForm extends StatefulWidget {
+class NewPersonForm extends StatefulWidget {
   static void navigate(BuildContext buildContext, Project project,
       {User userToModify}) {
-    Navigator.of(buildContext).push(platformPageRoute(
-      context: buildContext,
+    Navigator.of(buildContext).push(MaterialPageRoute(
       builder: (BuildContext context) =>
-          NewUserForm(project: project, userToModify: userToModify),
+          NewPersonForm(project: project, userToEdit: userToModify),
     ));
   }
 
   final Project project;
-  final User userToModify;
+  final User userToEdit;
 
-  const NewUserForm({Key key, @required this.project, this.userToModify})
+  const NewPersonForm({Key key, @required this.project, this.userToEdit})
       : super(key: key);
 
   @override
-  _NewUserFormState createState() => _NewUserFormState();
+  _NewPersonFormState createState() => _NewPersonFormState();
 }
 
-class _NewUserFormState extends State<NewUserForm> {
+class _NewPersonFormState extends State<NewPersonForm> {
   final _nameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    if (widget.userToModify != null) {
-      _nameController.text = widget.userToModify.name;
+    if (widget.userToEdit != null) {
+      _nameController.text = widget.userToEdit.name;
     }
     super.initState();
   }
@@ -49,11 +49,11 @@ class _NewUserFormState extends State<NewUserForm> {
     if (_formKey.currentState.validate()) {
       final enteredName = _nameController.text;
 
-      if (widget.userToModify == null) {
+      if (widget.userToEdit == null) {
         BlocProvider.of<UserBloc>(context)
             .add(AddUserEvent(enteredName, widget.project));
       } else {
-        final User edited = User(id: widget.userToModify.id, name: enteredName);
+        final User edited = User(id: widget.userToEdit.id, name: enteredName);
         BlocProvider.of<UserBloc>(context).add(ModifyUserEvent(edited));
       }
 
@@ -64,22 +64,12 @@ class _NewUserFormState extends State<NewUserForm> {
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.userToModify == null
+    final title = widget.userToEdit == null
         ? AppLocalizations.of(context).translate('user_form_add_user_button')
         : AppLocalizations.of(context)
             .translate('user_form_modify_user_button');
-    return CustomScaffold(
-      appBarTitle: title,
-      body: SingleChildScrollView(
-          child: Container(
-        padding: const EdgeInsets.only(
-          top: 10,
-          left: 10,
-          right: 10,
-          bottom: 10,
-        ),
-        child: _showForm(context),
-      )),
+    return Scaffold(
+      body: FormDecoration(title: title, content: _showForm(context)),
     );
   }
 
@@ -89,40 +79,29 @@ class _NewUserFormState extends State<NewUserForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          CustomTextField(
-            textFormFieldKey: const Key(Keys.userFormNameFieldKey),
-            hintText: AppLocalizations.of(context)
-                .translate('user_form_user_name_hint'),
+          FormTextField(
             controller: _nameController,
+            hint: AppLocalizations.of(context)
+                .translate('user_form_user_name_hint'),
+            textFieldKey: Keys.userFormNameFieldKey,
             validator: (String val) => val.isEmpty
                 ? AppLocalizations.of(context)
                     .translate('user_form_user_name_error')
                 : null,
-            iconData: context.platformIcons.person,
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              PlatformButton(
-                materialFlat: (_, platform) => MaterialFlatButtonData(
-                  textColor: Theme.of(context).errorColor,
-                ),
-                key: const Key(Keys.projectFormCancelButtonKey),
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(AppLocalizations.of(context)
-                    .translate('form_cancel_button')),
+              const FormCancelButton(
+                buttonKey: Keys.userFormCancelButtonKey,
               ),
-              PlatformButton(
+              FormAddEditButton(
                 key: const Key(Keys.userFormAddEditButtonKey),
                 onPressed: _submitData,
-                child: widget.userToModify == null
-                    ? Text(AppLocalizations.of(context)
-                        .translate('user_form_add_user_button'))
-                    : Text(AppLocalizations.of(context)
-                        .translate('user_form_modify_user_button')),
+                isEdit: widget.userToEdit != null,
               ),
             ],
           )

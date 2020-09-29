@@ -15,8 +15,11 @@ import 'package:mockito/mockito.dart';
 
 class MockExpenseBloc extends MockBloc<ExpenseState> implements ExpenseBloc {}
 
+class MockUserBloc extends MockBloc<UserState> implements UserBloc {}
+
 void main() {
   ExpenseBloc expenseBloc;
+  UserBloc userBloc;
   Project tProject;
   UserExpense tExpense;
 
@@ -30,27 +33,42 @@ void main() {
       creationDateTime: DateTime.now(),
     );
 
+    const User john = User(id: 3, name: "John");
+    const User kate = User(id: 4, name: "Kate");
+
     tExpense = UserExpense(
         id: 2,
         amount: Decimal.fromInt(10),
         currency: const Currency(name: "USD"),
         description: 'First Expense',
-        user: const User(id: 3, name: "John"),
-        receivers: const [User(id: 3, name: "John"), User(id: 4, name: "Kate")],
+        user: john,
+        receivers: const [john, kate],
         dateTime: DateTime.now());
 
     expenseBloc = MockExpenseBloc();
+    userBloc = MockUserBloc();
 
     //arrange
     when(expenseBloc.state).thenAnswer(
       (_) => ExpenseLoaded([tExpense]),
     );
 
-    testedWidget = BlocProvider(
-      create: (_) => expenseBloc,
+    when(userBloc.state).thenAnswer(
+      (_) => const UserLoaded([john, kate]),
+    );
+
+    testedWidget = MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => expenseBloc,
+        ),
+        BlocProvider(
+          create: (_) => userBloc,
+        )
+      ],
       child: MaterialApp(
           locale: const Locale('en'),
-          home: ExpensesListPage(project: tProject),
+          home: Scaffold(body: ExpensesListPage(project: tProject)),
           localizationsDelegates: const [
             AppLocalizations.delegate,
           ]),
@@ -67,21 +85,21 @@ void main() {
       await tester.pumpWidget(testedWidget);
       await tester.pumpAndSettle();
 
-      final itemFinder = find.byType(Dismissible);
-      final deleteButtonFinder =
+      final deleteButtonFinder = find.byKey(const Key('delete_expense_2'));
+      final confirmDeleteButtonFinder =
           find.byKey(const Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
+      expect(deleteButtonFinder, findsOneWidget);
+      await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
       //verify popup
       expect(find.text('Are you sure you wish to delete this item?'),
           findsOneWidget);
-      expect(deleteButtonFinder, findsOneWidget);
+      expect(confirmDeleteButtonFinder, findsOneWidget);
 
       //click delete
-      await tester.tap(deleteButtonFinder);
+      await tester.tap(confirmDeleteButtonFinder);
       await tester.pumpAndSettle();
 
       //assert
@@ -97,12 +115,12 @@ void main() {
       await tester.pumpWidget(testedWidget);
       await tester.pumpAndSettle();
 
-      final itemFinder = find.byType(Dismissible);
+      final deleteButtonFinder = find.byKey(const Key('delete_expense_2'));
       final cancelButtonFinder =
           find.byKey(const Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
+      expect(deleteButtonFinder, findsOneWidget);
+      await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
       //verify popup

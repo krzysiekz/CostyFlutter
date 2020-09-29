@@ -146,7 +146,7 @@ void main() {
         await tester.tap(addExpenseButtonFinder);
         await tester.pumpAndSettle();
         //assert
-        expect(find.text('Add expense'), findsNWidgets(2));
+        expect(find.text('Add expense'), findsOneWidget);
         expect(find.text('Description is required.'), findsOneWidget);
         expect(find.text('Field required.'), findsOneWidget);
         expect(find.text('Please select a user'), findsOneWidget);
@@ -172,7 +172,7 @@ void main() {
         await tester.pumpAndSettle();
 
         final amountFieldFinder =
-            find.byKey(const Key(Keys.expenseFormAcountFieldKey));
+            find.byKey(const Key(Keys.expenseFormAmountFieldKey));
         expect(amountFieldFinder, findsOneWidget);
         await tester.enterText(amountFieldFinder, "10");
         await tester.pumpAndSettle();
@@ -266,7 +266,7 @@ void main() {
         expect(find.byKey(const Key('user_1')), findsOneWidget);
         expect(find.text('10'), findsOneWidget);
         expect(find.text('USD').hitTestable(), findsOneWidget);
-        expect(find.text('Modify expense'), findsNWidgets(2));
+        expect(find.text('Edit expense'), findsOneWidget);
 
         final receiverJohn = find.byKey(const Key("receiver_John"));
         expect(receiverJohn, findsOneWidget);
@@ -295,7 +295,7 @@ void main() {
         await tester.pumpAndSettle();
 
         final amountFieldFinder =
-            find.byKey(const Key(Keys.expenseFormAcountFieldKey));
+            find.byKey(const Key(Keys.expenseFormAmountFieldKey));
         expect(amountFieldFinder, findsOneWidget);
         await tester.enterText(amountFieldFinder, "20");
         await tester.pumpAndSettle();

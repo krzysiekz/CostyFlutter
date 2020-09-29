@@ -42,7 +42,7 @@ void main() {
   });
 
   testWithScreenshots('should edit created project', () => ozzie, () async {
-    await tapOnKey("0_project_edit", driver);
+    await tapOnKey("edit_project_0", driver);
 
     await expectKeyPresent(Keys.projectFormProjectNameFieldKey, driver);
     await tapOnKey(Keys.projectFormProjectNameFieldKey, driver);
@@ -57,12 +57,10 @@ void main() {
     await tapOnKey(Keys.projectFormAddEditButtonKey, driver);
 
     await expectTextPresent("Project2", driver);
-    await expectTextPresent("EUR", driver);
   });
 
   testWithScreenshots('should delete created project', () => ozzie, () async {
-    await driver.scroll(
-        find.byValueKey("project_0"), -400, 0, const Duration(milliseconds: 300));
+    await tapOnKey("delete_project_0", driver);
 
     await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
     await tapOnKey(Keys.deleteConfirmationDeleteButton, driver);

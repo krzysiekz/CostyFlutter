@@ -3,11 +3,9 @@ import 'package:costy/app_localizations.dart';
 import 'package:costy/data/models/currency.dart';
 import 'package:costy/data/models/project.dart';
 import 'package:costy/data/models/user.dart';
-import 'package:costy/data/models/user_expense.dart';
 import 'package:costy/keys.dart';
 import 'package:costy/presentation/bloc/bloc.dart';
-import 'package:costy/presentation/widgets/pages/user_list_page.dart';
-import 'package:decimal/decimal.dart';
+import 'package:costy/presentation/widgets/pages/users_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -55,7 +53,7 @@ void main() {
       ],
       child: MaterialApp(
           locale: const Locale('en'),
-          home: UserListPage(project: tProject),
+          home: Scaffold(body: UsersListPage(project: tProject)),
           localizationsDelegates: const [
             AppLocalizations.delegate,
           ]),
@@ -73,21 +71,21 @@ void main() {
       await tester.pumpWidget(testedWidget);
       await tester.pumpAndSettle();
 
-      final itemFinder = find.byType(Dismissible);
-      final deleteButtonFinder =
+      final deleteButtonFinder = find.byKey(const Key('delete_user_1'));
+      final confirmDeleteButtonFinder =
           find.byKey(const Key(Keys.deleteConfirmationDeleteButton));
       //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
+      expect(deleteButtonFinder, findsOneWidget);
+      await tester.tap(deleteButtonFinder);
       await tester.pumpAndSettle();
 
       //verify popup
       expect(find.text('Are you sure you wish to delete this item?'),
           findsOneWidget);
-      expect(deleteButtonFinder, findsOneWidget);
+      expect(confirmDeleteButtonFinder, findsOneWidget);
 
       //click delete
-      await tester.tap(deleteButtonFinder);
+      await tester.tap(confirmDeleteButtonFinder);
       await tester.pumpAndSettle();
 
       //assert
@@ -103,60 +101,22 @@ void main() {
       await tester.pumpWidget(testedWidget);
       await tester.pumpAndSettle();
 
-      final itemFinder = find.byType(Dismissible);
-      final cancelButtonFinder =
+      final deleteItemFinder = find.byKey(const Key('delete_user_1'));
+      final confirmCancelButtonFinder =
           find.byKey(const Key(Keys.deleteConfirmationCancelButton));
       //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
+      expect(deleteItemFinder, findsOneWidget);
+      await tester.tap(deleteItemFinder);
       await tester.pumpAndSettle();
 
       //verify popup
       expect(find.text('Are you sure you wish to delete this item?'),
           findsOneWidget);
-      expect(cancelButtonFinder, findsOneWidget);
+      expect(confirmCancelButtonFinder, findsOneWidget);
 
       //click delete
-      await tester.tap(cancelButtonFinder);
+      await tester.tap(confirmCancelButtonFinder);
       await tester.pumpAndSettle();
-
-      //assert
-      verify(userBloc.add(argThat(isA<GetUsersEvent>())));
-      verifyNever(userBloc.add(argThat(isA<DeleteUserEvent>())));
-    });
-  });
-
-  testWidgets('should not delete item if user used in expense',
-      (WidgetTester tester) async {
-    await tester.runAsync(() async {
-      //arrange
-      final tExpense = UserExpense(
-          id: 1,
-          amount: Decimal.fromInt(10),
-          currency: const Currency(name: "USD"),
-          description: 'First Expense',
-          user: tUser,
-          receivers: [tUser],
-          dateTime: DateTime.now());
-
-      when(expenseBloc.state).thenAnswer(
-        (_) => ExpenseLoaded([tExpense]),
-      );
-
-      await tester.pumpWidget(testedWidget);
-      await tester.pumpAndSettle();
-
-      final itemFinder = find.byType(Dismissible);
-      //dismiss item
-      expect(itemFinder, findsOneWidget);
-      await tester.drag(itemFinder, const Offset(-500.0, 0.0));
-      await tester.pumpAndSettle();
-
-      //verify popup
-      expect(
-          find.text(
-              'Cannot remove user that is used in expense. Please remove expense first.'),
-          findsOneWidget);
 
       //assert
       verify(userBloc.add(argThat(isA<GetUsersEvent>())));

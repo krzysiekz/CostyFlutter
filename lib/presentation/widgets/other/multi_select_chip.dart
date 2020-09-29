@@ -1,3 +1,4 @@
+import 'package:costy/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,6 +23,9 @@ class MultiSelectChip<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Wrap(
+          children: _buildChoiceList(context),
+        ),
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -39,9 +43,6 @@ class MultiSelectChip<T> extends StatelessWidget {
             )
           ],
         ),
-        Wrap(
-          children: _buildChoiceList(context),
-        ),
       ],
     );
   }
@@ -53,7 +54,8 @@ class MultiSelectChip<T> extends StatelessWidget {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
         child: ChoiceChip(
-          selectedColor: Colors.blue.withOpacity(0.8),
+          backgroundColor: Colors.grey,
+          selectedColor: StyleConstants.primaryColor.withOpacity(0.8),
           key: Key("receiver_${extractLabelFunction(item)}"),
           label: Text(
             extractLabelFunction(item) as String,

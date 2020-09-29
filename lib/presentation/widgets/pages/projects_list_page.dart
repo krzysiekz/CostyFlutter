@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../../app_localizations.dart';
 import '../../../keys.dart';
+import '../../../style_constants.dart';
 import '../../bloc/project_bloc.dart';
 import '../../bloc/project_event.dart';
 import '../../bloc/project_state.dart';
 import '../forms/new_project_form_page.dart';
 import '../item/project_list_item.dart';
+import '../other/page_header.dart';
 import '../utilities/dialog_utilities.dart';
 
 class ProjectsListPage extends StatefulWidget {
@@ -26,16 +27,23 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      body: buildBody(context),
+    return Scaffold(
+      backgroundColor: StyleConstants.backgroundColor,
+      body: PageHeader(
+        content: buildContent(),
+        buttonOnPressed: () => _startAddNewProject(context),
+        svgAsset: 'assets/images/grow.svg',
+        title:
+            AppLocalizations.of(context).translate('project_list_page_title'),
+        description: AppLocalizations.of(context)
+            .translate('project_list_page_description'),
+        buttonLabel: AppLocalizations.of(context).translate('add'),
+        buttonKey: Keys.projectlistAddProjectButtonKey,
+      ),
     );
   }
 
-  void _startAddNewProject(BuildContext ctx) {
-    NewProjectForm.navigate(ctx);
-  }
-
-  Widget buildBody(BuildContext context) {
+  BlocConsumer<ProjectBloc, ProjectState> buildContent() {
     return BlocConsumer<ProjectBloc, ProjectState>(listener: (context, state) {
       if (state is ProjectError) {
         DialogUtilities.showAlertDialog(
@@ -60,79 +68,27 @@ class _ProjectsListPageState extends State<ProjectsListPage> {
       }
     }, builder: (context, state) {
       if (state is ProjectLoaded) {
-        return CustomScrollView(
-          slivers: <Widget>[
-            _createSliverAppBar(),
-            _createRemainingSliverWidget(state),
-          ],
-        );
+        if (state.projects.isEmpty) {
+          return Center(
+            child: Text(AppLocalizations.of(context)
+                .translate('project_list_page_no_projects')),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: state.projects.length,
+            itemBuilder: (ctx, index) => ProjectListItem(
+              key: Key("project_${state.projects[index].id}"),
+              project: state.projects[index],
+            ),
+          );
+        }
       } else {
         return DialogUtilities.showLoadingIndicator(context);
       }
     });
   }
 
-  Widget _createRemainingSliverWidget(ProjectLoaded state) {
-    if (state.projects.isEmpty) {
-      return SliverFillRemaining(
-        child: Center(
-          child: Text(AppLocalizations.of(context)
-              .translate('project_list_page_no_projects')),
-        ),
-      );
-    } else {
-      return _createSliverList(state);
-    }
-  }
-
-  SliverList _createSliverList(ProjectLoaded state) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          if (index >= state.projects.length) return null;
-          return ProjectListItem(
-            key: Key("project_${state.projects[index].id}"),
-            project: state.projects[index],
-          );
-        },
-      ),
-    );
-  }
-
-  PlatformWidget _createSliverAppBar() {
-    return PlatformWidget(
-      material: (context, platform) => SliverAppBar(
-        elevation: 1,
-        actions: <Widget>[
-          PlatformIconButton(
-            key: const Key(Keys.projectlistAddProjectButtonKey),
-            icon: Icon(context.platformIcons.add),
-            onPressed: () => _startAddNewProject(context),
-          )
-        ],
-        expandedHeight: 110,
-        pinned: true,
-        flexibleSpace: FlexibleSpaceBar(
-          title: Container(
-            padding: const EdgeInsets.all(5.0),
-            child: Text(
-                AppLocalizations.of(context)
-                    .translate('project_list_page_title'),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis),
-          ),
-        ),
-      ),
-      cupertino: (context, platform) => CupertinoSliverNavigationBar(
-        backgroundColor: CupertinoColors.white,
-        largeTitle: Text(
-            AppLocalizations.of(context).translate('project_list_page_title')),
-        trailing: PlatformIconButton(
-          key: const Key(Keys.projectlistAddProjectButtonKey),
-          icon: Icon(context.platformIcons.add),
-          onPressed: () => _startAddNewProject(context),
-        ),
-      ),
-    );
+  void _startAddNewProject(BuildContext ctx) {
+    NewProjectForm.navigate(ctx);
   }
 }

@@ -37,6 +37,7 @@ void main() {
     await createProject("Project1", "PLN", driver);
 
     await tapOnText('Project1', driver);
+    await tapOnKey(Keys.projectDetailsExpensesTab, driver);
 
     await expectTextPresent("No expenses to display.", driver);
   });
@@ -60,20 +61,20 @@ void main() {
 
     await tapOnKey(Keys.projectDetailsExpensesTab, driver);
 
-    await createExpense(
-        "Test description", "11", "John", "John => John, Kate", driver);
+    await createExpense("Test description", "11.00", "John",
+        "John paid for John, Kate", driver);
   });
 
   testWithScreenshots('should edit created expense', () => ozzie, () async {
-    await driver.tap(find.byValueKey("0_expense_edit"));
+    await driver.tap(find.byValueKey("edit_expense_0"));
 
     await expectKeyPresent(Keys.expenseFormDescriptionFieldKey, driver);
     await tapOnKey(Keys.expenseFormDescriptionFieldKey, driver);
     await driver.enterText("Edited description");
     await driver.waitFor(find.text('Edited description'));
 
-    await expectKeyPresent(Keys.expenseFormAcountFieldKey, driver);
-    await tapOnKey(Keys.expenseFormAcountFieldKey, driver);
+    await expectKeyPresent(Keys.expenseFormAmountFieldKey, driver);
+    await tapOnKey(Keys.expenseFormAmountFieldKey, driver);
     await driver.enterText("12");
     await driver.waitFor(find.text('12'));
 
@@ -85,13 +86,13 @@ void main() {
     await tapOnKey(Keys.expenseFormAddEditButtonKey, driver);
 
     await expectTextPresent("Edited description", driver);
-    await expectTextPresent("Kate => John, Kate", driver);
-    await expectTextPresent("12", driver);
+    //TODO uncomment when https://github.com/flutter/flutter/issues/62489 is done
+    // await expectTextPresent("Kate paid for John, Kate", driver);
+    await expectTextPresent("12.00", driver);
   });
 
   testWithScreenshots('should delete created expense', () => ozzie, () async {
-    await driver.scroll(find.byValueKey("expense_0"), -400, 0,
-        const Duration(milliseconds: 300));
+    await driver.tap(find.byValueKey("delete_expense_0"));
 
     await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
     await tapOnKey(Keys.deleteConfirmationDeleteButton, driver);

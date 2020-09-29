@@ -47,7 +47,7 @@ void main() {
   });
 
   testWithScreenshots('should edit created user', () => ozzie, () async {
-    await tapOnKey("0_user_edit", driver);
+    await tapOnKey("edit_user_0", driver);
 
     await expectKeyPresent(Keys.userFormNameFieldKey, driver);
     await tapOnKey(Keys.userFormNameFieldKey, driver);
@@ -61,8 +61,7 @@ void main() {
   });
 
   testWithScreenshots('should delete created user', () => ozzie, () async {
-    await driver.scroll(
-        find.byValueKey("user_0"), -400, 0, const Duration(milliseconds: 300));
+    await tapOnKey("delete_user_0", driver);
 
     await expectKeyPresent(Keys.deleteConfirmationDeleteButton, driver);
     await tapOnKey(Keys.deleteConfirmationDeleteButton, driver);
