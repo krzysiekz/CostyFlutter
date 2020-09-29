@@ -23,7 +23,7 @@ dependencies:
   intl: ^0.16.1
   oktoast: ^2.3.2
   share: ^0.6.4+3
-  device_preview: ^0.4.7
+  device_preview: ^0.4.8
   flutter_svg: ^0.18.1
   feather_icons_flutter: ^4.7.4
 

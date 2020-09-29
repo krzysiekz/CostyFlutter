@@ -85,6 +85,8 @@ class PageHeader extends StatelessWidget {
           ),
           Positioned(
             bottom: -20,
+            left: 30,
+            right: 0,
             child: Transform.scale(
                 scale: 0.8,
                 child: SvgPicture.asset(

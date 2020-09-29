@@ -23,7 +23,7 @@ const supportedCurrencies = ['USD', 'EUR', 'PLN', 'GBP'];
 Future<void> main() async {
   await initializeApp();
   runApp(DevicePreview(
-    enabled: false,
+    enabled: true,
     builder: (context) => DefaultAssetBundle(
       bundle: CustomAssetBundle(),
       child: MyApp(),

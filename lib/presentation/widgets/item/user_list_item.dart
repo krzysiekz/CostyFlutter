@@ -32,10 +32,11 @@ class _UserListItemState extends State<UserListItem> {
         children: [
           buildBottomCard(),
           buildTopCard(),
-          Column(
-            children: [
-              Expanded(
-                child: Padding(
+          Container(
+            height: 70,
+            child: Column(
+              children: [
+                Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Text(widget.user.name,
                       overflow: TextOverflow.fade,
@@ -46,20 +47,20 @@ class _UserListItemState extends State<UserListItem> {
                         fontSize: StyleConstants.secondaryTextSize,
                       )),
                 ),
-              ),
-              Expanded(
-                child: Transform.translate(
-                  offset: const Offset(0, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildDeleteButton(context),
-                      buildEditButton(context)
-                    ],
+                Expanded(
+                  child: Transform.translate(
+                    offset: const Offset(0, 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildDeleteButton(context),
+                        buildEditButton(context)
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
