@@ -2,7 +2,6 @@
 
 This is a rework of an Android app I wrote some time ago. This time written in Flutter and improved. I used it as my Flutter playground.
 
-[Google Play Store link.](https://play.google.com/store/apps/details?id=com.krzysiekz.costy)
 - [Functionality](#functionality)
 - [Some screenshots](#some-screenshots)
 - [Some technical details](#some-technical-details)
